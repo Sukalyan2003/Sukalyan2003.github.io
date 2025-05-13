@@ -1,0 +1,243 @@
+@keyframes changeText {
+  0% {
+    content: "a front-end learner";
+  }
+  50% {
+    content: "a machine-learning enthusiast.";
+  }
+  100% {
+    content: "aspiring Blogger";
+  }
+}
+
+.img-fluid.my-5{
+  border-radius: 50%;
+}
+.fitcen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.carousel-item img {
+  transition: transform 0.3s ease;
+  height: 400px;
+  width: 800px;
+  object-fit: cover;
+}
+
+.carousel {
+  margin: 0 auto;
+  width: 100%;
+}
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.4);
+  transition: transform 0.5s ease;
+}
+.carousel-caption:hover {
+  background: rgba(0, 0, 0, 0.75);
+  transform:scale(1.1);
+  color: #ffffff;
+  cursor: pointer;
+}
+@media (max-width: 767.98px) {
+  .carousel-caption {
+     font-size: 0.8rem;
+     padding: 10px;
+   }
+ }
+@media (min-width: 992px) {
+ .carousel {
+    max-width: 800px;
+  }
+}
+
+.icon {
+  transition: transform 0.3s ease;
+}
+
+
+.icon:hover {
+  transform: scale(1.5);
+}
+
+#web-dev-icon:hover {
+  color:rgb(149, 111, 220)!important;
+}
+
+#gameDevIcon:hover {
+  color: rgb(57, 224, 99)!important;
+}
+
+#ml-icon:hover {
+  color: rgb(185, 20, 91)!important;
+}
+
+#med-edit:hover {
+  color: rgb(255, 231, 17)!important;
+}
+
+#role {
+  animation: changeText 2s infinite;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width:100%
+}
+
+body{
+  font-family: "Montserrat", sans-serif;
+}
+
+.pixe {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.navcurs{
+  padding-left: 15px;
+  font-family: "Rubik Doodle Shadow", system-ui;
+  font-weight: 100;
+}
+
+.brushe{
+  font-family: "Nanum Brush Script", sans-serif;
+  font-size:24px;
+}
+
+.about > .material-icons-outlined {
+  font-size: 50px;
+}
+
+.dialogBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #000;
+  z-index: 1000;
+}
+
+.carousel-inner img {
+  margin: auto;
+}
+
+
+
+.notsel {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+ul.timeline-3 {
+  list-style-type: none;
+  position: relative;
+}
+ul.timeline-3:before {
+  content: " ";
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 29px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
+}
+ul.timeline-3 > li {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+ul.timeline-3 > li:before {
+  content: " ";
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #22c0e8;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
+}
+
+ul.timeline-4 {
+  list-style-type: none;
+  position: relative;
+}
+ul.timeline-4:before {
+  content: " ";
+  background: #d4d9df;
+  display: inline-block;
+  position: absolute;
+  left: 29px;
+  width: 2px;
+  height: 100%;
+  z-index: 400;
+}
+ul.timeline-4 > li {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+ul.timeline-4 > li:before {
+  content: " ";
+  background: white;
+  display: inline-block;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #22e822;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 400;
+}
+
+.carousel-caption > .material-icons-outlined {
+  font-size: 20px;
+  transition: ease 0.2s;
+  border-radius: 50%;
+}
+.carousel-caption:hover > .material-icons-outlined {
+  background-color: aliceblue;
+  border: 3px solid rgb(46, 46, 204);
+
+  padding: 2px;
+  color: #0c00ad;
+}
+
+.smed{
+  margin: auto;
+  transition: transform ease 0.2s;
+}
+
+.smed:hover{
+  transform: scale(1.2);
+  border: 3px solid rgb(55, 238, 238);
+  border-radius: 50%;
+}
+
+html{scroll-behavior:smooth}
+
+main {
+  animation: faded ease 1.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes faded {
+  0% {
+      opacity: 0;
+      filter: blur(5px) grayscale(100%);
+      transform: translateY(-10%);
+  }
+  100% {
+      opacity: 1;
+      filter: none;
+      transform: translateY(0);
+  }
+}
