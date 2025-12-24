@@ -1,5 +1,5 @@
 const role = document.getElementById("role");
-const roles = ["Web Developer", "aspiring blogger", "machine-learning enthusiast."];
+const roles = ["Backend Developer", "ML Enthusiast", "SIH 2023 Finalist", "Blogger"];
 let index = 0;
 
 setInterval(() => {
