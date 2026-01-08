@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sukalyan2003.github.io/sitemap.xml
