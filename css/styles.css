@@ -426,7 +426,16 @@ ul.timeline-4 > li:before {
   box-shadow: 0 5px 20px rgba(55, 238, 238, 0.4);
 }
 
-html{scroll-behavior:smooth}
+html {
+  scroll-behavior: smooth;
+}
+
+/* Match the roomier 110% browser zoom feel on larger screens. */
+@media (min-width: 768px) {
+  html {
+    font-size: 110%;
+  }
+}
 
 main {
   animation: faded ease 1.5s;
