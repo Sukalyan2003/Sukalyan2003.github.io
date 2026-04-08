@@ -6,10 +6,11 @@ const roles = [
   "an SIH 2023 National Finalist",
   "a Blogger"
 ];
-let index = 0;
+let index = 1;
 
-setInterval(() => {
-  role.textContent = roles[index];
-  index = (index + 1) % roles.length;
-}, 2000);
-
+if (role) {
+  setInterval(() => {
+    role.textContent = roles[index];
+    index = (index + 1) % roles.length;
+  }, 2000);
+}
