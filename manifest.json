@@ -1,0 +1,16 @@
+{
+    "name": "Sukalyan Roy Portfolio",
+    "short_name": "Sukalyan Roy",
+    "description": "Portfolio of Sukalyan Roy - Backend Developer & ML Engineer",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "icons": [
+        {
+            "src": "img/navimg1.png",
+            "sizes": "194x173",
+            "type": "image/png"
+        }
+    ]
+}
