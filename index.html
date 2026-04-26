@@ -6,8 +6,7 @@
 
     <!-- Primary SEO -->
     <title>Sukalyan Roy | Backend Engineer & Distributed Systems Developer</title>
-    <meta name="description" content="Sukalyan Roy — Backend Engineer building high-performance data systems and distributed architecture. EEG ingestion backends, RAG chatbots, FastAPI, PostgreSQL, Redis, ML.">
-    <meta name="keywords" content="Sukalyan Roy, Backend Engineer, Python Developer, FastAPI, PostgreSQL, Redis, Distributed Systems, Machine Learning, EEG, Avinya Neurotech, SIH 2023, Portfolio, Kolkata">
+    <meta name="description" content="Portfolio of Sukalyan Roy, a Backend Engineer focused on high-performance data systems, distributed architecture, FastAPI, PostgreSQL, Redis, and ML.">
     <meta name="author" content="Sukalyan Roy">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0077b6">
@@ -16,10 +15,12 @@
     <!-- Open Graph -->
     <meta property="og:type" content="profile">
     <meta property="og:title" content="Sukalyan Roy | Backend Engineer & Distributed Systems Developer">
-    <meta property="og:description" content="Backend Engineer building high-performance data systems and distributed architecture. EEG ingestion backends, RAG chatbots, FastAPI, PostgreSQL, Redis, ML.">
+    <meta property="og:description" content="Portfolio of Sukalyan Roy, a Backend Engineer focused on high-performance data systems, distributed architecture, FastAPI, PostgreSQL, Redis, and ML.">
     <meta property="og:url" content="https://sukalyan2003.github.io/">
     <meta property="og:site_name" content="Sukalyan Roy Portfolio">
     <meta property="og:image" content="https://sukalyan2003.github.io/img/self.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
     <meta property="og:image:alt" content="Portrait of Sukalyan Roy, Backend Engineer">
     <meta property="profile:first_name" content="Sukalyan">
     <meta property="profile:last_name" content="Roy">
@@ -27,22 +28,21 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sukalyan Roy | Backend Engineer & Distributed Systems Developer">
-    <meta name="twitter:description" content="Backend Engineer building high-performance data systems. EEG ingestion backends, RAG chatbots, FastAPI, PostgreSQL, Redis.">
+    <meta name="twitter:description" content="Portfolio of Sukalyan Roy, a Backend Engineer focused on high-performance data systems, distributed architecture, FastAPI, PostgreSQL, Redis, and ML.">
     <meta name="twitter:image" content="https://sukalyan2003.github.io/img/self.jpg">
 
     <!-- Fonts & styles -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="css/styles.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" as="style">
+    <link rel="preload" href="img/self.jpg" as="image" fetchpriority="high">
     
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pixelify+Sans:wght@400..700&family=Nanum+Brush+Script&family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Nanum+Brush+Script&family=Pixelify+Sans&family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/x-icon" href="img/navimg1.png">
@@ -109,7 +109,7 @@
     <div class="container-fluid px-0">
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
         <a class="navbar-brand" href="#top">
-          <img src="img/self.jpg" width="30" height="30" alt="Sukalyan Roy"><span class="navcurs">Sukalyan</span></a>
+          <img src="img/self.jpg" width="30" height="30" alt="Sukalyan Roy" decoding="async"><span class="navcurs">Sukalyan</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -143,10 +143,17 @@
                   <p class="lead text-muted mb-4 text-justify">
                     Backend Engineer specializing in high-performance data systems and distributed architecture. Designed and deployed EEG ingestion/analysis backends for 20GB+ medical datasets and optimized processing by 90%. SIH 2023 National Finalist.
                   </p>
+                  <div class="hero-actions">
+                    <a class="btn btn-primary" href="https://drive.google.com/file/d/1ZoVTduJawyx_JBG-pHlO94xy_6zmvXvB/view?usp=drive_link" target="_blank" rel="noopener" aria-label="Open Sukalyan Roy's resume">Resume</a>
+                    <a class="btn btn-outline-dark" href="#portfolio">View Case Studies</a>
+                  </div>
+                  <p class="hero-contact text-muted mt-3 mb-0">
+                    Contact: <a href="mailto:sukalyanroyofficial@gmail.com">sukalyanroyofficial@gmail.com</a>
+                  </p>
                 </div>
             </div>
             <div class="col-lg-4 col-xl-5 text-center">
-              <img class="img-fluid my-5" src="img/self.jpg" alt="Sukalyan Roy — Backend Engineer">
+              <img class="img-fluid my-5" src="img/self.jpg" width="800" height="800" alt="Sukalyan Roy — Backend Engineer" fetchpriority="high" decoding="async">
             </div>
           </div>
         </div>
@@ -270,49 +277,69 @@
         <hr>
         </section>
 
-        <section id="portfolio">
-          <div class="container-fluid py-5">
-            <h2 class="font-weight-bold text-center">My Projects</h2>
-            <br>
-            <div class="row justify-content-center">
-              <div class="col-lg-6">
-                <div id="carobtn" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carobtn" data-slide-to="0" class="active"></li>
-                    <li data-target="#carobtn" data-slide-to="1"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <a class="carousel-item active" href="https://github.com/Sukalyan2003/Nand2Tetris" target="_blank" rel="noopener" aria-label="Open Nand2Tetris project on GitHub">
-                      <img class="d-block w-100" src="img/nand2tetris.png" alt="Nand2Tetris project — NAND to CPU toolchain">
-                      <div class="carousel-caption d-md-block">
-                        <h5>Nand2Tetris</h5>
-                        <p>Built NAND→CPU toolchain: logic gates → ALU/CPU → assembler using Python, Assembly, VHDL. Validated using supplied test suite.</p>
-                        <span class="material-icons-outlined openic">
-                          open_in_new
-                        </span>
-                      </div>
-                    </a>
-                    <a class="carousel-item" href="https://sukalyanroy.hashnode.dev/" target="_blank" rel="noopener" aria-label="Open Sukalyan Roy's Hashnode blog">
-                      <img class="d-block w-100" src="img/hashnode.png" alt="Hashnode Blog — Sukalyan Roy's technical writing">
-                      <div class="carousel-caption d-md-block">
-                        <h5>Hashnode Blog</h5>
-                        <p>A collection of posts documenting my projects in a beginner-friendly way — covering Python, Assembly, Linux and AI.</p>
-                        <span class="material-icons-outlined openic">
-                          open_in_new
-                        </span>
-                      </div>
-                    </a>
-                  </div>
-                  <a class="carousel-control-prev" href="#carobtn" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carobtn" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
+        <section id="portfolio" class="case-study-section">
+          <div class="container py-5">
+            <p class="section-kicker text-center text-primary mb-2"></p>
+            <h2 class="font-weight-bold text-center">Shipped work</h2>
+
+            <div class="case-study-grid mt-5">
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">Production backend</span>
+                  <span class="case-study-metric">20GB+ EEG datasets</span>
                 </div>
-              </div>
+                <h3>Cloud EEG Ingestion &amp; Analysis Platform</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Medical EEG workflows needed reliable ingestion, analysis, exports, and real-time review for large datasets without exhausting memory.</li>
+                  <li><strong>Architecture:</strong> 5-service microservices platform with 50+ APIs, PostgreSQL for structured state, Redis for coordination/caching, Azure Blob Storage for large files, async jobs for analysis/export, and a streaming path for live review.</li>
+                  <li><strong>Tradeoffs:</strong> Moved heavy analysis out of request paths, favored object storage over local disk, and balanced real-time latency against batch frequency-band analysis and EDF+/PDF export jobs.</li>
+                  <li><strong>Outcome:</strong> Processed 20GB+ datasets, improved processing speed by 90%, reduced memory usage by 75%, and kept real-time streaming latency under 100ms.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>FastAPI</span><span>PostgreSQL</span><span>Redis</span><span>Azure Blob</span><span>PyTorch</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://www.avinyaneurotech.com/" target="_blank" rel="noopener">Company context</a>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">AI backend</span>
+                  <span class="case-study-metric">300+ pages indexed</span>
+                </div>
+                <h3>Internal RAG Knowledge Assistant</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Internal documentation was spread across hundreds of pages, making answers slow to find and easy to miss during day-to-day work.</li>
+                  <li><strong>Architecture:</strong> Python ingestion pipeline over 300+ pages of documentation, retrieval-first answer flow, Streamlit interface, and local LM Studio inference for a lightweight internal assistant.</li>
+                  <li><strong>Tradeoffs:</strong> Chose a local/private model workflow over a hosted API, prioritized fast retrieval and simple UX over a complex agent stack, and kept the first version easy to iterate with stakeholders.</li>
+                  <li><strong>Outcome:</strong> Reduced internal information retrieval from minutes to seconds while keeping the system simple enough to maintain and demo quickly.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>Python</span><span>RAG</span><span>Streamlit</span><span>LM Studio</span><span>LLMs</span>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">Systems project</span>
+                  <span class="case-study-metric">NAND → assembler</span>
+                </div>
+                <h3>Nand2Tetris Hardware Stack &amp; Two-Pass Assembler</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Build a small computer from first principles and translate Hack assembly into executable 16-bit machine code.</li>
+                  <li><strong>Architecture:</strong> HDL logic gates, ALU, memory hierarchy, program counter, memory-mapped I/O, plus a Python assembler split into parser, code-generation, symbol-table, and orchestration modules.</li>
+                  <li><strong>Tradeoffs:</strong> Used explicit translation tables and a two-pass algorithm for correctness and readability; chose Python over tutorial C++ to avoid copying and make the implementation easier to inspect.</li>
+                  <li><strong>Outcome:</strong> Built through the hardware portion, reached 16K memory, implemented an ALU capable of 18 operations via 6 control bits, and generated <code>.hack</code> binary output from <code>.asm</code> programs.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>Python</span><span>Assembler</span><span>HDL</span><span>Assembly</span><span>Computer Architecture</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://sukalyanroy.hashnode.dev/nand2tetris-part-1-hardware" target="_blank" rel="noopener">Read write-up</a>
+                  <a href="https://github.com/Sukalyan2003/Nand2Tetris" target="_blank" rel="noopener">View repo</a>
+                </div>
+              </article>
             </div>
           </div>
         </section>
@@ -320,39 +347,38 @@
 
         <section id="certifications" class="bg-light">
           <hr>
-          <div class="container my-5">
+          <div class="container my-5 compact-section">
             <h2 class="font-weight-bold text-center">Certifications</h2>
-            <div class="row">
-              <div class="col-lg-8 col-md-10 mx-auto">
-                <ul class="timeline-3">
-                  <li>
-                    <div class="cert-item">
-                      <h5 class="mb-1"><a href="https://coursera.org/share/9d72a12685ad3a91dd8515ab64cf4b84" target="_blank" rel="noopener">Google Project Management Professional Certificate</a></h5>
-                      <span class="badge badge-info mb-2">[2025]</span>
-                      <p class="mb-0 text-justify">Agile, Communication, Excel, Powerpoint, Gen AI</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="cert-item">
-                      <h5 class="mb-1">Harvard CS50 — Core, Cybersecurity &amp; AI</h5>
-                      <span class="badge badge-info mb-2">[2023 - 2026]</span>
-                      <p class="mb-0 text-justify">
-                        <a href="https://certificates.cs50.io/58941d2e-c300-4cbc-a45f-38301180463c.pdf?size=letter" target="_blank" rel="noopener">CS50x (Core)</a> &nbsp;·&nbsp;
-                        <a href="https://cs50.harvard.edu/certificates/7070c121-ec8b-4290-baba-7d29764c5bbb" target="_blank" rel="noopener">CS50 Cybersecurity</a> &nbsp;·&nbsp;
-                        <a href="https://certificates.cs50.io/94fa3516-9bc1-42b7-9e00-82d1d3dcc6a2.pdf" target="_blank" rel="noopener">CS50 AI</a><br>
-                        C, SQL, Python, Transformers, Linux, Networking — culminating in several projects.
-                      </p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="cert-item">
-                      <h5 class="mb-1"><a href="https://drive.google.com/file/d/19_Ww1V-FoHvupU37yqUPH1nFiK-SgEyK/view?usp=sharing" target="_blank" rel="noopener">Smart India Hackathon 2023</a></h5>
-                      <span class="badge badge-warning mb-2">National Finalist</span>
-                      <p class="mb-0 text-justify">Member of National Finalist team CodeRedX — built the AI chatbot model for our Mental Health Chatbot. Stack: TensorFlow, Flutter, Firebase.</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+            <p class="section-intro text-muted text-center mx-auto">Kept as supporting signals; the main proof is now in the case studies above.</p>
+            <div class="cert-grid mt-4">
+              <article class="cert-card">
+                <div class="cert-header">
+                  <h3><a href="https://coursera.org/share/9d72a12685ad3a91dd8515ab64cf4b84" target="_blank" rel="noopener">Google Project Management Professional Certificate</a></h3>
+                  <span class="badge badge-info">2025</span>
+                </div>
+                <p>Agile delivery, stakeholder communication, Excel, PowerPoint, and GenAI-assisted project workflows.</p>
+              </article>
+
+              <article class="cert-card">
+                <div class="cert-header">
+                  <h3>Harvard CS50 Track</h3>
+                  <span class="badge badge-info">2023 - 2026</span>
+                </div>
+                <p>CS50x, CS50 Cybersecurity, and CS50 AI — C, SQL, Python, networking, security, transformers, and project-based problem solving.</p>
+                <div class="cert-links">
+                  <a href="https://certificates.cs50.io/58941d2e-c300-4cbc-a45f-38301180463c.pdf?size=letter" target="_blank" rel="noopener">Core</a>
+                  <a href="https://cs50.harvard.edu/certificates/7070c121-ec8b-4290-baba-7d29764c5bbb" target="_blank" rel="noopener">Cybersecurity</a>
+                  <a href="https://certificates.cs50.io/94fa3516-9bc1-42b7-9e00-82d1d3dcc6a2.pdf" target="_blank" rel="noopener">AI</a>
+                </div>
+              </article>
+
+              <article class="cert-card">
+                <div class="cert-header">
+                  <h3><a href="https://drive.google.com/file/d/19_Ww1V-FoHvupU37yqUPH1nFiK-SgEyK/view?usp=sharing" target="_blank" rel="noopener">Smart India Hackathon 2023</a></h3>
+                  <span class="badge badge-warning">National Finalist</span>
+                </div>
+                <p>CodeRedX finalist team; built the AI chatbot model for a mental health chatbot using TensorFlow with Flutter/Firebase integration.</p>
+              </article>
             </div>
           </div>
           <hr>
@@ -368,15 +394,15 @@
                       <h5 class="text-center mx-auto pixe">
                       Feel free to reach out to me on any of the following platforms:
                     </h5>
-                      <div class="d-flex justify-content-center pt-3">
+                      <div class="d-flex justify-content-center pt-3 social-links">
                         <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" class="mr-4 px-3 text-decoration-none" target="_blank" rel="noopener" aria-label="LinkedIn profile of Sukalyan Roy">
-                          <img src="img/linklogo.png" class="smed" alt="LinkedIn" width="64" height="64">
+                          <img src="img/linklogo.png" class="smed" alt="LinkedIn" width="64" height="64" loading="lazy" decoding="async">
                         </a>
                         <a href="https://github.com/Sukalyan2003" class="mr-4 px-3 text-decoration-none" target="_blank" rel="noopener" aria-label="GitHub profile of Sukalyan Roy">
-                          <img src="img/gitlogo.png" class="smed" alt="GitHub" width="64" height="64">
+                          <img src="img/gitlogo.png" class="smed" alt="GitHub" width="64" height="64" loading="lazy" decoding="async">
                         </a>
                         <a href="mailto:sukalyanroyofficial@gmail.com" class="mr-4 px-3 text-decoration-none" aria-label="Email Sukalyan Roy">
-                          <img src="img/email.png" class="smed" alt="Email" width="64" height="64">
+                          <img src="img/email.png" class="smed" alt="Email" width="64" height="64" loading="lazy" decoding="async">
                         </a>
                       </div>
                     </div>
@@ -396,15 +422,19 @@
                 <p class="lead text-muted mb-0 brushe notsel">
                   Feel free to contact me for any project or collaboration!
                 </p>
+                <div class="footer-contact mt-3">
+                  <a class="btn btn-primary btn-sm" href="https://drive.google.com/file/d/1ZoVTduJawyx_JBG-pHlO94xy_6zmvXvB/view?usp=drive_link" target="_blank" rel="noopener" aria-label="Open Sukalyan Roy's resume">Resume</a>
+                  <span>Email: <a href="mailto:sukalyanroyofficial@gmail.com">sukalyanroyofficial@gmail.com</a></span>
+                </div>
               </div>
             </div>
           </div>
         </footer>
       </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <script defer src="js/script.js"></script>
 </body>
 </html>
