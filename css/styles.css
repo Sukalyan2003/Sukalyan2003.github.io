@@ -83,7 +83,7 @@ a:hover {
 }
 
 body{
-  font-family: "Montserrat", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .hero-actions,
@@ -144,7 +144,7 @@ section h2::after {
 .cert-card {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
@@ -387,25 +387,24 @@ ul.timeline-4 > li p {
   }
 }
 
-.pixe {
-  font-family: "Pixelify Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
 .navcurs{
   padding-left: 15px;
-  font-family: "Rubik Doodle Shadow", system-ui;
-  font-weight: 100;
+  font-weight: 700;
 }
 
-.brushe{
-  font-family: "Nanum Brush Script", sans-serif;
-  font-size:24px;
-}
-
-.about > .material-icons-outlined {
-  font-size: 50px;
+.skill-glyph {
+  align-items: center;
+  background: #f8fbff;
+  border: 1px solid rgba(0, 123, 255, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.12);
+  display: inline-flex;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 2rem;
+  height: 64px;
+  justify-content: center;
+  line-height: 1;
+  width: 64px;
 }
 
 .notsel {

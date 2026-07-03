@@ -1,0 +1,195 @@
+  \documentclass[letterpaper,10pt]{article}
+
+  \usepackage{latexsym}
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+  \usepackage[empty]{fullpage}
+  \usepackage{titlesec}
+  \usepackage{marvosym}
+  \usepackage[usenames,dvipsnames]{color}
+  \usepackage{verbatim}
+  \usepackage{enumitem}
+  \usepackage{textcomp}
+  \usepackage[unicode=true,hidelinks,pdfnewwindow=true]{hyperref}
+  \hypersetup{
+      colorlinks=true,
+      urlcolor=blue
+      }
+  \usepackage{fancyhdr}
+  \usepackage[english]{babel}
+  \usepackage{tabularx}
+  \input{glyphtounicode}
+  \pdfglyphtounicode{bullet}{2022}
+  \pdfglyphtounicode{textbullet}{2022}
+  \usepackage[utf8]{inputenc}
+  \usepackage{multicol}
+  \pagestyle{fancy}
+  \fancyhf{}
+  \fancyfoot{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+  \setlength{\footskip}{4pt}
+
+  \addtolength{\oddsidemargin}{-0.54in}
+  \addtolength{\evensidemargin}{-0.54in}
+  \addtolength{\textwidth}{1.08in}
+  \addtolength{\topmargin}{-0.62in}
+  \addtolength{\textheight}{1.28in}
+
+  \urlstyle{same}
+
+  \raggedbottom
+  \raggedright
+  \setlength{\tabcolsep}{0in}
+  \setlist[itemize]{itemsep=0pt, topsep=1pt, parsep=0pt, partopsep=0pt}
+
+  \titleformat{\section}{
+    \vspace{-6pt}\scshape\raggedright\large
+  }{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+
+  \pdfgentounicode=1
+
+  %-------------------------
+  \newcommand{\resumeItem}[1]{
+    \item\small{
+      {#1 \vspace{-2pt}}
+    }
+  }
+
+  \newcommand{\resumeSubheading}[4]{
+    \vspace{0pt}\item
+      \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & #2 \\
+        \textit{\small#3} & \textit{\small #4} \\
+      \end{tabular*}\vspace{-4pt}
+  }
+
+  \newcommand{\resumeProjectHeading}[2]{
+      \item
+      \begin{tabularx}{0.97\textwidth}{X r}
+        \small#1 & #2 \\
+      \end{tabularx}\vspace{-4pt}
+  }
+
+  \newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+  \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+  \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+  \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+  \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.18in]}
+  \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{0pt}}
+
+  \newcommand{\newtabhref}[2]{%
+    \leavevmode\pdfstartlink attr{/Border[0 0 0]} user{%
+      /Subtype/Link/A<</Type/Action/S/URI/URI(#1)/NewWindow true>>%
+    }\textcolor{blue}{#2}\pdfendlink%
+  }
+
+  %-------------------------------------------
+  \begin{document}
+
+  \begin{center}
+      \textbf{\Huge \scshape Sukalyan Roy} \\ \vspace{1pt}
+      \small +91-6291566336 $|$ \newtabhref{mailto:sukalyanroyofficial@gmail.com}{\underline{sukalyanroyofficial@gmail.com}} $|$
+      \newtabhref{https://www.linkedin.com/in/sukalyan-roy-457040362/}{\underline{LinkedIn}} $|$
+      \newtabhref{https://github.com/Sukalyan2003}{\underline{GitHub}} $|$
+      \newtabhref{https://sukalyan2003.github.io/}{\underline{Portfolio}} $|$
+      \newtabhref{https://sukalyanroy.hashnode.dev/}{\underline{Blog}}
+  \end{center}
+
+  %-----------Summary-----------
+  \section{Summary}
+  Backend Engineer specializing in \textbf{high-performance data systems}, \textbf{distributed architecture}, and ML infrastructure. Built \textbf{20\,GB+ EEG ingestion/analysis backends}, improved processing by \textbf{90\%} with \textbf{Python, PostgreSQL, Redis}, and independently built an interpretable medical-insurance premium ML service/research pipeline. \textbf{SIH National Finalist}.
+
+  %-----------EDUCATION-----------
+  \section{Education}
+    \resumeSubHeadingListStart
+      \resumeSubheading
+        {Netaji Subhash Engineering College, New Garia, Kolkata}{SGPA: 8.50/10.0 (as of 7th Sem)}
+        {Bachelor of Technology in Computer Science and Engineering 2022 -- 2026}{\textbf{SVMCM} and \textbf{Reliance Scholar}}
+        \resumeSubheading
+        {National Gems Higher Secondary School, Behala, Kolkata}{ISC(12th) 2022: 90\%, ICSE(10th) 2020: 92\%}
+        { }{}
+    \resumeSubHeadingListEnd
+
+  %-----------Experience-----------
+  \section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Backend Developer at Avinya Neurotech (Fully Remote)}{June 2025 -- Present}
+      {\textit{Python, FastAPI, PostgreSQL, Redis, Azure, EDF analysis}}{}
+      \resumeItemListStart
+        \resumeItem{Architected and scaled a \textbf{cloud-native microservices platform} (\textbf{5 services, 50+ REST APIs}) for clinical \textbf{EEG} analysis, concurrently processing \textbf{20\,GB+} datasets while cutting processing time by \textbf{90\%} and reducing memory footprint by \textbf{75\%}.}
+        \resumeItem{Single-handedly introduced the platform's real-time layer: \textbf{TimescaleDB} time-series storage and \textbf{WebSocket} streaming, both company-first implementations, sustaining \textbf{\(<\)100\,ms} latency while live-rendering \textbf{20\,GB+} EEG recordings.}
+        \resumeItem{Engineered an asynchronous, distributed data pipeline using \textbf{Redis}-backed job queues and \textbf{Azure Blob Storage}, powering automated \textbf{PDF/EDF+ exports} and clinical \textbf{frequency-band (bandpower) analysis}.}
+        \resumeItem{Built a cross-platform desktop \textbf{EEG viewer} delivering real-time visualization and \textbf{PyTorch}-driven \textbf{artifact and spike detection} for automated clinical insight.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Tech Development Intern at Aecho AI (Fully Remote)}{November 2024 -- January 2025}
+      {\textit{Python, Streamlit, LM Studio, RAG}}{}
+      \resumeItemListStart
+        \resumeItem{Built a privacy-conscious \textbf{RAG-based} internal knowledge assistant over \textbf{300+ pages} of documentation using local \textbf{LM Studio} inference, cutting information retrieval from minutes to \textbf{seconds} while keeping sensitive material off hosted APIs.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+  %-----------PROGRAMMING SKILLS-----------
+  \section{Technical Skills}
+  \begin{itemize}[leftmargin=0.15in, label={}, topsep=0pt]
+    \item[]
+      \small{
+        \textbf{Languages}{: Python, SQL, C, Java, JavaScript} \\
+        \textbf{Backend}{: FastAPI, Spring Boot, REST, OAuth, Microservices, WebSockets} \\
+        \textbf{Databases}{: PostgreSQL, TimescaleDB, Redis, SQLite, H2} \\
+        \textbf{ML \& AI}{: PyTorch, scikit-learn, SHAP, NumPy, pandas, RAG, Vector DBs, Ollama, MCP} \\
+        \textbf{Signal Processing}{: FFT, Spectrograms, Wavelet Transform, Bandpower Analysis} \\
+        \textbf{Cloud \& DevOps}{: Docker, Kubernetes, GitHub Actions, Azure, Linux, Bash, Prometheus, Grafana}
+        }
+  \end{itemize}
+
+  %-----------PROJECTS-----------
+    \section{Projects}
+      \resumeSubHeadingListStart
+      \resumeProjectHeading
+            {\textbf{\newtabhref{https://github.com/Sukalyan2003/ml-microservice}{MediPredict ML Microservice \& XAI Research}} $|$ \emph{FastAPI, scikit-learn, SHAP, Docker}}{2025 -- Present}
+            \resumeItemListStart
+              \resumeItem{Built the \textbf{FastAPI} premium-estimation service with artifact-driven loading, typed contracts, health/readiness endpoints, Docker deployment, \textbf{SHAP/permutation} interpretability, and Spring Boot / React integration.}
+              \resumeItem{Led unpublished research exposing \textbf{target leakage}, separating quote-time from renewal-time signals, and documenting fairness/reproducibility for a defensible interpretable premium pipeline.}
+            \resumeItemListEnd
+
+      \resumeProjectHeading
+            {\textbf{\newtabhref{https://github.com/Sukalyan2003/RAG-Chatbot}{Local-First RAG Chatbot with MCP Integration}} $|$ \emph{Python, Ollama, MCP, Streamlit}}{April 2026 -- Present}
+            \resumeItemListStart
+              \resumeItem{Built a \textbf{local-first RAG chatbot} (\textbf{Python, Ollama, MCP}) featuring \textbf{hybrid dense+BM25 retrieval} with \textbf{reciprocal rank fusion}, end-to-end \textbf{streaming}, a model-mismatch-guarded \textbf{embeddings cache}, hardware-aware \textbf{GPU/CPU tuning}, and a \textbf{JSON-RPC MCP server} with \textbf{Streamlit/CLI} frontends.}
+            \resumeItemListEnd
+
+      \resumeProjectHeading
+            {\textbf{\newtabhref{https://github.com/Sukalyan2003/Nand2Tetris}{Nand2Tetris}} $|$ \emph{Python, Assembly, HDL}}{May 2025 -- August 2025}
+            \resumeItemListStart
+              \resumeItem{Built a complete \textbf{NAND-to-CPU toolchain}, from logic gates to \textbf{ALU/CPU} to an \textbf{assembler}; validated against the supplied test suite.}
+            \resumeItemListEnd
+      \resumeSubHeadingListEnd
+
+  %-----------Certifications-----------
+    \section{Certifications}
+      \resumeSubHeadingListStart
+        \resumeProjectHeading
+          {\textbf{\newtabhref{https://coursera.org/share/9d72a12685ad3a91dd8515ab64cf4b84}{Google Project Management Professional Certificate}}}{2025}
+        \resumeProjectHeading
+          {\textbf{Harvard CS50 \newtabhref{https://certificates.cs50.io/58941d2e-c300-4cbc-a45f-38301180463c.pdf?size=letter}{Core},
+  \newtabhref{https://cs50.harvard.edu/certificates/7070c121-ec8b-4290-baba-7d29764c5bbb}{Cybersecurity},
+          \newtabhref{https://cs50.harvard.edu/certificates/94fa3516-9bc1-42b7-9e00-82d1d3dcc6a2}{AI} }}{2023--2026}
+      \resumeSubHeadingListEnd
+
+  %-----------Achievements-----------
+  \section{Achievements}
+    \begin{itemize}[leftmargin=0.15in, label=\textbullet, itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+      \item \small{\textbf{SIH National Finalist} - \newtabhref{https://drive.google.com/file/d/19_Ww1V-FoHvupU37yqUPH1nFiK-SgEyK/view?usp=sharing}{Smart India Hackathon 2023}, Government of India}
+      \item \small{\textbf{Silver Medalist} - Jadavpur University state-wide Quiz}
+      \item \small{Scholarships: SVMCM, Reliance Foundation}
+      \item \small{Tutored \textbf{university students} in CS \& Mathematics (since March 2025)}
+    \end{itemize}
+    \vspace{-5pt}
+  \end{document}
