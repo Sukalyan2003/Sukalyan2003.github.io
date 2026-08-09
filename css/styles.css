@@ -142,10 +142,19 @@ section h2::after {
 
 .case-study-card,
 .cert-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.case-study-card:hover,
+.cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
 
 .case-study-card {
@@ -283,9 +292,9 @@ ul.timeline-4 > li p {
   text-align: justify;
 }
 
-/* Skills section text justify */
+/* Skills section copy */
 #about p {
-  text-align: justify;
+  text-align: center;
 }
 
 /* Skills section spacing */
@@ -304,7 +313,20 @@ ul.timeline-4 > li p {
 }
 
 #about .about {
-  height: 100px;
+  height: 84px;
+}
+
+#about .skill-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#about .skill-copy {
+  line-height: 1.65;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 16rem;
 }
 
 @media (min-width: 992px) {
@@ -370,12 +392,54 @@ ul.timeline-4 > li p {
 }
 
 @media (max-width: 575.98px) {
+  header .row {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  header .col-12 {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  header .px-5 {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header .text-justify {
+    text-align: left;
+  }
+
+  header .img-fluid.my-5 {
+    max-width: 280px;
+  }
+
   .lead {
     font-size: 1rem;
   }
   
   #role {
-    min-height: 2.4em;
+    font-size: 1.45rem;
+    line-height: 1.35;
+    min-height: 0;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  #role .role-item {
+    display: block;
+  }
+
+  #role .role-separator {
+    display: none;
   }
 
   section h2 {
@@ -392,19 +456,43 @@ ul.timeline-4 > li p {
   font-weight: 700;
 }
 
-.skill-glyph {
+.skill-icon {
   align-items: center;
-  background: #f8fbff;
-  border: 1px solid rgba(0, 123, 255, 0.18);
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.12);
+  background: linear-gradient(145deg, #ffffff, #eef7ff);
+  border: 1px solid rgba(0, 119, 182, 0.2);
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(0, 119, 182, 0.12);
+  color: #0077b6;
   display: inline-flex;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-  font-size: 2rem;
-  height: 64px;
+  height: 76px;
   justify-content: center;
-  line-height: 1;
-  width: 64px;
+  position: relative;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  width: 76px;
+}
+
+.skill-icon::after {
+  border: 1px solid rgba(0, 119, 182, 0.08);
+  border-radius: 14px;
+  content: "";
+  inset: 6px;
+  position: absolute;
+}
+
+.skill-card:hover .skill-icon {
+  border-color: rgba(0, 119, 182, 0.38);
+  box-shadow: 0 14px 34px rgba(0, 119, 182, 0.18);
+  transform: translateY(-3px);
+}
+
+.skill-icon svg {
+  fill: none;
+  position: relative;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+  z-index: 1;
 }
 
 .notsel {

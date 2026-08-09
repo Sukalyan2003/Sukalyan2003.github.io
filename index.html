@@ -35,12 +35,12 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="css/styles.css?v=20260809" as="style">
     <link rel="preload" href="img/self.jpg" as="image" fetchpriority="high">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=20260809">
     <link rel="icon" type="image/x-icon" href="img/navimg1.png">
 
     <!-- Structured data: Person -->
@@ -93,12 +93,7 @@
         "System Design"
       ],
       "knowsLanguage": ["English", "Bengali", "Hindi"],
-      "award": [
-        "Smart India Hackathon 2023 National Finalist",
-        "SVMCM Scholar",
-        "Reliance Foundation Scholar",
-        "Jadavpur University State-wide Quiz Silver Medalist"
-      ]
+      "award": "Smart India Hackathon 2023 National Finalist"
     }
     </script>
 </head>
@@ -133,15 +128,17 @@
       <header class="bg-light py-5">
         <div class="container px-5">
             <div class="row align-items-center">
-              <div class="col-lg-8 col-xl-7">
+              <div class="col-12 col-lg-8 col-xl-7">
                 <div class="my-5">
                   <h1 class="text-center font-weight-bold mb-2 notsel">I am Sukalyan Roy</h1>
-                  <h2 class="text-primary text-center font-weight-bold mb-2 notsel" id="role">Backend Engineer | Distributed Systems | ML Infrastructure</h2>
+                  <h2 class="text-primary text-center font-weight-bold mb-2 notsel" id="role">
+                    <span class="role-item">Backend Engineer</span><span class="role-separator" aria-hidden="true"> | </span><span class="role-item">Distributed Systems</span><span class="role-separator" aria-hidden="true"> | </span><span class="role-item">ML Infrastructure</span>
+                  </h2>
                   <p class="lead text-muted mb-4 text-justify">
-                    Backend Engineer specializing in high-performance data systems, distributed architecture, and applied ML infrastructure. Designed and deployed EEG ingestion/analysis backends for 20GB+ medical datasets, optimized processing by 90%, and independently built the ML service and research pipeline for MediPredict.
+                    Backend Engineer building data-intensive and ML-backed systems with Python, FastAPI, PostgreSQL, Redis, and Azure. My work spans time-series EEG infrastructure, model-serving contracts, local-first retrieval, and deterministic AI-assisted workflows.
                   </p>
                   <div class="hero-actions">
-                    <a class="btn btn-primary" href="https://drive.google.com/file/d/1hEhjBcXoscEY2kVghvsFHAhipO56VK7g/view?usp=sharing" target="_blank" rel="noopener" aria-label="Open Sukalyan Roy's resume">Resume</a>
+                    <a class="btn btn-primary" href="assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener" type="application/pdf" aria-label="Open Sukalyan Roy's public resume PDF">Resume</a>
                     <a class="btn btn-outline-dark" href="#portfolio">View Case Studies</a>
                   </div>
                   <p class="hero-contact text-muted mt-3 mb-0">
@@ -149,8 +146,8 @@
                   </p>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-5 text-center">
-              <img class="img-fluid my-5" src="img/self.jpg" width="800" height="800" alt="Sukalyan Roy — Backend Engineer" fetchpriority="high" decoding="async">
+            <div class="col-12 col-lg-4 col-xl-5 text-center">
+              <img class="img-fluid my-5" src="img/self.jpg" width="800" height="800" alt="Sukalyan Roy, Backend Engineer" fetchpriority="high" decoding="async">
             </div>
           </div>
         </div>
@@ -158,50 +155,73 @@
       <hr>
         <!-- About -->
         <section id="about" class="text-center py-5">
-          <div class="container py-5">
+          <div class="container pt-5 pb-3">
             <div class="row justify-content-center">
               <h2 class="font-weight-bold">My Skills</h2>
             </div>
           </div>
           <div class="container mb-5">
             <div class="row justify-content-center">
-              <div class="col-lg-3 col-md-6 col-sm-6 mb-5">
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-5 skill-card">
                 <div class="d-flex mb-5 about">
-                  <span class="skill-glyph m-auto text-primary icon notsel" id="web-dev-icon" aria-hidden="true">💻</span>
+                  <span class="skill-icon m-auto notsel" id="web-dev-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="42" height="42" focusable="false">
+                      <path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5M14 4.5l-4 15" />
+                    </svg>
+                  </span>
                 </div>
                 <h5>Languages</h5>
-                <p class="text-muted mb-0">
+                <p class="skill-copy text-muted mb-0">
                   Python, SQL, C, Java, JavaScript
                 </p>
               </div>
 
-              <div class="col-lg-3 col-md-6 col-sm-6 mb-5">
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-5 skill-card">
                 <div class="d-flex mb-5 about">
-                  <span class="skill-glyph m-auto text-primary icon notsel" id="ml-icon" aria-hidden="true">🧠</span>
+                  <span class="skill-icon m-auto notsel" id="ml-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="42" height="42" focusable="false">
+                      <rect x="5" y="5" width="14" height="14" rx="3" />
+                      <circle cx="9" cy="9" r="1" />
+                      <circle cx="15" cy="9" r="1" />
+                      <circle cx="12" cy="15" r="1" />
+                      <path d="m9.8 9.7 1.5 3.8m2.9-3.8-1.5 3.8M10 9h4" />
+                    </svg>
+                  </span>
                 </div>
                 <h5>Backend &amp; ML</h5>
-                <p class="text-muted mb-0">
-                    FastAPI, Spring Boot, REST, OAuth<br>
-                    NumPy, pandas, PyTorch, scikit-learn, SHAP
+                <p class="skill-copy text-muted mb-0">
+                    FastAPI, Spring Boot, REST, OAuth, NumPy, pandas, PyTorch, scikit-learn, SHAP
                 </p>
               </div>
 
-              <div class="col-lg-3 col-md-6 col-sm-6 mb-5">
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-5 skill-card">
                 <div class="d-flex mb-5 about">
-                  <span class="skill-glyph m-auto text-primary icon notsel" id="tools-icon" aria-hidden="true">🗄️</span>
+                  <span class="skill-icon m-auto notsel" id="tools-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="42" height="42" focusable="false">
+                      <ellipse cx="12" cy="6.5" rx="7" ry="3" />
+                      <path d="M5 6.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5M5 11.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5" />
+                    </svg>
+                  </span>
                 </div>
                 <h5>Databases</h5>
-                <p class="text-muted mb-0">
+                <p class="skill-copy text-muted mb-0">
                     PostgreSQL, TimescaleDB, Redis, SQLite, H2
                 </p>
               </div>
 
-              <div class="col-lg-3 col-md-6 col-sm-6 mb-5">
+              <div class="col-lg-3 col-md-6 col-sm-6 mb-5 skill-card">
                 <div class="d-flex mb-5 about">
-                  <span class="skill-glyph m-auto text-primary icon notsel" id="soft-icon" aria-hidden="true">⚙️</span>
+                  <span class="skill-icon m-auto notsel" id="soft-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="42" height="42" focusable="false">
+                      <path d="M5 7h6M15 7h4M5 12h2M11 12h8M5 17h9M18 17h1" />
+                      <circle cx="13" cy="7" r="2" />
+                      <circle cx="9" cy="12" r="2" />
+                      <circle cx="16" cy="17" r="2" />
+                    </svg>
+                  </span>
                 </div>
                 <h5>Tools</h5>
-                <p class="text-muted mb-0">
+                <p class="skill-copy text-muted mb-0">
                     Docker, Kubernetes, GitHub Actions, Azure, Linux, Bash
                 </p>
               </div>
@@ -223,7 +243,7 @@
                       <h5 class="mb-1">Backend Developer</h5>
                       <span class="badge badge-primary">[June 2025 - Present]</span>
                     </div>
-                    <p class="mb-0 text-justify">Architected microservices platform (5 services, 50+ APIs, Redis, PostgreSQL) processing 20GB+ EEG datasets simultaneously on the cloud with 90% faster processing, 75% reduced memory and &lt;100ms real-time streaming latency at <a href="https://www.avinyaneurotech.com/" target="_blank" rel="noopener">Avinya Neurotech</a>. Built cloud data pipeline on Azure Blob Storage with PDF/EDF+ export, frequency band analysis and async job processing; also worked on a standalone desktop EEG viewer with PyTorch-based artifact/spike detection.</p>
+                    <p class="mb-0 text-justify">Reworked a five-service FastAPI platform with 50+ endpoints for EEG ingestion, analysis, export, and visualization at <a href="https://www.avinyaneurotech.com/" target="_blank" rel="noopener">Avinya Neurotech</a>. Designed TimescaleDB storage, bounded WebSocket streaming, Redis-backed jobs, and Azure Blob workflows; contributed bandpower, aEEG/qEEG, filter-parity, and Linux support to a separate desktop viewer.</p>
                   </div>
                 </li>
                 <li>
@@ -251,12 +271,7 @@
                 <li>
                   <a>B.Tech (CSE)</a>
                   <a class="float-right">[2022-2026]</a>
-                  <p class="mt-2">Netaji Subhash Engineering College, New Garia, Kolkata under MAKAUT<br><small class="text-muted">SGPA: 8.50/10.0 (as of 7th Sem) | SVMCM and Reliance Scholar</small><br><small class="text-muted">Coursework: DSA, OS, DBMS, CN, ML, Cybersecurity, Pattern Recognition</small><br><strong class="text-dark">Final Year Project: MediPredict - AI-powered medical insurance premium estimation with an independently built ML microservice and XAI research pipeline</strong></p>
-                </li>
-                <li>
-                  <a>ISC & ICSE</a>
-                  <a class="float-right">[2020-2022]</a>
-                  <p class="mt-2">National Gems Higher Secondary School, Behala, Kolkata under CISCE<br><small class="text-muted">ISC (12th): 90% | ICSE (10th): 92%</small></p>
+                  <p class="mt-2">Netaji Subhash Engineering College, New Garia, Kolkata under MAKAUT<br><small class="text-muted">CGPA: 8.0/10.0</small><br><small class="text-muted">Coursework: DSA, OS, DBMS, CN, ML, Cybersecurity, Pattern Recognition</small><br><strong class="text-dark">Final Year Project: MediPredict - medical-insurance premium modelling with an independently built ML microservice and leakage-aware interpretability study</strong></p>
                 </li>
               </ul>
             </div>
@@ -293,15 +308,115 @@
 
               <article class="case-study-card">
                 <div class="case-study-topline">
+                  <span class="case-study-label">Local-first productivity</span>
+                  <span class="case-study-metric">Deterministic scheduling</span>
+                </div>
+                <h3>Tempo Priority Assistant</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Convert loosely written tasks into a feasible daily plan without giving a language model control over dates, files, or external actions.</li>
+                  <li><strong>Architecture:</strong> React and Express orchestrate schema-constrained local Ollama output while a typed Python service owns relative-date reconciliation and scheduling.</li>
+                  <li><strong>Tradeoffs:</strong> Serialized inference protects limited VRAM; deterministic tools and explicit capability boundaries reduce flexibility in exchange for inspectable behavior.</li>
+                  <li><strong>Evidence:</strong> Locked Node and Python suites exercise scheduling, queue cancellation, provider failures, tool policy, and browser-local persistence in CI.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>TypeScript</span><span>React</span><span>Express</span><span>Python</span><span>Ollama</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://github.com/Sukalyan2003/Tempo" target="_blank" rel="noopener">View repo</a>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">Deterministic media tooling</span>
+                  <span class="case-study-metric">EDL + Premiere XML</span>
+                </div>
+                <h3>Premiere Assist CLI</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Turn local media analysis into a reviewable edit plan without allowing a model to execute commands or write the final timeline.</li>
+                  <li><strong>Architecture:</strong> FFmpeg-based evidence feeds validated candidate IDs into a deterministic resolver that produces a canonical decision list and Premiere delivery package.</li>
+                  <li><strong>Tradeoffs:</strong> The tool exports XML/EDL and review evidence rather than rendering a video; final editorial judgment stays in Premiere Pro.</li>
+                  <li><strong>Status:</strong> The pipeline has produced importable delivery packages in manual use; broader footage coverage and editorial-quality evaluation remain.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>Python</span><span>FFmpeg</span><span>Premiere XML</span><span>EDL</span><span>Pytest</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://github.com/Sukalyan2003/Premiere-Assist" target="_blank" rel="noopener">View repo</a>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">Retrieval infrastructure</span>
+                  <span class="case-study-metric">18-query regression set</span>
+                </div>
+                <h3>Local-First RAG Chatbot</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Search private documents locally while keeping retrieval behavior inspectable across UI, CLI, and programmatic clients.</li>
+                  <li><strong>Architecture:</strong> FAISS dense search and BM25 sparse search are fused with RRF; SQLite retains metadata and MCP exposes structured access.</li>
+                  <li><strong>Tradeoffs:</strong> The local store favors inspectability and one-writer simplicity over distributed scale.</li>
+                  <li><strong>Evidence:</strong> On a fixed synthetic regression set, hybrid search retained Hit Rate@3 of 1.000 and improved MRR from 0.972 to 1.000; this is not a general quality benchmark.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>Python</span><span>FAISS</span><span>SQLite</span><span>BM25</span><span>MCP</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://github.com/Sukalyan2003/RAG-Chatbot" target="_blank" rel="noopener">View repo</a>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">Signal-processing research</span>
+                  <span class="case-study-metric">6.46ms worst p95</span>
+                </div>
+                <h3>Windowed EEG Benchmark</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Identify silent correctness failures when standard EEG DSP is applied window by window rather than to a whole recording.</li>
+                  <li><strong>Architecture:</strong> Reproducible NumPy/SciPy/MNE experiments compare overlap-add, safe-window scheduling, edge policies, and bandpower equivalence.</li>
+                  <li><strong>Tradeoffs:</strong> Correctness and directly timed per-window latency take priority over broad framework throughput claims.</li>
+                  <li><strong>Evidence:</strong> Worst p95 filter-plus-feature latency was 6.46ms on 8-channel CHB-MIT and 1.63ms on 2-channel Sleep-EDF.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>Python</span><span>NumPy</span><span>SciPy</span><span>MNE</span><span>EDF</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://github.com/Sukalyan2003/eeg-streaming-benchmark" target="_blank" rel="noopener">View repo</a>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
+                  <span class="case-study-label">Local information system</span>
+                  <span class="case-study-metric">145 automated tests</span>
+                </div>
+                <h3>NewsTrellis News Evidence Organizer</h3>
+                <ul class="case-study-details">
+                  <li><strong>Problem:</strong> Turn fragmented feeds into a finite daily reading workflow while preserving source, collection, comparison, and correction evidence.</li>
+                  <li><strong>Architecture:</strong> FastAPI and SQLite support approval-gated RSS/Atom ingestion, SSRF-safe validation, retained article evidence, deduplication, search, event grouping, and deterministic digests.</li>
+                  <li><strong>Tradeoffs:</strong> The system favors local control, explicit unknown states, and reproducibility over automated engagement ranking or opaque personalization.</li>
+                  <li><strong>Evidence:</strong> The end-to-end workflow passes 145 tests and deterministic evaluation gates; the current interface still needs broader usability testing and simplification.</li>
+                </ul>
+                <div class="stack-list" aria-label="Technology stack">
+                  <span>Python</span><span>FastAPI</span><span>SQLite</span><span>RSS/Atom</span><span>Pytest</span>
+                </div>
+                <div class="case-study-links">
+                  <a href="https://github.com/Sukalyan2003/NewsTrellis" target="_blank" rel="noopener">View repo</a>
+                </div>
+              </article>
+
+              <article class="case-study-card">
+                <div class="case-study-topline">
                   <span class="case-study-label">Production backend</span>
-                  <span class="case-study-metric">20GB+ EEG datasets</span>
+                  <span class="case-study-metric">5 services · 50+ APIs</span>
                 </div>
                 <h3>Cloud EEG Ingestion &amp; Analysis Platform</h3>
                 <ul class="case-study-details">
                   <li><strong>Problem:</strong> Medical EEG workflows needed reliable ingestion, analysis, exports, and real-time review for large datasets without exhausting memory.</li>
                   <li><strong>Architecture:</strong> 5-service microservices platform with 50+ APIs, PostgreSQL for structured state, Redis for coordination/caching, Azure Blob Storage for large files, async jobs for analysis/export, and a streaming path for live review.</li>
                   <li><strong>Tradeoffs:</strong> Moved heavy analysis out of request paths, favored object storage over local disk, and balanced real-time latency against batch frequency-band analysis and EDF+/PDF export jobs.</li>
-                  <li><strong>Outcome:</strong> Processed 20GB+ datasets, improved processing speed by 90%, reduced memory usage by 75%, and kept real-time streaming latency under 100ms.</li>
+                  <li><strong>Outcome:</strong> Added bounded time-window streaming with stale-request cancellation; profiling reduced first-chunk latency to 783ms p50 and server send time to about 12ms.</li>
                 </ul>
                 <div class="stack-list" aria-label="Technology stack">
                   <span>FastAPI</span><span>PostgreSQL</span><span>Redis</span><span>Azure Blob</span><span>PyTorch</span>
@@ -431,7 +546,7 @@
                   Feel free to contact me for any project or collaboration!
                 </p>
                 <div class="footer-contact mt-3">
-                  <a class="btn btn-primary btn-sm" href="https://drive.google.com/file/d/1hEhjBcXoscEY2kVghvsFHAhipO56VK7g/view?usp=sharing" target="_blank" rel="noopener" aria-label="Open Sukalyan Roy's resume">Resume</a>
+                  <a class="btn btn-primary btn-sm" href="assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener" type="application/pdf" aria-label="Open Sukalyan Roy's public resume PDF">Resume</a>
                   <span>Email: <a href="mailto:sukalyanroyofficial@gmail.com">sukalyanroyofficial@gmail.com</a></span>
                 </div>
               </div>
