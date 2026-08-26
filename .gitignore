@@ -2,3 +2,5 @@
 /.codex
 AGENTS.md
 GITHUB_ALIGNMENT.md
+__pycache__/
+*.pyc

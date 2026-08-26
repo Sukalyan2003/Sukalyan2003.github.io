@@ -1,16 +1,36 @@
 {
     "name": "Sukalyan Roy Portfolio",
     "short_name": "Sukalyan Roy",
-    "description": "Portfolio of Sukalyan Roy - Backend Developer & ML Engineer",
+    "description": "Backend engineer building EEG data infrastructure and deterministic AI systems.",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#007bff",
+    "theme_color": "#0077b6",
     "icons": [
         {
-            "src": "img/navimg1.png",
-            "sizes": "194x173",
-            "type": "image/png"
+            "src": "img/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "img/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "img/icon-192-maskable.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "img/icon-512-maskable.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ]
 }

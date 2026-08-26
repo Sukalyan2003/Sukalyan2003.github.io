@@ -1,0 +1,44 @@
+name: Sync writing section from RSS
+
+# Refreshes the three featured posts in index.html from the Hashnode feed.
+# Runs on the 1st and 15th (roughly fortnightly) and on demand.
+#
+# Note: GitHub disables scheduled workflows in repositories with no activity
+# for 60 days. Committing anything re-arms the schedule, and the run_id
+# workflow_dispatch trigger below always works regardless.
+on:
+  schedule:
+    - cron: '0 6 1,15 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-writing
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh writing section
+        run: python3 scripts/update_writing.py
+
+      - name: Commit if changed
+        run: |
+          if [ -z "$(git status --porcelain index.html)" ]; then
+            echo "No change; nothing to commit."
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'chore: sync writing section from RSS feed'
+          git push

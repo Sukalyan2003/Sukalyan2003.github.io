@@ -1,111 +1,130 @@
-.img-fluid.my-5{
-  border-radius: 50%;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  border: 4px solid #fff;
-  transition: transform 0.3s ease;
+/* ==========================================================================
+   Sukalyan Roy - portfolio styles
+   Layered on Bootstrap 4. Custom rules only.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base / layout offsets for the fixed navbar
+   --nav-h is measured at runtime in js/script.js; the value here is a fallback.
+   -------------------------------------------------------------------------- */
+:root {
+  --nav-h: 3.5rem;
+  --ink: #1b2733;
+  --ink-muted: #5a6672;
+  --brand: #0077b6;
+  --brand-dark: #005b8c;
+  --rule: rgba(15, 34, 54, 0.1);
 }
 
-.img-fluid.my-5:hover {
-  transform: scale(1.05);
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 1rem);
 }
 
-.fitcen{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding-top: var(--nav-h);
 }
 
-/* Header section styling */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Match the roomier 110% browser zoom feel on larger screens. */
+@media (min-width: 768px) {
+  html {
+    font-size: 110%;
+  }
+}
+
+.skip-link {
+  background: var(--brand);
+  border-radius: 0 0 6px 0;
+  color: #fff;
+  font-weight: 700;
+  left: 0;
+  padding: 0.6rem 1rem;
+  position: absolute;
+  top: -100%;
+  z-index: 2000;
+}
+
+.skip-link:focus {
+  color: #fff;
+  outline: 3px solid #ffd166;
+  top: 0;
+}
+
+/* Visible focus for keyboard users throughout. */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
 header.bg-light {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
 }
 
-/* Smooth section transitions */
-section {
-  transition: all 0.3s ease;
-}
-
-/* Improved link styling */
-a {
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-/* Certificate and heading links */
-.cert-item h5 a,
-.exp-item h5 a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s ease;
-}
-
-.cert-item h5 a:hover,
-.exp-item h5 a:hover {
-  color: #007bff;
-  border-bottom-color: #007bff;
-}
-
-.icon {
+.hero-portrait {
+  border: 4px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
 }
 
-
-.icon:hover {
-  transform: scale(1.5);
-}
-
-#web-dev-icon:hover {
-  color:rgb(149, 111, 220)!important;
-}
-
-#ml-icon:hover {
-  color: rgb(185, 20, 91)!important;
-}
-
-#tools-icon:hover {
-  color: rgb(255, 165, 0)!important;
-}
-
-#soft-icon:hover {
-  color: rgb(50, 205, 50)!important;
-}
-
-#role {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  min-height: 1.2em;
-}
-
-body{
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+.hero-portrait:hover {
+  transform: scale(1.05);
 }
 
 .hero-actions,
 .footer-contact {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   gap: 0.75rem;
+  justify-content: center;
 }
 
 .hero-contact {
   text-align: center;
 }
 
-/* Text justification for all body text */
-.text-justify {
-  text-align: justify;
-  text-justify: inter-word;
+@media (min-width: 992px) {
+  .hero-actions {
+    justify-content: flex-start;
+  }
+
+  .hero-contact {
+    text-align: left;
+  }
 }
 
-/* Improved section spacing and styling */
+#role {
+  max-width: 100%;
+  min-height: 1.2em;
+}
+
+.navcurs {
+  font-weight: 700;
+  padding-left: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   Section furniture
+   -------------------------------------------------------------------------- */
 section {
   padding: 1rem 0;
 }
@@ -116,13 +135,13 @@ section h2 {
 }
 
 section h2::after {
+  background: linear-gradient(90deg, #007bff, #00d4ff);
+  border-radius: 2px;
   content: '';
   display: block;
-  width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #007bff, #00d4ff);
   margin: 0.5rem auto 0;
-  border-radius: 2px;
+  width: 60px;
 }
 
 .section-kicker {
@@ -135,194 +154,90 @@ section h2::after {
   max-width: 760px;
 }
 
-.case-study-grid {
-  display: grid;
-  gap: 1.5rem;
+a {
+  transition: color 0.2s ease;
 }
 
-.case-study-card,
-.cert-card {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+a:hover {
+  text-decoration: none;
 }
 
-.case-study-card:hover,
-.cert-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+/* --------------------------------------------------------------------------
+   About - the narrative section
+   -------------------------------------------------------------------------- */
+.about-wrap {
+  margin: 0 auto;
+  max-width: 780px;
 }
 
-.case-study-card {
-  padding: 1.5rem;
-}
-
-.case-study-card h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0.75rem 0 1rem;
-}
-
-.case-study-topline,
-.cert-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.case-study-label,
-.case-study-metric {
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.35rem 0.7rem;
-}
-
-.case-study-label {
-  background: #e7f1ff;
-  color: #0056b3;
-}
-
-.case-study-metric {
-  background: #e8f8ef;
-  color: #11723a;
-}
-
-.case-study-details {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.case-study-details li {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 0.85rem 0;
-}
-
-.case-study-details li:first-child {
-  border-top: 0;
-}
-
-.stack-list,
-.case-study-links,
-.cert-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.stack-list {
-  margin-top: 0.5rem;
-}
-
-.stack-list span {
-  background: #f1f3f5;
-  border-radius: 6px;
-  color: #343a40;
-  font-size: 0.8rem;
+.about-lede {
+  color: var(--ink);
+  font-size: 1.3rem;
   font-weight: 600;
-  padding: 0.35rem 0.55rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
 }
 
-.case-study-links {
-  margin-top: 1rem;
+.about-wrap p {
+  color: var(--ink-muted);
+  font-size: 1.03rem;
+  line-height: 1.75;
 }
 
-.case-study-links a,
-.cert-links a {
-  font-weight: 700;
+.about-wrap p + p {
+  margin-top: 1.1rem;
 }
 
-.cert-grid {
-  display: grid;
-  gap: 1rem;
+.about-principle {
+  background: linear-gradient(135deg, #f2f9ff 0%, #eaf4fb 100%);
+  border-left: 4px solid var(--brand);
+  border-radius: 0 10px 10px 0;
+  color: var(--ink);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.6;
+  margin: 1.75rem 0;
+  padding: 1.15rem 1.35rem;
 }
 
-.cert-card {
-  padding: 1.25rem;
+.about-signoff {
+  border-top: 1px solid var(--rule);
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
 }
 
-.cert-card h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.cert-card p {
-  color: #6c757d;
-  margin: 0.75rem 0 0;
-}
-
-.cert-links {
-  margin-top: 0.75rem;
-}
-
-/* Experience and Certification item styling */
-.exp-item, .cert-item {
-  padding: 0.5rem 0;
-}
-
-.exp-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.exp-header h5 {
-  margin-right: auto;
-}
-
-/* Badge styling improvements */
-.badge {
-  font-weight: 500;
-  padding: 0.4em 0.8em;
-}
-
-/* Timeline improvements */
-ul.timeline-3 > li p,
-ul.timeline-4 > li p {
-  text-align: justify;
-}
-
-/* Skills section copy */
-#about p {
+/* --------------------------------------------------------------------------
+   Skills
+   -------------------------------------------------------------------------- */
+#skills p {
   text-align: center;
 }
 
-/* Skills section spacing */
-#about .col-lg-3,
-#about .col-md-6 {
+#skills .col-lg-3,
+#skills .col-md-6 {
   padding: 15px 25px;
 }
 
-#about .mb-5 {
+#skills .mb-5 {
   margin-bottom: 2rem !important;
 }
 
-#about h5 {
-  margin-top: 0.5rem;
+#skills h5 {
   margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
-#about .about {
+#skills .about {
   height: 84px;
 }
 
-#about .skill-card {
+#skills .skill-card {
   align-items: center;
   display: flex;
   flex-direction: column;
 }
 
-#about .skill-copy {
+#skills .skill-copy {
   line-height: 1.65;
   margin-left: auto;
   margin-right: auto;
@@ -330,130 +245,9 @@ ul.timeline-4 > li p {
 }
 
 @media (min-width: 992px) {
-  #about .container.mb-5 {
+  #skills .container.mb-5 {
     max-width: 1140px;
   }
-
-  .hero-actions {
-    justify-content: flex-start;
-  }
-
-  .hero-contact {
-    text-align: left;
-  }
-}
-
-/* Responsive improvements */
-@media (max-width: 991.98px) {
-  .exp-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  ul.timeline-3,
-  ul.timeline-4 {
-    padding-left: 10px;
-  }
-  
-  ul.timeline-3:before,
-  ul.timeline-4:before {
-    left: 19px;
-  }
-  
-  ul.timeline-3 > li:before,
-  ul.timeline-4 > li:before {
-    left: 10px;
-  }
-}
-
-@media (max-width: 767.98px) {
-  section {
-    padding: 0.5rem 0;
-  }
-  
-  section h2 {
-    font-size: 1.5rem;
-  }
-  
-  .exp-item h5, .cert-item h5 {
-    font-size: 1rem;
-  }
-  
-  ul.timeline-3 > li,
-  ul.timeline-4 > li {
-    padding-left: 15px;
-    margin: 15px 0;
-  }
-  
-  .container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-
-@media (max-width: 575.98px) {
-  header .row {
-    display: block;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  header .col-12 {
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    width: 100%;
-  }
-
-  header .px-5 {
-    padding-left: 1.25rem !important;
-    padding-right: 1.25rem !important;
-  }
-
-  header h1 {
-    font-size: 2rem;
-  }
-
-  header .text-justify {
-    text-align: left;
-  }
-
-  header .img-fluid.my-5 {
-    max-width: 280px;
-  }
-
-  .lead {
-    font-size: 1rem;
-  }
-  
-  #role {
-    font-size: 1.45rem;
-    line-height: 1.35;
-    min-height: 0;
-    overflow: visible;
-    text-overflow: clip;
-  }
-
-  #role .role-item {
-    display: block;
-  }
-
-  #role .role-separator {
-    display: none;
-  }
-
-  section h2 {
-    font-size: 1.3rem;
-  }
-  
-  .badge {
-    font-size: 0.7rem;
-  }
-}
-
-.navcurs{
-  padding-left: 15px;
-  font-weight: 700;
 }
 
 .skill-icon {
@@ -462,7 +256,7 @@ ul.timeline-4 > li p {
   border: 1px solid rgba(0, 119, 182, 0.2);
   border-radius: 18px;
   box-shadow: 0 10px 28px rgba(0, 119, 182, 0.12);
-  color: #0077b6;
+  color: var(--brand);
   display: inline-flex;
   height: 76px;
   justify-content: center;
@@ -495,89 +289,359 @@ ul.timeline-4 > li p {
   z-index: 1;
 }
 
-.notsel {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+#web-dev-icon:hover {
+  color: rgb(149, 111, 220) !important;
 }
 
-ul.timeline-3 {
-  list-style-type: none;
-  position: relative;
-  padding-left: 30px;
-}
-ul.timeline-3:before {
-  content: " ";
-  background: linear-gradient(180deg, #22c0e8, #0077b6);
-  display: inline-block;
-  position: absolute;
-  left: 29px;
-  width: 3px;
-  height: 100%;
-  z-index: 400;
-  border-radius: 2px;
-}
-ul.timeline-3 > li {
-  margin: 25px 0;
-  padding-left: 25px;
-}
-ul.timeline-3 > li:before {
-  content: " ";
-  background: white;
-  display: inline-block;
-  position: absolute;
-  border-radius: 50%;
-  border: 3px solid #22c0e8;
-  left: 20px;
-  width: 20px;
-  height: 20px;
-  z-index: 400;
-  box-shadow: 0 2px 8px rgba(34, 192, 232, 0.3);
+#ml-icon:hover {
+  color: rgb(185, 20, 91) !important;
 }
 
+#tools-icon:hover {
+  color: rgb(255, 165, 0) !important;
+}
+
+#soft-icon:hover {
+  color: rgb(50, 205, 50) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Case studies
+   -------------------------------------------------------------------------- */
+.case-study-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+
+.case-study-card,
+.cert-card,
+.side-card,
+.writing-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 34, 54, 0.06);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.case-study-card:hover,
+.cert-card:hover,
+.side-card:hover,
+.writing-card:hover {
+  box-shadow: 0 20px 44px rgba(15, 34, 54, 0.11);
+  transform: translateY(-5px);
+}
+
+.case-study-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.case-study-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.75rem 0 1rem;
+}
+
+.case-study-topline,
+.cert-header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.case-study-label,
+.case-study-metric {
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+}
+
+.case-study-label {
+  background: #e7f1ff;
+  color: #0056b3;
+}
+
+.case-study-metric {
+  background: #e8f8ef;
+  color: #11723a;
+}
+
+.case-study-details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.case-study-details li {
+  border-top: 1px solid var(--rule);
+  line-height: 1.6;
+  padding: 0.85rem 0;
+}
+
+.case-study-details li:first-child {
+  border-top: 0;
+}
+
+.stack-list,
+.case-study-links,
+.cert-links,
+.side-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stack-list {
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+
+.stack-list span {
+  background: #f1f3f5;
+  border-radius: 6px;
+  color: #343a40;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.55rem;
+}
+
+.case-study-links,
+.side-links {
+  margin-top: 1rem;
+}
+
+.case-study-links a,
+.cert-links a,
+.side-links a,
+.writing-card a {
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Secondary work ("Also built")
+   -------------------------------------------------------------------------- */
+.side-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.side-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.15rem 1.25rem;
+}
+
+.side-card h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.side-card p {
+  color: var(--ink-muted);
+  font-size: 0.93rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.side-card .stack-list {
+  margin-top: 0.9rem;
+  padding-top: 0;
+}
+
+.side-card .stack-list span {
+  font-size: 0.74rem;
+}
+
+/* --------------------------------------------------------------------------
+   Writing
+   -------------------------------------------------------------------------- */
+.writing-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.writing-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+.writing-date {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.writing-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.6rem;
+}
+
+.writing-card h3 a {
+  color: var(--ink);
+}
+
+.writing-card h3 a:hover {
+  color: var(--brand);
+}
+
+.writing-card p {
+  color: var(--ink-muted);
+  font-size: 0.93rem;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.writing-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.writing-tags span {
+  background: #eef4f8;
+  border-radius: 999px;
+  color: #41576b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.22rem 0.55rem;
+  text-transform: lowercase;
+}
+
+.writing-card .writing-more {
+  margin-top: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Certifications
+   -------------------------------------------------------------------------- */
+.cert-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.cert-card {
+  padding: 1.25rem;
+}
+
+.cert-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cert-card p {
+  color: var(--ink-muted);
+  margin: 0.75rem 0 0;
+}
+
+.cert-links {
+  margin-top: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Experience / education timelines
+   -------------------------------------------------------------------------- */
+.exp-item {
+  padding: 0.5rem 0;
+}
+
+.exp-header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.exp-header h5 {
+  margin-right: auto;
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.4em 0.8em;
+}
+
+ul.timeline-3,
 ul.timeline-4 {
   list-style-type: none;
-  position: relative;
   padding-left: 30px;
+  position: relative;
 }
+
+ul.timeline-3:before,
 ul.timeline-4:before {
-  content: " ";
-  background: linear-gradient(180deg, #22e822, #00a000);
-  display: inline-block;
-  position: absolute;
-  left: 29px;
-  width: 3px;
-  height: 100%;
-  z-index: 400;
   border-radius: 2px;
+  content: " ";
+  display: inline-block;
+  height: 100%;
+  left: 29px;
+  position: absolute;
+  width: 3px;
+  z-index: 400;
 }
+
+ul.timeline-3:before {
+  background: linear-gradient(180deg, #22c0e8, #0077b6);
+}
+
+ul.timeline-4:before {
+  background: linear-gradient(180deg, #22e822, #00a000);
+}
+
+ul.timeline-3 > li,
 ul.timeline-4 > li {
   margin: 25px 0;
   padding-left: 25px;
 }
+
+ul.timeline-3 > li:before,
 ul.timeline-4 > li:before {
-  content: " ";
   background: white;
-  display: inline-block;
-  position: absolute;
   border-radius: 50%;
-  border: 3px solid #22e822;
-  left: 20px;
-  width: 20px;
+  content: " ";
+  display: inline-block;
   height: 20px;
+  left: 20px;
+  position: absolute;
+  width: 20px;
   z-index: 400;
+}
+
+ul.timeline-3 > li:before {
+  border: 3px solid #22c0e8;
+  box-shadow: 0 2px 8px rgba(34, 192, 232, 0.3);
+}
+
+ul.timeline-4 > li:before {
+  border: 3px solid #22e822;
   box-shadow: 0 2px 8px rgba(34, 232, 34, 0.3);
 }
 
-.smed{
-  margin: auto;
-  transition: all 0.3s ease;
-  border-radius: 8px;
+ul.timeline-3 > li p,
+ul.timeline-4 > li p {
+  line-height: 1.7;
 }
 
+/* --------------------------------------------------------------------------
+   Contact / footer
+   -------------------------------------------------------------------------- */
 .social-links {
   flex-wrap: wrap;
   gap: 1rem;
@@ -589,18 +653,136 @@ ul.timeline-4 > li:before {
   padding-right: 0.5rem !important;
 }
 
-.smed:hover{
-  transform: scale(1.15);
+.smed {
+  border-radius: 8px;
+  margin: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.smed:hover {
   box-shadow: 0 5px 20px rgba(55, 238, 238, 0.4);
+  transform: scale(1.15);
 }
 
-html {
-  scroll-behavior: smooth;
+.notsel {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-/* Match the roomier 110% browser zoom feel on larger screens. */
-@media (min-width: 768px) {
-  html {
-    font-size: 110%;
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+  .exp-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  ul.timeline-3,
+  ul.timeline-4 {
+    padding-left: 10px;
+  }
+
+  ul.timeline-3:before,
+  ul.timeline-4:before {
+    left: 19px;
+  }
+
+  ul.timeline-3 > li:before,
+  ul.timeline-4 > li:before {
+    left: 10px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  section {
+    padding: 0.5rem 0;
+  }
+
+  section h2 {
+    font-size: 1.5rem;
+  }
+
+  .exp-item h5 {
+    font-size: 1rem;
+  }
+
+  /* Clear the 20px marker (which spans 10px-30px from the list edge)
+     so headings are not overlapped by the timeline dot. */
+  ul.timeline-3 > li,
+  ul.timeline-4 > li {
+    margin: 15px 0;
+    padding-left: 28px;
+  }
+
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .about-lede {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  header .row {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  header .col-12 {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  header .px-5 {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header .hero-portrait {
+    max-width: 280px;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  #role {
+    font-size: 1.45rem;
+    line-height: 1.35;
+    min-height: 0;
+  }
+
+  #role .role-item {
+    display: block;
+  }
+
+  #role .role-separator {
+    display: none;
+  }
+
+  section h2 {
+    font-size: 1.3rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+  }
+
+  .about-principle {
+    font-size: 1.02rem;
+    padding: 1rem 1.1rem;
   }
 }
