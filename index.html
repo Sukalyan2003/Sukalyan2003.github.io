@@ -79,11 +79,11 @@
       },
       "knowsAbout": [
         "Backend Development",
-        "Distributed Systems",
+        "Data-Intensive Systems",
         "Python",
         "FastAPI",
-        "Spring Boot",
         "PostgreSQL",
+        "TimescaleDB",
         "Redis",
         "Docker",
         "Machine Learning",
@@ -137,7 +137,7 @@
                 <div class="my-5">
                   <h1 class="text-center font-weight-bold mb-2 notsel">I am Sukalyan Roy</h1>
                   <h2 class="text-primary text-center font-weight-bold mb-2 notsel" id="role">
-                    <span class="role-item">Backend Engineer</span><span class="role-separator" aria-hidden="true"> | </span><span class="role-item">Distributed Systems</span><span class="role-separator" aria-hidden="true"> | </span><span class="role-item">ML Infrastructure</span>
+                    <span class="role-item">Backend Engineer</span><span class="role-separator" aria-hidden="true"> | </span><span class="role-item">Python, Data &amp; ML Systems</span>
                   </h2>
                   <p class="lead text-muted mb-4">
                     I build backend systems for data that does not fit in memory, and for models that should not be trusted blindly. Python, FastAPI, PostgreSQL, Redis, and Azure - applied to time-series EEG infrastructure, model-serving contracts, local-first retrieval, and deterministic AI-assisted workflows.
@@ -212,7 +212,7 @@
                 </div>
                 <h5>Languages</h5>
                 <p class="skill-copy text-muted mb-0">
-                  Python, SQL, C, Java, JavaScript
+                  Python, SQL, JavaScript, TypeScript, C
                 </p>
               </div>
 
@@ -230,7 +230,7 @@
                 </div>
                 <h5>Backend &amp; ML</h5>
                 <p class="skill-copy text-muted mb-0">
-                    FastAPI, Spring Boot, REST, OAuth, NumPy, pandas, PyTorch, scikit-learn, SHAP
+                    FastAPI, REST, WebSockets, NumPy, pandas, PyTorch, scikit-learn, SHAP
                 </p>
               </div>
 
@@ -354,12 +354,12 @@
                 <h3>MediPredict Insurance Premium ML Platform</h3>
                 <ul class="case-study-details">
                   <li><strong>Problem:</strong> Build a medical-insurance premium assistant that can serve quote-time predictions while explaining model behavior and avoiding misleading offline accuracy.</li>
-                  <li><strong>Architecture:</strong> React frontend and Spring Boot backend call an independently built FastAPI ML microservice with typed prediction schemas, artifact-driven model loading, health/readiness endpoints, Docker support, and a premium-prediction contract.</li>
+                  <li><strong>My part:</strong> I built the FastAPI ML microservice, and only that: typed prediction schemas, artifact-driven model loading, preprocessing shared with training, health/readiness endpoints, SHAP payloads, and Docker packaging. A separate Spring Boot and React application, written by the rest of the project team, consumes it over HTTP; I did not write that backend or that frontend.</li>
                   <li><strong>Tradeoffs:</strong> Separated quote-time prediction from renewal-time signals, rejected temporally leaked features such as realized annual medical cost for new applicants, and favored interpretable histogram gradient boosting over heavier or misleading alternatives.</li>
-                  <li><strong>Outcome:</strong> Produced an unpublished research study that exposed target leakage, separated quote-time from renewal-time signals, added SHAP/permutation explanation payloads, and documented fairness, reproducibility, and cross-dataset leakage checks.</li>
+                  <li><strong>Outcome:</strong> An unpublished research study that traced a reported R&sup2; of 0.925 to a realised annual-cost field unavailable at quote time, put the honest quote-time ceiling near R&sup2; 0.15 by fixed-model feature ablation, and cut the served artifact from 95.8 MB to 0.39 MB and single-row inference from roughly 45 ms to 0.5 ms at unchanged cross-validated accuracy.</li>
                 </ul>
                 <div class="stack-list" aria-label="Technology stack">
-                  <span>FastAPI</span><span>Spring Boot</span><span>React</span><span>scikit-learn</span><span>SHAP</span><span>Docker</span>
+                  <span>FastAPI</span><span>scikit-learn</span><span>SHAP</span><span>Docker</span><span>Pytest</span>
                 </div>
                 <div class="case-study-links">
                   <a href="https://github.com/Sukalyan2003/ml-microservice" target="_blank" rel="noopener">View ML service</a>
