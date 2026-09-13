@@ -1,83 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, follow">
-    <meta name="theme-color" content="#0077b6">
-    <title>404 - Page Not Found | Sukalyan Roy</title>
-    <link rel="icon" href="img/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-    <style>
-        /* Self-contained: no external CSS or webfonts on an error page. */
-        * { box-sizing: border-box; }
-        body {
-            align-items: center;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: #1b2733;
-            display: flex;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            justify-content: center;
-            margin: 0;
-            min-height: 100vh;
-            padding: 2rem 1rem;
-        }
-        .error-container { max-width: 34rem; text-align: center; }
-        .error-code {
-            color: #0077b6;
-            font-size: 8rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-        .error-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 0 0 1rem;
-        }
-        .error-message {
-            color: #5a6672;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        .btn-home {
-            background-color: #0077b6;
-            border: 2px solid #0077b6;
-            border-radius: 6px;
-            color: #fff;
-            display: inline-block;
-            font-weight: 600;
-            padding: 12px 30px;
-            text-decoration: none;
-            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn-home:hover {
-            background-color: #005b8c;
-            border-color: #005b8c;
-            box-shadow: 0 5px 15px rgba(0, 119, 182, 0.3);
-            transform: translateY(-2px);
-        }
-        .btn-home:focus-visible { outline: 3px solid #ffd166; outline-offset: 2px; }
-        @media (max-width: 767.98px) {
-            .error-code { font-size: 5rem; }
-            .error-title { font-size: 1.5rem; }
-            .error-message { font-size: 1rem; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .btn-home { transition: none; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<title>404 - Sukalyan Roy</title>
+<link rel="stylesheet" href="/the-record/css/styles.css?v=1">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="/the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/the-record/img/apple-touch-icon.png">
 </head>
 <body>
-    <div class="error-container">
-        <div class="error-code">404</div>
-        <h1 class="error-title">That page does not exist</h1>
-        <p class="error-message">
-            The link is broken or the page has moved. The case studies, writing, and contact details are all on the home page.
-        </p>
-        <a href="/" class="btn-home">Back to home</a>
-    </div>
+<header class="masthead">
+  <div class="sheet">
+    <h1 class="masthead__name">404</h1>
+    <hr class="masthead__rule">
+    <p class="dateline"><span>Page not found</span><span>Sukalyan Roy</span></p>
+  </div>
+</header>
+<main id="main">
+  <div class="sheet">
+    <section class="section">
+      <p class="standfirst">That page does not exist, or it never did.</p>
+      <p class="section__intro">
+        The work, the writing and the contact details all live on one page.
+      </p>
+      <p><a class="more-link" href="/">Return to the front page</a>
+      </p>
+    </section>
+  </div>
+</main>
 </body>
 </html>

@@ -1,6 +1,6 @@
-name: Sync writing section from RSS
+name: Sync dispatches from RSS
 
-# Refreshes the three featured posts in index.html from the Hashnode feed.
+# Refreshes section 04 (Dispatches) in index.html from the Hashnode feed.
 # Runs on the 1st and 15th (roughly fortnightly) and on demand.
 #
 # Note: GitHub disables scheduled workflows in repositories with no activity
@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Refresh writing section
+      - name: Refresh dispatches
         run: python3 scripts/update_writing.py
 
       - name: Commit if changed
@@ -40,5 +40,5 @@ jobs:
           git config user.name  'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'chore: sync writing section from RSS feed'
+          git commit -m 'chore: sync dispatches from RSS feed'
           git push

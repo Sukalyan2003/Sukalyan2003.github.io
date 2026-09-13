@@ -1,0 +1,1256 @@
+/* ==========================================================================
+   The Record - Sukalyan Roy
+   Tokens and rules are derived from design.md. If you change a value here,
+   change it there too; design.md is the source of truth.
+
+   Three rules that must not be broken:
+     1. No box-shadow, no backdrop-filter. Print has no z-axis.
+     2. No border-radius. The `rounded` scale has one token and it is 0.
+     3. `signal` red appears only where design.md > Colors permits it: section
+        numerals, evidence-rail metric values, link hover, the Dispatches
+        updated marker, the masthead rule, and - added with the standing head
+        and the technical diagrams - masthead evidence figures and diagram
+        metric labels. Both of those are evidence rails in another form.
+   ========================================================================== */
+
+/* Font faces are linked from the HTML *before* this file, not @imported:
+   an @import serialises the second request behind this file's parse. */
+
+/* --------------------------------------------------------------------------
+   Tokens - Paper (light)
+   -------------------------------------------------------------------------- */
+:root {
+  --paper: #f4f1ea;
+  --paper-deep: #eae5da;
+  --paper-edge: #fbf9f5;
+  --ink: #17140f;
+  --ink-muted: #5a5348;
+  --ink-faint: #8a8274;
+  --rule: #d5cec0;
+  --rule-strong: #17140f;
+  --signal: #c4351f;
+  --signal-hover: #9e2915;
+  --signal-wash: #f7e4df;
+
+
+  /* Spacing - every block gap is a multiple of the baseline. */
+  --baseline: 28px;
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 14px;
+  --sp-lg: 28px;
+  --sp-xl: 56px;
+  --sp-xxl: 84px;
+  --sp-section: 112px;
+  --measure: 66ch;
+  --gutter: 32px;
+  --sheet: 1180px;
+
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --display: 'Fraunces', Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+/* Tokens - Press (dark). Applied by explicit choice or by system preference. */
+:root[data-theme='dark'] {
+  --paper: #14120e;
+  --paper-deep: #1c1915;
+  --paper-edge: #100e0b;
+  --ink: #e9e3d6;
+  --ink-muted: #a39b8b;
+  --ink-faint: #786f60;
+  --rule: #332e26;
+  --rule-strong: #e9e3d6;
+  --signal: #e8624a;
+  --signal-hover: #f2795f;
+  --signal-wash: #2a1a15;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #14120e;
+    --paper-deep: #1c1915;
+    --paper-edge: #100e0b;
+    --ink: #e9e3d6;
+    --ink-muted: #a39b8b;
+    --ink-faint: #786f60;
+    --rule: #332e26;
+    --rule-strong: #e9e3d6;
+    --signal: #e8624a;
+    --signal-hover: #f2795f;
+    --signal-wash: #2a1a15;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Clears the sticky contents bar so an anchored section head is not hidden. */
+  scroll-padding-top: 60px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  font-variant-numeric: oldstyle-num;
+  line-height: 1.66;
+  margin: 0;
+  /* Newsprint is never crisp white; keep rendering slightly soft to match. */
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul, ol, figure, blockquote {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 140ms linear;
+}
+
+a:hover {
+  color: var(--signal);
+  text-decoration-color: var(--signal);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--signal-wash);
+  color: var(--ink);
+}
+
+.skip-link {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  left: 0;
+  letter-spacing: 0.12em;
+  padding: 10px 16px;
+  position: absolute;
+  text-decoration: none;
+  text-transform: uppercase;
+  top: -200%;
+  z-index: 50;
+}
+
+.skip-link:focus {
+  color: var(--paper);
+  top: 0;
+}
+
+.sheet {
+  margin: 0 auto;
+  max-width: var(--sheet);
+  padding: 0 var(--gutter);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* --------------------------------------------------------------------------
+   Type roles
+   -------------------------------------------------------------------------- */
+.label,
+.tag,
+.rail-key,
+.dateline,
+.theme-toggle,
+.folio {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.data {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.standfirst {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.3vw, 1.5rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.42;
+  max-width: 54ch;
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   -------------------------------------------------------------------------- */
+.masthead {
+  background: var(--paper-edge);
+  border-bottom: 3px solid var(--rule-strong);
+  padding-bottom: var(--sp-md);
+  padding-top: var(--sp-lg);
+}
+
+.masthead__inner {
+  align-items: end;
+  display: grid;
+  gap: var(--sp-lg);
+  grid-template-columns: minmax(0, 1fr) 220px;
+}
+
+.masthead__name {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(2.9rem, 11.5vw, 8.2rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.86;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* The one place the masthead uses the accent: a hairline rule under the name. */
+.masthead__rule {
+  background: var(--signal);
+  border: 0;
+  height: 2px;
+  margin: var(--sp-md) 0 var(--sp-sm);
+  width: 100%;
+}
+
+.masthead__strap {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm) var(--sp-md);
+  justify-content: space-between;
+}
+
+.dateline {
+  color: var(--ink-muted);
+}
+
+.dateline span + span::before {
+  color: var(--rule);
+  content: '·';
+  margin: 0 0.55em;
+}
+
+/* Portrait - halftone by default, full colour on hover/focus/tap. */
+.portrait {
+  border: 1px solid var(--rule);
+  display: block;
+  position: relative;
+}
+
+.portrait img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.portrait__colour {
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 320ms ease;
+}
+
+/* Two halftone plates, one per theme. They are not the same image inverted:
+   dot DENSITY has to track brightness, so the Press plate is dithered from a
+   negated source. Inverting one plate with a CSS filter alone would render the
+   portrait as a photographic negative. */
+.portrait__plate img {
+  opacity: 0.92;
+}
+
+.portrait__plate--press {
+  display: none;
+}
+
+.portrait__plate--press img {
+  /* Black dots in the file, printed as light ink on the dark ground.
+     Held below full opacity so bright regions do not glare on a dark page. */
+  filter: invert(1);
+  opacity: 0.82;
+}
+
+:root[data-theme='dark'] .portrait__plate--paper {
+  display: none;
+}
+
+:root[data-theme='dark'] .portrait__plate--press {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .portrait__plate--paper {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .portrait__plate--press {
+    display: block;
+  }
+}
+
+.portrait:hover .portrait__colour,
+.portrait:focus-within .portrait__colour,
+.portrait.is-revealed .portrait__colour {
+  opacity: 1;
+}
+
+.portrait__caption {
+  border-top: 1px solid var(--rule);
+  color: var(--ink-faint);
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  padding-top: 6px;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Theme toggle
+   -------------------------------------------------------------------------- */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: border-color 140ms linear, color 140ms linear;
+}
+
+.theme-toggle:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.theme-toggle__on {
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Sections
+   -------------------------------------------------------------------------- */
+.section {
+  padding-top: var(--sp-section);
+}
+
+.section:last-of-type {
+  padding-bottom: var(--sp-xl);
+}
+
+.section__head {
+  align-items: baseline;
+  border-bottom: 2px solid var(--rule-strong);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+  padding-bottom: var(--sp-sm);
+}
+
+.section__numeral {
+  color: var(--signal);
+  font-family: var(--display);
+  font-size: 1rem;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0, 'opsz' 40;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.section__title {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
+  font-variation-settings: 'opsz' 36;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  margin-right: auto;
+}
+
+.section__note {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   01 The brief
+   -------------------------------------------------------------------------- */
+.brief {
+  display: grid;
+  gap: var(--sp-xl);
+  grid-template-columns: minmax(0, 1fr) 260px;
+}
+
+.brief__body > * + * {
+  margin-top: var(--sp-lg);
+}
+
+.brief__body p {
+  max-width: var(--measure);
+}
+
+.pull {
+  border-left: 3px solid var(--signal);
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-variation-settings: 'opsz' 40;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: var(--sp-xl) 0;
+  max-width: 46ch;
+  padding: var(--sp-xs) 0 var(--sp-xs) var(--sp-lg);
+}
+
+.brief__aside {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--sp-md);
+}
+
+.aside-list {
+  display: grid;
+  gap: var(--sp-md);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.aside-list div {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--sp-md);
+}
+
+.aside-list dt,
+.aside-list .k {
+  color: var(--ink-faint);
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.aside-list .v {
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Articles - case studies with an evidence rail
+   -------------------------------------------------------------------------- */
+.entries {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.entry {
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--sp-lg);
+  /* Prose is capped near the measure so the rail sits beside the text block
+     rather than stranded at the far margin. The rail takes the remainder. */
+  grid-template-columns: minmax(0, var(--measure)) minmax(210px, 1fr);
+  padding: var(--sp-lg) 0;
+}
+
+.entry:first-child {
+  border-top: 0;
+}
+
+.entry__kicker {
+  color: var(--ink-faint);
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  margin-bottom: var(--sp-sm);
+  text-transform: uppercase;
+}
+
+.entry__title {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  font-variation-settings: 'opsz' 32;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  margin-bottom: var(--sp-md);
+}
+
+.entry__body {
+  max-width: var(--measure);
+}
+
+/* Problem / Architecture / Tradeoff / Evidence, set as a definition table. */
+.facets {
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.facets div {
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--sp-md);
+  grid-template-columns: 104px minmax(0, 1fr);
+  padding: var(--sp-md) 0;
+}
+
+.facets div:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.facets .k {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+.facets .v {
+  line-height: 1.6;
+}
+
+/* The evidence rail - the layout's signature. */
+.rail {
+  border-left: 1px solid var(--rule);
+  padding-left: var(--sp-lg);
+}
+
+.rail__item {
+  border-bottom: 1px solid var(--rule);
+  padding: var(--sp-sm) 0;
+}
+
+.rail__item:first-child {
+  padding-top: 0;
+}
+
+.rail__item:last-child {
+  border-bottom: 0;
+}
+
+.rail-key {
+  color: var(--ink-faint);
+  display: block;
+  font-size: 0.62rem;
+  margin-bottom: 3px;
+}
+
+.rail-val {
+  color: var(--signal);
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+.rail-val--plain {
+  color: var(--ink);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: var(--sp-md);
+}
+
+.tag {
+  border: 1px solid var(--rule);
+  color: var(--ink-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+}
+
+.entry__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+
+.entry__links a,
+.dispatch a.more {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+p.entry__note,
+.entry__note {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  margin-top: var(--sp-md);
+}
+
+/* --------------------------------------------------------------------------
+   03 Also built - briefs, two columns
+   -------------------------------------------------------------------------- */
+.briefs {
+  display: grid;
+  gap: var(--sp-lg);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.brief-item {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--sp-md);
+}
+
+.brief-item h3 {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: var(--sp-sm);
+}
+
+.brief-item p {
+  color: var(--ink-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   04 Dispatches - synced from RSS
+   -------------------------------------------------------------------------- */
+.dispatches {
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dispatch {
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--sp-lg);
+  grid-template-columns: 132px minmax(0, 1fr);
+  padding: var(--sp-lg) 0;
+}
+
+.dispatch:first-child {
+  border-top: 0;
+}
+
+.dispatch__date {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.dispatch h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.28;
+  margin-bottom: var(--sp-sm);
+}
+
+.dispatch h3 a {
+  text-decoration: none;
+}
+
+.dispatch h3 a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+.dispatch p {
+  color: var(--ink-muted);
+  max-width: var(--measure);
+}
+
+.dispatch__meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+
+/* --------------------------------------------------------------------------
+   05 The record - experience & education
+   -------------------------------------------------------------------------- */
+.record__row {
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--sp-lg);
+  grid-template-columns: 168px minmax(0, 1fr);
+  padding: var(--sp-lg) 0;
+}
+
+.record__row:first-child {
+  border-top: 0;
+}
+
+.record__when {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+.record__what h3 {
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.record__where {
+  color: var(--ink-muted);
+  display: block;
+  font-size: 0.98rem;
+  margin-bottom: var(--sp-sm);
+}
+
+.record__what p {
+  max-width: var(--measure);
+}
+
+/* --------------------------------------------------------------------------
+   06 Credentials
+   -------------------------------------------------------------------------- */
+.creds {
+  display: grid;
+  gap: var(--sp-lg);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.cred {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--sp-md);
+}
+
+.cred h3 {
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.cred p {
+  color: var(--ink-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.cred__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-top: var(--sp-sm);
+}
+
+.cred__links a {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Contact & footer
+   -------------------------------------------------------------------------- */
+.contact {
+  border-top: 3px solid var(--rule-strong);
+  margin-top: var(--sp-section);
+  padding-top: var(--sp-xl);
+}
+
+.contact__lead {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 3vw, 1.85rem);
+  font-variation-settings: 'opsz' 40;
+  font-weight: 500;
+  line-height: 1.3;
+  max-width: 40ch;
+}
+
+.contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-lg);
+  margin-top: var(--sp-lg);
+}
+
+.contact__links a {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.folio {
+  border-top: 1px solid var(--rule);
+  color: var(--ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  justify-content: space-between;
+  margin-top: var(--sp-xl);
+  padding: var(--sp-md) 0 var(--sp-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive - rails collapse under their headline as a strip, never a card
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  :root {
+    --sp-section: 76px;
+    --gutter: 22px;
+  }
+
+  .masthead__inner {
+    grid-template-columns: minmax(0, 1fr) 120px;
+  }
+
+  .brief {
+    gap: var(--sp-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .entry,
+  .dispatch,
+  .record__row {
+    gap: var(--sp-md);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-md) var(--sp-lg);
+    padding-left: 0;
+    padding-top: var(--sp-md);
+  }
+
+  .rail__item {
+    border-bottom: 0;
+    padding: 0;
+  }
+
+  .dispatch__date,
+  .record__when {
+    order: -1;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 1.02rem;
+  }
+
+  .masthead__inner {
+    gap: var(--sp-md);
+    grid-template-columns: minmax(0, 1fr) 96px;
+  }
+
+  .facets div {
+    gap: 4px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .facets .k {
+    line-height: 1.2;
+  }
+
+  .pull {
+    margin: var(--sp-lg) 0;
+    padding-left: var(--sp-md);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Motion & print
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  :root {
+    --paper: #fff;
+    --ink: #000;
+    --signal: #000;
+  }
+
+  .theme-toggle,
+  .skip-link {
+    display: none;
+  }
+
+  .entry,
+  .dispatch {
+    break-inside: avoid;
+  }
+}
+
+/* Portrait caption swaps wording by input type; the effect is hover-driven on
+   pointer devices and tap-driven on touch (see js/main.js). */
+.on-touch { display: inline; }
+.on-hover { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .on-touch { display: none; }
+  .on-hover { display: inline; }
+}
+
+.dispatch__meta .tags {
+  margin-top: 0;
+}
+
+/* Section lede - the sentence between a section head and its content. */
+.section__intro {
+  color: var(--ink-muted);
+  margin-bottom: var(--sp-lg);
+  max-width: var(--measure);
+}
+
+/* Standalone mono link, e.g. "All dispatches". */
+.more-link {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-top: var(--sp-lg);
+  text-transform: uppercase;
+}
+
+
+/* --------------------------------------------------------------------------
+   Standing head - the identity block a recruiter reads in ten seconds.
+   Role, stack, evidence and the four links, all above the fold, all in the
+   masthead's own voice: mono, tracked, hairline-separated. No buttons.
+   -------------------------------------------------------------------------- */
+.masthead__role {
+  color: var(--ink-muted);
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.9vw, 1.28rem);
+  font-variation-settings: 'opsz' 24;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  margin-top: var(--sp-sm);
+}
+
+.standing {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--sp-md);
+  padding-top: var(--sp-md);
+}
+
+.standing__line {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs) var(--sp-md);
+  margin-bottom: var(--sp-sm);
+}
+
+.standing__k {
+  color: var(--ink-faint);
+  flex: 0 0 auto;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  min-width: 8.5em;
+  text-transform: uppercase;
+}
+
+.standing__v {
+  color: var(--ink-muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+/* Evidence figures. The same role as a rail metric, so the same colour. */
+.ev {
+  color: var(--signal);
+  font-weight: 600;
+}
+
+.standing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-md);
+}
+
+.action {
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 7px 12px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-color 140ms linear, color 140ms linear;
+}
+
+.action:hover,
+.action:focus-visible {
+  border-color: var(--ink);
+  color: var(--signal);
+}
+
+/* --------------------------------------------------------------------------
+   Contents - the running head. A newspaper's index strip, not a nav bar.
+   Sticks under the masthead so the sections stay reachable while reading.
+   -------------------------------------------------------------------------- */
+.contents {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-strong);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.contents__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--sp-lg);
+  margin: 0;
+  padding: var(--sp-sm) 0;
+}
+
+.contents__list a {
+  color: var(--ink-muted);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.contents__list a:hover,
+.contents__list a:focus-visible {
+  color: var(--signal);
+}
+
+/* Set by main.js as sections pass under the strip; absent without JavaScript. */
+.contents__list a.is-current {
+  border-bottom: 2px solid var(--signal);
+  color: var(--ink);
+  padding-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Diagrams - drawn in the page's own two colours, from repository facts only.
+   Every figure is inspectable: hairlines, mono labels, no fills but the one
+   scale bar, and no component that does not exist in the system it describes.
+   -------------------------------------------------------------------------- */
+.diagram {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--sp-lg);
+  padding-top: var(--sp-md);
+}
+
+/* Below ~700px the drawing scrolls sideways rather than shrinking its labels
+   into illegibility. Diagrams are the one element allowed to do this. */
+.diagram__scroll {
+  overflow-x: auto;
+}
+
+.dg {
+  display: block;
+  height: auto;
+  min-width: 620px;
+  width: 100%;
+}
+
+.diagram__cap {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin-top: var(--sp-sm);
+}
+
+.dg-box,
+.dg-track,
+.dg-group {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.dg-group {
+  stroke: var(--ink-muted);
+}
+
+.dg-group-dash {
+  fill: none;
+  stroke: var(--rule);
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+}
+
+.dg-fill {
+  fill: var(--signal-wash);
+  stroke: var(--signal);
+  stroke-width: 1;
+}
+
+.dg-line {
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-width: 1;
+}
+
+.dg-dash {
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-dasharray: 3 3;
+  stroke-width: 1;
+}
+
+.dg-head {
+  fill: var(--ink-muted);
+  stroke: none;
+}
+
+.dg-t {
+  fill: var(--ink);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dg-e,
+.dg-n {
+  fill: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+.dg-h {
+  fill: var(--ink-muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A diagram metric is a rail metric that happens to sit inside a drawing. */
+.dg-m {
+  fill: var(--signal);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .standing__k {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .contents__list {
+    gap: 0 var(--sp-md);
+  }
+
+  .action {
+    font-size: 0.62rem;
+    padding: 6px 9px;
+  }
+}
+
+@media print {
+  .contents,
+  .standing__actions {
+    display: none;
+  }
+
+  .dg {
+    min-width: 0;
+  }
+}
