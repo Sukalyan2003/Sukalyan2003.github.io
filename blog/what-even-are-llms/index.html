@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Understanding Language Learning Models - Engineering Tales</title>
+<meta name="description" content="Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/what-even-are-llms/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Understanding Language Learning Models - Engineering Tales">
+<meta property="og:description" content="Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/what-even-are-llms/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/what-even-are-llms/og-67055652.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2024-12-10T12:32:27.575Z">
+<meta property="article:modified_time" content="2026-06-08T03:43:12.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="AIML">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="RAG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Understanding Language Learning Models - Engineering Tales">
+<meta name="twitter:description" content="Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/what-even-are-llms/og-67055652.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/what-even-are-llms/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/what-even-are-llms/",
+      "url": "https://sukalyan2003.github.io/blog/what-even-are-llms/",
+      "headline": "What even are LLMs?",
+      "description": "Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements",
+      "datePublished": "2024-12-10T12:32:27.575Z",
+      "dateModified": "2026-06-08T03:43:12.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/what-even-are-llms/og-67055652.jpg"
+      ],
+      "keywords": [
+        "LLM",
+        "RAG"
+      ],
+      "articleSection": "AIML",
+      "wordCount": 1703,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AIML",
+          "item": "https://sukalyan2003.github.io/blog/aiml/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "What even are LLMs?",
+          "item": "https://sukalyan2003.github.io/blog/what-even-are-llms/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/" class="is-current" aria-current="page">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../aiml/">AIML</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">What even are LLMs?</h1>
+        <p class="standfirst article__standfirst">Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2024-12-10T12:32:27.575Z">10 Dec 2024</time></span><span>Updated <time datetime="2026-06-08T03:43:12.000Z">8 Jun 2026</time></span><span>7 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2024-12-10T12:32:27.575Z">10 Dec 2024</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-06-08T03:43:12.000Z">8 Jun 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>7 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../aiml/">AIML</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l3"><a href="#what-exactly-is-an-llm">What exactly is an LLM?</a></li><li class="toc__l3"><a href="#what-s-the-reversal-curse">What&#x27;s the reversal curse?</a></li><li class="toc__l3"><a href="#how-might-one-make-their-own-transformers">How might one make their own transformers?</a></li><li class="toc__l3"><a href="#intro-to-finetuning-models">Intro to finetuning models</a></li><li class="toc__l3"><a href="#breaking-and-toying-with-llms">Breaking and Toying with LLMs</a></li><li class="toc__l3"><a href="#recent-developments">Recent Developments</a></li><li class="toc__l3"><a href="#future-prospects">Future prospects?</a></li><li class="toc__l3"><a href="#references-and-further-reading">References and further reading</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/c4e546dab5f3-67055652-480.webp" srcset="img/c4e546dab5f3-67055652-480.webp 480w, img/c4e546dab5f3-67055652-960.webp 960w, img/c4e546dab5f3-67055652-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="263" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h3 id="what-exactly-is-an-llm">What exactly is an LLM? <a class="heading-anchor" href="#what-exactly-is-an-llm" aria-label="Link to this section">#</a></h3>
+<p>It’s what drives ChatgGPT. No, really. That’s what an LLM is. From Chatgpt to Claude to Bing to Gemini, the technical term for these magical chatbots is a Large Language Model (LLM).</p>
+<p>For a clear first impression, watching <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g%5D(https://www.youtube.com/watch?v=zjkBMFhNj_g)">This video</a> is essential; barely anyone else can explain LLMs like Andrej.<br />
+Consider this post as simultaneously a TLDR of the video and a somewhat deeper dive into the topics through supplementary articles.</p>
+<p>And if you're curious about Neural networks in general, you should check out another post of mine, <a href="../understanding-neural-networks/">here</a></p>
+<p>To summarize the idea, LLMs or Large Language Models are the product of a new way of thinking about text processing.</p>
+<p>It works on the fairly new attention-based transformer architecture to encode all its training data into a set of internal representations. Given how the training data is a several terabyte scrape of the internet, one could, as Andrej explains it, think of it like a semantic, lossy compression of the internet itself.</p>
+<p>These representations work like a probabilistic &quot;next word predictor&quot; of sorts, which takes in some context and generates new words. It then takes those words back into it's context and repeats this process for a set amount of iterations.</p>
+<p>The training step is the actual heavy-duty process and something that most of us do not need to care about, as users of the API or the open-weight/open-source files/models.</p>
+<p>Speaking of the architecture itself, here is a diagram from the paper &quot;Attention is all you need&quot;:</p>
+<figure class="figure"><img src="img/11274d0e7dbb-9542cb31-480.webp" srcset="img/11274d0e7dbb-9542cb31-480.webp 480w, img/11274d0e7dbb-9542cb31-635.webp 635w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="587" alt="Diagram of the Transformer model architecture, showing the encoder and decoder stacks. Each consists of layers of multi-head attention and feed-forward neural networks, with add and norm steps. Positional encoding is applied to input and output embeddings. The decoder includes masked multi-head attention. Output probabilities are obtained after a linear layer and softmax." loading="lazy" decoding="async"></figure>
+
+<p>this has a lot of parts and if there is enough demand for this, I will immediately start working on my own explanation of this seminal paper.</p>
+<h3 id="what-s-the-reversal-curse">What's the reversal curse? <a class="heading-anchor" href="#what-s-the-reversal-curse" aria-label="Link to this section">#</a></h3>
+<p>The reversal curse is the tendency of LLMs to not have bidirectional reasoning among it's internal logic.</p>
+<p>(Note: This is mostly true for Autoencoder models, which happen to be the most common type in use. For stuff like Google’s BERT, this might be less of a problem)</p>
+<p>It means that, if it is trained on sentences like <code>X is Y</code>, then it will learn precisely that, but it won't be able to answer questions like &quot;What is Y&quot;.</p>
+<p>More precisely, if a model is trained mostly on data that says <code>name is description</code> Then it won't be able to reason that <code>description refers to name</code>.</p>
+<p>For example: if it is trained on <code>Rabindranath Tagore was the first asian to win the Nobel prize</code>.</p>
+<p>If you ask who Rabindranath Tagore is, it will respond about the Nobel Prize.</p>
+<p>But if you ask &quot;Who was the first Asian to win a Nobel Prize?&quot; then the model won't be able to answer.</p>
+<p>Now to be clear about this, for my particular example, there are countless examples of both the former and the latter form of this bit of data on the internet, so an average model trained on it will be able to answer it.</p>
+<p><strong>But</strong> there are many many cases where both the direct and indirect form of the knowledge will not be present. For most cases it won't be sufficiently present. So the model will fail here.</p>
+<p>There have been several attempts to retrain or finetune models to work around this but with no noticeable improvement so far.</p>
+<p>Do humans have something similar? think about the last time you tried to rattle out the alphabet or a random poem in reverse.</p>
+<h3 id="how-might-one-make-their-own-transformers">How might one make their own transformers? <a class="heading-anchor" href="#how-might-one-make-their-own-transformers" aria-label="Link to this section">#</a></h3>
+<p>there are several tutorials online, but as a principle, you will start by learning about the transformer architecture and attention mechanism, followed by a fair amount of programming. Soon, I will be trying out the best tutorial on the internet by Andrej Karpathy and write up my journey as I go. Stay tuned for that.</p>
+<h3 id="intro-to-finetuning-models">Intro to finetuning models <a class="heading-anchor" href="#intro-to-finetuning-models" aria-label="Link to this section">#</a></h3>
+<p>Once the major training period on vast amount of data is done(quantity over quality), we have what is called a base model.</p>
+<p>This base model now forms the foundation for different models in use. However, this base model by itself is useless, we need to train these models further on the specific use case we are hoping to use it for. We need to &quot;finetune&quot; it using domain or interaction specific data. (quality over quantity)</p>
+<p>Often this data comes from proprietary sources or is done manually by humans who write up sample conversations (There are outsourcing companies for this like ScaleAi). In many cases such as that of Chatgpt, it uses user ratings on given responses, asks the users about alternatives to internally keep updating the model's behavior.</p>
+<p>Even though it is cheaper than full fledged base model creation; Effective finetuning takes a nontrivial amount of hardware which is often not found on Low end or budget Desktops and laptops. In that case, online providers like Google Colab is a relatively cheap and effective solution to experiment with this.</p>
+<p>I have delved into some aspects of finetuning before when working on my chatbot for a hackathon. Still, there is a lot i need to learn myself before I can come up with a detailed exposition on this topic. Stay tuned for that.</p>
+<h3 id="breaking-and-toying-with-llms">Breaking and Toying with LLMs <a class="heading-anchor" href="#breaking-and-toying-with-llms" aria-label="Link to this section">#</a></h3>
+<p>There are many ways to bend LLMs to your will, most of them relevant to Online or API based Models because they have the most restrictions, whereas the Open source models are much more open about content.</p>
+<p>Disclaimer: There are many many more that I discovered from reading research papers and articles online, which i do not feel comfortable sharing for the fear of misuse. I myself shall always refrain from using these LLMs for malicious purposes.</p>
+<p>Some of those include things like</p>
+<ol>
+<li>
+<p>Jailbreaks: essentially roleplaying with the LLM in a way to convince it that it has no restrictions.</p>
+</li>
+<li>
+<p>Asking your &quot;forbidden&quot; question in languages other than english, because even though the models are trained on many different languages, most of the security measures are implemented in english.</p>
+</li>
+<li>
+<p>Prompt injection attacks: Used by websites to gain control over models that actively query data from sites. Usually these are instructions for the model, written in white text inside the web pages so that it is invisible to the users, but often these are effective enough that it can change the behaviour of the responses.</p>
+</li>
+</ol>
+<h3 id="recent-developments">Recent Developments <a class="heading-anchor" href="#recent-developments" aria-label="Link to this section">#</a></h3>
+<p>In his book Thinking fast and slow, Daniel Kahneman explains his theory about two systems in the human brain. System 1 is intuitive, fast(split second), not correct all the time but good enough. It is in many ways important for us to survive our day to day lives without overthinking everything.</p>
+<p>System 2 on the other hand, is all about effortful thinking, deliberating, analysis and decision making. This is the system of our brain that leads to nontrivial developments in human knowledge, which helps us to make the really important decisions in our life.</p>
+<p>In recent times, models like chatgpt have been slowly incorporating more System 2 thinking in their models, so that instead of acting like next word generators with no thinking, it actually does some &quot;thinking&quot; internally which is not shown to the user, before the final answer is given. Now according to my current understanding, this is just some form of self prompting using tried and tested prompt engineering techniques implemented directly into the model and not some philosophical or biological equivalent of actual human thinking.</p>
+<h3 id="future-prospects">Future prospects? <a class="heading-anchor" href="#future-prospects" aria-label="Link to this section">#</a></h3>
+<p>There are some researchers working on making LLMs collaborate with each other. Where a general purpose model starts working on something, and based on certain &quot;switches&quot; they decide when to ask an expert model for more elaboration.</p>
+<p>In this way, most of the work is done by a lightweight general puporse model, and the detailed finetuned ones are only called when a depth of data is needed.</p>
+<h4 id="new-paradigm-in-operating-systems">New paradigm in Operating Systems <a class="heading-anchor" href="#new-paradigm-in-operating-systems" aria-label="Link to this section">#</a></h4>
+<p>There is a growing interest in the application of LLMs as the central hub or kernel that would sit at the centre of a next generation Operating system. Instead of traditional Operating systems, you would have a direct interface to the LLM and it will orchestrate all your daily needs. Almost like a real life Jarvis.</p>
+<p>there are many implementations that &quot;sort of&quot; work today and many more research papers detailing different approaches to balance the load between traditional OS and LLM based solutions.</p>
+<h3 id="references-and-further-reading">References and further reading <a class="heading-anchor" href="#references-and-further-reading" aria-label="Link to this section">#</a></h3>
+<p>To wrap it all up, i’ve put forward the most succinct explanations of the basics I could, and there are many great resources online to learn more.</p>
+<p>Do check these links out, and drop all your suggestions for further posts or any questions related to the content covered down in the comment section.</p>
+<p><a href="https://www.lesswrong.com/posts/SCqDipWAhZ49JNdmL/paper-llms-trained-on-a-is-b-fail-to-learn-b-is-a">https://www.lesswrong.com/posts/SCqDipWAhZ49JNdmL/paper-llms-trained-on-a-is-b-fail-to-learn-b-is-a</a> This goes deeper into the reversal curse.</p>
+<p><a href="https://news.mit.edu/2024/enhancing-llm-collaboration-smarter-more-efficient-solutions-0916">https://news.mit.edu/2024/enhancing-llm-collaboration-smarter-more-efficient-solutions-0916</a> This talks about inter LLM collaborations for more effective expert knowledge.</p>
+<p>The following two delve into the topic of LLM OS.</p>
+<p><a href="https://community.aws/content/2eojjD2E7TBgPFJmB2FGAtrSSBh/the-rise-of-the-llm-os-from-aios-to-memgpt-and-beyond">https://community.aws/content/2eojjD2E7TBgPFJmB2FGAtrSSBh/the-rise-of-the-llm-os-from-aios-to-memgpt-and-beyond</a></p>
+<p><a href="https://mansour-damanpak.medium.com/llm-os-and-software-2-0-the-dawn-of-a-new-computing-era-12d59a007ef8">https://mansour-damanpak.medium.com/llm-os-and-software-2-0-the-dawn-of-a-new-computing-era-12d59a007ef8</a></p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/rag/">RAG</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/what-even-are-llms/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-even-are-llms%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-even-are-llms%2F&amp;text=What%20even%20are%20LLMs%3F" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-even-are-llms%2F&amp;title=What%20even%20are%20LLMs%3F" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=What%20even%20are%20LLMs%3F&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-even-are-llms%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../understanding-neural-networks/" rel="prev"><span class="label">Older</span><span class="pager__title">Understanding Neural Networks</span></a><a class="pager__link pager__link--newer" href="../process-synchronization-in-linux/" rel="next"><span class="label">Newer</span><span class="pager__title">Process Synchronization in Linux</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-08-08T05:59:48.259Z">8 Aug 2026</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../discovering-rags-4-project-updates-all-the-way/">Discovering RAGs 4: Project updates all the way</a></h3>
+          <p>So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/devlog/">devlog</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-04T04:39:04.300Z">4 Jul 2026</time>
+          <span class="dispatch__read">13 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3>
+          <p>I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI&#x27;s Codex.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/evaluation-metrics/">evaluation metrics</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/mcp/">MCP</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-05-09T14:41:59.331Z">9 May 2026</time>
+          <span class="dispatch__read">9 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../transforming-chatbot-interactions-with-retrieval-augmented-generation/">Transforming Chatbot Interactions with Retrieval Augmented Generation</a></h3>
+          <p>Since ChatGPT was first unveiled, one of my persistent doubts has been how it will work in applications requiring proprietary or post-2022 data.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/chatbot/">chatbot</a><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/embeddings/">embeddings</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Tokens to Trees - Engineering Tales</title>
+<meta name="description" content="We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/from-tokens-to-trees/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="From Tokens to Trees - Engineering Tales">
+<meta property="og:description" content="We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/from-tokens-to-trees/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/from-tokens-to-trees/og-766d40eb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-06-06T04:57:51.375Z">
+<meta property="article:modified_time" content="2026-07-03T13:36:42.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Programming Concepts">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="interpreter">
+<meta property="article:tag" content="AST">
+<meta property="article:tag" content="compiler">
+<meta property="article:tag" content="parsing">
+<meta property="article:tag" content="compiler design">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From Tokens to Trees - Engineering Tales">
+<meta name="twitter:description" content="We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/from-tokens-to-trees/og-766d40eb.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/from-tokens-to-trees/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/from-tokens-to-trees/",
+      "url": "https://sukalyan2003.github.io/blog/from-tokens-to-trees/",
+      "headline": "From Tokens to Trees",
+      "description": "We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?",
+      "datePublished": "2026-06-06T04:57:51.375Z",
+      "dateModified": "2026-07-03T13:36:42.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/from-tokens-to-trees/og-766d40eb.jpg"
+      ],
+      "keywords": [
+        "python",
+        "interpreter",
+        "AST",
+        "compiler",
+        "parsing",
+        "compiler design"
+      ],
+      "articleSection": "Programming Concepts",
+      "wordCount": 1864,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Programming Concepts",
+          "item": "https://sukalyan2003.github.io/blog/programming-concepts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "From Tokens to Trees",
+          "item": "https://sukalyan2003.github.io/blog/from-tokens-to-trees/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/" class="is-current" aria-current="page">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">From Tokens to Trees</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-06-06T04:57:51.375Z">6 Jun 2026</time></span><span>Updated <time datetime="2026-07-03T13:36:42.000Z">3 Jul 2026</time></span><span>8 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-06-06T04:57:51.375Z">6 Jun 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T13:36:42.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>8 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../programming-concepts/">Programming Concepts</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#getting-started-the-big-picture">Getting Started: The Big Picture</a></li><li class="toc__l2"><a href="#the-lexer-breaking-down-the-input">The Lexer: Breaking Down the Input</a></li><li class="toc__l3"><a href="#tokenizing-numbers">Tokenizing Numbers</a></li><li class="toc__l3"><a href="#handling-identifiers-and-keywords">Handling Identifiers and Keywords</a></li><li class="toc__l2"><a href="#the-parser-structuring-the-tokens">The Parser: Structuring the Tokens</a></li><li class="toc__l3"><a href="#defining-the-grammar">Defining the Grammar</a></li><li class="toc__l3"><a href="#recursive-descent-parsing">Recursive Descent Parsing</a></li><li class="toc__l2"><a href="#the-interpreter-evaluating-the-ast">The Interpreter: Evaluating the AST</a></li><li class="toc__l3"><a href="#evaluating-expressions">Evaluating Expressions</a></li><li class="toc__l3"><a href="#managing-variables-and-assignments">Managing Variables and Assignments</a></li><li class="toc__l2"><a href="#challenges-and-solutions">Challenges and Solutions</a></li><li class="toc__l3"><a href="#why-does-the-code-break-for-inputs-like-5-5">Why Does the Code Break for Inputs Like 5 + (-5)?</a></li><li class="toc__l3"><a href="#handling-unresolved-variables">Handling Unresolved Variables</a></li><li class="toc__l3"><a href="#understanding-the-grammar-design">Understanding the Grammar Design</a></li><li class="toc__l2"><a href="#lessons-learned-and-reflections">Lessons Learned and Reflections</a></li><li class="toc__l2"><a href="#potential-improvements-for-the-followup-post">Potential Improvements (for the followup post)</a></li><li class="toc__l2"><a href="#final-thoughts">Final Thoughts</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/4c10d2ef8b50-766d40eb-480.webp" srcset="img/4c10d2ef8b50-766d40eb-480.webp 480w, img/4c10d2ef8b50-766d40eb-960.webp 960w, img/4c10d2ef8b50-766d40eb-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="320" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time? Let’s find out.</p>
+<p>This project was inspired by a <a href="https://youtu.be/1WpKsY9LBlY?feature=shared">YouTube tutorial</a> I came across. While I followed along with the tutorial, I also made several tweaks and improvements.</p>
+<p>In this blog post, I'll walk you through the development process, sharing insights, reflections, and the questions I grappled with along the way. I'll also discuss potential improvements and future extensions of the interpreter.</p>
+<p>By the end, we’ll have a small expression interpreter with variables, arithmetic, booleans, and a clearer mental model of how programming languages move from text to execution.</p>
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>This post builds a tiny interpreter to understand what happens between source code and execution.</p>
+</li>
+<li>
+<p>The pipeline goes from raw text to tokens, then a syntax tree, then evaluation.</p>
+</li>
+<li>
+<p>The implementation supports arithmetic, variables, booleans, and basic expression handling.</p>
+</li>
+<li>
+<p>The goal is not to build a production language. It is to make compiler-design ideas less abstract.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Project status</strong></p>
+<p>This interpreter is a learning project based on a tutorial, with my own modifications and explanations added while building. It currently covers the core interpreter pipeline. Better errors, functions, scopes, and a cleaner grammar would be natural next steps.</p>
+</blockquote>
+<hr />
+<h2 id="getting-started-the-big-picture">Getting Started: The Big Picture <a class="heading-anchor" href="#getting-started-the-big-picture" aria-label="Link to this section">#</a></h2>
+<figure class="figure"><img src="img/c5f17db75fae-502cc3b9-480.webp" srcset="img/c5f17db75fae-502cc3b9-480.webp 480w, img/c5f17db75fae-502cc3b9-960.webp 960w, img/c5f17db75fae-502cc3b9-1060.webp 1060w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="74" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Before diving into code, it's essential to have a clear mental model of what we're building. An interpreter typically consists of three main components:</p>
+<ol>
+<li>
+<p>Lexer (Tokenizer): Breaks down the input text into a sequence of tokens.</p>
+</li>
+<li>
+<p>Parser: Analyzes the sequence of tokens to understand the grammatical structure.</p>
+</li>
+<li>
+<p>Interpreter: Executes the parsed code, performing computations and managing state.</p>
+</li>
+</ol>
+<p>Understanding each component's role helps prevent getting lost in abstractions, especially when dealing with multiple classes and methods.</p>
+<hr />
+<p>Note: One general insight I had is that it's easy to get lost within abstractions. With classes for everything and different methods, it's crucial to keep a clear mental model of what each class and method does.</p>
+<hr />
+<h2 id="the-lexer-breaking-down-the-input">The Lexer: Breaking Down the Input <a class="heading-anchor" href="#the-lexer-breaking-down-the-input" aria-label="Link to this section">#</a></h2>
+<p>The lexer converts raw input text into meaningful tokens. Tokens are the basic building blocks that the parser will use to understand the code's structure.</p>
+<h3 id="tokenizing-numbers">Tokenizing Numbers <a class="heading-anchor" href="#tokenizing-numbers" aria-label="Link to this section">#</a></h3>
+<p>Handling numbers, including integers and floating-point values, was one of the initial challenges. The lexer reads characters sequentially, recognizing digits and decimal points to form complete numbers.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">tokenize_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="n">is_float</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">digits</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="o">==</span> <span class="s2">"."</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="o">==</span> <span class="s2">"."</span><span class="p">:</span>
+            <span class="n">is_float</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">num</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">Float</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_float</span> <span class="k">else</span> <span class="n">Integer</span><span class="p">(</span><span class="n">num</span><span class="p">)</span></code></pre></div>
+<h4 id="why-do-we-need-separate-functions-in-the-interpreter-to-convert-each-data-type-from-string-back-into-their-original-types">Why do we need separate functions in the interpreter to convert each data type from string back into their original types? <a class="heading-anchor" href="#why-do-we-need-separate-functions-in-the-interpreter-to-convert-each-data-type-from-string-back-into-their-original-types" aria-label="Link to this section">#</a></h4>
+<p>Initially, I had separate functions like read_INT, read_FLOAT, and read_VAR to convert string representations back into their original types. This was necessary because when tokens are created, their values are stored as strings. However, having multiple functions becomes cumbersome and can be refactored for efficiency.</p>
+<p>One potential improvement is to modify the token classes to store values in their appropriate types upon creation. This way, we can eliminate the need for separate conversion functions in the interpreter, simplifying the code.</p>
+<h3 id="handling-identifiers-and-keywords">Handling Identifiers and Keywords <a class="heading-anchor" href="#handling-identifiers-and-keywords" aria-label="Link to this section">#</a></h3>
+<p>Variables and keywords are composed of letters. The lexer needs to distinguish between them by:</p>
+<ul>
+<li>
+<p>Collecting consecutive letters to form words.</p>
+</li>
+<li>
+<p>Checking if the word matches any predefined keywords (like make for variable declarations).</p>
+</li>
+<li>
+<p>Treating it as an identifier (variable name) if it's not a keyword.</p>
+</li>
+</ul>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">extract_word</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">word</span> <span class="o">=</span> <span class="s2">""</span>
+
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">letters</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">word</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">char</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">declaration_keywords</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Declaration</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">boolean_literals</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></code></pre></div>
+<hr />
+<h2 id="the-parser-structuring-the-tokens">The Parser: Structuring the Tokens <a class="heading-anchor" href="#the-parser-structuring-the-tokens" aria-label="Link to this section">#</a></h2>
+<p>With a stream of tokens from the lexer, the parser's job is to understand the grammatical structure by building an abstract syntax tree (AST).</p>
+<p>An AST is a tree representation of the program’s structure. For arithmetic expressions, many nodes happen to be binary because operators like <code>+</code> and <code>*</code> have a left and right operand.</p>
+<h3 id="defining-the-grammar">Defining the Grammar <a class="heading-anchor" href="#defining-the-grammar" aria-label="Link to this section">#</a></h3>
+<p>Our grammar reflects the standard order of operations (operator precedence):</p>
+<ol>
+<li>
+<p>Boolean_expression: Handles logical operators (AND, OR, NOT).</p>
+</li>
+<li>
+<p>Comp_expression: Handles comparison operators (&lt;, &gt;, ==, !=, &lt;=, &gt;=).</p>
+</li>
+<li>
+<p>Expression: Handles addition and subtraction (+, -).</p>
+</li>
+<li>
+<p>Term: Handles multiplication and division (*, /).</p>
+</li>
+<li>
+<p>Factor: Handles numbers and parenthesized expressions.</p>
+</li>
+</ol>
+<h4 id="why-was-the-grammar-defined-in-this-particular-way">Why was the grammar defined in this particular way? <a class="heading-anchor" href="#why-was-the-grammar-defined-in-this-particular-way" aria-label="Link to this section">#</a></h4>
+<p>The grammar is designed to enforce operator precedence in arithmetic expressions. By structuring the grammar hierarchically, we ensure that multiplication and division are performed before addition and subtraction, and that expressions within parentheses are evaluated first. This simplifies parsing by handling each level of precedence separately and allows for recursive parsing of nested expressions.</p>
+<hr />
+<p><strong>Example from <a href="http://parser.py">parser.py</a> illustrating the factor method:</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"INT"</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"FLOAT"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"("</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">expression</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"VAR"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unary_operators</span><span class="p">:</span>
+        <span class="n">operation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="n">operand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">operation</span><span class="p">,</span> <span class="n">operand</span><span class="p">]</span></code></pre></div>
+<hr />
+<h4 id="why-does-a-simple-change-like-that-in-the-factor-method-make-brackets-work">Why does a simple change like that in the factor method make brackets work? <a class="heading-anchor" href="#why-does-a-simple-change-like-that-in-the-factor-method-make-brackets-work" aria-label="Link to this section">#</a></h4>
+<p>By returning the expression when encountering an opening parenthesis, we're treating the entire parenthesized expression as a single factor. This means that in higher-level methods (<code>term</code> and expression), the parenthesized expression is considered one unit, maintaining the correct order of operations. If we didn't do this, the parser would treat parentheses as separate tokens, leading to incorrect evaluation.</p>
+<h3 id="recursive-descent-parsing">Recursive Descent Parsing <a class="heading-anchor" href="#recursive-descent-parsing" aria-label="Link to this section">#</a></h3>
+<p>We use recursive functions for each grammar rule to build the AST. This method, known as recursive descent parsing, makes it easier to extend the grammar and understand the parsing logic.</p>
+<hr />
+<p><strong>Example from <a href="http://parser.py">parser.py</a> illustrating the term method:</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">term</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"*"</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"/"</span><span class="p">:</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="n">right_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor</span><span class="p">()</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">right_node</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></code></pre></div>
+<hr />
+<h2 id="the-interpreter-evaluating-the-ast">The Interpreter: Evaluating the AST <a class="heading-anchor" href="#the-interpreter-evaluating-the-ast" aria-label="Link to this section">#</a></h2>
+<p>With the AST, the interpreter evaluates expressions and manages variables.</p>
+<h3 id="evaluating-expressions">Evaluating Expressions <a class="heading-anchor" href="#evaluating-expressions" aria-label="Link to this section">#</a></h3>
+<p>For binary operations, the interpreter recursively evaluates the left and right subtrees before applying the operator.</p>
+<hr />
+<p><strong>Example from <a href="http://interpreter.py">interpreter.py</a> illustrating the evaluate method:</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="n">left_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+    <span class="n">right_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"+"</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">left_value</span> <span class="o">+</span> <span class="n">right_value</span>
+    <span class="k">elif</span> <span class="n">op</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"-"</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">left_value</span> <span class="o">-</span> <span class="n">right_value</span>
+    <span class="c1"># Additional operators...</span>
+
+    <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="n">Float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div>
+<hr />
+<h4 id="why-does-directly-returning-the-output-not-work-and-you-have-to-return-your-predefined-class-object">Why does directly returning the output not work, and you have to return your predefined class object? <a class="heading-anchor" href="#why-does-directly-returning-the-output-not-work-and-you-have-to-return-your-predefined-class-object" aria-label="Link to this section">#</a></h4>
+<p>The interpreter's methods expect operands to be objects with specific attributes (like type and value). If we return primitive data types like integers or floats directly, these attributes are missing, leading to errors. By returning instances of our predefined token classes (e.g., Integer, Float), we maintain a consistent structure that the interpreter can work with, allowing it to handle different data types uniformly.</p>
+<h3 id="managing-variables-and-assignments">Managing Variables and Assignments <a class="heading-anchor" href="#managing-variables-and-assignments" aria-label="Link to this section">#</a></h3>
+<p>Handling variable assignments and reassignments was challenging initially. Variables need to store their evaluated values, not just references.</p>
+<h4 id="handling-variable-reassignment">Handling Variable Reassignment <a class="heading-anchor" href="#handling-variable-reassignment" aria-label="Link to this section">#</a></h4>
+<p>When assigning one variable to another (e.g., make x = y), the interpreter stored the token representing y instead of its value. This led to incorrect behavior when reassigning variables.</p>
+<p>Solution:</p>
+<p>Modify the interpreter to evaluate the right-hand side before assignment.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"="</span><span class="p">:</span>
+        <span class="n">evaluated_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">left</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">evaluated_right</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">evaluated_right</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Handle other operations</span>
+        <span class="k">pass</span></code></pre></div>
+<p>Now, variables store the actual values, making reassignment work correctly.</p>
+<hr />
+<p>Example:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>
+shadowscript: make x = 50
+
+Result: 50
+
+shadowscript: make y = x + 50
+
+Result: 100
+
+shadowscript: make x = y
+
+Result: 100</code></pre></div>
+<hr />
+<h4 id="why-in-the-token-class-file-are-we-returning-everything-typecast-as-a-string">Why in the Token class file are we returning everything typecast as a string? <a class="heading-anchor" href="#why-in-the-token-class-file-are-we-returning-everything-typecast-as-a-string" aria-label="Link to this section">#</a></h4>
+<p>Typecasting everything as a string in the Token classes ensures that tokens can be compared and processed consistently. This is important for attributes like type, which could represent various data types (<code>INT</code>, FLOAT, VAR). Representing the type as a string simplifies comparisons and method calls based on token types, especially when using functions like getattr.</p>
+<p>Token types are usually strings or enums because they describe categories like <code>INT</code>, <code>FLOAT</code>, or <code>VAR</code>. Token values, however, do not always need to be strings. Numbers can often be stored as <code>int</code> or <code>float</code> immediately during lexing.</p>
+<hr />
+<h2 id="challenges-and-solutions">Challenges and Solutions <a class="heading-anchor" href="#challenges-and-solutions" aria-label="Link to this section">#</a></h2>
+<h3 id="why-does-the-code-break-for-inputs-like-5-5">Why Does the Code Break for Inputs Like 5 + (-5)? <a class="heading-anchor" href="#why-does-the-code-break-for-inputs-like-5-5" aria-label="Link to this section">#</a></h3>
+<p>The problem was that the unary method was returning primitive numeric values instead of Token objects. As a result, when the evaluate method expected tokens with type and value attributes, it received a primitive value, leading to an AttributeError.</p>
+<p>Modify the unary method to return Token objects after applying the unary operator.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">unary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">operand</span><span class="p">):</span>
+    
+    <span class="n">operand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">operand</span><span class="p">)</span>
+    
+    <span class="n">operand_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"read_</span><span class="si">{</span><span class="n">operand</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">"</span><span class="p">)(</span><span class="n">operand</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"-"</span><span class="p">:</span>
+    
+        <span class="n">result_value</span> <span class="o">=</span> <span class="o">-</span><span class="n">operand_value</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+    
+        <span class="n">result_value</span> <span class="o">=</span> <span class="n">operand_value</span>
+    
+    <span class="k">return</span> <span class="n">Integer</span><span class="p">(</span><span class="n">result_value</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result_value</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="n">Float</span><span class="p">(</span><span class="n">result_value</span><span class="p">)</span></code></pre></div>
+<h3 id="handling-unresolved-variables">Handling Unresolved Variables <a class="heading-anchor" href="#handling-unresolved-variables" aria-label="Link to this section">#</a></h3>
+<p>Accessing the type attribute of an undefined variable caused errors.</p>
+<p>To fix this, Add a check in the read_VAR method to ensure the variable exists before accessing its attributes.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">read_VAR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">variable</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Undefined variable '</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+
+    <span class="n">variable_type</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">type</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"read_</span><span class="si">{</span><span class="n">variable_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)(</span><span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></code></pre></div>
+<h3 id="understanding-the-grammar-design">Understanding the Grammar Design <a class="heading-anchor" href="#understanding-the-grammar-design" aria-label="Link to this section">#</a></h3>
+<h4 id="why-was-the-grammar-structured-with-separate-levels-for-expression-term-and-factor">Why was the grammar structured with separate levels for Expression, Term, and Factor? <a class="heading-anchor" href="#why-was-the-grammar-structured-with-separate-levels-for-expression-term-and-factor" aria-label="Link to this section">#</a></h4>
+<p>This structure enforces operator precedence, ensuring that multiplication and division are computed before addition and subtraction, and that expressions within parentheses are evaluated first. By handling each level separately, the parser can correctly interpret complex expressions and maintain the correct order of operations.</p>
+<hr />
+<h2 id="lessons-learned-and-reflections">Lessons Learned and Reflections <a class="heading-anchor" href="#lessons-learned-and-reflections" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Maintaining a Clear Mental Model: It's crucial to keep track of each component's purpose, especially when working with multiple classes and methods.</p>
+</li>
+<li>
+<p>Consistent Data Structures: Working consistently with Token objects prevented type-related errors and made the code easier to debug.</p>
+</li>
+<li>
+<p>Effective Error Handling: Adding checks and informative error messages helped in diagnosing issues quickly.</p>
+</li>
+<li>
+<p>Incremental Testing: Testing each component individually ensured that new features worked as intended and helped catch bugs early.</p>
+</li>
+<li>
+<p>Documenting Questions and Answers: Writing down my questions and the answers I found aided my understanding and will serve as a valuable reference for future projects.</p>
+</li>
+</ul>
+<hr />
+<h2 id="potential-improvements-for-the-followup-post">Potential Improvements (for the followup post) <a class="heading-anchor" href="#potential-improvements-for-the-followup-post" aria-label="Link to this section">#</a></h2>
+<ol>
+<li>
+<p>Refactor Data Type Conversions:</p>
+<p>Issue: Currently, we have separate functions in the interpreter to convert each data type from string back into their original types.</p>
+<p>Improvement: Modify the token classes to store values in their appropriate data types upon creation. This eliminates the need for separate conversion functions and simplifies the interpreter code.</p>
+</li>
+<li>
+<p>Add More Stopwords to Lexer:</p>
+<p>Improvement: Enhance the lexer's ability to handle whitespace and other non-essential characters, improving its accuracy in tokenizing input.</p>
+</li>
+<li>
+<p>Add Functionality for Strings:</p>
+<p>Improvement: Extend the lexer and parser to handle string literals, enabling string manipulation within the interpreter.</p>
+</li>
+<li>
+<p>Implement More Operators:</p>
+<p>Improvement: Add boolean literals and operators like increment (<code>++</code>) and decrement (<code>--</code>), taking care to handle pre and post-conditions appropriately.</p>
+</li>
+<li>
+<p>Write Class-Specific Tests:</p>
+<p>Improvement: Develop comprehensive tests for each component (lexer, parser, interpreter) to ensure reliability and ease future development.</p>
+</li>
+<li>
+<p>Ensure Correct Variable Reassignment:</p>
+<p>Goal: Make sure that sequences like make x = 50, make y = x + 50, make x = y result in x having the value 100.</p>
+</li>
+<li>
+<p>Implement Control Structures:</p>
+<p>Improvement: Complete the implementation of conditional statements (<code>if</code>, else) and loops (<code>while</code>) as introduced in the tutorial.</p>
+</li>
+<li>
+<p>Add Advanced Control Structures:</p>
+<p>Improvement: Incorporate additional loops like for, do-while and conditional structures like switch-case to enhance the interpreter's capabilities.</p>
+</li>
+<li>
+<p>Function Definitions and Calls:</p>
+<p>Improvement: Add functionality to define and call functions, enabling code reuse and modularization.</p>
+</li>
+<li>
+<p>Explore Advanced Runtime Improvements:<br />
+Add a bytecode VM, profiling tools, property-based tests, and REPL debugging hooks.</p>
+</li>
+</ol>
+<hr />
+<h2 id="final-thoughts">Final Thoughts <a class="heading-anchor" href="#final-thoughts" aria-label="Link to this section">#</a></h2>
+<p>Building a simple interpreter from scratch was both challenging and rewarding. It deepened my understanding of how programming languages work and reinforced the importance of thoughtful design and clear documentation. I'm excited about the potential improvements and features I plan to add.</p>
+<p>The complete github repo will be posted alongside Part 2 of this post.</p>
+<p>I encourage anyone interested in language design or compilers to embark on a similar journey. Not only does it demystify the process, but it also opens up new possibilities for creating your own languages and tools.</p>
+<p>If you have only used programming languages from the outside, try building even a toy interpreter once.</p>
+<p>Also, if you have worked on a similar project, i'd appreciate any suggestions you might have for Part 2.</p>
+<hr />
+<p>References:</p>
+<ul>
+<li><a href="https://youtu.be/1WpKsY9LBlY?feature=shared">YouTube Tutorial on Building an Interpreter</a></li>
+</ul>
+<hr />
+<p>Thank you for reading! If you have any questions or suggestions, feel free to reach out or leave a comment below. (or DM me if the comment section is not working)</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/python/">python</a><a class="tag" href="../tags/interpreter/">interpreter</a><a class="tag" href="../tags/ast/">AST</a><a class="tag" href="../tags/compiler/">compiler</a><a class="tag" href="../tags/parsing/">parsing</a><a class="tag" href="../tags/compilerdesign/">compiler design</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/from-tokens-to-trees/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Ffrom-tokens-to-trees%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Ffrom-tokens-to-trees%2F&amp;text=From%20Tokens%20to%20Trees" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Ffrom-tokens-to-trees%2F&amp;title=From%20Tokens%20to%20Trees" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=From%20Tokens%20to%20Trees&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Ffrom-tokens-to-trees%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../what-is-agentic-rag/" rel="prev"><span class="label">Older</span><span class="pager__title">What is Agentic RAG?</span></a><a class="pager__link pager__link--newer" href="../adding-rank-fusion-to-my-rag-retrieval-logic/" rel="next"><span class="label">Newer</span><span class="pager__title">Adding Rank Fusion to my RAG retrieval logic</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-04-03T13:30:50.340Z">3 Apr 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../my-first-command-line-program/">My first Command Line program</a></h3>
+          <p>Discover how this Python command-line tool, developed as a CS50 final project, generates secure passwords with customizable lengths and character sets, ensu</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/python/">python</a><a class="tag" href="../tags/terminal/">terminal</a><a class="tag" href="../tags/cli/">CLI</a><a class="tag" href="../tags/password-generator/">password generator</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-12-03T12:30:53.826Z">3 Dec 2024</time>
+          <span class="dispatch__read">6 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../understanding-neural-networks/">Understanding Neural Networks</a></h3>
+          <p>A beginner&#x27;s guide to understanding neural networks, exploring their history, applications, challenges, and foundational backpropagation algorithm</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/experiment/">experiment</a><a class="tag" href="../tags/python/">python</a><a class="tag" href="../tags/machine-learning/">machine learning</a><a class="tag" href="../tags/neural-networks/">neural networks</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-04-01T13:30:41.898Z">1 Apr 2024</time>
+          <span class="dispatch__read">5 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../exploring-pointers/">Exploring Pointers</a></h3>
+          <p>Demystify pointers in C programming with this beginner&#x27;s guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/c/">C</a><a class="tag" href="../tags/pointers/">pointers</a><a class="tag" href="../tags/memory-management/">memory management</a><a class="tag" href="../tags/pointers-in-c/">pointers in c</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

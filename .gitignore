@@ -4,3 +4,9 @@ AGENTS.md
 GITHUB_ALIGNMENT.md
 __pycache__/
 *.pyc
+
+# Blog: drafts and previews stay on this machine; BLOG.md is the local guide.
+/content/drafts/
+/.preview/
+/.venv/
+/BLOG.md

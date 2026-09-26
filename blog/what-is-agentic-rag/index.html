@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is Agentic RAG? - Engineering Tales</title>
+<meta name="description" content="Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/what-is-agentic-rag/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="What is Agentic RAG? - Engineering Tales">
+<meta property="og:description" content="Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/what-is-agentic-rag/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/what-is-agentic-rag/og-6a12bbd4.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-05-30T04:42:39.018Z">
+<meta property="article:modified_time" content="2026-07-03T13:38:41.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="AIML">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="agents">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="retrieval augmented generation">
+<meta property="article:tag" content="agentic AI">
+<meta property="article:tag" content="agentic RAG">
+<meta property="article:tag" content="MCP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is Agentic RAG? - Engineering Tales">
+<meta name="twitter:description" content="Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/what-is-agentic-rag/og-6a12bbd4.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/what-is-agentic-rag/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/what-is-agentic-rag/",
+      "url": "https://sukalyan2003.github.io/blog/what-is-agentic-rag/",
+      "headline": "What is Agentic RAG?",
+      "description": "Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…",
+      "datePublished": "2026-05-30T04:42:39.018Z",
+      "dateModified": "2026-07-03T13:38:41.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/what-is-agentic-rag/og-6a12bbd4.jpg"
+      ],
+      "keywords": [
+        "AI",
+        "agents",
+        "RAG",
+        "retrieval augmented generation",
+        "agentic AI",
+        "agentic RAG",
+        "MCP"
+      ],
+      "articleSection": "AIML",
+      "wordCount": 2350,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AIML",
+          "item": "https://sukalyan2003.github.io/blog/aiml/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "What is Agentic RAG?",
+          "item": "https://sukalyan2003.github.io/blog/what-is-agentic-rag/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/" class="is-current" aria-current="page">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../aiml/">AIML</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">What is Agentic RAG?</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-05-30T04:42:39.018Z">30 May 2026</time></span><span>Updated <time datetime="2026-07-03T13:38:41.000Z">3 Jul 2026</time></span><span>10 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-05-30T04:42:39.018Z">30 May 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T13:38:41.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>10 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../aiml/">AIML</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#where-we-are-now">Where we are now</a></li><li class="toc__l2"><a href="#impact-of-ever-growing-context">Impact of Ever growing context</a></li><li class="toc__l3"><a href="#long-context-is-expensive">Long Context is Expensive</a></li><li class="toc__l3"><a href="#long-context-is-noisy">Long context is noisy</a></li><li class="toc__l3"><a href="#long-context-does-not-solve-source-selection">Long context does not solve source selection</a></li><li class="toc__l2"><a href="#but-can-t-agents-solve-this">But can&#x27;t Agents solve this?</a></li><li class="toc__l2"><a href="#what-is-agentic-rag">What is Agentic RAG?</a></li><li class="toc__l3"><a href="#query-preprocessing">Query preprocessing</a></li><li class="toc__l3"><a href="#routing">Routing</a></li><li class="toc__l3"><a href="#tool-selection">Tool selection</a></li><li class="toc__l3"><a href="#reasoning-over-retrieved-context">Reasoning over retrieved context</a></li><li class="toc__l3"><a href="#validation">Validation</a></li><li class="toc__l2"><a href="#chunking-is-harder-than-it-looks">Chunking is harder than it looks</a></li><li class="toc__l3"><a href="#hierarchical-embedding-a-potential-fix">Hierarchical embedding, a potential fix</a></li><li class="toc__l2"><a href="#where-is-my-project-so-far">Where is my project so far?</a></li><li class="toc__l2"><a href="#conclusion-what-have-i-learned">Conclusion: What have I learned?</a></li><li class="toc__l2"><a href="#references">References</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/6e8f9e248470-6a12bbd4-480.webp" srcset="img/6e8f9e248470-6a12bbd4-480.webp 480w, img/6e8f9e248470-6a12bbd4-960.webp 960w, img/6e8f9e248470-6a12bbd4-1155.webp 1155w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="409" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer.</p>
+</li>
+<li>
+<p>Agentic RAG adds decisions inside the pipeline: when to search, where to search, whether to call tools, and whether the answer is grounded enough.</p>
+</li>
+<li>
+<p>This is useful when questions are vague, multi-step, tool-dependent, or spread across multiple sources.</p>
+</li>
+<li>
+<p>The tradeoff is complexity, latency, cost, and harder evaluation.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Project status</strong></p>
+<p>My own RAG project is still mostly a controlled local pipeline, but it is starting to need agent-like behavior around query analysis, retrieval strategy, validation, and tool orchestration.</p>
+</blockquote>
+<h2 id="where-we-are-now">Where we are now <a class="heading-anchor" href="#where-we-are-now" aria-label="Link to this section">#</a></h2>
+<p>In the <a href="../ai-prompt-engineering-basics/">previous posts</a>, we went over the basic ideas of a RAG, and some ways to optimize our prompting so that we can use existing solutions.</p>
+<p>The next step is to try and recreate such tools ourselves.</p>
+<p>We'll first continue with some more ideas regarding the current state of RAG and how people use it, and then I'll walk you through my most recent attempt at a fully functional system.</p>
+<p>The old version was simple:</p>
+<ol>
+<li>
+<p>split documents into chunks,</p>
+</li>
+<li>
+<p>embed the chunks,</p>
+</li>
+<li>
+<p>retrieve top-k chunks,</p>
+</li>
+<li>
+<p>stuff them into the prompt,</p>
+</li>
+<li>
+<p>ask the LLM to answer.</p>
+</li>
+</ol>
+<p>The newer version of RAG is more like a decision system. It asks:</p>
+<ul>
+<li>
+<p>Do I even need retrieval for this query?</p>
+</li>
+<li>
+<p>What should I retrieve?</p>
+</li>
+<li>
+<p>Which source should I retrieve from?</p>
+</li>
+<li>
+<p>Should I use vector search, keyword search, SQL, web search, an API, or a calculator?</p>
+</li>
+<li>
+<p>Did I retrieve enough evidence?</p>
+</li>
+<li>
+<p>Should I try again with a better query?</p>
+</li>
+<li>
+<p>Can I prove the final answer from the sources?</p>
+</li>
+</ul>
+<h2 id="impact-of-ever-growing-context">Impact of Ever growing context <a class="heading-anchor" href="#impact-of-ever-growing-context" aria-label="Link to this section">#</a></h2>
+<p>I was going through some blogs and other articles regarding the evolution of RAGs with constantly increasing context window sizes.</p>
+<p>It's even more noticeable when there are models, that claim to work with 12 million token context windows like <a href="https://subq.ai/">SubQ</a></p>
+<p>That's 12x the frontier model available publicly at the time of writing, and that too for the overpriced 1M token variant of the model, while the normal ones have barely 250k context.</p>
+<p>So, what are all the problems with that approach?</p>
+<h3 id="long-context-is-expensive">Long Context is Expensive <a class="heading-anchor" href="#long-context-is-expensive" aria-label="Link to this section">#</a></h3>
+<p>If the answer is in 5 useful chunks, sending 600K tokens is wasteful.</p>
+<p>It is like asking one simple question but inviting the whole company to the meeting. You technically have access to everyone, but you are paying for noise.</p>
+<p>In RAG, retrieval is the act of asking the right person first.</p>
+<p>For a local project like mine, this matters even more. I am not running huge hosted models with infinite budget. I am using Ollama locally.</p>
+<p>Tokens are not just costs, but how quickly i'll get any response.</p>
+<p>The Difference between &quot;Yes I can reasonably see myself using this&quot; and, like my old unposted approach, &quot;This is so slow, it's useless even if it gives me the best answers ever&quot;</p>
+<h3 id="long-context-is-noisy"><strong>Long context is noisy</strong> <a class="heading-anchor" href="#long-context-is-noisy" aria-label="Link to this section">#</a></h3>
+<p>All LLMs, no matter how sophisticated, have a tendency to focus more on the first few and last few tokens of a prompt.</p>
+<p>So, for really large contexts, whatever is in between is barely given any attention and is as if they did not exist at all sometimes.</p>
+<p>This is the classic &quot;lost in the middle&quot; problem.</p>
+<p>A smaller, cleaner context is usually better than a huge messy one.</p>
+<h3 id="long-context-does-not-solve-source-selection">Long context does not solve source selection <a class="heading-anchor" href="#long-context-does-not-solve-source-selection" aria-label="Link to this section">#</a></h3>
+<p>Even if you can paste a lot of text, you still need to decide what belongs in the prompt.</p>
+<p>Should the model see old docs or new docs? Should it see public docs or private docs? Should it use the PDF, the CSV, the API, or the web? Should it search code with keyword search instead of semantic search?</p>
+<p>Long context does not remove the need for retrieval logic. It just hides it.</p>
+<h2 id="but-can-t-agents-solve-this">But can't Agents solve this? <a class="heading-anchor" href="#but-can-t-agents-solve-this" aria-label="Link to this section">#</a></h2>
+<p>It's pretty easy to see how the agents that we commonly use, do their job.</p>
+<p>They use lexical search alot, using things like grep and regular expressions.</p>
+<p>This &quot;Keyword Search&quot; is highly effective for queries that deal with proper nouns, function names, class names, route and file paths and more.</p>
+<p>But it's useless when facing with any of the following formats that's not plain text:</p>
+<ul>
+<li>
+<p>PDFs,</p>
+</li>
+<li>
+<p>scanned documents,</p>
+</li>
+<li>
+<p>diagrams,</p>
+</li>
+<li>
+<p>charts,</p>
+</li>
+<li>
+<p>screenshots,</p>
+</li>
+<li>
+<p>tables,</p>
+</li>
+<li>
+<p>policy docs,</p>
+</li>
+<li>
+<p>contracts,</p>
+</li>
+<li>
+<p>emails,</p>
+</li>
+<li>
+<p>slide decks.</p>
+</li>
+</ul>
+<p>You cannot grep a diagram.</p>
+<p>Multimodal Agentic AI can somewhat help but again we return to the problem of choice. Else it will have to go through every possible image, ending your monthly tokens with a single prompt.</p>
+<p>Code may want grep or BM25. Prose may want dense embeddings. Financial data may want SQL. Fresh data may want web search. Images may want OCR or vision embeddings. Complex questions may want more than one of these.</p>
+<h2 id="what-is-agentic-rag">What is Agentic RAG? <a class="heading-anchor" href="#what-is-agentic-rag" aria-label="Link to this section">#</a></h2>
+<p>In essence it's the following:</p>
+<blockquote>
+<p>Instead of hardcoding one retrieve-then-generate path, give the system the ability to plan, choose tools, retrieve iteratively, validate evidence, and then answer.</p>
+</blockquote>
+<p>This has several parts to it as follows:</p>
+<figure class="figure"><img src="img/158ab5ff7bfd-6af5463c-480.webp" srcset="img/158ab5ff7bfd-6af5463c-480.webp 480w, img/158ab5ff7bfd-6af5463c-526.webp 526w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="765" alt="" loading="lazy" decoding="async"></figure>
+
+<h3 id="query-preprocessing"><strong>Query preprocessing</strong> <a class="heading-anchor" href="#query-preprocessing" aria-label="Link to this section">#</a></h3>
+<p>A user rarely writes the perfect retrieval query.</p>
+<p>They might ask:</p>
+<blockquote>
+<p>What were the main numbers last quarter?</p>
+</blockquote>
+<p>A human understands that this might mean revenue, profit, burn rate, customer growth, or some company-specific KPI. A basic RAG system may embed that exact sentence and hope for the best.</p>
+<p>An agentic system can rewrite it:</p>
+<ul>
+<li>
+<p>identify that &quot;last quarter&quot; needs a date range,</p>
+</li>
+<li>
+<p>detect that &quot;main numbers&quot; probably means KPIs,</p>
+</li>
+<li>
+<p>include synonyms like revenue, margin, growth, churn,</p>
+</li>
+<li>
+<p>split the query into subqueries,</p>
+</li>
+<li>
+<p>add metadata filters like <code>document_type=report</code> or <code>department=finance</code>.</p>
+</li>
+</ul>
+<p>My project already has a small version of this in <code>QueryAnalyzer</code>. It expands common abbreviations like <code>AI</code>, <code>ML</code>, <code>NLP</code>, classifies intent, detects query type, extracts simple entities, and adds hints like &quot;include step-by-step instructions&quot; or &quot;compare and contrast&quot;.</p>
+<h3 id="routing"><strong>Routing</strong> <a class="heading-anchor" href="#routing" aria-label="Link to this section">#</a></h3>
+<p>Routing means choosing the right path.</p>
+<p>Not every query needs retrieval.</p>
+<p>If the user says:</p>
+<blockquote>
+<p>Rephrase your last answer.</p>
+</blockquote>
+<p>The system should not search the knowledge base again.</p>
+<p>If the user says:</p>
+<blockquote>
+<p>What is in my uploaded ML notes?</p>
+</blockquote>
+<p>Then retrieval is needed.</p>
+<p>If the user says:</p>
+<blockquote>
+<p>What is the weather tomorrow?</p>
+</blockquote>
+<p>Local document retrieval is the wrong tool. It needs a live web/API call.</p>
+<p>If the user asks:</p>
+<blockquote>
+<p>Compare the refund policy in the PDF with the billing rules in the CSV.</p>
+</blockquote>
+<p>That may need multiple retrievals and maybe structured parsing.</p>
+<p>This feature is still a work in progress for me.</p>
+<h3 id="tool-selection"><strong>Tool selection</strong> <a class="heading-anchor" href="#tool-selection" aria-label="Link to this section">#</a></h3>
+<p>A basic RAG project usually has one tool: vector search.</p>
+<p>An agentic RAG system may choose between:</p>
+<ul>
+<li>
+<p>vector search for semantic similarity,</p>
+</li>
+<li>
+<p>BM25/keyword search for exact terms,</p>
+</li>
+<li>
+<p>SQL for structured data,</p>
+</li>
+<li>
+<p>web search for recent information,</p>
+</li>
+<li>
+<p>API calls for live systems,</p>
+</li>
+<li>
+<p>calculator/code execution for math,</p>
+</li>
+<li>
+<p>OCR or vision models for images.</p>
+</li>
+</ul>
+<p>My project already exposes tools through MCP:</p>
+<ul>
+<li>
+<p><code>chat</code>,</p>
+</li>
+<li>
+<p><code>load_documents</code>,</p>
+</li>
+<li>
+<p><code>search_documents</code>,</p>
+</li>
+<li>
+<p><code>analyze_query</code>,</p>
+</li>
+<li>
+<p><code>get_stats</code>,</p>
+</li>
+<li>
+<p><code>clear_documents</code>,</p>
+</li>
+<li>
+<p><code>clear_conversation</code>.</p>
+</li>
+</ul>
+<p>This is important because MCP turns the chatbot into a tool server, not just a UI app. Any MCP-compatible client can call into the RAG engine.</p>
+<p>Right now, the engine itself still follows a deterministic path. But because the MCP surface exists, the next step is natural: let a controller or LLM choose when to call <code>search_documents</code>, inspect results, and decide whether it has enough evidence.</p>
+<h3 id="reasoning-over-retrieved-context"><strong>Reasoning over retrieved context</strong> <a class="heading-anchor" href="#reasoning-over-retrieved-context" aria-label="Link to this section">#</a></h3>
+<p>Traditional RAG often just passes raw chunks into the prompt.</p>
+<p>Agentic RAG adds a reasoning layer before generation:</p>
+<ul>
+<li>
+<p>rank chunks,</p>
+</li>
+<li>
+<p>remove duplicates,</p>
+</li>
+<li>
+<p>cluster similar evidence,</p>
+</li>
+<li>
+<p>detect contradictions,</p>
+</li>
+<li>
+<p>compare sources,</p>
+</li>
+<li>
+<p>summarize intermediate findings,</p>
+</li>
+<li>
+<p>decide whether another retrieval is needed.</p>
+</li>
+</ul>
+<p>This is useful because retrieval results are messy. Two chunks may say similar things. One may be outdated. One may be too generic. One may be relevant but not enough.</p>
+<p>My current project retrieves top-K chunks by cosine similarity and appends source attribution. That is a good baseline, but the ranking layer is still weak.</p>
+<p>There is actually a <code>rerank_results</code> method in <code>EmbeddingManager</code>, and the main retrieval path calls it with an overhead of 4x .</p>
+<p>That is, if 5 retrievals is the max, it will look for atleast 20 and then rank them before returning the best 5 reference chunks.</p>
+<h3 id="validation"><strong>Validation</strong> <a class="heading-anchor" href="#validation" aria-label="Link to this section">#</a></h3>
+<p>The validation step is what separates a useful enterprise system from a cool demo.</p>
+<p>Before the final answer, the system should ask:</p>
+<ul>
+<li>
+<p>Do the retrieved sources actually support the answer?</p>
+</li>
+<li>
+<p>Are there contradictions?</p>
+</li>
+<li>
+<p>Is the answer missing a required source?</p>
+</li>
+<li>
+<p>Is the confidence too low?</p>
+</li>
+<li>
+<p>Should we ask a clarifying question?</p>
+</li>
+<li>
+<p>Should we refuse because the user lacks permission?</p>
+</li>
+</ul>
+<p>My project already has simple input validation, source attribution, and role-based permissions. But it does not yet have evidence validation.</p>
+<p>For a local chatbot, this can start simple. Even a rule like &quot;every factual paragraph must cite at least one retrieved source&quot; improves trust.</p>
+<h2 id="chunking-is-harder-than-it-looks">Chunking is harder than it looks <a class="heading-anchor" href="#chunking-is-harder-than-it-looks" aria-label="Link to this section">#</a></h2>
+<p>The central question is, what even is a chunk?</p>
+<p>Is it a:</p>
+<ul>
+<li>
+<p>a paragraph?</p>
+</li>
+<li>
+<p>1000 characters?</p>
+</li>
+<li>
+<p>500 tokens?</p>
+</li>
+<li>
+<p>one Markdown section?</p>
+</li>
+<li>
+<p>one PDF page?</p>
+</li>
+<li>
+<p>one table row?</p>
+</li>
+<li>
+<p>one heading and everything under it?</p>
+</li>
+<li>
+<p>a group of semantically related paragraphs?</p>
+</li>
+</ul>
+<p>If chunks are too small, the retriever loses context.</p>
+<p>If chunks are too large, the chunk may contain multiple topics and the model receives noise.</p>
+<p>If chunks overlap too much, results become redundant.</p>
+<p>If chunks ignore structure, citations become weak.</p>
+<p>My project currently uses sentence-aware chunking. It splits text on sentence boundaries, packs sentences greedily up to <code>retrieval.chunk_size</code>, and adds word overlap using <code>retrieval.chunk_overlap</code>. This is much better than blindly slicing text every N characters.</p>
+<p>But it is still not structure-aware.</p>
+<p>A Markdown heading is meaningful. A code block should not be split in half. A table should stay together. A PDF page number matters. A section path like <code>Architecture -&gt; MCP Server -&gt; Tools</code> matters.</p>
+<h3 id="hierarchical-embedding-a-potential-fix">Hierarchical embedding, a potential fix <a class="heading-anchor" href="#hierarchical-embedding-a-potential-fix" aria-label="Link to this section">#</a></h3>
+<p>Instead of assuming all chunks to be equal, we could do it in a hierarchy.</p>
+<p>Start off with small blocks, merge several of those together into a chunk one step above it, and so on until the highest possible chunk is the whole document itself.</p>
+<p>Then it can go top-down through that hierarchy, so chunks from irrelevant documents are not even considered:</p>
+<ol>
+<li>
+<p>find relevant documents,</p>
+</li>
+<li>
+<p>search inside those documents,</p>
+</li>
+<li>
+<p>find relevant sections,</p>
+</li>
+<li>
+<p>search inside those sections,</p>
+</li>
+<li>
+<p>return exact paragraphs or spans.</p>
+</li>
+</ol>
+<p>For my chatbot, I would not start with full hierarchical clustering immediately. I would first add structure-aware chunking.</p>
+<p>Practical version:</p>
+<ul>
+<li>
+<p>Markdown: split by headings, preserve code blocks, lists, and tables.</p>
+</li>
+<li>
+<p>PDFs: store page numbers and maybe page-level chunks.</p>
+</li>
+<li>
+<p>DOCX: preserve headings and paragraph styles where possible.</p>
+</li>
+<li>
+<p>Web pages: chunk by DOM headings instead of flattening all text.</p>
+</li>
+<li>
+<p>CSV: keep row-level chunks but also support grouped summaries.</p>
+</li>
+<li>
+<p>JSON: preserve object paths like <a href="http://customer.support"><code>customer.support</code></a><code>.refund_policy</code>.</p>
+</li>
+</ul>
+<h2 id="where-is-my-project-so-far">Where is my project so far? <a class="heading-anchor" href="#where-is-my-project-so-far" aria-label="Link to this section">#</a></h2>
+<p>As i promised in previous posts, I am working on making a proper RAG system, not because i have all the use cases or the hardware to make perfect use for it, but because I am genuinely curious about this approach.</p>
+<p>So, here are some updates about where it's at right now.</p>
+<p>The project is a local-first RAG chatbot with an MCP server and Streamlit UI.</p>
+<p>(If you need more background on MCPs, let me know in the comments/mail me, and I might work on a post about that as well.)</p>
+<p>The core idea is:</p>
+<blockquote>
+<p>Load documents, embed them locally, retrieve relevant chunks for each query, generate an answer using a local LLM, and return the answer with sources.</p>
+</blockquote>
+<p>The Main components are:</p>
+<ol>
+<li>
+<p>The Orchestrator which organized and calls all the different components of the project</p>
+</li>
+<li>
+<p>The MCP server which makes this usable with absolutely anything that supports MCP API.</p>
+</li>
+<li>
+<p>DocumentProcessor:<br />
+For normal text and Markdown, it reads the file and splits it into chunks.</p>
+<p>For PDF, it uses <code>pdfminer.six</code>.</p>
+<p>For DOCX, it uses <code>python-docx</code> if available.</p>
+<p>For JSON, it tries to find useful text fields like:</p>
+<ul>
+<li>
+<p><code>content</code>,</p>
+</li>
+<li>
+<p><code>text</code>,</p>
+</li>
+<li>
+<p><code>body</code>,</p>
+</li>
+<li>
+<p><code>message</code>,</p>
+</li>
+<li>
+<p><code>description</code>,</p>
+</li>
+<li>
+<p><code>summary</code>.</p>
+</li>
+</ul>
+<p>For CSV, every row becomes a textual chunk like:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>column_1: value
+column_2: value
+column_3: value</code></pre></div>
+<p>For web URLs, it uses <code>requests</code> and BeautifulSoup, removes script/style content, extracts text, and chunks it.</p>
+</li>
+<li>
+<p>Sentence Aware Chunking</p>
+</li>
+<li>
+<p>Embeddings and Chat models, orchestrated and run fully locally via Ollama<br />
+I'm using <code>qwen3-embedding:0.6b</code> and <code>qwen3:4b-instruct</code></p>
+</li>
+<li>
+<p>Role based access control (Still a work in progress)</p>
+</li>
+<li>
+<p>Source attribution to minimize hallucinations</p>
+</li>
+<li>
+<p>Full tool usage support in the API and route logic but pending the internal logic to do so</p>
+</li>
+<li>
+<p>Streamlit Dashboard with both the chat interface and the Document management along with every major kinds of analytics.</p>
+</li>
+<li>
+<p>A full test suite, that's still a work in progress as the features change.</p>
+</li>
+</ol>
+<h2 id="conclusion-what-have-i-learned">Conclusion: What have I learned? <a class="heading-anchor" href="#conclusion-what-have-i-learned" aria-label="Link to this section">#</a></h2>
+<p>It is easy to think of RAG as one pipeline:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>retrieve -&gt; generate</code></pre></div>
+<p>But Now I think of it more like this:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">markdown</span></div><pre class="code" tabindex="0"><code>understand query
+  -&gt; decide if retrieval is needed
+  -&gt; choose source/tool
+  -&gt; retrieve candidates
+  -&gt; rerank and validate
+  -&gt; retrieve again if needed
+  -&gt; generate from minimal evidence
+  -&gt; cite exact sources
+  -&gt; measure every stage</code></pre></div>
+<p>If there's enough response to this post, I'll be working actively on this project further, bringing more updates and explanations for each phase of it.</p>
+<p>Drop any questions or suggestions you might have, or if you think i'm doing something wrong.</p>
+<p>Stay tuned for more!</p>
+<h2 id="references">References <a class="heading-anchor" href="#references" aria-label="Link to this section">#</a></h2>
+<p><a href="https://vectorize.io/blog/how-i-finally-got-agentic-rag-to-work-right">https://vectorize.io/blog/how-i-finally-got-agentic-rag-to-work-right</a> &lt;- The cover image is from here. And I did learn a bit about the function behavior of Agentic AI though that's not a big point in this post.</p>
+<p><a href="https://lighton.ai/lighton-blogs/rag-is-dead-long-live-rag-retrieval-in-the-age-of-agents">https://lighton.ai/lighton-blogs/rag-is-dead-long-live-rag-retrieval-in-the-age-of-agents</a></p>
+<p><a href="https://dedicatted.com/insights/agentic-rag-what-it-is-and-its-role-in-truly-usable-enterprise-ai">https://dedicatted.com/insights/agentic-rag-what-it-is-and-its-role-in-truly-usable-enterprise-ai</a></p>
+<p><a href="https://docs.kanaries.net/articles/agentic-rag">https://docs.kanaries.net/articles/agentic-rag</a></p>
+<p><a href="https://gwern.net/tree-embedding">https://gwern.net/tree-embedding</a></p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/ai/">AI</a><a class="tag" href="../tags/agents/">agents</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/retrieval-augmented-generation/">retrieval augmented generation</a><a class="tag" href="../tags/agentic-ai/">agentic AI</a><a class="tag" href="../tags/agentic-rag/">agentic RAG</a><a class="tag" href="../tags/mcp/">MCP</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/what-is-agentic-rag/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-is-agentic-rag%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-is-agentic-rag%2F&amp;text=What%20is%20Agentic%20RAG%3F" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-is-agentic-rag%2F&amp;title=What%20is%20Agentic%20RAG%3F" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=What%20is%20Agentic%20RAG%3F&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-is-agentic-rag%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../ai-prompt-engineering-basics/" rel="prev"><span class="label">Older</span><span class="pager__title">How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly</span></a><a class="pager__link pager__link--newer" href="../from-tokens-to-trees/" rel="next"><span class="label">Newer</span><span class="pager__title">From Tokens to Trees</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-06-20T06:02:42.197Z">20 Jun 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../adding-rank-fusion-to-my-rag-retrieval-logic/">Adding Rank Fusion to my RAG retrieval logic</a></h3>
+          <p>In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/ollama/">ollama</a><a class="tag" href="../tags/hybrid-search/">hybrid search</a><a class="tag" href="../tags/agentic-ai/">agentic AI</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-11T04:05:58.536Z">11 Jul 2026</time>
+          <span class="dispatch__read">12 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../one-model-is-the-new-n-1/">One Model Is the New n=1</a></h3>
+          <p>In the first eval, the conclusion was annoying but useful. At the frontier, it did not make the model meaningfully smarter.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/devtools/">dev tools</a><a class="tag" href="../tags/prompt/">prompt</a><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/promptengineering/">prompt engineering</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-04T04:39:04.300Z">4 Jul 2026</time>
+          <span class="dispatch__read">13 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3>
+          <p>I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI&#x27;s Codex.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/evaluation-metrics/">evaluation metrics</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/mcp/">MCP</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

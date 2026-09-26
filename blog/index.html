@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Tales - Sukalyan Roy</title>
+<meta name="description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/">
+<link rel="next" href="https://sukalyan2003.github.io/blog/page/2/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Engineering Tales - Sukalyan Roy">
+<meta property="og:description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/">
+<meta property="og:image" content="https://sukalyan2003.github.io/the-record/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Tales - Sukalyan Roy">
+<meta name="twitter:description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/the-record/img/og-card.jpg">
+
+<link rel="preload" href="../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://sukalyan2003.github.io/blog/#blog",
+      "url": "https://sukalyan2003.github.io/blog/",
+      "name": "Engineering Tales",
+      "description": "A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "isPartOf": {
+        "@id": "https://sukalyan2003.github.io/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog">
+  <div class="sheet">
+    <h1 class="masthead__name blog-nameplate"><a href="./">Engineering Tales</a></h1>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="start-here/">Start here</a></li><li><a href="linux/">Linux</a></li><li><a href="aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="unsung-bits/">Unsung Bits</a></li><li><a href="programming-concepts/">Programming Concepts</a></li><li><a href="moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="./#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <section class="section front" aria-labelledby="latest-title">
+      <div class="section__head"><span class="section__numeral">01</span><h2 class="section__title" id="latest-title">Latest</h2><span class="section__note">Newest first</span></div>
+      <div class="front__grid">
+      <div class="front__lead"><article class="story story--lead">
+        <a class="story__media" href="the-number-that-shouldn-t-exist/" tabindex="-1" aria-hidden="true"><img src="the-number-that-shouldn-t-exist/img/a1950162fd6f-8eb222e1-480.webp" srcset="the-number-that-shouldn-t-exist/img/a1950162fd6f-8eb222e1-480.webp 480w, the-number-that-shouldn-t-exist/img/a1950162fd6f-8eb222e1-960.webp 960w, the-number-that-shouldn-t-exist/img/a1950162fd6f-8eb222e1-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 640px" width="480" height="360" alt="" fetchpriority="high" decoding="async"></a>
+        <p class="story__kicker"><a href="unsung-bits/">Unsung Bits</a></p>
+        <h3 class="story__title"><a href="the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></h3>
+        <p class="story__excerpt">Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.</p>
+        <p class="story__meta"><time datetime="2026-09-26T06:50:44.631Z">26 Sep 2026</time><span>10 min read</span></p>
+      </article></div>
+      <div class="front__col front__col--left"><article class="story">
+        <a class="story__media" href="the-algorithm-that-grinds-problems-to-dust/" tabindex="-1" aria-hidden="true"><img src="the-algorithm-that-grinds-problems-to-dust/img/ef24bce23797-833e4de6-480.webp" srcset="the-algorithm-that-grinds-problems-to-dust/img/ef24bce23797-833e4de6-480.webp 480w, the-algorithm-that-grinds-problems-to-dust/img/ef24bce23797-833e4de6-960.webp 960w, the-algorithm-that-grinds-problems-to-dust/img/ef24bce23797-833e4de6-1440.webp 1440w" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 300px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+        <p class="story__kicker"><a href="unsung-bits/">Unsung Bits</a></p>
+        <h3 class="story__title"><a href="the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></h3>
+        
+        <p class="story__meta"><time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time><span>10 min read</span></p>
+      </article><article class="story">
+        <a class="story__media" href="the-poet-who-accidentally-invented-binary-sort-of/" tabindex="-1" aria-hidden="true"><img src="the-poet-who-accidentally-invented-binary-sort-of/img/4241e3bcecf1-f596ba68-480.webp" srcset="the-poet-who-accidentally-invented-binary-sort-of/img/4241e3bcecf1-f596ba68-480.webp 480w, the-poet-who-accidentally-invented-binary-sort-of/img/4241e3bcecf1-f596ba68-960.webp 960w, the-poet-who-accidentally-invented-binary-sort-of/img/4241e3bcecf1-f596ba68-1440.webp 1440w" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 300px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+        <p class="story__kicker"><a href="unsung-bits/">Unsung Bits</a></p>
+        <h3 class="story__title"><a href="the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></h3>
+        
+        <p class="story__meta"><time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time><span>10 min read</span></p>
+      </article></div>
+      <div class="front__col front__col--right"><article class="story">
+        <a class="story__media" href="the-grammar-that-runs-like-a-program/" tabindex="-1" aria-hidden="true"><img src="the-grammar-that-runs-like-a-program/img/d250567f2e39-238c2d12-480.webp" srcset="the-grammar-that-runs-like-a-program/img/d250567f2e39-238c2d12-480.webp 480w, the-grammar-that-runs-like-a-program/img/d250567f2e39-238c2d12-960.webp 960w, the-grammar-that-runs-like-a-program/img/d250567f2e39-238c2d12-1440.webp 1440w" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 300px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+        <p class="story__kicker"><a href="unsung-bits/">Unsung Bits</a></p>
+        <h3 class="story__title"><a href="the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></h3>
+        
+        <p class="story__meta"><time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time><span>11 min read</span></p>
+      </article><article class="story">
+        <a class="story__media" href="discovering-rags-4-project-updates-all-the-way/" tabindex="-1" aria-hidden="true"><img src="discovering-rags-4-project-updates-all-the-way/img/2ad5670d305a-1727d82c-480.webp" srcset="discovering-rags-4-project-updates-all-the-way/img/2ad5670d305a-1727d82c-480.webp 480w, discovering-rags-4-project-updates-all-the-way/img/2ad5670d305a-1727d82c-801.webp 801w" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 300px" width="480" height="358" alt="" loading="lazy" decoding="async"></a>
+        <p class="story__kicker"><a href="aiml/">AIML</a></p>
+        <h3 class="story__title"><a href="discovering-rags-4-project-updates-all-the-way/">Discovering RAGs 4: Project updates all the way</a></h3>
+        
+        <p class="story__meta"><time datetime="2026-08-08T05:59:48.259Z">8 Aug 2026</time><span>7 min read</span></p>
+      </article></div>
+      </div>
+    </section>
+    <section class="colophon" aria-label="About this blog">
+      <div class="portrait colophon__portrait">
+        <picture class="portrait__plate portrait__plate--paper"><img src="../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+        <picture class="portrait__plate portrait__plate--press"><img src="../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+      </div>
+      <div class="colophon__body">
+        <p class="colophon__name">Engineering Tales</p>
+        <p class="colophon__desc">A technical lab notebook by <a href="../">Sukalyan Roy</a>: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.</p>
+        <p class="colophon__meta"><span>26 posts</span><span><a href="start-here/">Start here</a></span><span><a href="rss.xml">RSS</a></span></p>
+      </div>
+    </section>
+    <section class="section archive" id="search" aria-labelledby="archive-title">
+      <div class="section__head"><span class="section__numeral">02</span><h2 class="section__title" id="archive-title">Archive</h2><span class="section__note">Page 1 of 3</span></div>
+      <form class="finder" role="search" aria-label="Search posts" data-finder hidden>
+        <div class="finder__field finder__field--q">
+          <label class="label" for="finder-q">Search</label>
+          <input id="finder-q" type="search" name="q" autocomplete="off" spellcheck="false" placeholder="Title, summary or tag">
+        </div>
+        <div class="finder__field">
+          <label class="label" for="finder-section">Section</label>
+          <select id="finder-section" name="section"><option value="">All sections</option><option value="linux">Linux</option><option value="aiml">AIML</option><option value="unsung-bits">Unsung Bits</option><option value="programming-concepts">Programming Concepts</option><option value="moocs">Moocs</option></select>
+        </div>
+        <div class="finder__field">
+          <label class="label" for="finder-tag">Tag</label>
+          <select id="finder-tag" name="tag"><option value="">All tags</option><option value="ai">AI (4)</option><option value="ai-agents">AI agents (2)</option><option value="ai-development">AI development (1)</option><option value="ast">AST (1)</option><option value="bm25">BM25 (1)</option><option value="c">C (1)</option><option value="cli">CLI (2)</option><option value="cs50">CS50 (2)</option><option value="cs50-ai">CS50 AI (1)</option><option value="google-ai-studio">Google AI Studio (1)</option><option value="llm">LLM (5)</option><option value="mcp">MCP (4)</option><option value="nand2tetris">Nand2Tetris (1)</option><option value="rag">RAG (8)</option><option value="reactjs">React (1)</option><option value="typescript">TypeScript (1)</option><option value="agentic-ai">agentic AI (3)</option><option value="agentic-rag">agentic RAG (1)</option><option value="agents">agents (1)</option><option value="algorithms">algorithms (2)</option><option value="aryabhata">aryabhata (1)</option><option value="assembly">assembly (1)</option><option value="bash">bash (1)</option><option value="bash-script">bash script (1)</option><option value="binary">binary (1)</option><option value="chatbot">chatbot (1)</option><option value="claude">claude (1)</option><option value="claude-code">claude code (1)</option><option value="cli-tool">cli tool (1)</option><option value="combinatorics">combinatorics (1)</option><option value="compiler">compiler (1)</option><option value="compilerdesign">compiler design (1)</option><option value="computer-architecture">computer architecture (1)</option><option value="computer-science">computer science (1)</option><option value="computer-science-history">computer science history (4)</option><option value="devtools">dev tools (2)</option><option value="developer-tools">developer tools (2)</option><option value="devlog">devlog (1)</option><option value="embeddings">embeddings (1)</option><option value="evaluation-metrics">evaluation metrics (1)</option><option value="experiment">experiment (1)</option><option value="formal-languages">formal languages (1)</option><option value="gemini">gemini (1)</option><option value="golden-dataset">golden dataset (1)</option><option value="hardware">hardware (1)</option><option value="history-of-computing">history of computing (1)</option><option value="hybrid-search">hybrid search (1)</option><option value="india">india (5)</option><option value="interpreter">interpreter (1)</option><option value="introduction">introduction (1)</option><option value="linguistics">linguistics (1)</option><option value="linux">linux (1)</option><option value="linux-basics">linux basics (1)</option><option value="linux-for-beginners">linux for beginners (1)</option><option value="machine-learning">machine learning (1)</option><option value="mathematics">mathematics (3)</option><option value="memory-management">memory management (1)</option><option value="multiprocessing">multiprocessing (1)</option><option value="multithreading">multithreading (1)</option><option value="neural-networks">neural networks (1)</option><option value="number-theory">number theory (1)</option><option value="ollama">ollama (1)</option><option value="parsing">parsing (1)</option><option value="password-generator">password generator (1)</option><option value="pointers">pointers (1)</option><option value="pointers-in-c">pointers in c (1)</option><option value="process-management">process management (1)</option><option value="programming-blogs">programming blogs (1)</option><option value="prompt">prompt (1)</option><option value="promptengineering">prompt engineering (2)</option><option value="python">python (3)</option><option value="retrieval-augmented-generation">retrieval augmented generation (2)</option><option value="sanskrit">sanskrit (2)</option><option value="shell">shell (1)</option><option value="terminal">terminal (2)</option><option value="unsung-bits">unsung bits (3)</option><option value="vibe-coding">vibe coding (2)</option><option value="vim">vim (1)</option></select>
+        </div>
+      </form>
+      <output class="finder__status" for="finder-q finder-section finder-tag" aria-live="polite" data-finder-status></output>
+      <ul class="finder__results" data-finder-results hidden></ul>
+      <div class="archive__list" data-archive>
+      <div class="dispatches">
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-07-30T06:57:07.783Z">30 Jul 2026</time>
+          <span class="dispatch__read">6 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="history-of-computer-science-in-india-part-2/">History of computer science in india Part 2</a></h3>
+          <p>This series explores foundational Indian computing contributions that are often omitted from standard curricula.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/algorithms/">algorithms</a><a class="tag" href="tags/programming-blogs/">programming blogs</a><a class="tag" href="tags/computer-science/">computer science</a><a class="tag" href="tags/india/">india</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="history-of-computer-science-in-india-part-2/" tabindex="-1" aria-hidden="true"><img src="history-of-computer-science-in-india-part-2/img/6578db2a59d4-a86eb88c-480.webp" srcset="history-of-computer-science-in-india-part-2/img/6578db2a59d4-a86eb88c-480.webp 480w, history-of-computer-science-in-india-part-2/img/6578db2a59d4-a86eb88c-960.webp 960w, history-of-computer-science-in-india-part-2/img/6578db2a59d4-a86eb88c-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="360" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-07-18T13:01:48.926Z">18 Jul 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="vibecoding-hackathons/">Vibecoding Hackathons?</a></h3>
+          <p>I entered a vibecoding hackathon and somehow ended up using one AI to tell another AI how to build the app. This parody of software development is unfortunately the truth.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/ai/">AI</a><a class="tag" href="tags/devtools/">dev tools</a><a class="tag" href="tags/reactjs/">React</a><a class="tag" href="tags/typescript/">TypeScript</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="vibecoding-hackathons/" tabindex="-1" aria-hidden="true"><img src="vibecoding-hackathons/img/4f1c8556eb23-ae2a8469-480.webp" srcset="vibecoding-hackathons/img/4f1c8556eb23-ae2a8469-480.webp 480w, vibecoding-hackathons/img/4f1c8556eb23-ae2a8469-960.webp 960w, vibecoding-hackathons/img/4f1c8556eb23-ae2a8469-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="360" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-07-11T04:05:58.536Z">11 Jul 2026</time>
+          <span class="dispatch__read">12 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="one-model-is-the-new-n-1/">One Model Is the New n=1</a></h3>
+          <p>In the first eval, the conclusion was annoying but useful. At the frontier, it did not make the model meaningfully smarter.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/devtools/">dev tools</a><a class="tag" href="tags/prompt/">prompt</a><a class="tag" href="tags/llm/">LLM</a><a class="tag" href="tags/promptengineering/">prompt engineering</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="one-model-is-the-new-n-1/" tabindex="-1" aria-hidden="true"><img src="one-model-is-the-new-n-1/img/4503254fdda9-ef211b11-480.webp" srcset="one-model-is-the-new-n-1/img/4503254fdda9-ef211b11-480.webp 480w, one-model-is-the-new-n-1/img/4503254fdda9-ef211b11-754.webp 754w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="507" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-07-04T04:39:04.300Z">4 Jul 2026</time>
+          <span class="dispatch__read">13 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3>
+          <p>I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI&#x27;s Codex.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/llm/">LLM</a><a class="tag" href="tags/evaluation-metrics/">evaluation metrics</a><a class="tag" href="tags/rag/">RAG</a><a class="tag" href="tags/mcp/">MCP</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/" tabindex="-1" aria-hidden="true"><img src="does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/img/af4181755fca-6ed574e1-480.webp" srcset="does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/img/af4181755fca-6ed574e1-480.webp 480w, does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/img/af4181755fca-6ed574e1-960.webp 960w, does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/img/af4181755fca-6ed574e1-1195.webp 1195w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="580" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-06-20T06:02:42.197Z">20 Jun 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="adding-rank-fusion-to-my-rag-retrieval-logic/">Adding Rank Fusion to my RAG retrieval logic</a></h3>
+          <p>In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/rag/">RAG</a><a class="tag" href="tags/ollama/">ollama</a><a class="tag" href="tags/hybrid-search/">hybrid search</a><a class="tag" href="tags/agentic-ai/">agentic AI</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="adding-rank-fusion-to-my-rag-retrieval-logic/" tabindex="-1" aria-hidden="true"><img src="adding-rank-fusion-to-my-rag-retrieval-logic/img/9bbd2afac2e3-d9063996-480.webp" srcset="adding-rank-fusion-to-my-rag-retrieval-logic/img/9bbd2afac2e3-d9063996-480.webp 480w, adding-rank-fusion-to-my-rag-retrieval-logic/img/9bbd2afac2e3-d9063996-960.webp 960w, adding-rank-fusion-to-my-rag-retrieval-logic/img/9bbd2afac2e3-d9063996-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="244" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-06-06T04:57:51.375Z">6 Jun 2026</time>
+          <span class="dispatch__read">8 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="from-tokens-to-trees/">From Tokens to Trees</a></h3>
+          <p>We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/python/">python</a><a class="tag" href="tags/interpreter/">interpreter</a><a class="tag" href="tags/ast/">AST</a><a class="tag" href="tags/compiler/">compiler</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="from-tokens-to-trees/" tabindex="-1" aria-hidden="true"><img src="from-tokens-to-trees/img/4c10d2ef8b50-766d40eb-480.webp" srcset="from-tokens-to-trees/img/4c10d2ef8b50-766d40eb-480.webp 480w, from-tokens-to-trees/img/4c10d2ef8b50-766d40eb-960.webp 960w, from-tokens-to-trees/img/4c10d2ef8b50-766d40eb-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="320" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-05-30T04:42:39.018Z">30 May 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="what-is-agentic-rag/">What is Agentic RAG?</a></h3>
+          <p>Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/ai/">AI</a><a class="tag" href="tags/agents/">agents</a><a class="tag" href="tags/rag/">RAG</a><a class="tag" href="tags/retrieval-augmented-generation/">retrieval augmented generation</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="what-is-agentic-rag/" tabindex="-1" aria-hidden="true"><img src="what-is-agentic-rag/img/6e8f9e248470-6a12bbd4-480.webp" srcset="what-is-agentic-rag/img/6e8f9e248470-6a12bbd4-480.webp 480w, what-is-agentic-rag/img/6e8f9e248470-6a12bbd4-960.webp 960w, what-is-agentic-rag/img/6e8f9e248470-6a12bbd4-1155.webp 1155w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="409" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-05-16T14:56:02.378Z">16 May 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="ai-prompt-engineering-basics/">How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly</a></h3>
+          <p>I use coding agents as accelerators, not as authorities. The smaller the task and clearer the context, the better the result.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/cli/">CLI</a><a class="tag" href="tags/developer-tools/">developer tools</a><a class="tag" href="tags/ai-development/">AI development</a><a class="tag" href="tags/promptengineering/">prompt engineering</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="ai-prompt-engineering-basics/" tabindex="-1" aria-hidden="true"><img src="ai-prompt-engineering-basics/img/144957fcf2fe-8f175e32-480.webp" srcset="ai-prompt-engineering-basics/img/144957fcf2fe-8f175e32-480.webp 480w, ai-prompt-engineering-basics/img/144957fcf2fe-8f175e32-960.webp 960w, ai-prompt-engineering-basics/img/144957fcf2fe-8f175e32-1042.webp 1042w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="343" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-05-09T14:41:59.331Z">9 May 2026</time>
+          <span class="dispatch__read">9 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="aiml/">AIML</a></p>
+          <h3><a href="transforming-chatbot-interactions-with-retrieval-augmented-generation/">Transforming Chatbot Interactions with Retrieval Augmented Generation</a></h3>
+          <p>Since ChatGPT was first unveiled, one of my persistent doubts has been how it will work in applications requiring proprietary or post-2022 data.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="tags/chatbot/">chatbot</a><a class="tag" href="tags/llm/">LLM</a><a class="tag" href="tags/embeddings/">embeddings</a><a class="tag" href="tags/rag/">RAG</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="transforming-chatbot-interactions-with-retrieval-augmented-generation/" tabindex="-1" aria-hidden="true"><img src="transforming-chatbot-interactions-with-retrieval-augmented-generation/img/018d53bef0f7-587d0f3e-480.webp" srcset="transforming-chatbot-interactions-with-retrieval-augmented-generation/img/018d53bef0f7-587d0f3e-480.webp 480w, transforming-chatbot-interactions-with-retrieval-augmented-generation/img/018d53bef0f7-587d0f3e-960.webp 960w, transforming-chatbot-interactions-with-retrieval-augmented-generation/img/018d53bef0f7-587d0f3e-1280.webp 1280w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="268" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-05-02T04:56:56.224Z">2 May 2026</time>
+          <span class="dispatch__read">8 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="moocs/">Moocs</a></p>
+          <h3><a href="what-comes-after-cs50x-discover-cs50-ai-2/">What Comes After CS50x? Discover CS50 AI - 2</a></h3>
+          <p>We’re halfway there, we started this journey together and went through several projects that most people won’t even consider “real” AI. Now it’s time to change that.</p>
+          
+        </div>
+        <a class="dispatch__thumb" href="what-comes-after-cs50x-discover-cs50-ai-2/" tabindex="-1" aria-hidden="true"><img src="what-comes-after-cs50x-discover-cs50-ai-2/img/a59db0514191-0a127c69-480.webp" srcset="what-comes-after-cs50x-discover-cs50-ai-2/img/a59db0514191-0a127c69-480.webp 480w, what-comes-after-cs50x-discover-cs50-ai-2/img/a59db0514191-0a127c69-960.webp 960w, what-comes-after-cs50x-discover-cs50-ai-2/img/a59db0514191-0a127c69-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="467" alt="" loading="lazy" decoding="async"></a>
+      </article>
+    </div>
+      <nav class="pagination" aria-label="Archive pages"><ol class="pagination__pages"><li><a href="./" aria-current="page">1</a></li><li><a href="page/2/">2</a></li><li><a href="page/3/">3</a></li></ol><a class="pagination__step" href="page/2/" rel="next">Older posts</a></nav>
+      </div>
+      <nav class="browse" aria-label="Browse the archive"><p class="label">Browse</p><ul class="browse__list"><li><a href="start-here/">Start here</a></li><li><a href="linux/">Linux</a></li><li><a href="aiml/">AIML</a></li><li><a href="unsung-bits/">Unsung Bits</a></li><li><a href="programming-concepts/">Programming Concepts</a></li><li><a href="moocs/">Moocs</a></li><li><a href="tags/">All tags</a></li></ul></nav>
+    </section>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="./">Engineering Tales</a></span>
+      <span><a href="../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="rss.xml">RSS</a> · <a href="tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../the-record/js/main.js" defer></script>
+<script src="assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

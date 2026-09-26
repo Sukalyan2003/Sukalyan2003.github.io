@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Tales - page 3</title>
+<meta name="description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/page/3/">
+<link rel="prev" href="https://sukalyan2003.github.io/blog/page/2/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Engineering Tales - page 3">
+<meta property="og:description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/page/3/">
+<meta property="og:image" content="https://sukalyan2003.github.io/the-record/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Tales - page 3">
+<meta name="twitter:description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/the-record/img/og-card.jpg">
+
+<link rel="preload" href="../../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://sukalyan2003.github.io/blog/#blog",
+      "url": "https://sukalyan2003.github.io/blog/",
+      "name": "Engineering Tales",
+      "description": "A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "isPartOf": {
+        "@id": "https://sukalyan2003.github.io/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../../start-here/">Start here</a></li><li><a href="../../linux/">Linux</a></li><li><a href="../../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../../unsung-bits/">Unsung Bits</a></li><li><a href="../../programming-concepts/">Programming Concepts</a></li><li><a href="../../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <section class="section archive" id="search" aria-labelledby="archive-title">
+      <div class="section__head"><span class="section__numeral">02</span><h2 class="section__title" id="archive-title">Archive</h2><span class="section__note">Page 3 of 3</span></div>
+      
+      <div class="archive__list" data-archive>
+      <div class="dispatches">
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-02-28T06:38:17.390Z">28 Feb 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../linux/">Linux</a></p>
+          <h3><a href="../../learning-how-to-use-vim/">Learning how to use Vim</a></h3>
+          <p>Look at the basics of what vim is all about and have this handy cheatsheet to get you started</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/terminal/">terminal</a><a class="tag" href="../../tags/vim/">vim</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../learning-how-to-use-vim/" tabindex="-1" aria-hidden="true"><img src="../../learning-how-to-use-vim/img/a391ef83c91e-d02e1680-480.webp" srcset="../../learning-how-to-use-vim/img/a391ef83c91e-d02e1680-480.webp 480w, ../../learning-how-to-use-vim/img/a391ef83c91e-d02e1680-960.webp 960w, ../../learning-how-to-use-vim/img/a391ef83c91e-d02e1680-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="264" alt="" loading="lazy" decoding="async"></a>
+      </article>
+    </div>
+      <nav class="pagination" aria-label="Archive pages"><a class="pagination__step" href="../2/" rel="prev">Newer posts</a><ol class="pagination__pages"><li><a href="../../">1</a></li><li><a href="../2/">2</a></li><li><a href="./" aria-current="page">3</a></li></ol></nav>
+      </div>
+      <nav class="browse" aria-label="Browse the archive"><p class="label">Browse</p><ul class="browse__list"><li><a href="../../start-here/">Start here</a></li><li><a href="../../linux/">Linux</a></li><li><a href="../../aiml/">AIML</a></li><li><a href="../../unsung-bits/">Unsung Bits</a></li><li><a href="../../programming-concepts/">Programming Concepts</a></li><li><a href="../../moocs/">Moocs</a></li><li><a href="../../tags/">All tags</a></li></ul></nav>
+    </section>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../../">Engineering Tales</a></span>
+      <span><a href="../../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../../rss.xml">RSS</a> · <a href="../../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../../the-record/js/main.js" defer></script>
+<script src="../../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

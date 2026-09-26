@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastering Pointers in C: A Beginner&#x27;s Guide to Memory Management - Engineering Tales</title>
+<meta name="description" content="Demystify pointers in C programming with this beginner&#x27;s guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/exploring-pointers/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Mastering Pointers in C: A Beginner&#x27;s Guide to Memory Management - Engineering Tales">
+<meta property="og:description" content="Demystify pointers in C programming with this beginner&#x27;s guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/exploring-pointers/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/exploring-pointers/og-a539fcd3.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2024-04-01T13:30:41.898Z">
+<meta property="article:modified_time" content="2026-07-03T14:17:27.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Programming Concepts">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="pointers">
+<meta property="article:tag" content="memory management">
+<meta property="article:tag" content="pointers in c">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mastering Pointers in C: A Beginner&#x27;s Guide to Memory Management - Engineering Tales">
+<meta name="twitter:description" content="Demystify pointers in C programming with this beginner&#x27;s guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/exploring-pointers/og-a539fcd3.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/exploring-pointers/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/exploring-pointers/",
+      "url": "https://sukalyan2003.github.io/blog/exploring-pointers/",
+      "headline": "Exploring Pointers",
+      "description": "Demystify pointers in C programming with this beginner's guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po",
+      "datePublished": "2024-04-01T13:30:41.898Z",
+      "dateModified": "2026-07-03T14:17:27.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/exploring-pointers/og-a539fcd3.jpg"
+      ],
+      "keywords": [
+        "C",
+        "pointers",
+        "memory management",
+        "pointers in c"
+      ],
+      "articleSection": "Programming Concepts",
+      "wordCount": 1070,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Programming Concepts",
+          "item": "https://sukalyan2003.github.io/blog/programming-concepts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Exploring Pointers",
+          "item": "https://sukalyan2003.github.io/blog/exploring-pointers/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/" class="is-current" aria-current="page">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Exploring Pointers</h1>
+        <p class="standfirst article__standfirst">Demystify pointers in C programming with this beginner&#x27;s guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2024-04-01T13:30:41.898Z">1 Apr 2024</time></span><span>Updated <time datetime="2026-07-03T14:17:27.000Z">3 Jul 2026</time></span><span>5 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2024-04-01T13:30:41.898Z">1 Apr 2024</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T14:17:27.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>5 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../programming-concepts/">Programming Concepts</a></dd></div>
+          </dl>
+          
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/c911090b1349-a539fcd3-480.webp" srcset="img/c911090b1349-a539fcd3-480.webp 480w, img/c911090b1349-a539fcd3-960.webp 960w, img/c911090b1349-a539fcd3-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h3 id="pointers">Pointers <a class="heading-anchor" href="#pointers" aria-label="Link to this section">#</a></h3>
+<p>Pointers are an important aspect of learning programming.</p>
+<p>It's a part of every 101 course and used in almost every major algorithm or data structure under the hood for greater performance.</p>
+<p>it's good to have a basic understanding of pointers, even though you might not need to use them in your software job directly.</p>
+<p>These are a slightly edited version of my own notes when I was learning them a few months ago during my college studies.</p>
+<p>In the most basic of terms, a pointer is a variable that stores the memory location of a particular piece of data. We can further hold a pointer to a pointer on and on, but that's not immediately important.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int x</code></td>
+<td>An integer value</td>
+</tr>
+<tr>
+<td><code>&amp;x</code></td>
+<td>The address of <code>x</code></td>
+</tr>
+<tr>
+<td><code>int *p</code></td>
+<td>A pointer to an integer</td>
+</tr>
+<tr>
+<td><code>p = &amp;x</code></td>
+<td>Store <code>x</code>'s address in <code>p</code></td>
+</tr>
+<tr>
+<td><code>*p</code></td>
+<td>The value at the address stored in <code>p</code></td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>
+<p>Pointers are initialized by using <code>dataType *pointerVariableName;</code> .Value is assigned using the <code>&amp;</code> or &quot;AddressOf&quot; Operator as follows:<br />
+<code>pointerVariable = &amp;anotherVariable</code> After which the pointer stores the memory address of the concerned variable.</p>
+</li>
+<li>
+<p>We can use <code>*pointerVariable</code> to &quot;Dereference&quot; it. This just means that when we write <code>*pointerVariable</code>, it refers to the <strong>Value</strong> at the location which the pointer stores. Thus if variable <code>a</code> = 5 and <code>p = &amp;a</code>, then <code>*p</code> = 5. We can assign values to declared but non initialized variables using the following</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">c</span></div><pre class="code" tabindex="0"><code><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+<span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="c1">// Then if we print a we get value to be 5</span></code></pre></div>
+</li>
+<li>
+<p>We we increment a pointer <code>n</code> , it does not change by <code>n</code> but instead by <code>sizeOfDatatypeElement * n</code> Thus by incrementing a integer type pointer by one, we change the memory location value of it by <code>1*4</code> bytes because each integer type variable takes 4 bytes in the memory.</p>
+<p>We can only increment or decrement pointers. No other arithmetic is allowed for pointers.</p>
+</li>
+<li>
+<p>The <code>void</code> pointer. We can declare a void type pointer to store the starting memory location of values of any type. We don't need to do any typecasting to store the address in it.<br />
+The problem is that we cannot do pointer arithmetic or dereference this pointer as the compiler does not know how far the value goes, which it does if the type is specified. We can only store and retrieve the starting address.</p>
+</li>
+<li>
+<p>To use pointers to pointers or pointers to pointers to pointers and so on upto n layers. We use <code>dataType ***...n variableName</code>. For example <code>int **q = &amp;p</code> stores the address of pointer variable <code>p</code> in another pointer variable <code>q</code>.</p>
+</li>
+<li>
+<p>C by default uses <code>call by value</code>. This means that whenever a function is called, a copy of the arguments is sent over. All this happens in the Stack part of the memory and once the function is done executing, that part of the stack is cleared up.</p>
+<p>Now this is not a problem if we are using Global Variables as they have a separate space in the memory.</p>
+<p>But if we want to use functions to change a local variable, without reassigning it explicitly, we need to do a <code>Call by Reference</code> where we send the address of the variables to be changed rather than the copy of their values which is done by default. For example, the code to increment a local variable <code>a</code> by 1 using a function Increment can be written as <code>Increment(&amp;a);</code> and the function itself would be <code>void Increment(int *p){ (*p) = (*p) + 1; }</code></p>
+</li>
+<li>
+<p><strong>Using in Arrays</strong><br />
+An array is a contiguous block of memory having the same datatype. So when we create an array, it just tells us the type and the size, that is how many elements. Just the Array name gives us the Base address of the Array.<br />
+<code>&amp;A[0] == &amp;A == A</code> all three are the same. and <code>*A == A[0] == *A[0]</code> are all the same.</p>
+<p>We can get the nth element of an array in many ways, <code>A[n] == *(A+n) == n[A]</code></p>
+<p><strong>We cannot use Pointer Arithmetic on Array Names.</strong></p>
+</li>
+<li>
+<p>Arrays are always passed by reference.</p>
+</li>
+<li>
+<p>Strings are nothing but character arrays in C, and just like Array pointers cannot be changed, so the same applies here.</p>
+</li>
+<li>
+<p>Multidimensional Arrays<br />
+2D arrays can be declared as <code>A[i][j]</code> but also as <code>*p[j] = &amp;A;</code> gives you <code>A[0][j]</code>. And you cannot assign array addresses to pointers without doing this specific step. Similarly, <code>B[i][j]</code> = <code>*(B[i] + j)</code> = <code>*(*(B+i) + j)</code></p>
+</li>
+<li>
+<p>When Passing a multidimensional array as a function argument, The formal argument must be <code>variableName[]</code>, and all other third brackets for the dimension must have the accurate dimension specified. For example a <code>C[3][2][2]</code> array would have a formal argument of <code>A[][2][2]</code>.</p>
+</li>
+<li>
+<p>Dynamic Memory Allocation When we use local variables and function calls, they are stored in the Stack part of the memory. But that is fixed when the program starts. If we want to allocate memory as needed during the runtime, we need to store the stuff in the Heap Part of the memory.</p>
+<p>To do that we must use functions like malloc() used as<br />
+<code>int *p = (int*)malloc(sizeOf(int));</code> and we have to typecast, as malloc returns a void pointer. If there is no memory left to allocate, malloc returns NULL.</p>
+<p>calloc() realloc() are similar functions, check them out when needed.</p>
+<p><strong>free()</strong> When we reassign a pointer, the previous value on the heap is still unchanged, and can be mistakenly or maliciously accessed. To prevent this, we must use this function to free that part of memory once the work of that value is over</p>
+<figure class="figure"><img src="img/cf908f45860f-fee64b59-480.webp" srcset="img/cf908f45860f-fee64b59-480.webp 480w, img/cf908f45860f-fee64b59-960.webp 960w, img/cf908f45860f-fee64b59-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="203" alt="" loading="lazy" decoding="async"></figure>
+
+<p>.<br />
+Note: The Memory stack actually is an implementation of the Stack Data Structure but the Heap has nothing to do with the same named Data Structure. Also, this will start making more sense once you study Assembly and realize how C is just an advanced layer on top of it.</p>
+</li>
+</ol>
+<h4 id="function-pointers">Function pointers <a class="heading-anchor" href="#function-pointers" aria-label="Link to this section">#</a></h4>
+<p>Just like arrays are contiguous blocks of memory storing a particular type of value, functions can be considered a set of instructions in the memory. When we use function pointers, it points to the first instruction of that function in the memory. We declare a function pointer as follows</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">c</span></div><pre class="code" tabindex="0"><code><span class="n">returnType</span><span class="w"> </span><span class="nf">functionName</span><span class="p">(</span><span class="n">Arguments1</span><span class="p">,</span><span class="n">arg2</span><span class="p">...){</span>
+<span class="n">body</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="n">returnType</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)(</span><span class="n">datatypeOfArgument1</span><span class="p">,...);</span>
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">functionName</span><span class="p">;</span>
+<span class="c1">// Then to call the function</span>
+<span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)(</span><span class="n">argument1</span><span class="p">,....);</span>
+<span class="p">}</span></code></pre></div>
+<p>for example, the following code:</p>
+<figure class="figure"><img src="img/cac507525153-18a51fde-480.webp" srcset="img/cac507525153-18a51fde-480.webp 480w, img/cac507525153-18a51fde-960.webp 960w, img/cac507525153-18a51fde-1024.webp 1024w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="202" alt="" loading="lazy" decoding="async"></figure>
+
+<h2 id="check-this-out">Check this out <a class="heading-anchor" href="#check-this-out" aria-label="Link to this section">#</a></h2>
+<p>This <a href="https://www.youtube.com/watch?v=zuegQmMdy8M&amp;pp=ygUNcG9pbnRlcnMgaW4gQw%3D%3D">video</a> is my main resource while learning, and the screenshots are taken from here as well.</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/c/">C</a><a class="tag" href="../tags/pointers/">pointers</a><a class="tag" href="../tags/memory-management/">memory management</a><a class="tag" href="../tags/pointers-in-c/">pointers in c</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/exploring-pointers/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fexploring-pointers%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fexploring-pointers%2F&amp;text=Exploring%20Pointers" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fexploring-pointers%2F&amp;title=Exploring%20Pointers" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Exploring%20Pointers&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fexploring-pointers%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../basics-of-shell-scripting/" rel="prev"><span class="label">Older</span><span class="pager__title">Basics of Shell scripting</span></a><a class="pager__link pager__link--newer" href="../cs50-my-experience/" rel="next"><span class="label">Newer</span><span class="pager__title">CS50 My experience</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-04-03T13:30:50.340Z">3 Apr 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../my-first-command-line-program/">My first Command Line program</a></h3>
+          <p>Discover how this Python command-line tool, developed as a CS50 final project, generates secure passwords with customizable lengths and character sets, ensu</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/python/">python</a><a class="tag" href="../tags/terminal/">terminal</a><a class="tag" href="../tags/cli/">CLI</a><a class="tag" href="../tags/password-generator/">password generator</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-06-06T04:57:51.375Z">6 Jun 2026</time>
+          <span class="dispatch__read">8 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../from-tokens-to-trees/">From Tokens to Trees</a></h3>
+          <p>We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/python/">python</a><a class="tag" href="../tags/interpreter/">interpreter</a><a class="tag" href="../tags/ast/">AST</a><a class="tag" href="../tags/compiler/">compiler</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

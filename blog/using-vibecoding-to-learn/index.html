@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning with Vibecoding Techniques - Engineering Tales</title>
+<meta name="description" content="Learn to safely use AI-driven &quot;vibecoding&quot; for learning, prototyping, and speeding up complex tasks while maintaining judgment">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Learning with Vibecoding Techniques - Engineering Tales">
+<meta property="og:description" content="Learn to safely use AI-driven &quot;vibecoding&quot; for learning, prototyping, and speeding up complex tasks while maintaining judgment">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/og-3312b1dc.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-01-25T15:09:43.406Z">
+<meta property="article:modified_time" content="2026-07-03T13:58:07.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="AIML">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="developer tools">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="AI agents">
+<meta property="article:tag" content="vibe coding">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learning with Vibecoding Techniques - Engineering Tales">
+<meta name="twitter:description" content="Learn to safely use AI-driven &quot;vibecoding&quot; for learning, prototyping, and speeding up complex tasks while maintaining judgment">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/og-3312b1dc.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/",
+      "url": "https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/",
+      "headline": "Using vibecoding to learn",
+      "description": "Learn to safely use AI-driven \"vibecoding\" for learning, prototyping, and speeding up complex tasks while maintaining judgment",
+      "datePublished": "2026-01-25T15:09:43.406Z",
+      "dateModified": "2026-07-03T13:58:07.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/og-3312b1dc.jpg"
+      ],
+      "keywords": [
+        "AI",
+        "developer tools",
+        "LLM",
+        "AI agents",
+        "vibe coding"
+      ],
+      "articleSection": "AIML",
+      "wordCount": 1993,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AIML",
+          "item": "https://sukalyan2003.github.io/blog/aiml/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Using vibecoding to learn",
+          "item": "https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/" class="is-current" aria-current="page">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../aiml/">AIML</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Using vibecoding to learn</h1>
+        <p class="standfirst article__standfirst">Learn to safely use AI-driven &quot;vibecoding&quot; for learning, prototyping, and speeding up complex tasks while maintaining judgment</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-01-25T15:09:43.406Z">25 Jan 2026</time></span><span>Updated <time datetime="2026-07-03T13:58:07.000Z">3 Jul 2026</time></span><span>9 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-01-25T15:09:43.406Z">25 Jan 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T13:58:07.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>9 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../aiml/">AIML</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l3"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#what-can-we-do">What can we do?</a></li><li class="toc__l2"><a href="#the-projects">The projects</a></li><li class="toc__l3"><a href="#sorting-visualizer">Sorting Visualizer</a></li><li class="toc__l3"><a href="#gale-shapley-algo">Gale-Shapley Algo</a></li><li class="toc__l3"><a href="#tournament-simulation-in-java">Tournament Simulation in Java</a></li><li class="toc__l3"><a href="#ironhand">IronHand</a></li><li class="toc__l3"><a href="#my-final-opinion-on-this">My Final Opinion on this</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/44f4bd86fcda-3312b1dc-480.webp" srcset="img/44f4bd86fcda-3312b1dc-480.webp 480w, img/44f4bd86fcda-3312b1dc-960.webp 960w, img/44f4bd86fcda-3312b1dc-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="251" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>Most people dislike vibecoded software, but deep down all of them would not miss a beat to use it, if it meant they had to bother themselves less with a work task.</p>
+<p>For better or most likely for worse in the long term, it is here to stay, with many companies either relaxing their no LLM policies or outright encouraging or mandating that Engineers should use AI to speed up shipping code.</p>
+<p>To begin with, <a href="https://youtu.be/m0b_D2JgZgY?si=92U9yprohs0Bew2k">this clip</a> although a few years old, shows what happens when you let these agents run wild without any supervision.</p>
+<p>Vibecoding (for me) = letting an LLM generate working code faster than I can fully reason about it.<br />
+It’s not going away, so this post is about using it safely: as a hint engine, a prototyping tool, and a learning accelerator—without outsourcing your judgment.</p>
+<h3 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>
+<p>Vibecoding can be useful for learning if you treat the AI as a fast collaborator, not a replacement for understanding.</p>
+</li>
+<li>
+<p>The danger is shipping code you cannot explain.</p>
+</li>
+<li>
+<p>The useful version is asking for small steps, reading the diff, running it, and rewriting parts yourself.</p>
+</li>
+<li>
+<p>If the model hides the hard part from you, it did not help you learn.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Learning status</strong></p>
+<p>This is my current stance on AI-assisted learning. I am not against using the tools. I am against outsourcing the exact struggle that teaches the concept.</p>
+</blockquote>
+<h2 id="what-can-we-do">What can we do? <a class="heading-anchor" href="#what-can-we-do" aria-label="Link to this section">#</a></h2>
+<p>Since it has become quite an unavoidable part of our lives, let’s try to figure out a few ways we can put it to use without destroying everything.</p>
+<p>For this, my go to thing is using AI generated code as a proxy for everything it has been trained on, somewhat like a hint engine.</p>
+<p>Even though i try my best to minimize AI code in my internship, and completely forbid myself from copy pasting any AI code directly into personal projects, I still use it for hints on assignments on courses.</p>
+<p>For generating template code to play around with; to generate extremely common standard projects that might not have any CV or long term learning value, but that might be cool to run locally and see for myself.</p>
+<p>The uses are quite varied, so in this post I would like to summarize some of the things I’ve had generated using the Copilot in VS code.</p>
+<p>Before we move on to them, always remember that if you take just one suggestion from this post, that should be <strong>“Always try to figure things out on your own, but never be stubborn against using AI to help you out if things get out of hand”</strong>.</p>
+<h2 id="the-projects">The projects <a class="heading-anchor" href="#the-projects" aria-label="Link to this section">#</a></h2>
+<h3 id="sorting-visualizer">Sorting Visualizer <a class="heading-anchor" href="#sorting-visualizer" aria-label="Link to this section">#</a></h3>
+<h4 id="what-it-is">What it is <a class="heading-anchor" href="#what-it-is" aria-label="Link to this section">#</a></h4>
+<p>I’ve seen those sorting visualizer videos on youtube a lot, and always liked the weird sounds they made.</p>
+<p>Coincidentally, I was also struggling with sorting algorithms back then, so thought, why not make something that will help me visualize stuff?</p>
+<p>So, i built a very basic black and white with simple buttons sorting visualizer.<br />
+That got the job done for all the basic algos that I already knew how to implement like insertion, merge, bubble, selection etc.</p>
+<p>What next? The basic functionality done, it would not help me at all in trying to work hard and make it look prettier, as I never intended to work on frontend things, so, I let AI do it.</p>
+<p>All you see below, is from a single prompt: “Make it look prettier and add more sorting algorithms”, everything is just one html, one css and one JS file.</p>
+<figure class="figure"><img src="img/039f86dee98b-bc979485-480.webp" srcset="img/039f86dee98b-bc979485-480.webp 480w, img/039f86dee98b-bc979485-960.webp 960w, img/039f86dee98b-bc979485-1240.webp 1240w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="369" alt="" loading="lazy" decoding="async"></figure>
+
+<h4 id="what-i-learned">What i learned <a class="heading-anchor" href="#what-i-learned" aria-label="Link to this section">#</a></h4>
+<p>Now with this as a reference, I can visualize any algo that i want to learn in real time, change parameters and test the same data across different algorithms.</p>
+<p>Then I can use that insight to learn them myself. This has even helped me teach someone else about Sorting Algorithms.</p>
+<h3 id="gale-shapley-algo">Gale-Shapley Algo <a class="heading-anchor" href="#gale-shapley-algo" aria-label="Link to this section">#</a></h3>
+<h4 id="what-it-is-1">What it is <a class="heading-anchor" href="#what-it-is-1" aria-label="Link to this section">#</a></h4>
+<p>This was not in any of my DSA classes, i stumbled across this while going through the MIT OCW Discrete Math course. (Which I have since left incomplete cause I felt it was not that relevant to my work now).</p>
+<p>The stable matching or stable marriage problem is one where, there are several suitors, traditionally called male and female but in practice can be anything, for example servers and clients making request to those servers.</p>
+<p>Each of them have a preference order of who they like more than the others, 1st 2nd 3rd etc preferences.</p>
+<p>We need to find the stable matching, which must follow the criteria that: Every Man and Woman must be paired with someone such that, there is no other better option left for them.</p>
+<p>I had trouble visualizing this process based on static text in books, so I had AI generate a visual simulation for me, along with a document that serves as quite a decent tutorial for learning it for the first time, before i move on to other sources.</p>
+<p>The Original 1962 algorithm is as:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>Algorithm: Gale-Shapley (Men-Proposing)
+─────────────────────────────────────────
+
+Initialize:
+    All men and women are FREE
+    Each man has a preference list of women (not yet proposed to)
+
+While there exists a FREE man m who hasn&#x27;t proposed to all women:
+    1. m proposes to his highest-ranked woman w he hasn&#x27;t proposed to yet
+    
+    2. If w is FREE:
+        - (m, w) become ENGAGED
+    
+    3. Else if w is ENGAGED to m&#x27;:
+        - If w prefers m over m&#x27;:
+            - (m, w) become ENGAGED
+            - m&#x27; becomes FREE
+        - Else:
+            - w rejects m
+            - m remains FREE
+
+Return: The set of engaged pairs (this is a stable matching)</code></pre></div>
+<p>But here, there are several real world constraints that we might want to consider:</p>
+<ol>
+<li>
+<p>Each Recipient can accept more than one proposers. (Like in College admissions)</p>
+</li>
+<li>
+<p>The proposers do not have a complete preference list.</p>
+</li>
+<li>
+<p>When there is a Tie in preferences</p>
+</li>
+<li>
+<p>If one party lies. It is usually not optimal for the proposer to lie, but the receivers can benefit from lying.</p>
+</li>
+<li>
+<p>Deferred Vs Immediate acceptance</p>
+</li>
+<li>
+<p>and many more</p>
+</li>
+</ol>
+<p>So how do we deal with these modern considerations? What the AI did, was use knowledge from later papers to add changes to it.</p>
+<p>The final directory had the original implementation, the modern implementation, and a pygame based GUI to animate it all.</p>
+<figure class="figure"><img src="img/069029eaf9f7-d27f1c94-480.webp" srcset="img/069029eaf9f7-d27f1c94-480.webp 480w, img/069029eaf9f7-d27f1c94-874.webp 874w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="220" alt="" loading="lazy" decoding="async"></figure>
+<figure class="figure"><img src="img/d4f3c8ae3bf7-5b295362-480.webp" srcset="img/d4f3c8ae3bf7-5b295362-480.webp 480w, img/d4f3c8ae3bf7-5b295362-960.webp 960w, img/d4f3c8ae3bf7-5b295362-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="277" alt="" loading="lazy" decoding="async"></figure>
+
+<p>The above is the visualization for the standard algo, and every step can be seen in real time in the terminal as well.</p>
+<h4 id="what-i-learned-1">What i learned <a class="heading-anchor" href="#what-i-learned-1" aria-label="Link to this section">#</a></h4>
+<p>To be honest, compared to the other generations, this one was slightly less useful to me immediately, and it also took less prompts, the AI could do it directly.</p>
+<p>Potential ways to learn from this would be the entire pygame setup for animations, and the different ways in which optimizations and modern enhancements were done. Will be useful when later I want to work on some non trivial pygame/simulation project.</p>
+<h3 id="tournament-simulation-in-java">Tournament Simulation in Java <a class="heading-anchor" href="#tournament-simulation-in-java" aria-label="Link to this section">#</a></h3>
+<h4 id="what-it-is-2">What it is <a class="heading-anchor" href="#what-it-is-2" aria-label="Link to this section">#</a></h4>
+<p>Everyone knows about the infamous tournament simulator. It’s the go to project for any beginner trying to prove that they know Java, even still, most of the times it is copy pasted from github anyways.</p>
+<p>We’d have a set of teams for a sport, with certain criteria for winning and losing, and based on that we match up teams at random in several rounds, leaving us with the winner at the end.</p>
+<p>The project is supposed to teach us more about Java fundamentals like OOP and such, but to be very honest I felt this project to be useless for real learning at first. I made a very rudimentary version that might have been enough to show that i know something, but it was boring.</p>
+<p>Here comes the AI, where, instead of randomly prompting it “Generate a tournament Sim for me in Java”, I wrote a detailed spec sheet first.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>Here I need to describe what exactly are the different entities(objects) and their interactions(methods).
+
+But before that, what sport do I even want to simulate?
+- Cricket in IPL style: Group round with X number of matches per Team
+everyone plays everyone else a certain number of times. 
+Then Semi finals with two matches A(Top two in the leaderboard) and B(3rd and 4th position)
+Loser of B is eliminated, Winner of B matches with Loser of A in Match C 
+Finals happen with winner of A and C 
+For the group round, Every team plays with every other team twice so no seeding needed
+(We assume the outcome of each Match is independent)
+
+What will be the things that I will keep track of?
+- Wins, loses, ties and Team Run Rate
+
+What are the Basic units?
+- Teams(Wins, Loses, Ties, Run Rate, Team Attributes)
+- Matches (Team A, Team B, Stage)
+
+What will be the win or lose condition?
+- That is, how do i decide the numbers once the teams are paired up for a match
+- There should be some way to tie up the Team attributes to a RNG to generate the match outcome
+- All the updating logic will be done by the Matches class which will return the win/lose/tie outcome of the match 
+and also the runs scored by each team. 
+- To simplify things, we will only have the &quot;Won by X&quot; runs criteria based on the RNG
+outputs. We don&#x27;t need to check who batted first or whether it was a win by X wickets or not
+- Then the run rate of each team must be updated after each match
+- Is there any game theory logic that I can add?
+- Only results are calculated so no In match events
+
+Data management? 
+- All the team data will be fetched from a file called Teams.txt
+ in the form of Name, Team attributes
+- Store everything about all the matches in Matches.log
+- The group stage leaderboard is shown once it&#x27;s over
+- Only the Semifinal and final matches are printed in the console one by one 
+- Last output will be the winner.
+- Everything displayed in the console will go to the results.log file
+- The game will run from the terminal where the Teams.txt file is passed as an argument
+
+Nice to haves:
+- Concurrent Match simulations
+- Complete Unit testing usint Junit and Mockito</code></pre></div>
+<p>Which was then fed into the AI to generate an even better more structured Spec sheet, in which i made several changes in the specifics, at the end of which we get:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>How to run:  
+
+
+# Tournament Simulator Specification (NewSpecs)
+
+## 1. Purpose
+
+This document defines the requirements, design, and constraints for a Java-based IPL-style cricket tournament simulator. It provides a blueprint for implementing group stages, semifinals, finals, match simulation, data management, and logging.
+
+## 2. Scope &amp; Assumptions
+
+1. In-scope:
+   - IPL format: double round-robin group stage, two semifinals (A &amp; B), Match C (loser A vs winner B), final.
+   - Abstract match outcomes (&quot;won by X runs&quot;).
+   - Console/CLI interface only; flat-file persistence (no database).
+2. Out-of-scope:
+   - Detailed in-match events (batting order, wickets).
+   - GUI or web interface.
+   - External persistence beyond CSV/flat files.
+   - More complex game theoretic logic instead of RNG
+3. Constraints:
+   - Maximum teams: 10 by default (configurable).
+   - Teams data from `Teams.txt` (CSV).
+   - Results/logs written to `results.log` and `matches.log`.
+
+## 3. Entities &amp; Data Models
+
+| Class       | Fields                                                   | Methods                                    |
+|-------------|----------------------------------------------------------|--------------------------------------------|
+| **Team**    | `name:String`, `wins:int`, `losses:int`, `ties:int`, `runRate:double`, `attributes:Map&lt;String,Double&gt;` | `updateStats(int runsFor, int runsAgainst)`, `computeRunRate()`, `toString()` |
+| **Match**   | `teamA:Team`, `teamB:Team`, `stage:StageEnum`, `runsA:int`, `runsB:int`, `winner:Team?` | `play(Random rng):MatchResult`, `logResult()` |
+| **Tournament** | `teams:List&lt;Team&gt;`, `matches:List&lt;Match&gt;`, `leaderboard:List&lt;Team&gt;` | `loadTeams(File)`, `runGroupStage()`, `runKnockouts()`, `printResults()` |
+| **StageEnum** | `GROUP`, `SEMIFINAL_A`, `SEMIFINAL_B`, `MATCH_C`, `FINAL` | N/A                                        |
+
+## 4. Match Simulation Logic
+
+1. RNG Strategy:
+   - Use Java `Random` or `ThreadLocalRandom`.
+   - Weight runs by team batting strength attribute.
+2. Run generation:
+   
+   double base = rng.nextDouble() * (teamA.attr(&quot;batting&quot;) + teamB.attr(&quot;bowling&quot;));
+   int runsA = (int)Math.round(base);
+   int runsB = (int)Math.round(rng.nextDouble() * maxRuns);
+3. Outcome:
+   - Compare `runsA` vs `runsB`. Record &quot;won by X runs&quot;.
+   - Tie if equal.
+4. Update:
+   - `team.updateStats(runsFor, runsAgainst)` updates wins/losses/ties and recalc run rate.
+
+## 5. Tournament Flow
+
+1. **Group Stage:**
+   - Each pair of teams plays twice (nested loops).
+   - Record all results, update stats.
+   - Sort leaderboard by points (win=2, tie=1), then run rate.
+2. **Semifinals:**
+   - A: positions 1 vs 2.
+   - B: positions 3 vs 4.
+3. **Match C:**
+   - Loser of A vs Winner of B.
+4. **Final:**
+   - Winner of A vs Winner of C.
+5. Tie-breaker:
+   - Higher run rate.
+
+## 6. Input/Output &amp; Logging
+
+1. **Teams.txt** (CSV):
+   name,batting,bowling,fielding
+   Mumbai Indians,8.5,7.2,6.9
+   Royal Challengers,7.9,7.4,7.1
+
+2. **CLI Usage:**
+
+   java -jar tournament.jar --teams Teams.txt --out results.log
+
+3. **Logging:**
+   - Use SLF4J + Logback.
+   - All console output redirected to `results.log`.
+   - Detailed match entries in `matches.log`.
+4. **Sample `matches.log`:**
+
+   [GROUP] MI vs RCB: won by 15 runs (150 vs 135)
+   [SEMIFINAL_A] CSK vs MI: won by 5 runs (145 vs 140)
+
+
+## 7. Error Handling &amp; Validation
+
+- Validate CSV format and numeric ranges; exit code `1` on error.
+- Catch I/O exceptions on file read/write; log error and exit code `2`.
+- Report mismatched team count if &lt;4 or odd number.
+
+## 8. Concurrency (Nice-to-Have)
+
+- Parallelize group matches using `ExecutorService`.
+- Use thread-safe structures (e.g. `ConcurrentHashMap`) or synchronize `updateStats`.
+- Limit pool size to available processors.
+
+## 9. Testing Strategy
+
+1. **Unit Tests (JUnit):**
+   - `TeamTest`, `MatchTest`, `TournamentTest`.
+   - Test run-rate calc, leaderboard sorting, flow branching.
+2. **Mocks (Mockito):**
+   - Mock `Random` for deterministic outcomes.
+   - Mock file I/O to test error handling.
+3. **Property Tests:**
+   - Randomized tests for statistical properties (e.g. average runs within expected window).
+
+## 10. Deliverables &amp; Timeline
+
+Version 1: Implements everything in the spec except out of scopes and Concurrency
+Version 2: Implements Concurrency
+Version 3: Implements all the out of scope features. 
+
+## Learnings
+
+The important thing that i&#x27;ve realized after the multithreaded version didn&#x27;t work much faster, 
+is that if we are logging to a file, or reading stuff from a file, it doesn&#x27;t matter how many threads you 
+spawn, it will always get bottlenecked at Disk IO. So for my purposes, Single threaded solution is fine, which
+is i think version 3. 
+
+And I gotta study Version 2 to understand the basics of multithreading in Java, but it is
+not beneficial for this given project.</code></pre></div>
+<p>All this word salad later, just three prompts for the three versions and Voila, we have different levels of functionality.</p>
+<figure class="figure"><img src="img/6c17592582b3-07e63886-480.webp" srcset="img/6c17592582b3-07e63886-480.webp 480w, img/6c17592582b3-07e63886-960.webp 960w, img/6c17592582b3-07e63886-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="144" alt="" loading="lazy" decoding="async"></figure>
+
+<p>The entire thing is very detailed and the matches tabs contains very specific events logged.</p>
+<h4 id="what-i-learned-2">What i learned <a class="heading-anchor" href="#what-i-learned-2" aria-label="Link to this section">#</a></h4>
+<p>Firstly, that this is much cooler than any Tournament Sim projects i have seen so far, if someone wanted to, they could attach this match log data into a pretty awesome looking Animation.</p>
+<p>On reading through the code, i saw several different features of Java that i would never have used on my own accord, but now i might.</p>
+<p>This serves as a runnable example for testing and logging frameworks, Swing GUIs, OOP principles and so much more.</p>
+<p>Realistically I don’t see myself working in Java anytime soon, but whenever I’ll need a refresher, this would be a lot better than the same old Patterns and draw a box tutorials that are out there.</p>
+<p>For a more major, and personally usable project, this will be the revision before I start working on it.</p>
+<h3 id="ironhand">IronHand <a class="heading-anchor" href="#ironhand" aria-label="Link to this section">#</a></h3>
+<h4 id="what-it-is-3">What it is <a class="heading-anchor" href="#what-it-is-3" aria-label="Link to this section">#</a></h4>
+<p>The whole mediapipe with openCV gesture control thing has spread all over linkedin like cancer. At this point there is very little value in making it anyways, and most people posting about it are certainly copy pasting from Github anyways.</p>
+<p>What might have been a more useful spin on it? Using the gestures to actually control something, rather than just drawing shapes on the screen. I thought about this while watching an Avengers movie and suddenly realized that’s pretty much what the whole Ironman holographic interface is.</p>
+<p>So, I had the AI made it, and out of everything else i have mentioned here, this took the most trial and error even for the best model i had access to.</p>
+<p>The overall framework and basics were covered with a single prompt, but then it took a few more to really tune the behavior with proper parameter definitions.</p>
+<p>But that’s where it all broke down, the window controls were not working properly, and the parameters were not getting properly set no matter how many prompts I provided, so ii had to go old school on it.</p>
+<p>Manual testing, parameter tuning, manually changing the libraries, completely rewriting the gestures themselves etc, and a few hours later, I had the best version of it i could possibly have.</p>
+<h4 id="what-i-learned-3">What i learned <a class="heading-anchor" href="#what-i-learned-3" aria-label="Link to this section">#</a></h4>
+<p>This is not a fun way to replace the mouse. Not sure how Tony Stark did it so casually, but in my experience the whole setup was too jittery.</p>
+<p>To deal with camera bandwidth and latency, I dropped the resolution down to 720p with 60fps recording.<br />
+Then tuned the smoothness parameters in several different ways, which made the thing finally usable.</p>
+<p>I spent nearly a whole day using my gestures instead of the mouse, and my hands got really sore.</p>
+<p>An alternative arrangement would be instead of a front facing camera, we hand a camera from the ceiling and rest the hands on the desk, but if we’re going that far anyways then a mouse is good enough, and there are other non AI options already available that work well.</p>
+<h3 id="my-final-opinion-on-this">My Final Opinion on this <a class="heading-anchor" href="#my-final-opinion-on-this" aria-label="Link to this section">#</a></h3>
+<p>These show a few different ways i have used AI to generate code, each taking a different level of prompting and manual fixing effort, leading to a different final complexity of the project.</p>
+<p>A checklist for making good use of it would be:</p>
+<ul>
+<li>
+<p>Use AI for: scaffolding, API exploration, test generation, quick prototypes, visualizations.</p>
+</li>
+<li>
+<p>Don’t use AI for: security-sensitive code, unclear requirements, anything you can’t explain back.</p>
+</li>
+<li>
+<p>Always do: run tests, add logging, read diffs, ask “what would break?”, add constraints to prompts.</p>
+</li>
+</ul>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Bad use</th>
+<th>Better use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&quot;Build the whole app for me&quot;</td>
+<td>&quot;Help me implement this one function, then explain the tradeoffs&quot;</td>
+</tr>
+<tr>
+<td>Accepting code because it runs once</td>
+<td>Reading the diff and testing edge cases</td>
+</tr>
+<tr>
+<td>Asking broad vague prompts</td>
+<td>Giving the current file, error, and goal</td>
+</tr>
+<tr>
+<td>Skipping concepts</td>
+<td>Asking for the concept, then coding it yourself</td>
+</tr>
+</tbody>
+</table></div>
+<p>I’d say that AI is pretty useful, and almost an inseparable part of our lives, but it is essential that we teach ourselves enough to be able to discern when it is giving us nonsense.</p>
+<p>If you’d like a post on good Prompt Engineering Practices, do comment, i’ll write it up soon.</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/ai/">AI</a><a class="tag" href="../tags/developer-tools/">developer tools</a><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/ai-agents/">AI agents</a><a class="tag" href="../tags/vibe-coding/">vibe coding</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/using-vibecoding-to-learn/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fusing-vibecoding-to-learn%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fusing-vibecoding-to-learn%2F&amp;text=Using%20vibecoding%20to%20learn" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fusing-vibecoding-to-learn%2F&amp;title=Using%20vibecoding%20to%20learn" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Using%20vibecoding%20to%20learn&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fusing-vibecoding-to-learn%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../nand2tetris-part-1-hardware/" rel="prev"><span class="label">Older</span><span class="pager__title">Nand2Tetris Part 1: Hardware</span></a><a class="pager__link pager__link--newer" href="../what-comes-after-cs50x-discover-cs50-ai/" rel="next"><span class="label">Newer</span><span class="pager__title">What Comes After CS50x? Discover CS50 AI</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-18T13:01:48.926Z">18 Jul 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../vibecoding-hackathons/">Vibecoding Hackathons?</a></h3>
+          <p>I entered a vibecoding hackathon and somehow ended up using one AI to tell another AI how to build the app. This parody of software development is unfortunately the truth.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/ai/">AI</a><a class="tag" href="../tags/devtools/">dev tools</a><a class="tag" href="../tags/reactjs/">React</a><a class="tag" href="../tags/typescript/">TypeScript</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-12-10T12:32:27.575Z">10 Dec 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../what-even-are-llms/">What even are LLMs?</a></h3>
+          <p>Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-04T04:39:04.300Z">4 Jul 2026</time>
+          <span class="dispatch__read">13 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3>
+          <p>I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI&#x27;s Codex.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/evaluation-metrics/">evaluation metrics</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/mcp/">MCP</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

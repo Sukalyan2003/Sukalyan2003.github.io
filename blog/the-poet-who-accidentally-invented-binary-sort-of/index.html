@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Poet Who Accidentally Invented Binary (Sort Of) - Engineering Tales</title>
+<meta name="description" content="Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="The Poet Who Accidentally Invented Binary (Sort Of) - Engineering Tales">
+<meta property="og:description" content="Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/og-f596ba68.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-09-12T04:46:54.437Z">
+<meta property="article:modified_time" content="2026-09-12T04:46:54.437Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Unsung Bits">
+<meta property="article:tag" content="india">
+<meta property="article:tag" content="mathematics">
+<meta property="article:tag" content="binary">
+<meta property="article:tag" content="sanskrit">
+<meta property="article:tag" content="computer science history">
+<meta property="article:tag" content="combinatorics">
+<meta property="article:tag" content="unsung bits">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Poet Who Accidentally Invented Binary (Sort Of) - Engineering Tales">
+<meta name="twitter:description" content="Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/og-f596ba68.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/",
+      "url": "https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/",
+      "headline": "The Poet Who Accidentally Invented Binary (Sort Of)",
+      "description": "Piṅgala's prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.",
+      "datePublished": "2026-09-12T04:46:54.437Z",
+      "dateModified": "2026-09-12T04:46:54.437Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/og-f596ba68.jpg"
+      ],
+      "keywords": [
+        "india",
+        "mathematics",
+        "binary",
+        "sanskrit",
+        "computer science history",
+        "combinatorics",
+        "unsung bits"
+      ],
+      "articleSection": "Unsung Bits",
+      "wordCount": 2403,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Unsung Bits",
+          "item": "https://sukalyan2003.github.io/blog/unsung-bits/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "The Poet Who Accidentally Invented Binary (Sort Of)",
+          "item": "https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/" class="is-current" aria-current="page">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../unsung-bits/">Unsung Bits</a></li></ol></nav>
+        <p class="article__series label">Part 3 of 5</p>
+        <h1 class="article__title" id="article-title">The Poet Who Accidentally Invented Binary (Sort Of)</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time></span><span>10 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>10 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../unsung-bits/">Unsung Bits</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#what-was-pingala-trying-to-solve">What was Pingala trying to solve?</a></li><li class="toc__l2"><a href="#six-procedures-one-by-one">Six procedures, one by one</a></li><li class="toc__l2"><a href="#what-did-halayudha-do">What did Halāyudha do?</a></li><li class="toc__l2"><a href="#the-chain-of-scholars-who-reached-the-fibonacci-sequence">The chain of scholars who reached the Fibonacci Sequence</a></li><li class="toc__l2"><a href="#the-demo">The Demo</a></li><li class="toc__l2"><a href="#my-gripes">My gripes</a></li><li class="toc__l2"><a href="#sources-further-reading">Sources &amp; further reading</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/4241e3bcecf1-f596ba68-480.webp" srcset="img/4241e3bcecf1-f596ba68-480.webp 480w, img/4241e3bcecf1-f596ba68-960.webp 960w, img/4241e3bcecf1-f596ba68-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Piṅgala's prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.</p>
+</li>
+<li>
+<p>Naṣṭa and uddiṣṭa convert between a pattern and its row without constructing the whole table.</p>
+</li>
+<li>
+<p>Halāyudha, not Piṅgala alone, made the Indian version of Pascal's triangle explicit.</p>
+</li>
+<li>
+<p>Fixing total mātrās instead of syllable count produces the recurrence later associated with Fibonacci.</p>
+</li>
+<li>
+<p>This is structural binary combinatorics, not evidence that Piṅgala used a binary numeral system.</p>
+</li>
+</ul>
+<p>Before Leibniz, before Boole, before any of the Western lineage that shows up in a CS curriculum, there was a Sanskrit prosodist, a scholar of poetic meter, who enumerated all the ways you can arrange short and long syllables in a line of verse, wrote down the conversion procedures for jumping between a pattern and its position number in the list, and arrived at a set of algorithms that are structurally indistinguishable from binary arithmetic.</p>
+<hr />
+<h2 id="what-was-pingala-trying-to-solve">What was Pingala trying to solve? <a class="heading-anchor" href="#what-was-pingala-trying-to-solve" aria-label="Link to this section">#</a></h2>
+<p>Sanskrit poetry in the ancient world was oral. It was transmitted by memorization and recitation, and the meter of a poem and the rhythmic pattern of its syllables was the main structural feature that made long texts memorable and verifiable. Get it right across ten thousand verses and you had the Mahābhārata.</p>
+<p>Syllables in Sanskrit fall into two categories: <em>laghu</em> (L), short, worth one mātrā (mora); and <em>guru</em> (G), long, worth two mātrās. A meter is defined by how many syllables it has and which positions are L and which are G.</p>
+<p>The Gāyatrī, the most sacred of Vedic meters, has 24 syllables across three lines of eight each.</p>
+<p>The question a prosodist asks is: given a meter of length n, how many possible arrangements of L and G exist? And can you list them all? And if someone gives you a pattern, can you tell them which number in the list it is without listing everything first?</p>
+<p>These are combinatorial questions, and Piṅgala's <em>Chandaḥśāstra</em> - eight chapters in the ultra-compressed sūtra style - answers all of them with algorithms. [<a href="https://en.wikipedia.org/wiki/Pingala">Wikipedia, Piṅgala</a>]</p>
+<p>The <em>Chandaḥśāstra</em> is terse aphoristic instructions, barely a few syllables per sūtra, requiring a trained interpreter and a commentary tradition to render operational.</p>
+<p>That commentary tradition runs from Bharata in the early common era to Halāyudha in the 10th century CE - meaning Piṅgala's text spawned a thousand years of people working out what he meant.</p>
+<p>The algorithms I'm about to describe are what that tradition extracted from his sūtras. [<a href="https://sanskrit.uohyd.ac.in/Algorithms_in_Ancient_India/Material/Pingala.pdf">Jayant Shah, &quot;A History of Piṅgala's Combinatorics,&quot; University of Hyderabad</a>]</p>
+<hr />
+<h2 id="six-procedures-one-by-one">Six procedures, one by one <a class="heading-anchor" href="#six-procedures-one-by-one" aria-label="Link to this section">#</a></h2>
+<p>Piṅgala's system organizes around six pratyāya - procedural answers to specific questions about a meter of length n. [<a href="https://en.wikipedia.org/wiki/Sanskrit_prosody">Jayant Shah; Wikipedia, Sanskrit prosody</a>]</p>
+<p><strong>Prastāra</strong> is the table.</p>
+<p>It is a systematic listing of all possible patterns for n syllables, arranged in a specific order. For n = 3, there are 8 patterns, and Piṅgala's table begins with GGG (row 1) and ends with LLL (row 8). The order in between follows a regular rule: it is binary counting in descending order, with the leftmost syllable as the least-significant bit. GGG = 111 in binary, LGG = 110, GLG = 101, and so on down to LLL = 000. The table is the full enumeration. The code in <code>code/pingala.py</code> generates it exactly.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Row</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pattern</td>
+<td>GGG</td>
+<td>LGG</td>
+<td>GLG</td>
+<td>LLG</td>
+<td>GGL</td>
+<td>LGL</td>
+<td>GLL</td>
+<td>LLL</td>
+</tr>
+<tr>
+<td>Binary value</td>
+<td>111</td>
+<td>110</td>
+<td>101</td>
+<td>100</td>
+<td>011</td>
+<td>010</td>
+<td>001</td>
+<td>000</td>
+</tr>
+</tbody>
+</table></div>
+<p>If you take Piṅgala's prastāra for n syllables and write G = 1, L = 0, reading each row from right to left, you get the integers from 2ⁿ − 1 down to 0, in order. [<a href="https://chandrahasblogs.wordpress.com/2020/05/18/pingalas-algorithm-for-binary-conversion/">Chandrahas blogs, &quot;Binary Conversion&quot;; Indica Today, &quot;Meru Prastaar&quot;</a>]</p>
+<p><strong>Saṅkhyā</strong> is the count: the total number of patterns for n syllables is 2ⁿ. Piṅgala computes this by repeated doubling - add one syllable, double the count. Every combinatorics course covers this in the first week; Piṅgala arriving at it roughly 2,200 years earlier is notable but not astonishing once you accept that the problem itself forces you there.</p>
+<p><strong>Naṣṭa</strong> is the inverse lookup: given a row number k, find the pattern without constructing the whole table. Piṅgala's procedure (from sūtras 8.24–25, as interpreted by commentators): start with k. If k is even, write L and halve k. If k is odd, write G, add 1, then halve. Repeat n times. [<a href="https://www.indica.today/quick-reads/pingalas-algorithm-value-binary-sequences/">Indica Today, &quot;Pingala's Algorithm Part IV&quot;</a>]</p>
+<figure class="figure"><img src="img/7f82f7e4ae72-304e0ac4-480.webp" srcset="img/7f82f7e4ae72-304e0ac4-480.webp 480w, img/7f82f7e4ae72-304e0ac4-481.webp 481w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="1177" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Here is a step-by-step trace of this algorithm running for <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>k</mi><mo>&#x0003D;</mo><mn>4</mn></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>n</mi><mo>&#x0003D;</mo><mn>3</mn></mrow></math>:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Current <code>k</code></th>
+<th>Even/Odd?</th>
+<th>Action</th>
+<th>Output Syllable</th>
+<th>Next <code>k</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>4</td>
+<td>Even</td>
+<td>Write L, Halve</td>
+<td><strong>L</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>Even</td>
+<td>Write L, Halve</td>
+<td><strong>L</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>Odd</td>
+<td>Write G, +1, Halve</td>
+<td><strong>G</strong></td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Resulting Pattern: <strong>L, L, G</strong></p>
+<p>Here is the exact modern relationship. For row <em>k</em> in an <em>n</em>-syllable table, compute 2ⁿ − <em>k</em>, write it as an <em>n</em>-bit number, reverse the bits because Piṅgala's least-significant position is on the left, then map 0 to L and 1 to G. For row 4: 8 − 4 = 4 = 100₂; reversed, that is 001, or LLG. Naṣṭa reaches the same pattern without first constructing that binary value.</p>
+<p><strong>Uddiṣṭa</strong> runs backward: given a pattern, find its position.</p>
+<p>Piṅgala's rule: set value = 1, scan from rightmost to leftmost syllable; if L, double; if G, double then subtract 1. The result is the row number. This is equivalent to Horner's method reading binary digits from MSB to LSB - though Piṅgala has no explicit concept of place value or base.</p>
+<p>This is a step-by-step trace running for the pattern <strong>L, L, G</strong> (read rightmost first: G, L, L):</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Step (Syllable)</th>
+<th>Current Value</th>
+<th>Action (L=Double, G=Double-1)</th>
+<th>Next Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start</td>
+<td>1</td>
+<td>-</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1 (<strong>G</strong>)</td>
+<td>1</td>
+<td>Double, subtract 1 (2 X 1 - 1)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2 (<strong>L</strong>)</td>
+<td>1</td>
+<td>Double (2 X 1)</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3 (<strong>L</strong>)</td>
+<td>2</td>
+<td>Double (2 X 2)</td>
+<td>4</td>
+</tr>
+</tbody>
+</table></div>
+<p>Resulting Position: <strong>4</strong></p>
+<p>The same LLG that prastāra places in row 4 is recovered from 4 by naṣṭa, and uddiṣṭa takes LLG back to 4. The round-trip verifies correctly for all 2ⁿ entries. The code shows this for n = 4: all 16 patterns, no mismatches.</p>
+<p><strong>Lagakriyā</strong> answers a different question: how many n-syllable patterns have exactly r laghu syllables?</p>
+<p>The answer is C(n, r), the binomial coefficient, choosing r positions from n for the short syllables. For example, if we want to find how many 4-syllable meters have exactly 2 laghu syllables, the math is C(4, 2) = 6. Those 6 patterns are LLGG, LGLG, LGGL, GLLG, GLGL, GGLL.</p>
+<p>Piṅgala's sūtras describe a recursive procedure for computing these values. The triangular arrangement of all C(n, r) for varying n and r is what became the meru-prastāra.</p>
+<p><strong>Adhvan</strong> estimates how much physical space is needed to write out the full prastāra which is a practical concern when everything is being carved into palm leaves.</p>
+<hr />
+<h2 id="what-did-halayudha-do">What did Halāyudha do? <a class="heading-anchor" href="#what-did-halayudha-do" aria-label="Link to this section">#</a></h2>
+<p>The meru-prastāra or the triangular arrangement where each number equals the sum of the two above it, identical in structure to Pascal's triangle, but it is <strong>not explicitly in Piṅgala's text</strong>.</p>
+<p>Piṅgala's sūtra 8.34, &quot;pare pūrṇam iti,&quot; is cryptic enough that scholars spent centuries debating what it implied. It was Halāyudha, a scholar who worked in 10th-century CE Ujjain under the Paramāra king Muñja, who wrote the <em>Mṛtasañjīvanī</em> commentary and laid out the pyramid explicitly.</p>
+<p>He called it the meru-prastāra: the mountain arrangement. He showed how to construct it, row by row, with each interior entry built from the two entries above. He showed that row n gives the lagakriyā values: the count of n-syllable patterns with 0, 1, 2, …, n laghu syllables. [<a href="https://en.wikipedia.org/wiki/Halayudha">Wikipedia, Halāyudha</a>]</p>
+<p>Here is what the top 4 rows of that pyramid look like when labeled with their L (laghu) and G (guru) combinations:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Syllables (n)</th>
+<th>Triangle Values (Lagakriyā)</th>
+<th>Corresponding Patterns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1      1</td>
+<td>(1 G)      (1 L)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1      2      1</td>
+<td>(1 GG)      (2 GL,LG)      (1 LL)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1      3      3      1</td>
+<td>(1 GGG)      (3 GGL,GLG,LGG)      (3 GLL,LGL,LLG)      (1 LLL)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1     4     6     4     1</td>
+<td>(1 GGGG)    (4 with 1 L)    (6 with 2 L)    (4 with 3 L)    (1 LLLL)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Jayant Shah puts it bluntly in his historical survey: &quot;None of the authors (from Bharata onwards) before Halāyudha describes such a construction or even employs the designation meru prastāra.&quot;</p>
+<p>Halāyudha's version predates Pascal (1623 CE) by roughly 700 years. But it is Halāyudha who deserves credit for the triangular construction in the Indian tradition, not Piṅgala.</p>
+<p>Pascal's triangle also appears in Chinese mathematics - Yang Hui in the 13th century, and almost certainly earlier Chinese sources - so the &quot;India predates Pascal&quot; claim needs to be made with some precision about who in India and when.</p>
+<hr />
+<h2 id="the-chain-of-scholars-who-reached-the-fibonacci-sequence">The chain of scholars who reached the Fibonacci Sequence <a class="heading-anchor" href="#the-chain-of-scholars-who-reached-the-fibonacci-sequence" aria-label="Link to this section">#</a></h2>
+<p>Prastāra fixes the number of syllables, which gives 2ⁿ patterns and the binomial coefficients. Mātrā-vṛtta fixes their total weight instead: L costs one mātrā and G costs two. That different question produces the Fibonacci numbers.</p>
+<p>Fill 1 mātrā: L. One way. Fill 2 mātrās: LL, or G. Two ways. Fill 3 mātrās: LLL, LG, GL. Three ways. Fill 4 mātrās: LLLL, LLG, LGL, GLL, GG. Five ways.</p>
+<p>The recurrence is immediate: to fill n mātrās, either append an L to a (n−1)-mātrā arrangement, or append a G to a (n−2)-mātrā arrangement. So f(n) = f(n−1) + f(n−2). The sequence 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 is the Fibonacci sequence, shifted by one index.</p>
+<figure class="figure"><img src="img/b566cae98645-c183c712-480.webp" srcset="img/b566cae98645-c183c712-480.webp 480w, img/b566cae98645-c183c712-580.webp 580w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="439" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Piṅgala's <em>Chandaḥśāstra</em> mentions the mātrāmeru - the count of these mātrā-vṛtta forms - which is why his name gets attached to this result. It shouldn't be only his name. [<a href="https://en.wikipedia.org/wiki/Virahanka">Wikipedia, Virahanka</a>; <a href="http://cosmicmaths.org">cosmicmaths.org</a>]</p>
+<p><strong>Virahanka</strong> (~6th–8th century CE) was the first to state the recurrence rule explicitly. His exact dates are uncertain - somewhere in a roughly 200-year window.</p>
+<p><strong>Gopala</strong> (before 1135 CE) was the first author to explicitly enumerate the numbers in the sequence as a list.</p>
+<p><strong>Hemachandra</strong> (1150 CE) stated the rule cleanly: &quot;Sum of last and the last but one numbers is that of the mātrā-vṛtta coming next.&quot;</p>
+<p><strong>Fibonacci</strong> published <em>Liber Abaci</em> in 1202 CE, introducing the same sequence to European mathematics via the rabbit problem.</p>
+<p>The Indian tradition precedes Fibonacci by at minimum 52 years (Hemachandra), probably by several centuries (Virahanka, Gopala). The sequence is sometimes called the Hemachandra-Fibonacci sequence or the Virahanka-Fibonacci sequence in historical mathematics literature.</p>
+<hr />
+<h2 id="the-demo">The Demo <a class="heading-anchor" href="#the-demo" aria-label="Link to this section">#</a></h2>
+<p>The code demo (<code>code/pingala.py</code>) runs the prastāra for n = 3, verifies the naṣṭa/uddiṣṭa round-trip on every 4-syllable pattern, prints the lagakriyā values for n = 6 (sum = 64 = 2⁶), builds the meru-prastāra to 8 rows, and lists mātrā-vṛtta counts up to 10 mātrās: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89.</p>
+<p>The mātrā-vṛtta problem is not contrived. Ancient Sanskrit poets genuinely cared about how many different metrical forms were available in a given mora count.</p>
+<p>It follows from the structure of the problem, from the fact that you have two syllable types with different weights. The same structure underlies the rabbit problem, which is why Fibonacci got there too. Independent convergence on the same structure.</p>
+<hr />
+<h2 id="my-gripes">My gripes <a class="heading-anchor" href="#my-gripes" aria-label="Link to this section">#</a></h2>
+<p>The prastāra is not an obscure curio. It is a fully worked algorithmic system for binary enumeration that predates Leibniz by two thousand years. The Fibonacci attribution we use in every CS curriculum is missing at minimum three Indian scholars who came before him.</p>
+<p>There's a version of this story where you wave the flag and declare victory - ancient India, binary, two thousand years ahead of the West.</p>
+<p>The overclaim poisons the genuine contribution, because the moment a reader verifies that Piṅgala didn't actually have a binary number system, they throw out the baby with the bathwater and conclude the whole story was inflated.</p>
+<p>The accurate version is that a prosodist builds combinatorial enumeration algorithms that are structurally binary, commentary tradition over 1200 years extracts the Pascal's triangle and Fibonacci connections, all of this predates the Western equivalents by centuries to millennia.</p>
+<p>It doesn't need to be more than this.</p>
+<hr />
+<h2 id="sources-further-reading">Sources &amp; further reading <a class="heading-anchor" href="#sources-further-reading" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Wikipedia, &quot;Piṅgala&quot;: <a href="https://en.wikipedia.org/wiki/Pingala">https://en.wikipedia.org/wiki/Pingala</a> - overview with citations to van Nooten and Plofker</p>
+</li>
+<li>
+<p>Wikipedia, &quot;Halāyudha&quot;: <a href="https://en.wikipedia.org/wiki/Halayudha">https://en.wikipedia.org/wiki/Halayudha</a> - 10th-century dating, meru-prastāra attribution</p>
+</li>
+<li>
+<p>Wikipedia, &quot;Virahanka&quot;: <a href="https://en.wikipedia.org/wiki/Virahanka">https://en.wikipedia.org/wiki/Virahanka</a> - Fibonacci chain</p>
+</li>
+<li>
+<p>Jayant Shah, &quot;A History of Piṅgala's Combinatorics,&quot; University of Hyderabad: <a href="https://sanskrit.uohyd.ac.in/Algorithms_in_Ancient_India/Material/Pingala.pdf">https://sanskrit.uohyd.ac.in/Algorithms_in_Ancient_India/Material/Pingala.pdf</a></p>
+</li>
+<li>
+<p>Indica Today, &quot;Piṅgala's Algorithm Part VI: Meru Prastaar&quot;: <a href="https://www.indica.today/quick-reads/pingalas-algorithm-meru-prastaar/">https://www.indica.today/quick-reads/pingalas-algorithm-meru-prastaar/</a></p>
+</li>
+<li>
+<p>Indica Today, &quot;Piṅgala's Algorithm Part IV: Value of a Binary Sequence&quot;: <a href="https://www.indica.today/quick-reads/pingalas-algorithm-value-binary-sequences/">https://www.indica.today/quick-reads/pingalas-algorithm-value-binary-sequences/</a></p>
+</li>
+<li>
+<p>Chandrahas blogs, &quot;Piṅgala's Algorithm for Binary Conversion&quot;: <a href="https://chandrahasblogs.wordpress.com/2020/05/18/pingalas-algorithm-for-binary-conversion/">https://chandrahasblogs.wordpress.com/2020/05/18/pingalas-algorithm-for-binary-conversion/</a></p>
+</li>
+<li>
+<p><a href="http://Cosmicmaths.org">Cosmicmaths.org</a>, &quot;Mātrā-vṛttas and Fibonacci Series&quot;: <a href="https://www.cosmicmaths.org/post/matra-vrttas-and-fibonacci-series">https://www.cosmicmaths.org/post/matra-vrttas-and-fibonacci-series</a></p>
+</li>
+<li>
+<p>Kim Plofker, <em>Mathematics in India</em>, Princeton University Press, 2009. ISBN 978-0-691-12067-6 - authoritative scholarly treatment of Indian mathematical history</p>
+</li>
+<li>
+<p>Barend van Nooten, &quot;Binary Numbers in Indian Antiquity,&quot; <em>Journal of Indian Philosophy</em> 21 (1993), pp. 31–50 (also reprinted in <em>Computing Science in Ancient India</em>, ed. Srinivasan, 2000) - documents the binary parallel while carefully distinguishing it from modern binary arithmetic</p>
+</li>
+</ul>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/binary/">binary</a><a class="tag" href="../tags/sanskrit/">sanskrit</a><a class="tag" href="../tags/computer-science-history/">computer science history</a><a class="tag" href="../tags/combinatorics/">combinatorics</a><a class="tag" href="../tags/unsung-bits/">unsung bits</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/the-poet-who-accidentally-invented-binary-sort-of/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-poet-who-accidentally-invented-binary-sort-of%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-poet-who-accidentally-invented-binary-sort-of%2F&amp;text=The%20Poet%20Who%20Accidentally%20Invented%20Binary%20%28Sort%20Of%29" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-poet-who-accidentally-invented-binary-sort-of%2F&amp;title=The%20Poet%20Who%20Accidentally%20Invented%20Binary%20%28Sort%20Of%29" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=The%20Poet%20Who%20Accidentally%20Invented%20Binary%20%28Sort%20Of%29&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-poet-who-accidentally-invented-binary-sort-of%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      <nav class="section series" id="series" aria-labelledby="series-title">
+        <div class="section__head"><h2 class="section__title" id="series-title">Unsung Bits</h2><span class="section__note">The series, in reading order</span></div>
+        <ol class="series__list"><li><span class="section__numeral">01</span><a href="../history-of-computer-science-in-india-part-2/">History of computer science in india Part 2</a></li><li><span class="section__numeral">02</span><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></li><li><span class="section__numeral">03</span><span aria-current="page">The Poet Who Accidentally Invented Binary (Sort Of)</span></li><li><span class="section__numeral">04</span><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></li><li><span class="section__numeral">05</span><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></li></ol>
+      </nav>
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../the-grammar-that-runs-like-a-program/" rel="prev"><span class="label">Older</span><span class="pager__title">The Grammar That Runs Like a Program</span></a><a class="pager__link pager__link--newer" href="../the-algorithm-that-grinds-problems-to-dust/" rel="next"><span class="label">Newer</span><span class="pager__title">The Algorithm That Grinds Problems to Dust</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-26T06:50:44.631Z">26 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></h3>
+          <p>Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></h3>
+          <p>Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/linguistics/">linguistics</a><a class="tag" href="../tags/sanskrit/">sanskrit</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></h3>
+          <p>Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/algorithms/">algorithms</a><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/number-theory/">number theory</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

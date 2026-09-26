@@ -1,0 +1,823 @@
+[
+ {
+  "slug": "the-number-that-shouldn-t-exist",
+  "url": "/blog/the-number-that-shouldn-t-exist/",
+  "title": "The Number That Shouldn't Exist",
+  "date": "2026-09-26T06:50:44.631Z",
+  "dateLabel": "26 Sep 2026",
+  "section": "unsung-bits",
+  "sectionLabel": "Unsung Bits",
+  "tags": [
+   {
+    "slug": "india",
+    "label": "india"
+   },
+   {
+    "slug": "mathematics",
+    "label": "mathematics"
+   },
+   {
+    "slug": "computer-science-history",
+    "label": "computer science history"
+   }
+  ],
+  "summary": "Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.",
+  "minutes": 10
+ },
+ {
+  "slug": "the-algorithm-that-grinds-problems-to-dust",
+  "url": "/blog/the-algorithm-that-grinds-problems-to-dust/",
+  "title": "The Algorithm That Grinds Problems to Dust",
+  "date": "2026-09-19T08:35:22.188Z",
+  "dateLabel": "19 Sep 2026",
+  "section": "unsung-bits",
+  "sectionLabel": "Unsung Bits",
+  "tags": [
+   {
+    "slug": "algorithms",
+    "label": "algorithms"
+   },
+   {
+    "slug": "india",
+    "label": "india"
+   },
+   {
+    "slug": "mathematics",
+    "label": "mathematics"
+   },
+   {
+    "slug": "number-theory",
+    "label": "number theory"
+   },
+   {
+    "slug": "computer-science-history",
+    "label": "computer science history"
+   },
+   {
+    "slug": "unsung-bits",
+    "label": "unsung bits"
+   },
+   {
+    "slug": "aryabhata",
+    "label": "aryabhata"
+   }
+  ],
+  "summary": "Aryabhata's kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…",
+  "minutes": 10
+ },
+ {
+  "slug": "the-poet-who-accidentally-invented-binary-sort-of",
+  "url": "/blog/the-poet-who-accidentally-invented-binary-sort-of/",
+  "title": "The Poet Who Accidentally Invented Binary (Sort Of)",
+  "date": "2026-09-12T04:46:54.437Z",
+  "dateLabel": "12 Sep 2026",
+  "section": "unsung-bits",
+  "sectionLabel": "Unsung Bits",
+  "tags": [
+   {
+    "slug": "india",
+    "label": "india"
+   },
+   {
+    "slug": "mathematics",
+    "label": "mathematics"
+   },
+   {
+    "slug": "binary",
+    "label": "binary"
+   },
+   {
+    "slug": "sanskrit",
+    "label": "sanskrit"
+   },
+   {
+    "slug": "computer-science-history",
+    "label": "computer science history"
+   },
+   {
+    "slug": "combinatorics",
+    "label": "combinatorics"
+   },
+   {
+    "slug": "unsung-bits",
+    "label": "unsung bits"
+   }
+  ],
+  "summary": "Piṅgala's prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.",
+  "minutes": 10
+ },
+ {
+  "slug": "the-grammar-that-runs-like-a-program",
+  "url": "/blog/the-grammar-that-runs-like-a-program/",
+  "title": "The Grammar That Runs Like a Program",
+  "date": "2026-09-05T05:49:19.955Z",
+  "dateLabel": "5 Sep 2026",
+  "section": "unsung-bits",
+  "sectionLabel": "Unsung Bits",
+  "tags": [
+   {
+    "slug": "india",
+    "label": "india"
+   },
+   {
+    "slug": "linguistics",
+    "label": "linguistics"
+   },
+   {
+    "slug": "sanskrit",
+    "label": "sanskrit"
+   },
+   {
+    "slug": "computer-science-history",
+    "label": "computer science history"
+   },
+   {
+    "slug": "formal-languages",
+    "label": "formal languages"
+   },
+   {
+    "slug": "unsung-bits",
+    "label": "unsung bits"
+   }
+  ],
+  "summary": "Pāṇini's Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.",
+  "minutes": 11
+ },
+ {
+  "slug": "discovering-rags-4-project-updates-all-the-way",
+  "url": "/blog/discovering-rags-4-project-updates-all-the-way/",
+  "title": "Discovering RAGs 4: Project updates all the way",
+  "date": "2026-08-08T05:59:48.259Z",
+  "dateLabel": "8 Aug 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "devlog",
+    "label": "devlog"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   }
+  ],
+  "summary": "So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.",
+  "minutes": 7
+ },
+ {
+  "slug": "history-of-computer-science-in-india-part-2",
+  "url": "/blog/history-of-computer-science-in-india-part-2/",
+  "title": "History of computer science in india Part 2",
+  "date": "2026-07-30T06:57:07.783Z",
+  "dateLabel": "30 Jul 2026",
+  "section": "unsung-bits",
+  "sectionLabel": "Unsung Bits",
+  "tags": [
+   {
+    "slug": "algorithms",
+    "label": "algorithms"
+   },
+   {
+    "slug": "programming-blogs",
+    "label": "programming blogs"
+   },
+   {
+    "slug": "computer-science",
+    "label": "computer science"
+   },
+   {
+    "slug": "india",
+    "label": "india"
+   },
+   {
+    "slug": "history-of-computing",
+    "label": "history of computing"
+   }
+  ],
+  "summary": "This series explores foundational Indian computing contributions that are often omitted from standard curricula.",
+  "minutes": 6
+ },
+ {
+  "slug": "vibecoding-hackathons",
+  "url": "/blog/vibecoding-hackathons/",
+  "title": "Vibecoding Hackathons?",
+  "date": "2026-07-18T13:01:48.926Z",
+  "dateLabel": "18 Jul 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "ai",
+    "label": "AI"
+   },
+   {
+    "slug": "devtools",
+    "label": "dev tools"
+   },
+   {
+    "slug": "reactjs",
+    "label": "React"
+   },
+   {
+    "slug": "typescript",
+    "label": "TypeScript"
+   },
+   {
+    "slug": "ai-agents",
+    "label": "AI agents"
+   },
+   {
+    "slug": "gemini",
+    "label": "gemini"
+   },
+   {
+    "slug": "google-ai-studio",
+    "label": "Google AI Studio"
+   },
+   {
+    "slug": "vibe-coding",
+    "label": "vibe coding"
+   }
+  ],
+  "summary": "I entered a vibecoding hackathon and somehow ended up using one AI to tell another AI how to build the app. This parody of software development is unfortunately the truth.",
+  "minutes": 11
+ },
+ {
+  "slug": "one-model-is-the-new-n-1",
+  "url": "/blog/one-model-is-the-new-n-1/",
+  "title": "One Model Is the New n=1",
+  "date": "2026-07-11T04:05:58.536Z",
+  "dateLabel": "11 Jul 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "devtools",
+    "label": "dev tools"
+   },
+   {
+    "slug": "prompt",
+    "label": "prompt"
+   },
+   {
+    "slug": "llm",
+    "label": "LLM"
+   },
+   {
+    "slug": "promptengineering",
+    "label": "prompt engineering"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   },
+   {
+    "slug": "agentic-ai",
+    "label": "agentic AI"
+   },
+   {
+    "slug": "mcp",
+    "label": "MCP"
+   }
+  ],
+  "summary": "In the first eval, the conclusion was annoying but useful. At the frontier, it did not make the model meaningfully smarter.",
+  "minutes": 12
+ },
+ {
+  "slug": "does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out",
+  "url": "/blog/does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/",
+  "title": "Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out",
+  "date": "2026-07-04T04:39:04.300Z",
+  "dateLabel": "4 Jul 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "llm",
+    "label": "LLM"
+   },
+   {
+    "slug": "evaluation-metrics",
+    "label": "evaluation metrics"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   },
+   {
+    "slug": "mcp",
+    "label": "MCP"
+   },
+   {
+    "slug": "golden-dataset",
+    "label": "golden dataset"
+   }
+  ],
+  "summary": "I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI's Codex.",
+  "minutes": 13
+ },
+ {
+  "slug": "adding-rank-fusion-to-my-rag-retrieval-logic",
+  "url": "/blog/adding-rank-fusion-to-my-rag-retrieval-logic/",
+  "title": "Adding Rank Fusion to my RAG retrieval logic",
+  "date": "2026-06-20T06:02:42.197Z",
+  "dateLabel": "20 Jun 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "rag",
+    "label": "RAG"
+   },
+   {
+    "slug": "ollama",
+    "label": "ollama"
+   },
+   {
+    "slug": "hybrid-search",
+    "label": "hybrid search"
+   },
+   {
+    "slug": "agentic-ai",
+    "label": "agentic AI"
+   },
+   {
+    "slug": "mcp",
+    "label": "MCP"
+   },
+   {
+    "slug": "bm25",
+    "label": "BM25"
+   }
+  ],
+  "summary": "In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…",
+  "minutes": 10
+ },
+ {
+  "slug": "from-tokens-to-trees",
+  "url": "/blog/from-tokens-to-trees/",
+  "title": "From Tokens to Trees",
+  "date": "2026-06-06T04:57:51.375Z",
+  "dateLabel": "6 Jun 2026",
+  "section": "programming-concepts",
+  "sectionLabel": "Programming Concepts",
+  "tags": [
+   {
+    "slug": "python",
+    "label": "python"
+   },
+   {
+    "slug": "interpreter",
+    "label": "interpreter"
+   },
+   {
+    "slug": "ast",
+    "label": "AST"
+   },
+   {
+    "slug": "compiler",
+    "label": "compiler"
+   },
+   {
+    "slug": "parsing",
+    "label": "parsing"
+   },
+   {
+    "slug": "compilerdesign",
+    "label": "compiler design"
+   }
+  ],
+  "summary": "We’ve all used so many programming languages over the years. Who makes them? And how are they maintained? Was the Compiler Design class in university a complete waste of time?",
+  "minutes": 8
+ },
+ {
+  "slug": "what-is-agentic-rag",
+  "url": "/blog/what-is-agentic-rag/",
+  "title": "What is Agentic RAG?",
+  "date": "2026-05-30T04:42:39.018Z",
+  "dateLabel": "30 May 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "ai",
+    "label": "AI"
+   },
+   {
+    "slug": "agents",
+    "label": "agents"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   },
+   {
+    "slug": "retrieval-augmented-generation",
+    "label": "retrieval augmented generation"
+   },
+   {
+    "slug": "agentic-ai",
+    "label": "agentic AI"
+   },
+   {
+    "slug": "agentic-rag",
+    "label": "agentic RAG"
+   },
+   {
+    "slug": "mcp",
+    "label": "MCP"
+   }
+  ],
+  "summary": "Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…",
+  "minutes": 10
+ },
+ {
+  "slug": "ai-prompt-engineering-basics",
+  "url": "/blog/ai-prompt-engineering-basics/",
+  "title": "How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly",
+  "date": "2026-05-16T14:56:02.378Z",
+  "dateLabel": "16 May 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "cli",
+    "label": "CLI"
+   },
+   {
+    "slug": "developer-tools",
+    "label": "developer tools"
+   },
+   {
+    "slug": "ai-development",
+    "label": "AI development"
+   },
+   {
+    "slug": "promptengineering",
+    "label": "prompt engineering"
+   },
+   {
+    "slug": "claude",
+    "label": "claude"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   },
+   {
+    "slug": "claude-code",
+    "label": "claude code"
+   }
+  ],
+  "summary": "I use coding agents as accelerators, not as authorities. The smaller the task and clearer the context, the better the result.",
+  "minutes": 11
+ },
+ {
+  "slug": "transforming-chatbot-interactions-with-retrieval-augmented-generation",
+  "url": "/blog/transforming-chatbot-interactions-with-retrieval-augmented-generation/",
+  "title": "Transforming Chatbot Interactions with Retrieval Augmented Generation",
+  "date": "2026-05-09T14:41:59.331Z",
+  "dateLabel": "9 May 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "chatbot",
+    "label": "chatbot"
+   },
+   {
+    "slug": "llm",
+    "label": "LLM"
+   },
+   {
+    "slug": "embeddings",
+    "label": "embeddings"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   },
+   {
+    "slug": "retrieval-augmented-generation",
+    "label": "retrieval augmented generation"
+   }
+  ],
+  "summary": "Since ChatGPT was first unveiled, one of my persistent doubts has been how it will work in applications requiring proprietary or post-2022 data.",
+  "minutes": 9
+ },
+ {
+  "slug": "what-comes-after-cs50x-discover-cs50-ai-2",
+  "url": "/blog/what-comes-after-cs50x-discover-cs50-ai-2/",
+  "title": "What Comes After CS50x? Discover CS50 AI - 2",
+  "date": "2026-05-02T04:56:56.224Z",
+  "dateLabel": "2 May 2026",
+  "section": "moocs",
+  "sectionLabel": "Moocs",
+  "tags": [],
+  "summary": "We’re halfway there, we started this journey together and went through several projects that most people won’t even consider “real” AI. Now it’s time to change that.",
+  "minutes": 8
+ },
+ {
+  "slug": "what-comes-after-cs50x-discover-cs50-ai",
+  "url": "/blog/what-comes-after-cs50x-discover-cs50-ai/",
+  "title": "What Comes After CS50x? Discover CS50 AI",
+  "date": "2026-04-24T04:30:00.000Z",
+  "dateLabel": "24 Apr 2026",
+  "section": "moocs",
+  "sectionLabel": "Moocs",
+  "tags": [
+   {
+    "slug": "ai",
+    "label": "AI"
+   },
+   {
+    "slug": "cs50",
+    "label": "CS50"
+   },
+   {
+    "slug": "cs50-ai",
+    "label": "CS50 AI"
+   }
+  ],
+  "summary": "Explore insights and challenges from Harvard's CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence",
+  "minutes": 10
+ },
+ {
+  "slug": "using-vibecoding-to-learn",
+  "url": "/blog/using-vibecoding-to-learn/",
+  "title": "Using vibecoding to learn",
+  "date": "2026-01-25T15:09:43.406Z",
+  "dateLabel": "25 Jan 2026",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "ai",
+    "label": "AI"
+   },
+   {
+    "slug": "developer-tools",
+    "label": "developer tools"
+   },
+   {
+    "slug": "llm",
+    "label": "LLM"
+   },
+   {
+    "slug": "ai-agents",
+    "label": "AI agents"
+   },
+   {
+    "slug": "vibe-coding",
+    "label": "vibe coding"
+   }
+  ],
+  "summary": "Learn to safely use AI-driven \"vibecoding\" for learning, prototyping, and speeding up complex tasks while maintaining judgment",
+  "minutes": 9
+ },
+ {
+  "slug": "nand2tetris-part-1-hardware",
+  "url": "/blog/nand2tetris-part-1-hardware/",
+  "title": "Nand2Tetris Part 1: Hardware",
+  "date": "2026-01-16T13:30:43.109Z",
+  "dateLabel": "16 Jan 2026",
+  "section": "moocs",
+  "sectionLabel": "Moocs",
+  "tags": [
+   {
+    "slug": "hardware",
+    "label": "hardware"
+   },
+   {
+    "slug": "assembly",
+    "label": "assembly"
+   },
+   {
+    "slug": "computer-architecture",
+    "label": "computer architecture"
+   },
+   {
+    "slug": "nand2tetris",
+    "label": "Nand2Tetris"
+   }
+  ],
+  "summary": "Learn to build basic computer hardware with Nand2Tetris: logic gates, ALU, memory, and assembly language",
+  "minutes": 11
+ },
+ {
+  "slug": "process-synchronization-in-linux",
+  "url": "/blog/process-synchronization-in-linux/",
+  "title": "Process Synchronization in Linux",
+  "date": "2026-01-09T13:30:17.012Z",
+  "dateLabel": "9 Jan 2026",
+  "section": "linux",
+  "sectionLabel": "Linux",
+  "tags": [
+   {
+    "slug": "linux",
+    "label": "linux"
+   },
+   {
+    "slug": "multithreading",
+    "label": "multithreading"
+   },
+   {
+    "slug": "linux-for-beginners",
+    "label": "linux for beginners"
+   },
+   {
+    "slug": "linux-basics",
+    "label": "linux basics"
+   },
+   {
+    "slug": "process-management",
+    "label": "process management"
+   },
+   {
+    "slug": "multiprocessing",
+    "label": "multiprocessing"
+   }
+  ],
+  "summary": "Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations",
+  "minutes": 7
+ },
+ {
+  "slug": "what-even-are-llms",
+  "url": "/blog/what-even-are-llms/",
+  "title": "What even are LLMs?",
+  "date": "2024-12-10T12:32:27.575Z",
+  "dateLabel": "10 Dec 2024",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "llm",
+    "label": "LLM"
+   },
+   {
+    "slug": "rag",
+    "label": "RAG"
+   }
+  ],
+  "summary": "Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements",
+  "minutes": 7
+ },
+ {
+  "slug": "understanding-neural-networks",
+  "url": "/blog/understanding-neural-networks/",
+  "title": "Understanding Neural Networks",
+  "date": "2024-12-03T12:30:53.826Z",
+  "dateLabel": "3 Dec 2024",
+  "section": "aiml",
+  "sectionLabel": "AIML",
+  "tags": [
+   {
+    "slug": "experiment",
+    "label": "experiment"
+   },
+   {
+    "slug": "python",
+    "label": "python"
+   },
+   {
+    "slug": "machine-learning",
+    "label": "machine learning"
+   },
+   {
+    "slug": "neural-networks",
+    "label": "neural networks"
+   }
+  ],
+  "summary": "A beginner's guide to understanding neural networks, exploring their history, applications, challenges, and foundational backpropagation algorithm",
+  "minutes": 6
+ },
+ {
+  "slug": "my-first-command-line-program",
+  "url": "/blog/my-first-command-line-program/",
+  "title": "My first Command Line program",
+  "date": "2024-04-03T13:30:50.340Z",
+  "dateLabel": "3 Apr 2024",
+  "section": "programming-concepts",
+  "sectionLabel": "Programming Concepts",
+  "tags": [
+   {
+    "slug": "python",
+    "label": "python"
+   },
+   {
+    "slug": "terminal",
+    "label": "terminal"
+   },
+   {
+    "slug": "cli",
+    "label": "CLI"
+   },
+   {
+    "slug": "password-generator",
+    "label": "password generator"
+   },
+   {
+    "slug": "cli-tool",
+    "label": "cli tool"
+   }
+  ],
+  "summary": "Discover how this Python command-line tool, developed as a CS50 final project, generates secure passwords with customizable lengths and character sets, ensu",
+  "minutes": 7
+ },
+ {
+  "slug": "cs50-my-experience",
+  "url": "/blog/cs50-my-experience/",
+  "title": "CS50 My experience",
+  "date": "2024-04-02T13:30:31.421Z",
+  "dateLabel": "2 Apr 2024",
+  "section": "moocs",
+  "sectionLabel": "Moocs",
+  "tags": [
+   {
+    "slug": "introduction",
+    "label": "introduction"
+   },
+   {
+    "slug": "cs50",
+    "label": "CS50"
+   }
+  ],
+  "summary": "Explore one student's experience taking Harvard's renowned CS50 introduction to computer science online course.",
+  "minutes": 15
+ },
+ {
+  "slug": "exploring-pointers",
+  "url": "/blog/exploring-pointers/",
+  "title": "Exploring Pointers",
+  "date": "2024-04-01T13:30:41.898Z",
+  "dateLabel": "1 Apr 2024",
+  "section": "programming-concepts",
+  "sectionLabel": "Programming Concepts",
+  "tags": [
+   {
+    "slug": "c",
+    "label": "C"
+   },
+   {
+    "slug": "pointers",
+    "label": "pointers"
+   },
+   {
+    "slug": "memory-management",
+    "label": "memory management"
+   },
+   {
+    "slug": "pointers-in-c",
+    "label": "pointers in c"
+   }
+  ],
+  "summary": "Demystify pointers in C programming with this beginner's guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po",
+  "minutes": 5
+ },
+ {
+  "slug": "basics-of-shell-scripting",
+  "url": "/blog/basics-of-shell-scripting/",
+  "title": "Basics of Shell scripting",
+  "date": "2024-03-31T16:18:03.231Z",
+  "dateLabel": "31 Mar 2024",
+  "section": "linux",
+  "sectionLabel": "Linux",
+  "tags": [
+   {
+    "slug": "bash",
+    "label": "bash"
+   },
+   {
+    "slug": "shell",
+    "label": "shell"
+   },
+   {
+    "slug": "bash-script",
+    "label": "bash script"
+   }
+  ],
+  "summary": "Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks",
+  "minutes": 6
+ },
+ {
+  "slug": "learning-how-to-use-vim",
+  "url": "/blog/learning-how-to-use-vim/",
+  "title": "Learning how to use Vim",
+  "date": "2024-02-28T06:38:17.390Z",
+  "dateLabel": "28 Feb 2024",
+  "section": "linux",
+  "sectionLabel": "Linux",
+  "tags": [
+   {
+    "slug": "terminal",
+    "label": "terminal"
+   },
+   {
+    "slug": "vim",
+    "label": "vim"
+   }
+  ],
+  "summary": "Look at the basics of what vim is all about and have this handy cheatsheet to get you started",
+  "minutes": 7
+ }
+]

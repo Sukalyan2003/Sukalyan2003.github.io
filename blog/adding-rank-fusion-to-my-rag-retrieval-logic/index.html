@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adding Rank Fusion to my RAG retrieval logic - Engineering Tales</title>
+<meta name="description" content="In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Adding Rank Fusion to my RAG retrieval logic - Engineering Tales">
+<meta property="og:description" content="In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/og-d9063996.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-06-20T06:02:42.197Z">
+<meta property="article:modified_time" content="2026-07-03T13:03:08.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="AIML">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="ollama">
+<meta property="article:tag" content="hybrid search">
+<meta property="article:tag" content="agentic AI">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="BM25">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Adding Rank Fusion to my RAG retrieval logic - Engineering Tales">
+<meta name="twitter:description" content="In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/og-d9063996.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/",
+      "url": "https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/",
+      "headline": "Adding Rank Fusion to my RAG retrieval logic",
+      "description": "In the previous part, we explored Agentic RAG as an evolution of the traditional Retrieval-Augmented Generation pipeline…",
+      "datePublished": "2026-06-20T06:02:42.197Z",
+      "dateModified": "2026-07-03T13:03:08.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/og-d9063996.jpg"
+      ],
+      "keywords": [
+        "RAG",
+        "ollama",
+        "hybrid search",
+        "agentic AI",
+        "MCP",
+        "BM25"
+      ],
+      "articleSection": "AIML",
+      "wordCount": 2318,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AIML",
+          "item": "https://sukalyan2003.github.io/blog/aiml/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Adding Rank Fusion to my RAG retrieval logic",
+          "item": "https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/" class="is-current" aria-current="page">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../aiml/">AIML</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Adding Rank Fusion to my RAG retrieval logic</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-06-20T06:02:42.197Z">20 Jun 2026</time></span><span>Updated <time datetime="2026-07-03T13:03:08.000Z">3 Jul 2026</time></span><span>10 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-06-20T06:02:42.197Z">20 Jun 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T13:03:08.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>10 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../aiml/">AIML</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#a-little-review">A little Review</a></li><li class="toc__l2"><a href="#agentic-rag">Agentic RAG</a></li><li class="toc__l2"><a href="#graphs">Graphs</a></li><li class="toc__l2"><a href="#tradeoffs">Tradeoffs</a></li><li class="toc__l2"><a href="#project-updates">Project Updates</a></li><li class="toc__l2"><a href="#hybrid-search-with-bm25">Hybrid Search with BM25</a></li><li class="toc__l3"><a href="#bm25-sparse-index-module">BM25 Sparse Index Module</a></li><li class="toc__l3"><a href="#retrieval-rank-fusion">Retrieval Rank Fusion</a></li><li class="toc__l2"><a href="#conclusion">Conclusion</a></li><li class="toc__l2"><a href="#references">References</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/9bbd2afac2e3-d9063996-480.webp" srcset="img/9bbd2afac2e3-d9063996-480.webp 480w, img/9bbd2afac2e3-d9063996-960.webp 960w, img/9bbd2afac2e3-d9063996-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="244" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>In the previous part, we explored <strong>Agentic RAG</strong> as an evolution of the traditional Retrieval-Augmented Generation pipeline:<br />
+<a href="https://sukalyanroy.hashnode.dev/discovering-rags-2-what-is-agentic-rag">https://sukalyanroy.hashnode.dev/discovering-rags-2-what-is-agentic-rag</a></p>
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>I moved the RAG project from semantic-only retrieval toward hybrid retrieval.</p>
+</li>
+<li>
+<p>Dense embeddings are still useful for meaning, but BM25 helps with exact terms like MCP, JSON-RPC, stdio, and specific filenames.</p>
+</li>
+<li>
+<p>Reciprocal Rank Fusion combines both rankings without pretending their raw scores mean the same thing.</p>
+</li>
+<li>
+<p>This makes retrieval less fragile, but evaluation and reranking are still the next big missing pieces.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Project status</strong></p>
+<p>The chatbot now supports hybrid dense + BM25 retrieval with RRF. It can ingest multiple document types, use Ollama locally, expose an MCP server, and return source-attributed answers. The next work is retrieval evaluation, reranking, and more deliberate agentic control.</p>
+</blockquote>
+<h2 id="a-little-review">A little Review <a class="heading-anchor" href="#a-little-review" aria-label="Link to this section">#</a></h2>
+<p>Traditional RAG is mostly reactive.</p>
+<p>It takes the user’s question, retrieves some relevant chunks, sends them to the LLM, and returns an answer. For simple factual questions, this works pretty well.</p>
+<p>But real users rarely ask clean questions.</p>
+<p>They ask vague things. They mix multiple intents in one prompt. They refer to previous conversations. They expect answers that may depend on documents, databases, APIs, tools, memory, or even live systems.</p>
+<p>And sometimes the answer is not sitting inside one perfect chunk of text. It may be spread across multiple files, hidden behind relationships, or dependent on rules that need some reasoning.</p>
+<p>That is why we need Agentic RAG.</p>
+<h2 id="agentic-rag">Agentic RAG <a class="heading-anchor" href="#agentic-rag" aria-label="Link to this section">#</a></h2>
+<p>Once we add agency to RAG, the system starts looking less like a fixed pipeline and more like a workflow.</p>
+<p>There may be a planner agent that breaks the request into smaller steps. A retrieval agent that decides where to search. A reasoning agent that combines evidence. A critic agent that checks whether the answer is actually grounded. There may also be memory, so the system can carry useful information beyond one single conversation.</p>
+<p>Some systems do all this with one agent. Others use multiple specialized agents. Some use reflection, where the system checks and improves its own output. Some use tools, where the LLM can call databases, search, calculators, APIs, or code execution.</p>
+<p>And when this is combined with knowledge graphs, we get into Agentic GraphRAG.</p>
+<h2 id="graphs">Graphs <a class="heading-anchor" href="#graphs" aria-label="Link to this section">#</a></h2>
+<p>Normal vector RAG searches for chunks that are semantically similar.</p>
+<p>This is useful, but it can treat knowledge like isolated pieces of text.</p>
+<p>In many real cases, the relationships matter just as much as the facts.<br />
+A company may be connected to subsidiaries, executives, transactions, and regulations. A medical answer may depend on symptoms, medicines, diagnoses, and patient history. An enterprise answer may depend on teams, services, incidents, and documents.</p>
+<p>A knowledge graph stores these relationships directly.</p>
+<p>So instead of only asking, “Which chunk is similar to this query?”, the system can also ask, “Which entities are connected, and how?”</p>
+<p>This is where frameworks like LangGraph become useful. Instead of making the RAG app a straight line, we can model it as a graph of steps. One node rewrites the query. Another retrieves documents. Another calls a tool. Another validates the answer. Another decides whether to continue or stop.</p>
+<p>Basically, the workflow becomes more explicit and easier to control.</p>
+<h2 id="tradeoffs">Tradeoffs <a class="heading-anchor" href="#tradeoffs" aria-label="Link to this section">#</a></h2>
+<p>Of course, agentic systems are not free magic.</p>
+<p>They can be slower because they may perform multiple steps. They can be more expensive because each step may call a model or a tool. They can be harder to evaluate because the path to the answer is not always fixed. And they can be harder to control because the system is making decisions at runtime.</p>
+<p>So the question is not simply:</p>
+<p>“Should we use Agentic RAG?”</p>
+<p>The better question is:</p>
+<p>“Which parts of the RAG pipeline actually need agency?”</p>
+<h2 id="project-updates">Project Updates <a class="heading-anchor" href="#project-updates" aria-label="Link to this section">#</a></h2>
+<p>With that framing in mind, the next step is about identifying which parts of my own RAG pipeline are beginning to need more agency: query analysis, retrieval strategy, validation, memory, and orchestration.</p>
+<p>And i'll make an update about that once we're done going through the rest of the changes made since the last post. The updates themselves might take more than one post.</p>
+<p>If I had to summarize the entire state of the project right now, it would be this:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>A local-first Retrieval-Augmented Generation chatbot. 
+
+Documents (PDF, DOCX, TXT, MD, JSON, CSV, web URLs) are chunked, embedded against an Ollama model, and stored in a pickled cache.
+
+At query time the user&#x27;s question is validated and analyzed, the top-K most relevant chunks are retrieved by a hybrid of dense (cosine) and sparse (BM25) search fused with reciprocal rank fusion.
+
+The LLM (also Ollama by default) is prompted with the context plus role-conditioned system prompt, and the answer is returned with source attribution. 
+
+The whole engine is also exposed as a Model Context Protocol server over JSON-RPC stdio so any MCP-compatible client can drive it, and there are two Streamlit UIs — one talking to the MCP server, one importing the engine directly.</code></pre></div>
+<p>The core logic, is in <code>src/core/final_rag_system.py</code>, which acts as an orchestrator. When you open it, the first thing you will see after the imports and some callback helper function, is the class of <code>FinalRagChatbot</code>.</p>
+<p>Now this was a name i came up with out of frustration as I kept procrastinating my previous projects, but there are still many many phases left to be improved and further worked upon.</p>
+<p>The class itself calls the functions for all the default parameter tuning, and cache path resolution and more. Contains all the methods needed to make the main chat loop work.</p>
+<p>The main section of the code is the entire chat turn, and if we understand that, we can branch out into the several components part by part to understand them specifically.</p>
+<p>There are some tracking and metrics related thing at the top of this function but the main logic starts as follows:</p>
+<ol>
+<li>
+<p>Validating the input</p>
+<p>against harmful patterns like code execution; or when someone asks a security related question but does not have the authorization, via the <code>validate_input</code> and <code>check_permissions</code> functions.<br />
+Both of these are keyword based, might try some further semantic checks here later.</p>
+</li>
+<li>
+<p>Then the <code>analyze_query</code> function<br />
+uses some hardcoded rules and heuristics to convert potentially vague queries, and expand them out into better representations.</p>
+<p>For example, expanding out certain popular acronyms, check against common keywords to figure out whether it's asking for a tutorial or a report or troubleshooting etc, Isolate out the entities like Proper nouns and acronyms.</p>
+<p>And based on all this, it adds some extra lines of instruction to make the response better.</p>
+</li>
+<li>
+<p>Then we retrieve the relevant documents based on some logic.<br />
+This was pure semantic search before using vector embedding and cosine similarity, but has been changed since to use a hybrid system (Described later in this post)</p>
+</li>
+<li>
+<p>When asking the LLM to generate the response, we also fetch a system prompt that's in the codebase, which is sent along with our documents and instructions.</p>
+</li>
+<li>
+<p>If no relevant documents found then we just reply a message for that and end the turn, if not then we continue.</p>
+</li>
+<li>
+<p>If Streaming is enabled we call to the streaming response function, otherwise we generate the whole response at once and then return it.</p>
+</li>
+<li>
+<p>Also we remove source attribution from the LLM response itself because our pipeline explicitly marks it separately.</p>
+</li>
+<li>
+<p>After that, we update the conversation history so the latest turn is in the context for the next one.</p>
+</li>
+<li>
+<p>Finally return the response with the updated metrics.</p>
+</li>
+</ol>
+<h2 id="hybrid-search-with-bm25">Hybrid Search with BM25 <a class="heading-anchor" href="#hybrid-search-with-bm25" aria-label="Link to this section">#</a></h2>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Retrieval style</th>
+<th>What it is good at</th>
+<th>Where it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dense/vector search</td>
+<td>Finds semantically related chunks even when the wording differs</td>
+<td>Can miss exact technical terms, filenames, commands, acronyms</td>
+</tr>
+<tr>
+<td>BM25</td>
+<td>Rewards exact keyword matches and rare terms</td>
+<td>Does not understand meaning beyond lexical overlap</td>
+</tr>
+<tr>
+<td>Hybrid + RRF</td>
+<td>Combines semantic and lexical ranking without mixing incompatible raw scores</td>
+<td>Needs tuning and evaluation to know whether it actually improves answers</td>
+</tr>
+</tbody>
+</table></div>
+<p>If you've been following the previous posts, you know that the first thing i started with, was vector embedding and cosine similarity.</p>
+<p>Related to vector spaces? Check. Using embedding models that are LLM based? Check!</p>
+<p>So the next step would obviously be something even more sophisticated, even more enmeshed within the AI ecosystem right? Well, not quite.</p>
+<p>To take several steps ahead, we need to take a few steps back, almost 40+ years ago.</p>
+<p>We reach the age when the first personal computers were getting popular, but enterprise workloads were still the dominant use.</p>
+<p>The internet was still not a thing yet, but people wanted to figure out how to search for keywords smartly across large volumes of data.</p>
+<p>Artificial intelligence was in a limbo, one of the several AI winters as people talk about it, and it was the perfect time for statistical methods.</p>
+<p>From this environment came out several Statistical keyword search algorithms, one of which, along with it's variants would go on to dominate search as Internet became a big deal.</p>
+<p>Of course you build up your corpus of data by crawling and what not, but once you have it crawled, how do you decide which one to fetch? This algorithm comes in here.</p>
+<p>This is where BM25, or as it's full name is, Okapi Best Match 25 comes in.</p>
+<p>Before we even go into the details, let me give you an example of why do we even care.</p>
+<p>Suppose the user asks, “How does MCP integration work in this project?” Dense search may retrieve semantically related chunks about agents or tool use, but BM25 can strongly reward exact terms like “MCP,” “JSON-RPC,” and “stdio.” Hybrid search lets the system benefit from both semantic similarity and exact keyword matching.</p>
+<p>Another example: The main reason why i started this project was that I wanted something to summarize my college notes for me, and act essentially as my tutor.</p>
+<p>When this project began, there was neither NotebookLM nor Study mode in Chatgpt or anything similar.</p>
+<p>So, quite obviously, once I made this functional, the first thing i did was feed my cybersecurity notes into this system, to try and see how it works. I asked about best security practices for users. But the search was very contrived.</p>
+<p>It often tried quoting MCQs that directly mentioned some of the keywords, and on other times, returned documents that have nothing to do with security at all.</p>
+<p>The answer could still sound somewhat reasonable, but the retrieved context made it clear that the system was not really understanding what I needed.</p>
+<p>This motivated my need for a better retrieval system.</p>
+<hr />
+<p>Now, below this you will see two crazy looking formulas that won't make much sense at first, but you do not need to memorize the formula.</p>
+<p>The important idea is that BM25 rewards terms that are frequent in a document but rare across the whole corpus, while also adjusting for document length.</p>
+<figure class="figure"><img src="img/43595f364c55-aa07770c-480.webp" srcset="img/43595f364c55-aa07770c-480.webp 480w, img/43595f364c55-aa07770c-798.webp 798w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="72" alt="" loading="lazy" decoding="async"></figure>
+<figure class="figure"><img src="img/8a727e2d60d3-509147ef-442.webp" srcset="img/8a727e2d60d3-509147ef-442.webp 442w" sizes="(max-width: 900px) 100vw, 680px" width="442" height="91" alt="" loading="lazy" decoding="async"></figure>
+
+<p>You can of course look up tutorials on this online, including wikipedia which has a nice article on what each of these terms mean, but let me give you a crash course.</p>
+<p>Essentially, this just codifies a way to calculate different things about a given query, <code>Q</code>. Such as,</p>
+<ol>
+<li>
+<p>How frequently does the query word occur in the stored documents as a proportion of the documents? (The TF-IDF terms)<br />
+<code>The specificity of a term can be quantified as an inverse function of the number of documents in which it occurs.</code></p>
+</li>
+<li>
+<p>How large or small those documents are? If we don't adjust for this, then we might bias for small documents where the query is perhaps one of the only words, while there can be larger ones which have more meaning, OR vice versa.</p>
+</li>
+</ol>
+<p>Now, moving beyond the formula, it is a lot more important that we can make it work alongside our vector search implementation, how do we do that?</p>
+<p>We give the user, or rather the one setting up the configuration, the choice to enable or disable this feature.</p>
+<p>The platform by default uses cosine similarity with vector embeddings, but if hybrid search is enabled, then it calls to the <code>hybrid_candidates</code> function.</p>
+<p>The <code>dense_candidates</code> function is used in both cases, directly when cosine similarity and indirectly in hybrid. It returns all the documents which pass a certain threshold similarity score.</p>
+<p>But we have discussed most of those things already, the core new logic that we need to discuss is how the BM25 algorithm is used in this project.</p>
+<h3 id="bm25-sparse-index-module">BM25 Sparse Index Module <a class="heading-anchor" href="#bm25-sparse-index-module" aria-label="Link to this section">#</a></h3>
+<p>Wraps <code>rank_bm25.BM25Okapi</code> to provide a lexical (sparse) retrieval leg that runs alongside dense embedding similarity. Chunks are tracked by a caller-supplied stable <code>chunk_id</code> so the sparse index can be fused with the dense ranking via reciprocal rank fusion.</p>
+<p><code>BM25Okapi</code> builds its statistics at construction time and has no incremental API, so this wrapper keeps the tokenized corpus in memory and rebuilds the underlying model lazily whenever the corpus changes.</p>
+<h3 id="retrieval-rank-fusion">Retrieval Rank Fusion <a class="heading-anchor" href="#retrieval-rank-fusion" aria-label="Link to this section">#</a></h3>
+<p>In my codebase, it is a separate module in <code>utils.py</code></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">reciprocal_rank_fusion</span><span class="p">(</span>
+    <span class="n">rankings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Fuse several ranked id lists with Reciprocal Rank Fusion.</span>
+
+<span class="sd">    Each input is an ordered list of ids (best first). A document's fused score</span>
+<span class="sd">    is ``sum(1 / (k + rank))`` over the lists it appears in, where ``rank`` is</span>
+<span class="sd">    its 0-based position in that list. The constant ``k`` damps the influence of</span>
+<span class="sd">    top ranks so a single list cannot dominate the fusion.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rankings: List of ranked id lists from each retriever leg.</span>
+<span class="sd">        k: RRF damping constant (typically 60).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``(doc_id, score)`` pairs sorted by fused score descending.</span>
+<span class="sd">    """</span>
+    <span class="n">scores</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">ranking</span> <span class="ow">in</span> <span class="n">rankings</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rank</span><span class="p">,</span> <span class="n">doc_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ranking</span><span class="p">):</span>
+            <span class="n">scores</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">doc_id</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="n">rank</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code></pre></div>
+<p>The code snippet and docstring are lifted straight from my repo, and are mostly self explanatory. Though we can always experiment with the <code>rrf_k</code> damping factor to see if we can squeeze out better results.</p>
+<figure class="figure"><img src="img/d3e1899ebb4c-2b3eaaef-480.webp" srcset="img/d3e1899ebb4c-2b3eaaef-480.webp 480w, img/d3e1899ebb4c-2b3eaaef-960.webp 960w, img/d3e1899ebb4c-2b3eaaef-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="105" alt="" loading="lazy" decoding="async"></figure>
+
+<h2 id="conclusion">Conclusion <a class="heading-anchor" href="#conclusion" aria-label="Link to this section">#</a></h2>
+<p>So this update marks an important shift in the project: retrieval is no longer purely semantic. By adding BM25 and RRF, the chatbot can now combine meaning-based search with exact lexical matching. The next step is to improve what happens after retrieval: reranking, evaluation, and eventually more agentic control over the pipeline.</p>
+<p>If you are building a small RAG system yourself, try one query that depends on meaning and one query that depends on exact terms. That contrast will tell you faster than any theory whether hybrid retrieval is worth adding.</p>
+<h2 id="references">References <a class="heading-anchor" href="#references" aria-label="Link to this section">#</a></h2>
+<p><a href="https://github.com/asinghcsu/AgenticRAG-Survey">https://github.com/asinghcsu/AgenticRAG-Survey</a></p>
+<p><a href="https://ankitjswl56.hashnode.dev/beyond-basic-rag-architecting-a-fault-tolerant-agentic-ai-platform">https://ankitjswl56.hashnode.dev/beyond-basic-rag-architecting-a-fault-tolerant-agentic-ai-platform</a></p>
+<p><a href="https://theneuralmaze.substack.com/p/agentic-graphrag-for-the-real-world">https://theneuralmaze.substack.com/p/agentic-graphrag-for-the-real-world</a></p>
+<p><a href="https://medium.com/@zawanah/bm25-explained-the-classic-algorithm-that-still-powers-search-today-865351fce9aa">https://medium.com/@zawanah/bm25-explained-the-classic-algorithm-that-still-powers-search-today-865351fce9aa</a></p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/ollama/">ollama</a><a class="tag" href="../tags/hybrid-search/">hybrid search</a><a class="tag" href="../tags/agentic-ai/">agentic AI</a><a class="tag" href="../tags/mcp/">MCP</a><a class="tag" href="../tags/bm25/">BM25</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/adding-rank-fusion-to-my-rag-retrieval-logic/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fadding-rank-fusion-to-my-rag-retrieval-logic%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fadding-rank-fusion-to-my-rag-retrieval-logic%2F&amp;text=Adding%20Rank%20Fusion%20to%20my%20RAG%20retrieval%20logic" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fadding-rank-fusion-to-my-rag-retrieval-logic%2F&amp;title=Adding%20Rank%20Fusion%20to%20my%20RAG%20retrieval%20logic" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Adding%20Rank%20Fusion%20to%20my%20RAG%20retrieval%20logic&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fadding-rank-fusion-to-my-rag-retrieval-logic%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../from-tokens-to-trees/" rel="prev"><span class="label">Older</span><span class="pager__title">From Tokens to Trees</span></a><a class="pager__link pager__link--newer" href="../does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/" rel="next"><span class="label">Newer</span><span class="pager__title">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-11T04:05:58.536Z">11 Jul 2026</time>
+          <span class="dispatch__read">12 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../one-model-is-the-new-n-1/">One Model Is the New n=1</a></h3>
+          <p>In the first eval, the conclusion was annoying but useful. At the frontier, it did not make the model meaningfully smarter.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/devtools/">dev tools</a><a class="tag" href="../tags/prompt/">prompt</a><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/promptengineering/">prompt engineering</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-05-30T04:42:39.018Z">30 May 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../what-is-agentic-rag/">What is Agentic RAG?</a></h3>
+          <p>Normal RAG is usually a fixed pipeline: retrieve context, send it to the model, return an answer. Agentic RAG adds decisions inside the pipeline: when to search, where to search…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/ai/">AI</a><a class="tag" href="../tags/agents/">agents</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/retrieval-augmented-generation/">retrieval augmented generation</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-04T04:39:04.300Z">4 Jul 2026</time>
+          <span class="dispatch__read">13 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3>
+          <p>I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI&#x27;s Codex.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/evaluation-metrics/">evaluation metrics</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/mcp/">MCP</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovering RAGs 4: Project updates all the way - Engineering Tales</title>
+<meta name="description" content="So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Discovering RAGs 4: Project updates all the way - Engineering Tales">
+<meta property="og:description" content="So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/og-1727d82c.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-08-08T05:59:48.259Z">
+<meta property="article:modified_time" content="2026-08-08T05:59:48.259Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="AIML">
+<meta property="article:tag" content="devlog">
+<meta property="article:tag" content="RAG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Discovering RAGs 4: Project updates all the way - Engineering Tales">
+<meta name="twitter:description" content="So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/og-1727d82c.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/",
+      "url": "https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/",
+      "headline": "Discovering RAGs 4: Project updates all the way",
+      "description": "So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.",
+      "datePublished": "2026-08-08T05:59:48.259Z",
+      "dateModified": "2026-08-08T05:59:48.259Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/og-1727d82c.jpg"
+      ],
+      "keywords": [
+        "devlog",
+        "RAG"
+      ],
+      "articleSection": "AIML",
+      "wordCount": 1577,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AIML",
+          "item": "https://sukalyan2003.github.io/blog/aiml/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Discovering RAGs 4: Project updates all the way",
+          "item": "https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/" class="is-current" aria-current="page">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../aiml/">AIML</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Discovering RAGs 4: Project updates all the way</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-08-08T05:59:48.259Z">8 Aug 2026</time></span><span>7 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-08-08T05:59:48.259Z">8 Aug 2026</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>7 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../aiml/">AIML</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#cache-hardening">Cache hardening</a></li><li class="toc__l2"><a href="#mcp-and-streamlit-improvements">MCP and Streamlit improvements</a></li><li class="toc__l2"><a href="#streaming-responses">Streaming Responses</a></li><li class="toc__l2"><a href="#ollama-autotuning">Ollama Autotuning</a></li><li class="toc__l2"><a href="#next-up">Next up</a></li><li class="toc__l2"><a href="#conclusion">Conclusion</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/2ad5670d305a-1727d82c-480.webp" srcset="img/2ad5670d305a-1727d82c-480.webp 480w, img/2ad5670d305a-1727d82c-801.webp 801w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="358" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.</p>
+<p>Where do we go from here? Well, there's going to be atleast a couple posts like this, which are not about novel concepts, as much as they are about the details of implementation.</p>
+<p>The devlogs and the learnings I've gotten in trying to work with this project and improve it. The ways i have used AI to assist me, and the things that I had to do because even the best AI are not upto the mark for everything yet.</p>
+<p>The commits were done with one specific improvement in mind, and for the devlogs, it is quite useful to go commit by commit and understand exactly what was changed and why.</p>
+<p>Expect a bunch of code snippets, and as always, you can refer to the github repo for the whole thing.</p>
+<h2 id="cache-hardening">Cache hardening <a class="heading-anchor" href="#cache-hardening" aria-label="Link to this section">#</a></h2>
+<p>commit ID: a9d827a</p>
+<figure class="figure"><img src="img/ccbbd147a5cc-9f707ca6-480.webp" srcset="img/ccbbd147a5cc-9f707ca6-480.webp 480w, img/ccbbd147a5cc-9f707ca6-614.webp 614w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="858" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Throughout this project so far i've tried to avoid the typical Sentence Transformers approach, rather going for proper embedding models like <code>qwen3-embedding:0.6b</code></p>
+<p>The essential problem is that, the embeddings generated depend on the model and the surrounding configuration of the system.</p>
+<p>If we build the embeddings and other data and store it under one model, then try to run it with another model, everything will collapse quite spectacularly.</p>
+<p>So this commit introduced a cache schema version in <code>config.json</code> to manage embedding cache compatibility. Whenever you want to track or change it, this is the place to check.</p>
+<p>Refuses to load when the cache header reports a different embedding model or vector dimension from the currently configured model. On mismatch the in-memory state is left empty so the next <code>add_documents</code> call rebuilds against the configured model. Returns <code>True</code> when the cache was loaded, <code>False</code> when it was rejected or empty.</p>
+<p>Hash comparisons were used to keep track of duplicate chunks after processing.</p>
+<p>But the current storage method is Pickle, which isn't safe for untrusted data (arbitrary code execution on load). It's tied to Python version semantics, and you can't migrate the schema without writing custom code. For a single-user local app it's fine; for production you'd swap to a real vector DB (FAISS for local, or Qdrant/Weaviate/Milvus/pgvector for served).</p>
+<p>My GPU is slow, so even a document set of a few pdfs, maybe 5-6 of them, still takes a long time, and without any progress tracking, I had no idea whether any work was actually going on, or something silently failed and got stuck in an infinite loop.</p>
+<p>So I had to introduce progress tracking,</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="n">progress_callback</span><span class="p">:</span> <span class="n">Optional</span> <span class="p">(</span><span class="n">stage</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span> <span class="n">callback</span> <span class="n">invoked</span> <span class="n">during</span> <span class="n">dedup</span> <span class="ow">and</span> <span class="n">per</span><span class="o">-</span><span class="n">batch</span> <span class="n">embedding</span><span class="o">.</span> <span class="n">current</span> <span class="ow">and</span> <span class="n">total</span> <span class="n">are</span> <span class="n">chunk</span> <span class="n">counts</span><span class="p">;</span> <span class="n">stage</span> <span class="ow">is</span> <span class="n">one</span> <span class="n">of</span> <span class="s2">"dedup"</span><span class="p">,</span> <span class="s2">"embedding"</span><span class="p">,</span> <span class="s2">"storing"</span><span class="o">.</span></code></pre></div>
+<p>This was essential because I faced this problem a lot.</p>
+<p>And the self_report function was doing all the heavy lifting:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="k">def</span><span class="w"> </span><span class="nf">_safe_report</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ProgressCallback</span><span class="p">],</span> <span class="n">stage</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">current</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Invoke a progress callback while swallowing UI-side exceptions."""</span>
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">callback</span><span class="p">(</span><span class="n">stage</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Progress callback raised; ignoring"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code></pre></div>
+<p>In essence, this commit was more about robustness and stability rather than fundamentally changing the functionality of anything.</p>
+<h2 id="mcp-and-streamlit-improvements">MCP and Streamlit improvements <a class="heading-anchor" href="#mcp-and-streamlit-improvements" aria-label="Link to this section">#</a></h2>
+<p>commit ID: 303ff5df02a132e454976e2747ef0f1c9d0853ee</p>
+<figure class="figure"><img src="img/8f145932e51a-1727d82c-480.webp" srcset="img/8f145932e51a-1727d82c-480.webp 480w, img/8f145932e51a-1727d82c-801.webp 801w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="358" alt="" loading="lazy" decoding="async"></figure>
+
+<p>How to orchestrate the messages properly both with and without MCP servers? How to use the callbacks added previously and cleanly tie it up with the actual UI?</p>
+<p>Adding genuine unit tests to the current state of the project so far, and more.</p>
+<p>There was a split between the JSON structure of Notifications vs the structure of responses. And instead of trying to unify the whole thing, I simply added some demux logic at the JSON-RPC parsing level.</p>
+<p>The whole callback and notification system was designed to be opt-in.</p>
+<p>If someone wants to run the system without them, it should also support that, and that support was formalized here.</p>
+<p>The groundwork for the Streaming responses was also set up here, which we will be discussing in detail next.</p>
+<h2 id="streaming-responses">Streaming Responses <a class="heading-anchor" href="#streaming-responses" aria-label="Link to this section">#</a></h2>
+<p>commit ID: 542742b2cfa626d7a2872adae881b97ab13c515a</p>
+<figure class="figure"><img src="img/77c5c89bea15-d32fcb52-480.webp" srcset="img/77c5c89bea15-d32fcb52-480.webp 480w, img/77c5c89bea15-d32fcb52-639.webp 639w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="545" alt="" loading="lazy" decoding="async"></figure>
+
+<p>prereq is the generation path in llm_interface. Independent of the retrieval phases.</p>
+<p>This one finally adds the optional streaming responses feature.</p>
+<p>The difference is that, without streaming you have to wait for the full response to be generated. Whether it is going in the right direction or not, you must wait.</p>
+<p>But with streaming, the data is sent chunk by chunk as it is generated by the LLM and you can easily figure out whether it's doing well or has completely lost the plot. You can either short circuit the generation as needed or prepare your next prompt in response to the faulty generation happening.</p>
+<p>It streams Ollama responses (NDJSON token deltas) when <code>generate_response(stream=True)</code> is requested or <code>system.enable_streaming</code> is on; non-Ollama providers fall back to a single-chunk pseudo-stream.</p>
+<p>The Newline Delimited feature of NDJSON is fundamental to the clean streamability of the chunks.</p>
+<p>Set <code>system.enable_streaming: true</code> in <code>config/config.json</code> to render Ollama answers token-by-token.</p>
+<ul>
+<li>
+<p><strong>Direct UI (</strong><code>streamlit_app.py</code><strong>)</strong> : tick the &quot;Streaming&quot; checkbox on the chat page. <code>FinalRAGChatbot.chat(stream=True)</code> returns an iterator of text deltas which the UI hands to <code>st.write_stream</code>. The <code>**Sources**</code> block is appended as the final delta after the model finishes.</p>
+</li>
+<li>
+<p><strong>MCP UI (</strong><code>streamlit_app_mcp.py</code><strong>)</strong>: when <code>system.enable_streaming</code> is on <strong>and</strong> the &quot;Use MCP Protocol&quot; toggle is off, the UI streams from the in-process engine via <code>MCPIntegratedRAG.chat_stream</code>. With MCP on, streaming over JSON-RPC notifications is deferred (Phase 13 in the roadmap), so the UI renders the full answer once the MCP <code>chat</code> tool returns.</p>
+</li>
+</ul>
+<p>The chat function returns:</p>
+<p>Response string when <code>stream</code> is False. When True, an iterator of text deltas suitable for <code>st.write_stream</code>;</p>
+<p>the source block is appended as the final delta and conversation history is recorded after the stream is fully consumed.</p>
+<p><code>&lt;think&gt;</code> blocks are buffered and stripped from what reaches the consumer.</p>
+<p>At this point, streaming was still not functional for MCP, so with MCP on, it collapsed every streaming request and worked with a single complete string response after the LLM generation was complete.</p>
+<h2 id="ollama-autotuning">Ollama Autotuning <a class="heading-anchor" href="#ollama-autotuning" aria-label="Link to this section">#</a></h2>
+<p>commit ID: 5ad96da06975fb1c8f68142fb273ad1f25e3df4b</p>
+<figure class="figure"><img src="img/56233514516e-cb5cdcf9-480.webp" srcset="img/56233514516e-cb5cdcf9-480.webp 480w, img/56233514516e-cb5cdcf9-784.webp 784w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="913" alt="" loading="lazy" decoding="async"></figure>
+
+<p>The parameters I use in my device is specifically for the Bottlenecks that I have. If i shipped the project with those exact parameters, it would be unusable in a weaker device, and completely underutilise a stronger one.</p>
+<p>Even if I don't go so far as to assume a technically illiterate user, I can't always expect them to be well versed in LLM hardware requirements or config best practices.</p>
+<p>Then how to make sure that the config is done right?</p>
+<p>This Commit aimed to fix this issue by setting up some heuristical assumptions about performance across different levels of hardware and then setup suggested config for each of them. So when someone runs the project for the first time, the tuning is already done at a level better than blind guessing.</p>
+<p>If further change needed, the user can try to tweak it more.</p>
+<p>To pin a specific value, replace <code>&quot;auto&quot;</code> with the value you want, explicit config always wins over auto-detection. To disable detection entirely, set <code>system.auto_tune: false</code>.</p>
+<p>User-set values in config always win auto-detection only fills gaps marked &quot;auto&quot; or left out entirely.</p>
+<p><code>OLLAMA_*</code> env vars only affect the <code>ollama serve</code> process, which is started by you. The engine exports them into its own process for inheritance, but for the Ollama server to honour them, set them in the shell that runs <code>ollama serve</code>:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">shell</span></div><pre class="code" tabindex="0"><code><span class="nb">export</span><span class="w"> </span><span class="nv">OLLAMA_NUM_GPU</span><span class="o">=</span><span class="m">999</span><span class="w"> </span><span class="nv">OLLAMA_KV_CACHE_TYPE</span><span class="o">=</span>q8_0<span class="w"> </span><span class="nv">OLLAMA_KEEP_ALIVE</span><span class="o">=</span>24h
+ollama<span class="w"> </span>serve</code></pre></div>
+<p><code>keep_alive</code> is the most impactful for interactive use: cold-loading a 4B model on a 4 GB card takes seconds; keeping it resident for 24 hours amortizes that across the session.</p>
+<p>Also an important note: Just because i'm focusing on Ollama here, doesn't mean that nothing else works. I was a regular User of LM studio before this, and I'm aware that different APIs exist.</p>
+<p>That's where the LLM interface comes in, you can change any part of that to make sure that your required LLM API works with it, and the rest of the whole project works perfectly without any changes beyond that.</p>
+<h2 id="next-up">Next up <a class="heading-anchor" href="#next-up" aria-label="Link to this section">#</a></h2>
+<p>In the current implementation, <code>retrieve_documents</code> oversamples.</p>
+<p>It gathers <code>max_results * retrieval.rerank_oversample_factor</code> candidates (default factor 4) from the retrieval stage (RRF-fused hybrid by default , or threshold-gated cosine in the dense-only fallback), then calls <code>EmbeddingManager.rerank_results</code> to reorder them and trims to <code>max_results</code>.</p>
+<p>The current reranker is a lightweight placeholder (content-length bonus capped at +0.1, plus a per-type bias <code>pdf=0.05, text=0.03, web=0.02</code>);</p>
+<p>the production upgrade is to swap that body for a real cross-encoder (e.g. <code>ms- marco-MiniLM-L-6-v2</code>) without changing the surrounding flow.</p>
+<h2 id="conclusion">Conclusion <a class="heading-anchor" href="#conclusion" aria-label="Link to this section">#</a></h2>
+<p>The math behind the embeddings and the LLM generation is the cool looking part, but 80% of the actual engineering is just making sure the UI doesn't freeze, the cache doesn't corrupt when you swap models, and the hardware doesn't melt down because you assumed everyone has a 24GB GPU.</p>
+<p>If you have a wildly different hardware setup, maybe a Mac with Apple Silicon or an older AMD card: pull the repo, let the auto-tuner run, and open an issue if the heuristical guesses fall flat.</p>
+<p>I'm actively trying to map out those edge cases.</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/devlog/">devlog</a><a class="tag" href="../tags/rag/">RAG</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/discovering-rags-4-project-updates-all-the-way/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fdiscovering-rags-4-project-updates-all-the-way%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fdiscovering-rags-4-project-updates-all-the-way%2F&amp;text=Discovering%20RAGs%204%3A%20Project%20updates%20all%20the%20way" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fdiscovering-rags-4-project-updates-all-the-way%2F&amp;title=Discovering%20RAGs%204%3A%20Project%20updates%20all%20the%20way" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Discovering%20RAGs%204%3A%20Project%20updates%20all%20the%20way&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fdiscovering-rags-4-project-updates-all-the-way%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../history-of-computer-science-in-india-part-2/" rel="prev"><span class="label">Older</span><span class="pager__title">History of computer science in india Part 2</span></a><a class="pager__link pager__link--newer" href="../the-grammar-that-runs-like-a-program/" rel="next"><span class="label">Newer</span><span class="pager__title">The Grammar That Runs Like a Program</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-12-10T12:32:27.575Z">10 Dec 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../what-even-are-llms/">What even are LLMs?</a></h3>
+          <p>Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-04T04:39:04.300Z">4 Jul 2026</time>
+          <span class="dispatch__read">13 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3>
+          <p>I maintain a single global system prompt that every AI coding agent I use reads. One file, shared across Claude Code, Antigravity and OpenAI&#x27;s Codex.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/evaluation-metrics/">evaluation metrics</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/mcp/">MCP</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-05-09T14:41:59.331Z">9 May 2026</time>
+          <span class="dispatch__read">9 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../transforming-chatbot-interactions-with-retrieval-augmented-generation/">Transforming Chatbot Interactions with Retrieval Augmented Generation</a></h3>
+          <p>Since ChatGPT was first unveiled, one of my persistent doubts has been how it will work in applications requiring proprietary or post-2022 data.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/chatbot/">chatbot</a><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/embeddings/">embeddings</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

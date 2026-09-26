@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Tales - page 2</title>
+<meta name="description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/page/2/">
+<link rel="prev" href="https://sukalyan2003.github.io/blog/">
+<link rel="next" href="https://sukalyan2003.github.io/blog/page/3/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Engineering Tales - page 2">
+<meta property="og:description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/page/2/">
+<meta property="og:image" content="https://sukalyan2003.github.io/the-record/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering Tales - page 2">
+<meta name="twitter:description" content="A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/the-record/img/og-card.jpg">
+
+<link rel="preload" href="../../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://sukalyan2003.github.io/blog/#blog",
+      "url": "https://sukalyan2003.github.io/blog/",
+      "name": "Engineering Tales",
+      "description": "A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "isPartOf": {
+        "@id": "https://sukalyan2003.github.io/#website"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../../start-here/">Start here</a></li><li><a href="../../linux/">Linux</a></li><li><a href="../../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../../unsung-bits/">Unsung Bits</a></li><li><a href="../../programming-concepts/">Programming Concepts</a></li><li><a href="../../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <section class="section archive" id="search" aria-labelledby="archive-title">
+      <div class="section__head"><span class="section__numeral">02</span><h2 class="section__title" id="archive-title">Archive</h2><span class="section__note">Page 2 of 3</span></div>
+      
+      <div class="archive__list" data-archive>
+      <div class="dispatches">
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-04-24T04:30:00.000Z">24 Apr 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../moocs/">Moocs</a></p>
+          <h3><a href="../../what-comes-after-cs50x-discover-cs50-ai/">What Comes After CS50x? Discover CS50 AI</a></h3>
+          <p>Explore insights and challenges from Harvard&#x27;s CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/ai/">AI</a><a class="tag" href="../../tags/cs50/">CS50</a><a class="tag" href="../../tags/cs50-ai/">CS50 AI</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../what-comes-after-cs50x-discover-cs50-ai/" tabindex="-1" aria-hidden="true"><img src="../../what-comes-after-cs50x-discover-cs50-ai/img/27620b7b797f-9e3423eb-480.webp" srcset="../../what-comes-after-cs50x-discover-cs50-ai/img/27620b7b797f-9e3423eb-480.webp 480w, ../../what-comes-after-cs50x-discover-cs50-ai/img/27620b7b797f-9e3423eb-960.webp 960w, ../../what-comes-after-cs50x-discover-cs50-ai/img/27620b7b797f-9e3423eb-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="467" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-01-25T15:09:43.406Z">25 Jan 2026</time>
+          <span class="dispatch__read">9 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../aiml/">AIML</a></p>
+          <h3><a href="../../using-vibecoding-to-learn/">Using vibecoding to learn</a></h3>
+          <p>Learn to safely use AI-driven &quot;vibecoding&quot; for learning, prototyping, and speeding up complex tasks while maintaining judgment</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/ai/">AI</a><a class="tag" href="../../tags/developer-tools/">developer tools</a><a class="tag" href="../../tags/llm/">LLM</a><a class="tag" href="../../tags/ai-agents/">AI agents</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../using-vibecoding-to-learn/" tabindex="-1" aria-hidden="true"><img src="../../using-vibecoding-to-learn/img/44f4bd86fcda-3312b1dc-480.webp" srcset="../../using-vibecoding-to-learn/img/44f4bd86fcda-3312b1dc-480.webp 480w, ../../using-vibecoding-to-learn/img/44f4bd86fcda-3312b1dc-960.webp 960w, ../../using-vibecoding-to-learn/img/44f4bd86fcda-3312b1dc-1200.webp 1200w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="251" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-01-16T13:30:43.109Z">16 Jan 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../moocs/">Moocs</a></p>
+          <h3><a href="../../nand2tetris-part-1-hardware/">Nand2Tetris Part 1: Hardware</a></h3>
+          <p>Learn to build basic computer hardware with Nand2Tetris: logic gates, ALU, memory, and assembly language</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/hardware/">hardware</a><a class="tag" href="../../tags/assembly/">assembly</a><a class="tag" href="../../tags/computer-architecture/">computer architecture</a><a class="tag" href="../../tags/nand2tetris/">Nand2Tetris</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../nand2tetris-part-1-hardware/" tabindex="-1" aria-hidden="true"><img src="../../nand2tetris-part-1-hardware/img/0f4b0f832ad5-10b3039d-474.webp" srcset="../../nand2tetris-part-1-hardware/img/0f4b0f832ad5-10b3039d-474.webp 474w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="474" height="266" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2026-01-09T13:30:17.012Z">9 Jan 2026</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../linux/">Linux</a></p>
+          <h3><a href="../../process-synchronization-in-linux/">Process Synchronization in Linux</a></h3>
+          <p>Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/linux/">linux</a><a class="tag" href="../../tags/multithreading/">multithreading</a><a class="tag" href="../../tags/linux-for-beginners/">linux for beginners</a><a class="tag" href="../../tags/linux-basics/">linux basics</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../process-synchronization-in-linux/" tabindex="-1" aria-hidden="true"><img src="../../process-synchronization-in-linux/img/e162cde8e4cf-7abbfdd9-480.webp" srcset="../../process-synchronization-in-linux/img/e162cde8e4cf-7abbfdd9-480.webp 480w, ../../process-synchronization-in-linux/img/e162cde8e4cf-7abbfdd9-960.webp 960w, ../../process-synchronization-in-linux/img/e162cde8e4cf-7abbfdd9-1024.webp 1024w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="360" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-12-10T12:32:27.575Z">10 Dec 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../aiml/">AIML</a></p>
+          <h3><a href="../../what-even-are-llms/">What even are LLMs?</a></h3>
+          <p>Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/llm/">LLM</a><a class="tag" href="../../tags/rag/">RAG</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../what-even-are-llms/" tabindex="-1" aria-hidden="true"><img src="../../what-even-are-llms/img/c4e546dab5f3-67055652-480.webp" srcset="../../what-even-are-llms/img/c4e546dab5f3-67055652-480.webp 480w, ../../what-even-are-llms/img/c4e546dab5f3-67055652-960.webp 960w, ../../what-even-are-llms/img/c4e546dab5f3-67055652-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="263" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-12-03T12:30:53.826Z">3 Dec 2024</time>
+          <span class="dispatch__read">6 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../aiml/">AIML</a></p>
+          <h3><a href="../../understanding-neural-networks/">Understanding Neural Networks</a></h3>
+          <p>A beginner&#x27;s guide to understanding neural networks, exploring their history, applications, challenges, and foundational backpropagation algorithm</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/experiment/">experiment</a><a class="tag" href="../../tags/python/">python</a><a class="tag" href="../../tags/machine-learning/">machine learning</a><a class="tag" href="../../tags/neural-networks/">neural networks</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../understanding-neural-networks/" tabindex="-1" aria-hidden="true"><img src="../../understanding-neural-networks/img/2e8466525462-65be4f2a-480.webp" srcset="../../understanding-neural-networks/img/2e8466525462-65be4f2a-480.webp 480w, ../../understanding-neural-networks/img/2e8466525462-65be4f2a-960.webp 960w, ../../understanding-neural-networks/img/2e8466525462-65be4f2a-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="320" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-04-03T13:30:50.340Z">3 Apr 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../../my-first-command-line-program/">My first Command Line program</a></h3>
+          <p>Discover how this Python command-line tool, developed as a CS50 final project, generates secure passwords with customizable lengths and character sets, ensu</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/python/">python</a><a class="tag" href="../../tags/terminal/">terminal</a><a class="tag" href="../../tags/cli/">CLI</a><a class="tag" href="../../tags/password-generator/">password generator</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../my-first-command-line-program/" tabindex="-1" aria-hidden="true"><img src="../../my-first-command-line-program/img/c0db06a591d9-77bc1d07-480.webp" srcset="../../my-first-command-line-program/img/c0db06a591d9-77bc1d07-480.webp 480w, ../../my-first-command-line-program/img/c0db06a591d9-77bc1d07-960.webp 960w, ../../my-first-command-line-program/img/c0db06a591d9-77bc1d07-1109.webp 1109w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="338" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-04-02T13:30:31.421Z">2 Apr 2024</time>
+          <span class="dispatch__read">15 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../moocs/">Moocs</a></p>
+          <h3><a href="../../cs50-my-experience/">CS50 My experience</a></h3>
+          <p>Explore one student&#x27;s experience taking Harvard&#x27;s renowned CS50 introduction to computer science online course.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/introduction/">introduction</a><a class="tag" href="../../tags/cs50/">CS50</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../cs50-my-experience/" tabindex="-1" aria-hidden="true"><img src="../../cs50-my-experience/img/e87a7c094451-2be294e6-480.webp" srcset="../../cs50-my-experience/img/e87a7c094451-2be294e6-480.webp 480w, ../../cs50-my-experience/img/e87a7c094451-2be294e6-960.webp 960w, ../../cs50-my-experience/img/e87a7c094451-2be294e6-1440.webp 1440w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-04-01T13:30:41.898Z">1 Apr 2024</time>
+          <span class="dispatch__read">5 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../../exploring-pointers/">Exploring Pointers</a></h3>
+          <p>Demystify pointers in C programming with this beginner&#x27;s guide. Learn pointer syntax, memory management, pointer arithmetic, dynamic allocation, function po</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/c/">C</a><a class="tag" href="../../tags/pointers/">pointers</a><a class="tag" href="../../tags/memory-management/">memory management</a><a class="tag" href="../../tags/pointers-in-c/">pointers in c</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../exploring-pointers/" tabindex="-1" aria-hidden="true"><img src="../../exploring-pointers/img/c911090b1349-a539fcd3-480.webp" srcset="../../exploring-pointers/img/c911090b1349-a539fcd3-480.webp 480w, ../../exploring-pointers/img/c911090b1349-a539fcd3-960.webp 960w, ../../exploring-pointers/img/c911090b1349-a539fcd3-1280.webp 1280w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="270" alt="" loading="lazy" decoding="async"></a>
+      </article>
+      <article class="dispatch dispatch--thumb">
+        <div class="dispatch__date">
+          <time datetime="2024-03-31T16:18:03.231Z">31 Mar 2024</time>
+          <span class="dispatch__read">6 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../../linux/">Linux</a></p>
+          <h3><a href="../../basics-of-shell-scripting/">Basics of Shell scripting</a></h3>
+          <p>Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../../tags/bash/">bash</a><a class="tag" href="../../tags/shell/">shell</a><a class="tag" href="../../tags/bash-script/">bash script</a></div></div>
+        </div>
+        <a class="dispatch__thumb" href="../../basics-of-shell-scripting/" tabindex="-1" aria-hidden="true"><img src="../../basics-of-shell-scripting/img/85ea07495883-bd89ae7a-480.webp" srcset="../../basics-of-shell-scripting/img/85ea07495883-bd89ae7a-480.webp 480w, ../../basics-of-shell-scripting/img/85ea07495883-bd89ae7a-960.webp 960w, ../../basics-of-shell-scripting/img/85ea07495883-bd89ae7a-1200.webp 1200w" sizes="(max-width: 900px) min(100vw, 420px), 180px" width="480" height="426" alt="" loading="lazy" decoding="async"></a>
+      </article>
+    </div>
+      <nav class="pagination" aria-label="Archive pages"><a class="pagination__step" href="../../" rel="prev">Newer posts</a><ol class="pagination__pages"><li><a href="../../">1</a></li><li><a href="./" aria-current="page">2</a></li><li><a href="../3/">3</a></li></ol><a class="pagination__step" href="../3/" rel="next">Older posts</a></nav>
+      </div>
+      <nav class="browse" aria-label="Browse the archive"><p class="label">Browse</p><ul class="browse__list"><li><a href="../../start-here/">Start here</a></li><li><a href="../../linux/">Linux</a></li><li><a href="../../aiml/">AIML</a></li><li><a href="../../unsung-bits/">Unsung Bits</a></li><li><a href="../../programming-concepts/">Programming Concepts</a></li><li><a href="../../moocs/">Moocs</a></li><li><a href="../../tags/">All tags</a></li></ul></nav>
+    </section>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../../">Engineering Tales</a></span>
+      <span><a href="../../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../../rss.xml">RSS</a> · <a href="../../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../../the-record/js/main.js" defer></script>
+<script src="../../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

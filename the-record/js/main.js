@@ -1,9 +1,10 @@
 /* The Record - all of the site's JavaScript.
  *
- * Three jobs, all progressive enhancement:
+ * Four jobs, all progressive enhancement:
  *   1. Theme toggle between Paper (light) and Press (dark).
  *   2. Tap-to-reveal on the portrait, because touch devices have no hover.
  *   3. Marking the current section in the contents strip while scrolling.
+ *   4. Folder links resolving to index.html when a page is opened from disk.
  *
  * The page is fully readable with this file blocked. Nothing here renders
  * content; the FOUC guard that applies a stored theme before first paint is
@@ -103,6 +104,23 @@
 
     targets.forEach(function (section) {
       observer.observe(section);
+    });
+  }
+
+  /* ------------------------------------------------------------- file:// */
+  /* Pages link to folders ("blog/", "../slug/") the way a web server expects.
+     Opened straight from disk there is no server to add index.html, so do it
+     here. Has no effect when the site is served over http(s). */
+  if (location.protocol === 'file:') {
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest && event.target.closest('a[href]');
+      if (!link || event.defaultPrevented || event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      var url = new URL(link.href);
+      if (url.protocol !== 'file:' || url.pathname.slice(-1) !== '/') return;
+      event.preventDefault();
+      url.pathname += 'index.html';
+      location.href = url.href;
     });
   }
 

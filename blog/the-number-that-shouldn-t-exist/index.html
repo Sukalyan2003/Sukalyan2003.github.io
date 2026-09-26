@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number That Shouldn&#x27;t Exist - Engineering Tales</title>
+<meta name="description" content="Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="The Number That Shouldn&#x27;t Exist - Engineering Tales">
+<meta property="og:description" content="Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/og-8eb222e1.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-09-26T06:50:44.631Z">
+<meta property="article:modified_time" content="2026-09-26T06:50:44.631Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Unsung Bits">
+<meta property="article:tag" content="india">
+<meta property="article:tag" content="mathematics">
+<meta property="article:tag" content="computer science history">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Number That Shouldn&#x27;t Exist - Engineering Tales">
+<meta name="twitter:description" content="Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/og-8eb222e1.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/",
+      "url": "https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/",
+      "headline": "The Number That Shouldn't Exist",
+      "description": "Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.",
+      "datePublished": "2026-09-26T06:50:44.631Z",
+      "dateModified": "2026-09-26T06:50:44.631Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/og-8eb222e1.jpg"
+      ],
+      "keywords": [
+        "india",
+        "mathematics",
+        "computer science history"
+      ],
+      "articleSection": "Unsung Bits",
+      "wordCount": 2278,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Unsung Bits",
+          "item": "https://sukalyan2003.github.io/blog/unsung-bits/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "The Number That Shouldn't Exist",
+          "item": "https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/" class="is-current" aria-current="page">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../unsung-bits/">Unsung Bits</a></li></ol></nav>
+        <p class="article__series label">Part 5 of 5</p>
+        <h1 class="article__title" id="article-title">The Number That Shouldn&#x27;t Exist</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-09-26T06:50:44.631Z">26 Sep 2026</time></span><span>10 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-09-26T06:50:44.631Z">26 Sep 2026</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>10 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../unsung-bits/">Unsung Bits</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#what-a-zero-placeholder-is">What a zero placeholder is</a></li><li class="toc__l2"><a href="#brahmagupta-628-ce">Brahmagupta, 628 CE</a></li><li class="toc__l2"><a href="#aryabhata-s-fifty-nine-words-on-place-value">Aryabhata&#x27;s fifty-nine words on place-value</a></li><li class="toc__l2"><a href="#the-bakhshali-manuscript">The Bakhshali manuscript</a></li><li class="toc__l2"><a href="#making-arithmetic-mechanical">Making Arithmetic mechanical</a></li><li class="toc__l2"><a href="#baghdad-then-pisa-then-everywhere">Baghdad, then Pisa, then everywhere</a></li><li class="toc__l2"><a href="#the-nuance">The nuance</a></li><li class="toc__l2"><a href="#sources-further-reading">Sources &amp; further reading</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/a1950162fd6f-8eb222e1-480.webp" srcset="img/a1950162fd6f-8eb222e1-480.webp 480w, img/a1950162fd6f-8eb222e1-960.webp 960w, img/a1950162fd6f-8eb222e1-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.</p>
+</li>
+<li>
+<p>The combination of Aryabhata's positional notation and Brahmagupta's zero made arithmetic local and mechanical.</p>
+</li>
+<li>
+<p>The famous Bakhshali manuscript zero is a placeholder dot, not the fully realized arithmetic zero that makes modern computation possible.</p>
+</li>
+</ul>
+<blockquote>
+<p>The <code>code/place_value.py</code> script implements base conversion and carry-propagating column addition in both decimal and binary, demonstrating exactly how a positional zero makes algorithmic arithmetic possible.</p>
+</blockquote>
+<p>We all know this story. India invented zero. It spread west. The end.</p>
+<p>The story we have in our heads was wrong in almost every interesting detail.</p>
+<p>So. Let me tell you what actually happened.</p>
+<h2 id="what-a-zero-placeholder-is">What a zero placeholder is <a class="heading-anchor" href="#what-a-zero-placeholder-is" aria-label="Link to this section">#</a></h2>
+<p>The Babylonians had something zero-shaped by around 300 BCE. A scribal gap instead of a number. In their base-60 system, they needed a way to distinguish 1 from 60 from 3600, so they eventually started using two angled wedges to mark an empty column. No symbol at the end of a number, and never used alone. It was a typographical fix to an ambiguity problem. <a href="https://en.wikipedia.org/wiki/0">Wikipedia, &quot;0&quot;</a></p>
+<p>The Maya had something even more developed, a shell glyph for zero, used in a vigesimal (base-20) positional system, attested by 36 BCE. They may have used it in a slightly richer way than the Babylonians. It doesn't matter for our purposes: their system had no contact with India or with anything that became our arithmetic. <a href="https://en.wikipedia.org/wiki/0">Wikipedia, &quot;0&quot;</a></p>
+<p>The distinction is between a <em>placeholder</em> and a <em>number</em>.</p>
+<p>A placeholder tells you: this column is empty, It's a formatting device.</p>
+<p>A number participates in arithmetic: you can add it, subtract it, multiply by it, and you get predictable results.</p>
+<p>The Babylonian and Maya systems had the placeholder. What Indian mathematics did, specifically, what Brahmagupta did in 628 CE, was give zero the arithmetic.</p>
+<hr />
+<h2 id="brahmagupta-628-ce">Brahmagupta, 628 CE <a class="heading-anchor" href="#brahmagupta-628-ce" aria-label="Link to this section">#</a></h2>
+<p>Brahmagupta was born in 598 CE. By the time he was thirty, he had written the <em>Brāhmasphuṭasiddhānta</em>, &quot;Correctly Established Doctrine of Brahma&quot;, a substantial astronomical and mathematical treatise. Chapter 18 is where the history of zero turns. <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Brahmagupta/">MacTutor, &quot;Brahmagupta&quot;</a></p>
+<p>He called positive numbers <em>dhana</em> (fortune) and negative numbers <em>ṛṇa</em> (debt). Zero he called <em>śūnya</em>, void, empty. And then he did something nobody had done before in writing: he gave <em>śūnya</em> arithmetic rules.</p>
+<p>&quot;The sum of a negative and zero is negative; [that] of a positive and zero is positive; [and that] of two zeros is zero.&quot; For multiplication: &quot;the product of zero and a negative, of zero and a positive, or of two zeros is zero.&quot; <a href="https://en.wikipedia.org/wiki/Brahmagupta">Wikipedia, &quot;Brahmagupta&quot;</a></p>
+<p>Before 628, they were not obvious as nobody had written them down as rules. The move Brahmagupta made was to treat zero as <em>an element of the number system</em>, something you can operate on just like any other number, rather than as a gap in notation.</p>
+<p>He also worked out negative number arithmetic: product of two negatives is positive, a fortune subtracted from zero gives a debt, a debt subtracted from zero gives a fortune. He was essentially describing what we'd now call a ring.</p>
+<p>Then he tried division by zero. He claimed that <em>0 ÷ 0 = 0</em>. This is wrong, division by zero is not well-defined, and it's a recognized error in an otherwise remarkable text. The MacTutor biography calls it &quot;a brilliant attempt.&quot;</p>
+<p>It would take until Bhāskara II in the 12th century before Indian mathematics acknowledged that the result was more complicated, and until the 19th century before rigorous answers were available.</p>
+<hr />
+<h2 id="aryabhata-s-fifty-nine-words-on-place-value">Aryabhata's fifty-nine words on place-value <a class="heading-anchor" href="#aryabhata-s-fifty-nine-words-on-place-value" aria-label="Link to this section">#</a></h2>
+<p>Before Brahmagupta gave zero its arithmetic, Aryabhata had made the positional structure explicit. Aryabhata was born in 476 CE. In 499 CE, he notes he was 23 at the time, he wrote the <em>Aryabhatiya</em>. Chapter 1, second stanza: <em>sthānam sthānam daśa guṇam</em>, &quot;from place to place, ten times in value.&quot; <a href="https://en.wikipedia.org/wiki/%C4%80ryabha%E1%B9%ADa_numeration">Wikipedia, &quot;Āryabhaṭa numeration&quot;</a></p>
+<p>That's the whole principle. Everything about our number system follows from it: the reason 347 means 3×100 + 4×10 + 7×1, the reason 42 in binary means 1×32 + 0×16 + 1×8 + 0×4 + 1×2 + 0×1. It's a new idea about what <em>position means</em>.</p>
+<p>Aryabhata himself didn't write a zero symbol, his own notation system used Sanskrit letters with vowels encoding place values, clever and extraordinarily compact, but not the symbol-based system we ended up with. The place-value principle was already operating in Indian mathematics by 499 CE. <a href="https://en.wikipedia.org/wiki/Aryabhata">Wikipedia, &quot;Aryabhata&quot;</a></p>
+<p>What the combination of Aryabhata's explicit place-value principle and Brahmagupta's zero arithmetic gives you is a <em>complete number system</em>: ten digits (0–9), position determines magnitude, and every digit including zero has defined arithmetic properties.</p>
+<hr />
+<h2 id="the-bakhshali-manuscript">The Bakhshali manuscript <a class="heading-anchor" href="#the-bakhshali-manuscript" aria-label="Link to this section">#</a></h2>
+<p>You may have seen headlines from 2017 announcing the discovery of the world's oldest zero, in a manuscript held at Oxford's Bodleian Library: the Bakhshali manuscript, a collection of birch-bark mathematical leaves found in 1881 near what is now Pakistan.</p>
+<p>Oxford's radiocarbon dating of three folios produced dates of 224–383 CE, 680–779 CE, and 885–993 CE, three folios from three different centuries, in the same manuscript.</p>
+<p>It means the 70 leaves were assembled from materials of different ages, which makes the &quot;oldest&quot; framing dubious from the start.</p>
+<p>Scholars including Kim Plofker (whose <em>Mathematics in India</em>, Princeton 2009, is the standard scholarly treatment of this subject) criticized Oxford for releasing the findings through press releases and YouTube rather than peer review. <a href="https://www.smithsonianmag.com/smart-news/dating-ancient-indian-text-gives-new-timeline-history-zero-180964896/">Smithsonian Magazine, 2017</a>; <a href="https://en.wikipedia.org/wiki/Bakhshali_manuscript">Wikipedia, &quot;Bakhshali manuscript&quot;</a></p>
+<p>Then in 2024, Oxford revised the dating. The entire manuscript: 799–1102 CE. The earliest folio went from &quot;possibly 3rd century&quot; to &quot;probably 10th century.&quot;</p>
+<p>What the Bakhshali zero actually is: a dot used as a placeholder within a positional grid, the <em>śūnya-bindu</em>, dot of the empty place. It marks an empty column. This is important and interesting evidence of the positional system in active use in Indian mathematical practice but not Brahmagupta's arithmetic zero. <a href="https://en.wikipedia.org/wiki/Bakhshali_manuscript">Wikipedia, &quot;Bakhshali manuscript&quot;</a></p>
+<p>The carbon dating is contested; the zero-dot is a placeholder and even at the old dates, it doesn't predate the Babylonian placeholder. The real story, Brahmagupta giving zero arithmetic, is better than the headline.</p>
+<hr />
+<h2 id="making-arithmetic-mechanical">Making Arithmetic mechanical <a class="heading-anchor" href="#making-arithmetic-mechanical" aria-label="Link to this section">#</a></h2>
+<p>What does it <em>actually</em> take to make arithmetic into an algorithm?</p>
+<p>Consider adding 347 and 485 in Roman numerals. CCCXLVII + CDLXXXV. There is no column algorithm. You have to convert the subtractive prefixes to additive form, concatenate the letters, sort them by value, combine where possible, re-encode the result.</p>
+<p>The system doesn't have columns or positions; there's no concept of carrying, because the symbols don't have place values. Each computation requires inspecting the whole numeral and knowing the full substitution rules. The Romans, when they needed to compute, used counting boards and then <em>wrote the result</em> in Roman numerals, the numerals themselves were for recording, not calculating. <a href="https://scienceblogs.com/goodmath/2006/08/16/roman-numerals-and-arithmetic">ScienceBlogs, &quot;Roman Numerals and Arithmetic&quot;</a></p>
+<p>Now consider adding 347 and 485 in the positional system:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>  347
++ 485
+-----
+  7+5 = 12; write 2, carry 1
+  4+8+1 = 13; write 3, carry 1
+  3+4+1 = 8; write 8
+= 832</code></pre></div>
+<p>Each column is <em>independent</em> given the carry from the column to its right. You never need to look at the whole number. The carry is a single bit, zero or one, and it always moves exactly one column left. The process is local, right-to-left, terminating. It is an algorithm in the modern sense: a finite, deterministic procedure.</p>
+<figure class="figure"><img src="img/36b0377f60c5-a5a63f5f-480.webp" srcset="img/36b0377f60c5-a5a63f5f-480.webp 480w, img/36b0377f60c5-a5a63f5f-590.webp 590w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="593" alt="" loading="lazy" decoding="async"></figure>
+
+<p>What makes this work?</p>
+<p>Position determines magnitude, so column alignment is meaningful. And zero is a valid digit, an empty column is not a gap or an ambiguity but a genuine input to that column's calculation.</p>
+<p>Strip the zero out of the system and you cannot uniquely represent numbers like 1024, 1204, and 1240, they collapse to the same digit list <code>[1, 2, 4]</code> with the zeros removed. The zero is load-bearing.</p>
+<p>The code in <code>code/place_value.py</code> demonstrates this: base conversion between decimal and arbitrary bases (including binary), and the column addition algorithm running on digit lists with carry. Run it; you'll see 347 + 485 done in both base 10 and base 2 by the same function, same algorithm, different radix.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="c1"># Same algorithm, base 10:</span>
+<span class="n">show_addition</span><span class="p">(</span><span class="mi">347</span><span class="p">,</span> <span class="mi">485</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>   <span class="c1"># → 832</span>
+
+<span class="c1"># Same algorithm, base 2:</span>
+<span class="n">show_addition</span><span class="p">(</span><span class="mi">347</span><span class="p">,</span> <span class="mi">485</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># → 1101000000 (= 832)</span></code></pre></div>
+<p>Binary is literally the same positional structure as Decimal with base 2 instead of base 10. The computer's adder circuits are built on the local, carry-propagating column algorithm. The reason you can implement addition in hardware, in gates, in silicon, is that each bit position needs only its two input bits plus one carry bit from the right. That locality comes from the positional structure. That positional structure, in the form the whole world uses, comes from India. <a href="https://en.wikipedia.org/wiki/Positional_notation">Wikipedia, &quot;Positional notation&quot;</a></p>
+<hr />
+<h2 id="baghdad-then-pisa-then-everywhere">Baghdad, then Pisa, then everywhere <a class="heading-anchor" href="#baghdad-then-pisa-then-everywhere" aria-label="Link to this section">#</a></h2>
+<p>Brahmagupta's <em>Brāhmasphuṭasiddhānta</em> was written in 628. About 200 years later, a Persian mathematician named Muḥammad ibn Mūsā al-Khwārizmī, working in the House of Wisdom in Baghdad, wrote a treatise on Hindu numerals, <em>De numero Indorum</em> in its Latin title, that gave a full account of the Indian place-value system including zero. The text is described as likely based on an Arabic translation of Brahmagupta's work. <a href="https://www.britannica.com/biography/al-Khwarizmi">Britannica, &quot;Al-Khwarizmi&quot;</a></p>
+<p>Al-Khwārizmī also wrote <em>Kitāb al-mukhtaṣar fī ḥisāb al-jabr wal-muqābala</em>, &quot;The Compendious Book on Calculation by Completion and Balancing.&quot; The Arabic <em>al-jabr</em> from that title gives us &quot;algebra.&quot; The Latinization of al-Khwārizmī's own name, <em>Algoritmi</em>, gives us &quot;algorithm.&quot; Both words that define computational thinking trace back to the same man, who was transmitting Indian mathematics westward. <a href="https://historyofinformation.com/detail.php?id=202">History of Information</a></p>
+<p>In 1202, Leonardo of Pisa, Fibonacci, published <em>Liber Abaci</em>. He had learned the Hindu-Arabic system studying in North Africa. His book opened: &quot;The nine Indian figures are: 9 8 7 6 5 4 3 2 1. With these nine figures, and with sign 0 which the Arabs call zephir any number whatsoever is written.&quot; <a href="https://en.wikipedia.org/wiki/Liber_Abaci">Wikipedia, &quot;Liber Abaci&quot;</a></p>
+<p>He called it <em>modus Indorum</em>, the method of the Indians.</p>
+<p>The <em>Liber Abaci</em> made the practical case: positional arithmetic was simply faster and cheaper for commerce than Roman numerals. Italian merchants competing in Mediterranean trade needed to calculate, not just record, and the positional system let them do it without a counting board. That's the reason it spread: not scholarly consensus nor royal decree, simply economic pressure. <a href="https://en.wikipedia.org/wiki/Liber_Abaci">Wikipedia, &quot;Liber Abaci&quot;</a></p>
+<hr />
+<h2 id="the-nuance">The nuance <a class="heading-anchor" href="#the-nuance" aria-label="Link to this section">#</a></h2>
+<p>The line I've seen on social media, in textbooks, and in well-meaning retrospectives: &quot;India invented zero.&quot; It's not wrong, exactly. It's just not the sentence that earns the weight placed on it.</p>
+<p>Placeholder zeros existed elsewhere earlier. The Maya zero, developed entirely independently, is arguably more sophisticated as a placeholder than the Babylonian one. If the story were only about the placeholder, the Indian contribution wouldn't be uniquely significant.</p>
+<p>The distinctively Indian thing is: zero as a <em>number</em>, with arithmetic rules, in a place-value system capable of representing any integer with ten symbols, transmissible and learnable. That is what Brahmagupta wrote in 628 CE and what al-Khwārizmī carried to Baghdad, what Fibonacci carried to Pisa, what ended up in every computer ever built.</p>
+<p>A 7th-century mathematician in what is now Rajasthan figuring out the arithmetic of nothing, getting one answer wrong, and giving us the number system the whole world now uses, doesn't need inflating.</p>
+<hr />
+<p>Run the column addition algorithm in <code>code/place_value.py</code> with base 2 and base 10. If you can break the carry logic with a specific input, open an issue on the repository to let me know.</p>
+<h2 id="sources-further-reading">Sources &amp; further reading <a class="heading-anchor" href="#sources-further-reading" aria-label="Link to this section">#</a></h2>
+<ol>
+<li>
+<p>Wikipedia, &quot;Brahmagupta&quot;: <a href="https://en.wikipedia.org/wiki/Brahmagupta">https://en.wikipedia.org/wiki/Brahmagupta</a></p>
+</li>
+<li>
+<p>Wikipedia, &quot;0 (number)&quot;: <a href="https://en.wikipedia.org/wiki/0">https://en.wikipedia.org/wiki/0</a></p>
+</li>
+<li>
+<p>Wikipedia, &quot;Aryabhata&quot;: <a href="https://en.wikipedia.org/wiki/Aryabhata">https://en.wikipedia.org/wiki/Aryabhata</a></p>
+</li>
+<li>
+<p>Wikipedia, &quot;Āryabhaṭa numeration&quot;: <a href="https://en.wikipedia.org/wiki/%C4%80ryabha%E1%B9%ADa%5C_numeration">https://en.wikipedia.org/wiki/Āryabhaṭa\_numeration</a></p>
+</li>
+<li>
+<p>Wikipedia, &quot;Bakhshali manuscript&quot;: <a href="https://en.wikipedia.org/wiki/Bakhshali%5C_manuscript">https://en.wikipedia.org/wiki/Bakhshali\_manuscript</a></p>
+</li>
+<li>
+<p>Wikipedia, &quot;Positional notation&quot;: <a href="https://en.wikipedia.org/wiki/Positional%5C_notation">https://en.wikipedia.org/wiki/Positional\_notation</a></p>
+</li>
+<li>
+<p>Wikipedia, &quot;Liber Abaci&quot;: <a href="https://en.wikipedia.org/wiki/Liber%5C_Abaci">https://en.wikipedia.org/wiki/Liber\_Abaci</a></p>
+</li>
+<li>
+<p>MacTutor History of Mathematics, &quot;Brahmagupta&quot;: <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Brahmagupta/">https://mathshistory.st-andrews.ac.uk/Biographies/Brahmagupta/</a></p>
+</li>
+<li>
+<p>MacTutor History of Mathematics, &quot;Aryabhata I&quot;: <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Aryabhata%5C_I/">https://mathshistory.st-andrews.ac.uk/Biographies/Aryabhata\_I/</a></p>
+</li>
+<li>
+<p>Oxford Bodleian Libraries, 2017 Bakhshali press release: <a href="https://www.glam.ox.ac.uk/article/carbon-dating-finds-bakhshali-manuscript-contains-oldest-recorded-origins-symbol-zero">https://www.glam.ox.ac.uk/article/carbon-dating-finds-bakhshali-manuscript-contains-oldest-recorded-origins-symbol-zero</a></p>
+</li>
+<li>
+<p>Smithsonian Magazine, &quot;Carbon Dating Reveals the History of Zero Is Older Than Previously Thought&quot; (2017): <a href="https://www.smithsonianmag.com/smart-news/dating-ancient-indian-text-gives-new-timeline-history-zero-180964896/">https://www.smithsonianmag.com/smart-news/dating-ancient-indian-text-gives-new-timeline-history-zero-180964896/</a></p>
+</li>
+<li>
+<p>Kim Plofker, <em>Mathematics in India</em>, Princeton University Press, 2009: <a href="https://books.google.ie/books/about/Mathematics%5C_in%5C_India.html?id=6nPfpOIUyAEC">https://books.google.ie/books/about/Mathematics\_in\_India.html?id=6nPfpOIUyAEC</a></p>
+</li>
+<li>
+<p>Britannica, &quot;Al-Khwarizmi&quot;: <a href="https://www.britannica.com/biography/al-Khwarizmi">https://www.britannica.com/biography/al-Khwarizmi</a></p>
+</li>
+<li>
+<p>History of Information, &quot;Al-Khwārizmī Invents the Algorithm&quot;: <a href="https://historyofinformation.com/detail.php?id=202">https://historyofinformation.com/detail.php?id=202</a></p>
+</li>
+<li>
+<p>ScienceOpen, &quot;Brahmagupta and the Concept of Zero&quot;: <a href="https://www.scienceopen.com/hosted-document?doi=10.14293/S2199-1006.1.SOR-.PPDIJRA.v1">https://www.scienceopen.com/hosted-document?doi=10.14293/S2199-1006.1.SOR-.PPDIJRA.v1</a></p>
+</li>
+<li>
+<p>ScienceBlogs, &quot;Roman Numerals and Arithmetic&quot;: <a href="https://scienceblogs.com/goodmath/2006/08/16/roman-numerals-and-arithmetic">https://scienceblogs.com/goodmath/2006/08/16/roman-numerals-and-arithmetic</a></p>
+</li>
+</ol>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-number-that-shouldn-t-exist%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-number-that-shouldn-t-exist%2F&amp;text=The%20Number%20That%20Shouldn%27t%20Exist" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-number-that-shouldn-t-exist%2F&amp;title=The%20Number%20That%20Shouldn%27t%20Exist" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=The%20Number%20That%20Shouldn%27t%20Exist&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-number-that-shouldn-t-exist%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      <nav class="section series" id="series" aria-labelledby="series-title">
+        <div class="section__head"><h2 class="section__title" id="series-title">Unsung Bits</h2><span class="section__note">The series, in reading order</span></div>
+        <ol class="series__list"><li><span class="section__numeral">01</span><a href="../history-of-computer-science-in-india-part-2/">History of computer science in india Part 2</a></li><li><span class="section__numeral">02</span><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></li><li><span class="section__numeral">03</span><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></li><li><span class="section__numeral">04</span><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></li><li><span class="section__numeral">05</span><span aria-current="page">The Number That Shouldn&#x27;t Exist</span></li></ol>
+      </nav>
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../the-algorithm-that-grinds-problems-to-dust/" rel="prev"><span class="label">Older</span><span class="pager__title">The Algorithm That Grinds Problems to Dust</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></h3>
+          <p>Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/algorithms/">algorithms</a><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/number-theory/">number theory</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></h3>
+          <p>Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/binary/">binary</a><a class="tag" href="../tags/sanskrit/">sanskrit</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></h3>
+          <p>Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/linguistics/">linguistics</a><a class="tag" href="../tags/sanskrit/">sanskrit</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

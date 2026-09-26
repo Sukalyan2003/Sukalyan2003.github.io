@@ -1,0 +1,10 @@
+# Build-time only: scripts/build_blog.py, import_hashnode.py, blog.py and the
+# tests. The published site is static files and needs none of this.
+markdown-it-py==4.2.0
+mdit-py-plugins==0.6.1
+mdurl==0.1.2
+linkify-it-py==2.2.0
+Pygments==2.21.0
+pillow==12.3.0
+PyYAML==6.0.3
+latex2mathml==3.81.1

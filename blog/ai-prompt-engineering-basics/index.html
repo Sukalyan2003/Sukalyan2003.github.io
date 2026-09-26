@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly - Engineering Tales</title>
+<meta name="description" content="I use coding agents as accelerators, not as authorities. The smaller the task and clearer the context, the better the result.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly - Engineering Tales">
+<meta property="og:description" content="I use coding agents as accelerators, not as authorities. The smaller the task and clearer the context, the better the result.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/og-8f175e32.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-05-16T14:56:02.378Z">
+<meta property="article:modified_time" content="2026-07-03T13:42:39.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="AIML">
+<meta property="article:tag" content="CLI">
+<meta property="article:tag" content="developer tools">
+<meta property="article:tag" content="AI development">
+<meta property="article:tag" content="prompt engineering">
+<meta property="article:tag" content="claude">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="claude code">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly - Engineering Tales">
+<meta name="twitter:description" content="I use coding agents as accelerators, not as authorities. The smaller the task and clearer the context, the better the result.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/og-8f175e32.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/",
+      "url": "https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/",
+      "headline": "How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly",
+      "description": "I use coding agents as accelerators, not as authorities. The smaller the task and clearer the context, the better the result.",
+      "datePublished": "2026-05-16T14:56:02.378Z",
+      "dateModified": "2026-07-03T13:42:39.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/og-8f175e32.jpg"
+      ],
+      "keywords": [
+        "CLI",
+        "developer tools",
+        "AI development",
+        "prompt engineering",
+        "claude",
+        "RAG",
+        "claude code"
+      ],
+      "articleSection": "AIML",
+      "wordCount": 2635,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AIML",
+          "item": "https://sukalyan2003.github.io/blog/aiml/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly",
+          "item": "https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/" class="is-current" aria-current="page">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../aiml/">AIML</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">How I Use AI Coding Agents Without Burning Tokens or Trusting Them Blindly</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-05-16T14:56:02.378Z">16 May 2026</time></span><span>Updated <time datetime="2026-07-03T13:42:39.000Z">3 Jul 2026</time></span><span>11 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-05-16T14:56:02.378Z">16 May 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T13:42:39.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>11 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../aiml/">AIML</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l3"><a href="#tl-dr">TL;DR</a></li><li class="toc__l3"><a href="#where-to-begin-agentic-ai">Where to begin? (Agentic AI)</a></li><li class="toc__l3"><a href="#the-prompts">The Prompts</a></li><li class="toc__l3"><a href="#spawning-agents">Spawning Agents</a></li><li class="toc__l3"><a href="#how-to-pick-the-right-model-and-effort-level">How to pick the right model and effort level?</a></li><li class="toc__l3"><a href="#importance-of-context-management">Importance of context management</a></li><li class="toc__l3"><a href="#what-are-skills">What are skills?</a></li><li class="toc__l3"><a href="#summary-of-certain-methods">Summary of certain methods</a></li><li class="toc__l3"><a href="#conclusion">Conclusion</a></li><li class="toc__l2"><a href="#references">References</a></li><li class="toc__l2"><a href="#bonus">Bonus</a></li><li class="toc__l3"><a href="#core-moves-do-these-every-time">Core Moves (do These Every time)</a></li><li class="toc__l3"><a href="#ultra-short-universal-template">Ultra-short Universal Template</a></li><li class="toc__l3"><a href="#minimal-json-schema-copy-paste">Minimal JSON Schema (copy-paste)</a></li><li class="toc__l3"><a href="#chains-patterns-that-work">Chains &amp; Patterns That Work</a></li><li class="toc__l3"><a href="#fix-common-failures-fast">Fix Common Failures Fast</a></li><li class="toc__l3"><a href="#image-prompts-one-line-that-covers-95">Image Prompts (one Line That Covers 95%)</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/144957fcf2fe-8f175e32-480.webp" srcset="img/144957fcf2fe-8f175e32-480.webp 480w, img/144957fcf2fe-8f175e32-960.webp 960w, img/144957fcf2fe-8f175e32-1042.webp 1042w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="343" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h3 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>
+<p>I use coding agents as accelerators, not as authorities.</p>
+</li>
+<li>
+<p>The smaller the task and clearer the context, the better the result.</p>
+</li>
+<li>
+<p>I avoid dumping an entire repo into the prompt unless the task actually needs it.</p>
+</li>
+<li>
+<p>I verify outputs with tests, diffs, type checks, and my own reading.</p>
+</li>
+<li>
+<p>The best workflow is constrained delegation.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Workflow status</strong></p>
+<p>This is my current personal workflow for using AI coding agents. It will change as the tools improve, but the core habit will stay the same: give them bounded work and verify the result.</p>
+</blockquote>
+<p>In the <a href="https://sukalyanroy.hashnode.dev/discovering-rags-a-comprehensive-guide-part-1">last post about RAGs</a> we went through some basic ways of finding similarities in texts, but it's quite obvious that it's a far cry from all the sophisticated ways in which AI works right now.</p>
+<p>So... what's the difference?</p>
+<p>The difference lies in two things:</p>
+<ol>
+<li>
+<p>Effective organization of knowledge-base and ways to communicate with it</p>
+</li>
+<li>
+<p>Usage of proper prompts and existing AI features, so that you don't have to reinvent the wheel.</p>
+</li>
+</ol>
+<p>This post will be a preface to all the proper Prompting Best practices, and then the actual Proof of concept pipeline shall be made in the next post.</p>
+<p>Even if you don't work on RAG directly, you will still find several ways to supercharge your workflow using the methods discussed in this post.</p>
+<p>The point of using AI is not to completely outsource every possible work to it. The point is to make sure that you never start from a completely Blank canvas.</p>
+<h3 id="where-to-begin-agentic-ai">Where to begin? (Agentic AI) <a class="heading-anchor" href="#where-to-begin-agentic-ai" aria-label="Link to this section">#</a></h3>
+<p>Here we will learn what Agentic AI is, what are the major versions of it all and how to make the best use of all of them.</p>
+<p>Agentic AI is just a buzzword that essentially means that AI has a certain degree of autonomy in actually doing things, and interacting with things around them, rather than just sending and receiving messages.</p>
+<p>They can analyse a codebase, or a pdf, or an image, and then actually apply patches or create document files and more.</p>
+<p>And depending upon the permissions you give them, they can do significantly more on their own than what you would expect.</p>
+<h3 id="the-prompts">The Prompts <a class="heading-anchor" href="#the-prompts" aria-label="Link to this section">#</a></h3>
+<p>Apart from the per session chats themselves, there is a hierarchy of prompts in every CLI Agentic AI tool.</p>
+<p>First you have the Global Prompt, then the project specific prompt, and then the use case wise specific skills that you add or remove.</p>
+<p>An important thing to remember is that most different &quot;modes&quot; and skills everywhere is just another Prompt that repeatably achieves similar tasks.</p>
+<p>The lowest hanging fruit in getting good results from AI is to understand this prompt hierarchy and have these setup as early as possible.</p>
+<p>Have a good global prompt, you can even leave it code specific if you only use these AI for your coding work. But maybe try to make it more generic if you plan on using it for other tasks as well.</p>
+<p>Then remember to use the init command in every major project. That is also simply a prompt that asks the AI to analyse the codebase and create a document that makes understanding it easier for the AI in the future.</p>
+<p>But interestingly enough, that is also pretty good as a summary doc for quick onboarding or refreshing your memory if you seem to forget general ideas about the project.</p>
+<p>This is also an important observation that, the closer AI gets to reasoning and conceptualizing things the way humans do, the more unified these optimizations will become. Anything that makes life easier for AI will also help us directly and might, in time, encourage us to do more without AI, just for the fun of it.</p>
+<h3 id="spawning-agents">Spawning Agents <a class="heading-anchor" href="#spawning-agents" aria-label="Link to this section">#</a></h3>
+<figure class="figure"><img src="img/2b83edd968de-069f3116-480.webp" srcset="img/2b83edd968de-069f3116-480.webp 480w, img/2b83edd968de-069f3116-894.webp 894w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="228" alt="" loading="lazy" decoding="async"></figure>
+
+<p>There is a feature in Claude (at the time of writing i didnt see it elsewhere) where you can manually create and run multiple agents, each with it's own specific agenda and task.</p>
+<p>Overall in my exploration, I have felt like this is only useful if you have near unlimited token budget and can spam workflows a lot.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Task type</th>
+<th>How I use the agent</th>
+<th>How I verify it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small bug</td>
+<td>Give the exact file, symptom, and expected behavior</td>
+<td>Run the failing case and inspect the diff</td>
+</tr>
+<tr>
+<td>Refactor</td>
+<td>Ask for the smallest behavior-preserving change</td>
+<td>Run tests and check public interfaces</td>
+</tr>
+<tr>
+<td>New feature</td>
+<td>Ask for a plan first, then implementation</td>
+<td>Test happy path, edge cases, and integration points</td>
+</tr>
+<tr>
+<td>Explanation</td>
+<td>Ask it to cite files/functions, not just summarize</td>
+<td>Open the referenced code myself</td>
+</tr>
+</tbody>
+</table></div>
+<p>Most of the Agentic AI workflows actually work under the assumption that prompt cost is not a factor, that lines of code is a useful metric and that as long as we can optimize for memory under long workflows, we can essentially prompt loop our way to success.</p>
+<p>I don't have unlimited tokens, so all of that goes out of the window. All of my paid token access also comes from my workplace so that's even more reason why I cannot directly stuff them into something like Openrouter.<br />
+There's an interesting balance to be maintained to not exhaust the whole team's daily credits just because I was too lazy.</p>
+<p>And to add to this, the latest models will spawn their own subagents in a more optimal way during a prompt anyways, and that can usually get the job done well enough.</p>
+<h3 id="how-to-pick-the-right-model-and-effort-level">How to pick the right model and effort level? <a class="heading-anchor" href="#how-to-pick-the-right-model-and-effort-level" aria-label="Link to this section">#</a></h3>
+<p>This is extremely experience based, but for my own uses, i have observed the following:</p>
+<p>The common wisdom goes that you should use lower end models for simple things and higher end models for complicated tasks, but this can be very inefficient in practice.</p>
+<p>Grouping together several small tasks and having the best model do it on high effort, often one shots the entire thing, saving you both time and tokens(in the long run).</p>
+<p>But if you use lesser models, you will need multiple prompting or some way to loop the prompting, and in almost all cases i have observed that it ends up using more tokens before giving me an acceptable solution.</p>
+<p>So, in summary, collect all your tasks, craft a proper context and feed it all at once to the best model you have available. Save yourself time and energy. Even if you can run 3 such prompts per day, if a single prompt can finish your day's work, mission accomplished.</p>
+<p>And often I have observed that if the tasks are truly small, even at extreme high effort, very few tokens are used as the whole thing is resolved.</p>
+<h3 id="importance-of-context-management">Importance of context management <a class="heading-anchor" href="#importance-of-context-management" aria-label="Link to this section">#</a></h3>
+<p>Most sources agree that the more stuffed your context window is, the worse is the quality of the responses. If you have gone through the transformers explanation i wrote in a previous article, you might guess the reason why. (Hint: There's a limit to how far the attention heads can be while still being relevant)</p>
+<p>Some strict guidelines want us to keep the context no more than 40% of the limit, though i have seen decent performance even upto 75% filled. Anything beyond and it gets a bit goofy.</p>
+<p>Essentially though, there are plenty of features in every major tool to fix this.<br />
+The idea is regular compression/summarization of the chat.</p>
+<p>Some tools allow automatic compression and some have an option to do it manually.</p>
+<p>These options often work better than telling the AI to summarize everything manually via a human prompt.</p>
+<h3 id="what-are-skills">What are skills? <a class="heading-anchor" href="#what-are-skills" aria-label="Link to this section">#</a></h3>
+<p>Another fancy term for prompts. That's literally it. Rarely anyone uses the provided but optional script options. Almost all skills are just prompts. And if you have a good global and project specific prompt then you don't need anything else.</p>
+<p>You can even use your project specific prompts as skills if the same requirements are needed in multiple places but not fully globally.</p>
+<h3 id="summary-of-certain-methods">Summary of certain methods <a class="heading-anchor" href="#summary-of-certain-methods" aria-label="Link to this section">#</a></h3>
+<p>The following comes straight from my notes that i made a couple years ago, at a time where prompt engineering was an actual thing you could practice and not just another way of overcomplicate simple ideas.</p>
+<p>One thing to note is that, a lot of the ideas that we'll go through will be partially obsoleted by newer models that try to integrate them natively within their workflows.</p>
+<p>But just as learning low level stuff helps us build things better in our day to day lives, here as well, learning about some of these legacy ways of doing things will help us understand how the new features might be working in the upcoming updates of the models themselves.</p>
+<ol>
+<li>
+<p>Few shot prompting.</p>
+<p>When we ask the AI to do something for us with no examples, that's 0-shot prompting. When we give one example that's 1-shot prompting and more than one examples is Few shot prompting. The more examples we give, the more &quot;consistent&quot; the outputs become.</p>
+</li>
+<li>
+<p>Chain of thought Prompting</p>
+<p>This relatively recent alternative to Few shot prompting is done as follows:<br />
+You pose a question and give it's answer, but this time you explain the answer with reasoning just like a human. Then you ask your another question of the same type and let the AI come up with an answer. This method has been observed to be successful only when the model is larger than 100 billion parameters.</p>
+</li>
+<li>
+<p>Zero shot Chain of thought</p>
+<p>When coming up with few shot explanations for A given question is difficult, we can add the following to the end of prompt, to get a better but still not as good as CoT response: &quot;Let's think step by step&quot;</p>
+</li>
+<li>
+<p>Make the AI come up with reasoning.<br />
+When you are short on explanations but want a proper CoT prompt, tell the AI to list facts for you, and then use them as the explanations for your CoT.</p>
+</li>
+<li>
+<p>Write &quot;Show me only the code&quot; for simple prompts so that the verbosity of it's explanations doesn't slow the responses.</p>
+</li>
+<li>
+<p>Make it write test cases for everything.</p>
+</li>
+<li>
+<p>Unit tests can also serve as examples. Before writing your function, you can use Copilot to write unit tests for the function. Then, you can ask Copilot to write a function described by those unit tests.</p>
+</li>
+</ol>
+<h3 id="conclusion">Conclusion <a class="heading-anchor" href="#conclusion" aria-label="Link to this section">#</a></h3>
+<p>This was my attempt to codify some of the best practices, but even for me it's a continuous learning process.</p>
+<p>If you use coding agents differently, I am especially interested in the verification part. The prompt is less important than how you catch the model when it is confidently wrong.</p>
+<p>Check out the next post in this series: <a href="https://sukalyanroy.hashnode.dev/discovering-rags-2-what-is-agentic-rag">here</a></p>
+<h2 id="references">References <a class="heading-anchor" href="#references" aria-label="Link to this section">#</a></h2>
+<p><a href="https://www.philschmid.de/agentic-pattern">https://www.philschmid.de/agentic-pattern</a><br />
+<a href="https://alexlavaee.me/blog/atomic-workflow/">https://alexlavaee.me/blog/atomic-workflow/</a></p>
+<p><a href="https://blog.oguzhanatalay.com/why-your-ai-agent-needs-a-constitution">https://blog.oguzhanatalay.com/why-your-ai-agent-needs-a-constitution</a></p>
+<p><a href="https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf?hsLang=en">https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf?hsLang=en</a></p>
+<h2 id="bonus">Bonus <a class="heading-anchor" href="#bonus" aria-label="Link to this section">#</a></h2>
+<p>Here's what Chatgpt thinks about Prompting Best practices:</p>
+<p>Here’s a brutally concise, battle-tested prompting cheatsheet — refreshed from the OpenAI Platform + Cookbook guides and distilled with key additions from Learn Prompting.</p>
+<p><strong>Mantra: Constrain + Context + Chain + Check.</strong></p>
+<h3 id="core-moves-do-these-every-time">Core Moves (do These Every time) <a class="heading-anchor" href="#core-moves-do-these-every-time" aria-label="Link to this section">#</a></h3>
+<ol>
+<li>
+<p><strong>State goal + audience first</strong> (what, who, success criteria). Keep it in the first 1–2 lines. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Assign a role</strong> to anchor expertise/tone (“Act as a senior {role} who {domain}”). (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Paste concrete context</strong> (facts, tables, excerpts). Prefer <em>reference text</em> over “use your knowledge.” (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Constrain the format</strong> (sections or strict JSON schema). Tell the model to <em>validate JSON</em>. Use clear delimiters around context. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Make requirements testable</strong> (length, tone, must-include/avoid, eval rubric). (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Few-shot right</strong>: include 1 good example + 1 near-miss to define the boundary. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Handle uncertainty</strong>: ask for 2–3 <strong>assumptions</strong> before the answer; allow “unknown/can’t verify” for non-obvious claims. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Chain complex work</strong>: split into sub-tasks → order → pass intermediate outputs → iterate. (Cookbook’s recommended workflow &amp; prompt organization.) (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Prefer light-weight rationale</strong>: request assumptions or a brief plan, not wordy hidden reasoning; long CoT increases tokens/latency. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Iterate explicitly</strong>: “Propose 3 options → I pick → expand winner.” Build quick evals and refine. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+</ol>
+<h3 id="ultra-short-universal-template">Ultra-short Universal Template <a class="heading-anchor" href="#ultra-short-universal-template" aria-label="Link to this section">#</a></h3>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>You are an expert {ROLE}. Task: {WHAT}.
+Audience: {WHO}. Constraints: {TONE, LENGTH, MUST-INCLUDES}.
+Use ONLY this context:
+---
+{PASTE DATA/NOTES}
+---
+Output format: {MARKDOWN sections or JSON schema}.
+Before answering: list 3 assumptions + any missing info. If data is missing, proceed with minimal reasonable defaults and flag them.</code></pre></div>
+<p>(From Platform/Cookbook patterns: clear instructions, delimiters, explicit formatting.) (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+<h3 id="minimal-json-schema-copy-paste">Minimal JSON Schema (copy-paste) <a class="heading-anchor" href="#minimal-json-schema-copy-paste" aria-label="Link to this section">#</a></h3>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>Return valid JSON only:
+{
+  &quot;summary&quot;: &quot;≤120 words&quot;,
+  &quot;key_points&quot;: [&quot;&quot;, &quot;&quot;, &quot;&quot;],
+  &quot;risks&quot;: [{&quot;item&quot;:&quot;&quot;, &quot;mitigation&quot;:&quot;&quot;, &quot;owner&quot;:&quot;&quot;}],
+  &quot;next_actions&quot;: [{&quot;step&quot;:&quot;&quot;, &quot;due&quot;:&quot;&quot;, &quot;owner&quot;:&quot;&quot;}]
+}
+If any field is unknown, use &quot;&quot; and list it under &quot;assumptions&quot;.</code></pre></div>
+<p>(Pairs schema+validation with instruction-following best practices.) (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+<h3 id="chains-patterns-that-work">Chains &amp; Patterns That Work <a class="heading-anchor" href="#chains-patterns-that-work" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>
+<p><strong>Collect → Analyze → Conclude</strong> (3 steps with explicit criteria). (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Reason-lite prompts</strong>: ask for <em>assumptions/plan bullets</em> instead of full step-by-step traces. (Helps control verbosity and cost.) (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p><strong>Few-shot CoT only when needed</strong> (math/logic): try “Let’s think step by step” or a single worked example; consider contrastive/auto-CoT variants. (<a href="https://learnprompting.org/docs/intermediate/chain_of_thought?srsltid=AfmBOooH07yppjCs2uNyHPyo8aFhX3dVt0psxd2ZLXtYu7QKGS3kL2Pl&amp;utm_source=chatgpt.com">Learn Prompting</a>)</p>
+</li>
+</ul>
+<h3 id="fix-common-failures-fast">Fix Common Failures Fast <a class="heading-anchor" href="#fix-common-failures-fast" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>
+<p>Vague → add length, tone, must-include items. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p>Hallucination → attach source snippets; require citations/“can’t verify.” (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p>Over-verbose → set hard token/word caps and “no filler.” (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p>Format drift → restate schema at end; tell model “validate JSON.” (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+<li>
+<p>Long context → put instructions at top (and optionally repeat at end). (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+</li>
+</ul>
+<h3 id="image-prompts-one-line-that-covers-95">Image Prompts (one Line That Covers 95%) <a class="heading-anchor" href="#image-prompts-one-line-that-covers-95" aria-label="Link to this section">#</a></h3>
+<p><strong>Subject</strong>, <strong>environment</strong>, <strong>composition/angle</strong>, <strong>lighting</strong>, <strong>style/era/lens</strong>, <strong>fine details/materials</strong>, <strong>aspect ratio</strong>, <strong>negatives</strong> (“no text/watermark/blur”). (LP’s image-prompting modules emphasize subject + parameters like aspect ratio.) (<a href="https://learnprompting.org/docs/image_prompting/introduction?srsltid=AfmBOoowGvuHRkII-GtZM5lmPaC1X2SCjuScpuw-e62nuTwD4JXNXtdt&amp;utm_source=chatgpt.com">Learn Prompting</a>)</p>
+<hr />
+<h4 id="tiny-best-of-prompts-you-can-reuse">Tiny “best-of” Prompts You Can Reuse <a class="heading-anchor" href="#tiny-best-of-prompts-you-can-reuse" aria-label="Link to this section">#</a></h4>
+<p><strong>1) Universal task prompt</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>You are an expert {ROLE}. Task: {WHAT}. Audience: {WHO}.
+Constraints: {LENGTH, TONE, MUST-INCLUDES/EXCLUDES}.
+Use ONLY this context:
+---
+{DATA}
+---
+Output: {sections|JSON}. Before final answer: 3 assumptions + missing info.</code></pre></div>
+<p>(<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+<p><strong>2) Few-shot with guardrails</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>Good → {tight exemplar}
+Near-miss → {what to avoid + why}
+Follow the good pattern. Do NOT copy wording.</code></pre></div>
+<p>(<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+<p><strong>3) Iterative refinement (built-in loop)</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>Step 1: Propose 3 distinct options (bullets).
+Step 2: Wait for my choice.
+Step 3: Expand the winner to {N} words with examples and sources.</code></pre></div>
+<p>(<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide">OpenAI Cookbook</a>)</p>
+<p><strong>4) Image (text-to-image) one-liner</strong></p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>Subject, Environment, Composition, Lighting, Style, Details, Aspect (e.g., 3:2), Negatives (no text/watermark).</code></pre></div>
+<p>(<a href="https://learnprompting.org/docs/image_prompting/introduction?srsltid=AfmBOoowGvuHRkII-GtZM5lmPaC1X2SCjuScpuw-e62nuTwD4JXNXtdt&amp;utm_source=chatgpt.com">Learn Prompting</a>)</p>
+<hr />
+<h4 id="why-trust-these-moves">Why Trust These Moves? <a class="heading-anchor" href="#why-trust-these-moves" aria-label="Link to this section">#</a></h4>
+<p>They’re aligned with OpenAI’s official Prompt Engineering/Instruction-Following guidance (structure, delimiters, iteration) and Learn Prompting’s taxonomies and CoT/image-prompt techniques. Use them as defaults, then A/B prompt variants against a small eval set. (<a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide?utm_source=chatgpt.com">OpenAI Cookbook</a>)</p>
+<p>If you want, I can turn this into a 1-page printable card or add task-specific mini-prompts (e.g., analyst, marketer, tutor).</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/cli/">CLI</a><a class="tag" href="../tags/developer-tools/">developer tools</a><a class="tag" href="../tags/ai-development/">AI development</a><a class="tag" href="../tags/promptengineering/">prompt engineering</a><a class="tag" href="../tags/claude/">claude</a><a class="tag" href="../tags/rag/">RAG</a><a class="tag" href="../tags/claude-code/">claude code</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/ai-prompt-engineering-basics/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fai-prompt-engineering-basics%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fai-prompt-engineering-basics%2F&amp;text=How%20I%20Use%20AI%20Coding%20Agents%20Without%20Burning%20Tokens%20or%20Trusting%20Them%20Blindly" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fai-prompt-engineering-basics%2F&amp;title=How%20I%20Use%20AI%20Coding%20Agents%20Without%20Burning%20Tokens%20or%20Trusting%20Them%20Blindly" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=How%20I%20Use%20AI%20Coding%20Agents%20Without%20Burning%20Tokens%20or%20Trusting%20Them%20Blindly&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fai-prompt-engineering-basics%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../transforming-chatbot-interactions-with-retrieval-augmented-generation/" rel="prev"><span class="label">Older</span><span class="pager__title">Transforming Chatbot Interactions with Retrieval Augmented Generation</span></a><a class="pager__link pager__link--newer" href="../what-is-agentic-rag/" rel="next"><span class="label">Newer</span><span class="pager__title">What is Agentic RAG?</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-07-11T04:05:58.536Z">11 Jul 2026</time>
+          <span class="dispatch__read">12 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../one-model-is-the-new-n-1/">One Model Is the New n=1</a></h3>
+          <p>In the first eval, the conclusion was annoying but useful. At the frontier, it did not make the model meaningfully smarter.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/devtools/">dev tools</a><a class="tag" href="../tags/prompt/">prompt</a><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/promptengineering/">prompt engineering</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-08-08T05:59:48.259Z">8 Aug 2026</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../discovering-rags-4-project-updates-all-the-way/">Discovering RAGs 4: Project updates all the way</a></h3>
+          <p>So far, we have covered a lot of the project. All the conceptual basics, going from the bare-bones structure of the project and right into features such as RRF.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/devlog/">devlog</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-12-10T12:32:27.575Z">10 Dec 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../aiml/">AIML</a></p>
+          <h3><a href="../what-even-are-llms/">What even are LLMs?</a></h3>
+          <p>Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/llm/">LLM</a><a class="tag" href="../tags/rag/">RAG</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

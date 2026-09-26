@@ -7,6 +7,8 @@ gone private. This turns those rules into a check that fails loudly.
 
 Standard library only.
 
+Covers the front page, the legacy page, and every generated /blog page.
+
 Usage:
     python3 scripts/check.py              # structural + design rules
     python3 scripts/check.py --links      # also resolve every external URL
@@ -23,8 +25,14 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ["index.html", "404.html", "classic/index.html", "the-record/index.html"]
-CSS = "the-record/css/styles.css"
+STATIC_PAGES = ["index.html", "404.html", "classic/index.html", "the-record/index.html"]
+CSS_FILES = ["the-record/css/styles.css", "blog/assets/blog.css"]
+DRAFTS = ROOT / "content" / "drafts"
+
+
+def pages() -> list[str]:
+    blog = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "blog").rglob("index.html"))
+    return STATIC_PAGES + blog
 
 # design.md > Elevation & Depth, and > Shapes.
 BANNED_CSS = {
@@ -50,27 +58,32 @@ def check() -> list[str]:
     problems: list[str] = []
 
     # ---- CSS design rules (comments stripped, so the header can name them) ---
-    css_raw = (ROOT / CSS).read_text(encoding="utf-8")
-    css = strip_css_comments(css_raw)
-    for prop, why in BANNED_CSS.items():
-        if prop in css:
-            problems.append(f"{CSS}: '{prop}' is banned - {why}")
-    for font in BANNED_FONTS:
-        if re.search(rf"\b{font}\b", css):
-            problems.append(f"{CSS}: '{font}' is banned (design.md > Do's and Don'ts)")
+    for css_file in CSS_FILES:
+        if not (ROOT / css_file).exists():
+            continue
+        css = strip_css_comments((ROOT / css_file).read_text(encoding="utf-8"))
+        for prop, why in BANNED_CSS.items():
+            if prop in css:
+                problems.append(f"{css_file}: '{prop}' is banned - {why}")
+        for font in BANNED_FONTS:
+            if re.search(rf"\b{font}\b", css):
+                problems.append(f"{css_file}: '{font}' is banned (design.md > Do's and Don'ts)")
 
-    # Every grid must declare its columns; a bare `display: grid` silently
-    # collapses to one full-width column. This bit us on the previous site.
-    for block in re.findall(r"\{[^{}]*\}", css):
-        if "display: grid" in block and "grid-template-columns" not in block:
-            selector_hint = block.strip()[:60].replace("\n", " ")
-            problems.append(
-                f"{CSS}: grid without grid-template-columns near '{selector_hint}…'"
-            )
+        # Every grid must declare its columns; a bare `display: grid` silently
+        # collapses to one full-width column. This bit us on the previous site.
+        for block in re.findall(r"\{[^{}]*\}", css):
+            if "display: grid" in block and "grid-template-columns" not in block:
+                selector_hint = block.strip()[:60].replace("\n", " ")
+                problems.append(
+                    f"{css_file}: grid without grid-template-columns near '{selector_hint}…'"
+                )
 
     # ---- per-page structural checks ------------------------------------------
-    for page in PAGES:
+    for page in pages():
         html = (ROOT / page).read_text(encoding="utf-8")
+        # Highlighted code is a run of spans (some holding only whitespace)
+        # inside <pre>; the empty-element rule is about layout, not code.
+        html_no_code = re.sub(r"<pre\b.*?</pre>", "<pre></pre>", html, flags=re.S)
 
         if 'style="' in html:
             problems.append(f"{page}: inline style attribute (use a class)")
@@ -80,7 +93,7 @@ def check() -> list[str]:
             for part in candidate.split(","):
                 refs.add(part.strip().split()[0])
         for ref in sorted(refs):
-            path = ref.split("?")[0]
+            path = ref.split("?")[0].split("#")[0]
             candidate = ROOT / path.lstrip("/") if path.startswith("/") else ROOT / Path(page).parent / path
             if not candidate.resolve().exists():
                 problems.append(f"{page}: missing local file '{ref}'")
@@ -97,10 +110,43 @@ def check() -> list[str]:
             if opened != closed:
                 problems.append(f"{page}: <{tag}> unbalanced ({opened} open, {closed} close)")
 
-        for match in re.finditer(r"<(p|h2|h3|span|div)([^>]*)>\s*</\1>", html):
+        for match in re.finditer(r"<(p|h2|h3|span|div)([^>]*)>\s*</\1>", html_no_code):
             if 'class="navbar-toggler-icon"' in match.group(2):
                 continue
             problems.append(f"{page}: empty <{match.group(1)}{match.group(2)}>")
+
+        for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
+            try:
+                json.loads(block)
+            except json.JSONDecodeError as exc:
+                problems.append(f"{page}: JSON-LD invalid ({exc})")
+
+        # The giscus CSP exception belongs only on pages that mount comments.
+        csp = re.search(r'http-equiv="Content-Security-Policy" content="([^"]+)"', html)
+        if csp and "giscus.app" in csp.group(1) and "data-giscus" not in html:
+            problems.append(f"{page}: CSP allows giscus.app but the page has no comments")
+
+    # ---- drafts must never reach public output --------------------------------
+    # content/drafts/ exists only on the author's machine (gitignored).
+    if DRAFTS.exists():
+        draft_slugs = set()
+        for draft in (d for d in DRAFTS.glob("*.md") if not d.name.startswith("_")):
+            match = re.search(r'^slug:\s*"?([^"\n]+)"?\s*$', draft.read_text(encoding="utf-8"), re.M)
+            draft_slugs.add(match.group(1).strip() if match else draft.stem)
+        published = {p.stem for p in (ROOT / "content" / "blog").glob("*.md")}
+        draft_slugs -= published  # a draft may share a slug with the post it once was
+        public = [ROOT / "sitemap.xml", ROOT / "blog" / "rss.xml", ROOT / "blog" / "search.json"]
+        public += [ROOT / p for p in pages()]
+        for path in public:
+            if not path.exists():
+                continue
+            text = path.read_text(encoding="utf-8")
+            for slug in sorted(draft_slugs):
+                if f"/blog/{slug}/" in text:
+                    problems.append(f"{path.relative_to(ROOT)}: links to draft '{slug}'")
+        for slug in sorted(draft_slugs):
+            if (ROOT / "blog" / slug).exists():
+                problems.append(f"blog/{slug}/: a draft was built into the public output")
 
     # ---- JSON payloads --------------------------------------------------------
     index = (ROOT / "index.html").read_text(encoding="utf-8")

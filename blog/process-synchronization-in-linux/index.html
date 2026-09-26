@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Process Synchronization Guide - Engineering Tales</title>
+<meta name="description" content="Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/process-synchronization-in-linux/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Linux Process Synchronization Guide - Engineering Tales">
+<meta property="og:description" content="Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/process-synchronization-in-linux/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/process-synchronization-in-linux/og-7abbfdd9.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-01-09T13:30:17.012Z">
+<meta property="article:modified_time" content="2026-07-03T14:14:56.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Linux">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="multithreading">
+<meta property="article:tag" content="linux for beginners">
+<meta property="article:tag" content="linux basics">
+<meta property="article:tag" content="process management">
+<meta property="article:tag" content="multiprocessing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linux Process Synchronization Guide - Engineering Tales">
+<meta name="twitter:description" content="Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/process-synchronization-in-linux/og-7abbfdd9.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/process-synchronization-in-linux/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/process-synchronization-in-linux/",
+      "url": "https://sukalyan2003.github.io/blog/process-synchronization-in-linux/",
+      "headline": "Process Synchronization in Linux",
+      "description": "Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations",
+      "datePublished": "2026-01-09T13:30:17.012Z",
+      "dateModified": "2026-07-03T14:14:56.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/process-synchronization-in-linux/og-7abbfdd9.jpg"
+      ],
+      "keywords": [
+        "linux",
+        "multithreading",
+        "linux for beginners",
+        "linux basics",
+        "process management",
+        "multiprocessing"
+      ],
+      "articleSection": "Linux",
+      "wordCount": 1607,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Linux",
+          "item": "https://sukalyan2003.github.io/blog/linux/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Process Synchronization in Linux",
+          "item": "https://sukalyan2003.github.io/blog/process-synchronization-in-linux/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/" class="is-current" aria-current="page">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../linux/">Linux</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Process Synchronization in Linux</h1>
+        <p class="standfirst article__standfirst">Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-01-09T13:30:17.012Z">9 Jan 2026</time></span><span>Updated <time datetime="2026-07-03T14:14:56.000Z">3 Jul 2026</time></span><span>7 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-01-09T13:30:17.012Z">9 Jan 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T14:14:56.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>7 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../linux/">Linux</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#part-1-the-basics">Part 1: The basics</a></li><li class="toc__l3"><a href="#tl-dr">TL;DR</a></li><li class="toc__l3"><a href="#what-are-processes">What are processes?</a></li><li class="toc__l3"><a href="#what-are-threads">What are Threads?</a></li><li class="toc__l3"><a href="#which-one-to-use">Which one to use?</a></li><li class="toc__l3"><a href="#a-minimal-example-in-the-terminal">A minimal example in the terminal</a></li><li class="toc__l2"><a href="#part-2-coding-it-up">Part 2: Coding it up</a></li><li class="toc__l2"><a href="#whats-next">What’s next?</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/e162cde8e4cf-7abbfdd9-480.webp" srcset="img/e162cde8e4cf-7abbfdd9-480.webp 480w, img/e162cde8e4cf-7abbfdd9-960.webp 960w, img/e162cde8e4cf-7abbfdd9-1024.webp 1024w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="part-1-the-basics">Part 1: The basics <a class="heading-anchor" href="#part-1-the-basics" aria-label="Link to this section">#</a></h2>
+<p>Have you ever wondered how your computer or phone makes so many different apps work simultaneously? Or how you can have things running in the background doing their work, while you’re watching netflix in the foreground?</p>
+<p>These Background “Processes” are a very common way to achieve multitasking.</p>
+<p>For this post, let’s begin by learning about certain terms in broader lingo, and then drill down on them to learn more about the internals of how your operating system and the programming languages on top of it, use these ideas to make everything seamless for us.</p>
+<h3 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>
+<p>Process synchronization is about stopping concurrent programs from corrupting shared state.</p>
+</li>
+<li>
+<p>The core problem is the race condition: output depends on timing instead of logic.</p>
+</li>
+<li>
+<p>Locks, semaphores, and other primitives are ways to control access to critical sections.</p>
+</li>
+<li>
+<p>The hard part is balancing correctness with deadlocks, waiting, and performance.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Learning status</strong></p>
+<p>This post is part operating-systems note, part Linux learning log. The goal is to connect textbook synchronization ideas with what actually happens when processes run together.</p>
+</blockquote>
+<h3 id="what-are-processes">What are processes? <a class="heading-anchor" href="#what-are-processes" aria-label="Link to this section">#</a></h3>
+<p>Everything that you run in your devices, can be run in many ways. One at a time, several at a time, waiting for the CPU to process stuff, or waiting for some input from your end.</p>
+<p>Regardless of the way in which the hardware chooses to do so, the apps themselves are called processes when they are running.</p>
+<p>Each app can have one process, like when we run some simple python programs or start a text editor etc.<br />
+They can also have multiple processes, one example for that could be Firefox.</p>
+<p>If you open your task manager, you’ll see a processes tab. It’s highly likely that if you have multiple tabs open in Firefox, you’ll see several entries in that tab called firefox, each with a different CPU and memory usage. Even within them, for really complex pages, the firefox entry has a little toggle beside it, that leads to several sub processes under it.</p>
+<figure class="figure"><img src="img/83a35400d06b-3aa4afa4-480.webp" srcset="img/83a35400d06b-3aa4afa4-480.webp 480w, img/83a35400d06b-3aa4afa4-652.webp 652w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="156" alt="" loading="lazy" decoding="async"></figure>
+
+<p>When we have CPU intensive stuff, we use multiple processes, divided up between multiple physical cores of the CPU Hardware.</p>
+<p>Now comes the fun part, these processes themselves are not the smallest unit of work. They can be further divided into something called Threads.</p>
+<h3 id="what-are-threads">What are Threads? <a class="heading-anchor" href="#what-are-threads" aria-label="Link to this section">#</a></h3>
+<p>Each process can be further divided into one or more threads, with the fundamental difference being that, Each process has it’s separate collection of hardware and software resources, but all threads under a process share the same stuff.</p>
+<p>When we have different kinds of tasks, where they are IO Bound(Bottlenecked by slow IO) then we use Threads. When one IO bound thread is stuck at waiting, the CPU can process some other thread which has got the response it was waiting for.</p>
+<figure class="figure"><img src="img/588848f243e1-7abbfdd9-480.webp" srcset="img/588848f243e1-7abbfdd9-480.webp 480w, img/588848f243e1-7abbfdd9-960.webp 960w, img/588848f243e1-7abbfdd9-1024.webp 1024w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="PPT - Processes, Threads, Synchronization PowerPoint Presentation, free ..." loading="lazy" decoding="async"></figure>
+
+<p>The above diagram illustrates all the different states a thread can be in.</p>
+<h3 id="which-one-to-use">Which one to use? <a class="heading-anchor" href="#which-one-to-use" aria-label="Link to this section">#</a></h3>
+<p>The following diagram is taken from a python website but the main ideas hold true for processes and threads in any language. Here is a rough idea of how you make the decision of which one to use:</p>
+<figure class="figure"><img src="img/96f535bf516c-4bce4359-480.webp" srcset="img/96f535bf516c-4bce4359-480.webp 480w, img/96f535bf516c-4bce4359-960.webp 960w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="" loading="lazy" decoding="async"></figure>
+
+<h3 id="a-minimal-example-in-the-terminal">A minimal example in the terminal <a class="heading-anchor" href="#a-minimal-example-in-the-terminal" aria-label="Link to this section">#</a></h3>
+<p>Before we proceed, I shall assume that you have very basic familiarity with the bash shell, and terminal stuff in general, as it’s easiest to study OS internals with Linux.</p>
+<p>For a refresher you can check out <a href="../basics-of-shell-scripting/">my earlier post on it</a>, we’ll pick up from where it left and try out some examples here.</p>
+<p><strong>In Linux, the terminology is as follows:</strong><br />
+We have the init process which is the source of everything. it starts when the kernel starts.</p>
+<p>With that as the Parent, every other process is created as it’s child at first, and then the other processes are the children of those processes and so on.</p>
+<p>This creation of a process from another process is called Forking. We fork a parent to create a Child Process, where the child can act as the parent of some other processes and so on.</p>
+<p>Each process has it’s PID or it’s process ID, and it also has a PPID or the Parent Process ID. These two are enough for us to track them, in tools such has top or htop, which is the task manager tool for linux terminals</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Meaning</th>
+<th>Failure it prevents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical section</td>
+<td>Code that touches shared state</td>
+<td>Two processes changing the same thing at once</td>
+</tr>
+<tr>
+<td>Mutex / lock</td>
+<td>Allows one actor in at a time</td>
+<td>Race conditions</td>
+</tr>
+<tr>
+<td>Semaphore</td>
+<td>Controls access with a counter</td>
+<td>Overuse of limited resources</td>
+</tr>
+<tr>
+<td>Deadlock</td>
+<td>Everyone waits forever</td>
+<td>Bad lock ordering or circular waiting</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="figure"><img src="img/53d3ab4f1b50-e9423cbc-480.webp" srcset="img/53d3ab4f1b50-e9423cbc-480.webp 480w, img/53d3ab4f1b50-e9423cbc-960.webp 960w, img/53d3ab4f1b50-e9423cbc-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="140" alt="" loading="lazy" decoding="async"></figure>
+
+<p>For our minimal example, let’s use a shell script to find the PID and PPID of the shell itself, and then create a child process and check it’s IDs too.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Starting infinite loop..."</span>
+./loop.sh<span class="w"> </span><span class="p">&amp;</span><span class="w">  </span><span class="c1"># Run in background</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Task started in background. Script exiting now."</span></code></pre></div>
+<p>This will create a child process that runs in the background, then we can check the before and after of all the running processes to get the pid and ppid.</p>
+<p>The code inside <a href="http://loop.sh">loop.sh</a> is:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="w"> </span><span class="c1">#!/bin/bash</span>
+<span class="w"> </span><span class="nv">i</span><span class="o">=</span><span class="m">1</span>
+<span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span>-ge<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w"> </span><span class="o">((</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">))</span>
+<span class="w"> </span><span class="k">done</span></code></pre></div>
+<p>This is a simple infinite loop that will just keep running.</p>
+<p><strong>Before running the script, the processes are:</strong></p>
+<figure class="figure"><img src="img/3dff87b251f5-e0255066-385.webp" srcset="img/3dff87b251f5-e0255066-385.webp 385w" sizes="(max-width: 900px) 100vw, 680px" width="385" height="153" alt="" loading="lazy" decoding="async"></figure>
+
+<p><strong>After running the script:</strong></p>
+<figure class="figure"><img src="img/9af03e11caa4-8cd7d9e5-478.webp" srcset="img/9af03e11caa4-8cd7d9e5-478.webp 478w" sizes="(max-width: 900px) 100vw, 680px" width="478" height="234" alt="" loading="lazy" decoding="async"></figure>
+
+<p><strong>Also see the PPID of this is the same as the PID of the shell itself(333):</strong></p>
+<figure class="figure"><img src="img/f29033ea697b-f3962881-358.webp" srcset="img/f29033ea697b-f3962881-358.webp 358w" sizes="(max-width: 900px) 100vw, 680px" width="358" height="25" alt="" loading="lazy" decoding="async"></figure>
+
+<p><strong>We can now check it inside htop:</strong></p>
+<figure class="figure"><img src="img/dfba231a797c-ab0a2583-480.webp" srcset="img/dfba231a797c-ab0a2583-480.webp 480w, img/dfba231a797c-ab0a2583-960.webp 960w, img/dfba231a797c-ab0a2583-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="63" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Notice that only one core is engaged with this process, this is just as we discussed before, per process we can use only one core. For true multiprocessing, we separate the task into multiple processes and assign each to a different core.</p>
+<p>Here you can also see the resources used by everything.</p>
+<p>Now that was all for processes, we can use these as and when we need, with lots of library support across languages for achieving multiprocessing. Just to recall, this is useful when the problem at hand is CPU intensive.</p>
+<h2 id="part-2-coding-it-up">Part 2: Coding it up <a class="heading-anchor" href="#part-2-coding-it-up" aria-label="Link to this section">#</a></h2>
+<p>Even though it is technically possible to do multi-threading in bash as well, it needs several specific linux utilities that make it too complicated for a first explanation. Most of the thread level logic is done in a programming language, whether it be C that is the language Linux is written on, or any other programming language interacting with the Linux Kernel using System Calls( this is a different topic altogether that deserves it’s own post)</p>
+<p>Let’s take the simplest possible example of summing up numbers and see how it works. Fair warning, the upcoming code is a little bit tricky to understand if you haven’t worked with these constructs before, but this was the only way to show this in action:</p>
+<p>The program divides up the work between several processes and then for each, writes it to a buffer.<br />
+At the very end, everything is read from the buffer and added up for one last time.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">c</span></div><pre class="code" tabindex="0"><code><span class="c1">// sum_processes.c &lt;- This uses multi processing using forks and child processes </span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;errno.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/wait.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;time.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define ARRAY_SIZE 10000000</span>
+<span class="cp">#define N_WORKERS 4</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">write_all</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">buf</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">ssize_t</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">errno</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">EINTR</span><span class="p">)</span>
+<span class="w">        </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">w</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">w</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">read_all</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">buf</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">ssize_t</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">errno</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">EINTR</span><span class="p">)</span>
+<span class="w">        </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="c1">// unexpected EOF</span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">r</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">r</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">clock_t</span><span class="w"> </span><span class="n">startT</span><span class="p">,</span><span class="w"> </span><span class="n">endT</span><span class="p">;</span>
+<span class="w">  </span><span class="n">startT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span><span class="w"> </span><span class="c1">// Start counting time</span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">perror</span><span class="p">(</span><span class="s">"malloc"</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">pipes</span><span class="p">[</span><span class="n">N_WORKERS</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">])</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">"pipe"</span><span class="p">);</span>
+<span class="w">      </span><span class="n">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">rem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span>
+<span class="c1">// divide up the number of processes based on available number of workers</span>
+
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">rem</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">"fork"</span><span class="p">);</span>
+<span class="w">      </span><span class="n">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// Child: close read end, compute sum, write it, exit</span>
+<span class="w">      </span><span class="n">close</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="w">      </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">write_all</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">perror</span><span class="p">(</span><span class="s">"write"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_exit</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="n">close</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">      </span><span class="n">_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Parent: close write end (for this worker), continue to next fork</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// Parent: collect results</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">part</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">read_all</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="n">part</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">part</span><span class="p">))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">perror</span><span class="p">(</span><span class="s">"read"</span><span class="p">);</span>
+<span class="w">      </span><span class="c1">// continue anyway</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">pipes</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">part</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// Reap children</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">"Process sum = %lld (expected %lld)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">ARRAY_SIZE</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">endT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span><span class="w"> </span><span class="c1">// End timing</span>
+
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">time_taken</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="p">((</span><span class="kt">double</span><span class="p">)(</span><span class="n">endT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">startT</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">CLOCKS_PER_SEC</span><span class="p">;</span><span class="w"> </span><span class="c1">// Calculate time in seconds</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">"Time taken: %f seconds</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">time_taken</span><span class="p">);</span>
+<span class="w">  </span><span class="n">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+<p><strong>And the performance of this is:</strong></p>
+<figure class="figure"><img src="img/538ebc366e48-f974f54d-428.webp" srcset="img/538ebc366e48-f974f54d-428.webp 428w" sizes="(max-width: 900px) 100vw, 680px" width="428" height="301" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Now to solve this using multithreading, we would have to use the <code>pthread</code> :</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">c</span></div><pre class="code" tabindex="0"><code><span class="c1">// sum_threads.c</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;pthread.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;time.h&gt;</span>
+
+<span class="cp">#define ARRAY_SIZE  10000000</span>
+<span class="cp">#define N_WORKERS   4</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">arr</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="o">*</span><span class="n">partials</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">worker_id</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Task</span><span class="p">;</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="nf">worker_sum</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Task</span><span class="w"> </span><span class="o">*</span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Task</span><span class="o">*</span><span class="p">)</span><span class="n">arg</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">start</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">partials</span><span class="p">[</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">worker_id</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">clock_t</span><span class="w"> </span><span class="n">startT</span><span class="p">,</span><span class="w"> </span><span class="n">endT</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">startT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span><span class="w">  </span><span class="c1">// Start timing</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">perror</span><span class="p">(</span><span class="s">"malloc"</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// easy to verify</span>
+
+<span class="w">    </span><span class="n">pthread_t</span><span class="w"> </span><span class="n">threads</span><span class="p">[</span><span class="n">N_WORKERS</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Task</span><span class="w"> </span><span class="n">tasks</span><span class="p">[</span><span class="n">N_WORKERS</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">partials</span><span class="p">[</span><span class="n">N_WORKERS</span><span class="p">];</span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">rem</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">ARRAY_SIZE</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">size_t</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">rem</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">tasks</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Task</span><span class="p">){</span>
+<span class="w">            </span><span class="p">.</span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="p">,</span>
+<span class="w">            </span><span class="p">.</span><span class="n">partials</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">partials</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">worker_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">w</span><span class="p">],</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">worker_sum</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tasks</span><span class="p">[</span><span class="n">w</span><span class="p">])</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">perror</span><span class="p">(</span><span class="s">"pthread_create"</span><span class="p">);</span>
+<span class="w">            </span><span class="n">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">pthread_join</span><span class="p">(</span><span class="n">threads</span><span class="p">[</span><span class="n">w</span><span class="p">],</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N_WORKERS</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">partials</span><span class="p">[</span><span class="n">w</span><span class="p">];</span>
+
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Threaded sum = %lld (expected %lld)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="p">)</span><span class="n">ARRAY_SIZE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">endT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clock</span><span class="p">();</span><span class="w">  </span><span class="c1">// End timing</span>
+
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">time_taken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="kt">double</span><span class="p">)(</span><span class="n">endT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">startT</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">CLOCKS_PER_SEC</span><span class="p">;</span><span class="w">  </span><span class="c1">// Calculate time in seconds</span>
+
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"Time taken: %f seconds</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">time_taken</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+<p>And the performance is as follows:</p>
+<figure class="figure"><img src="img/683d50128a4a-dc03ae13-401.webp" srcset="img/683d50128a4a-dc03ae13-401.webp 401w" sizes="(max-width: 900px) 100vw, 680px" width="401" height="121" alt="" loading="lazy" decoding="async"></figure>
+
+<p>When we compare the two, we see that the multiprocessing is faster than multithreading, but these differences wont be more clear until we tackle a really large problem with it. (More on it in a different post)</p>
+<p>(PS: AI help was taken to write these code snippets, as im learning these things myself while writing this)</p>
+<p>Now for some important notes:</p>
+<blockquote>
+<p><strong>Note</strong>: There is a difference between concurrency and parallelism. Parallelism allows multiple tasks to execute at the same time, whereas concurrency allows multiple tasks to execute one at a time in an interleaving manner.</p>
+<p><strong>Note</strong>: Due to Python Global Interpreter Lock (GIL), only one thread can be executed at a time. Therefore, multithreading only achieves concurrency and not parallelism for IO-bound processes. On the other hand, multiprocessing achieves parallelism.</p>
+<p>Note that using multithreading for CPU-bound processes might slow down performance due to competing resources that ensure only one thread can execute at a time, and overhead is incurred in dealing with multiple threads.</p>
+<p>On the other hand, multiprocessing can be used for IO-bound processes. However, the overhead for managing multiple processes is higher than managing multiple threads as illustrated above. You may notice that multiprocessing might lead to higher CPU utilization due to multiple CPU cores being used by the program, which is expected.</p>
+</blockquote>
+<p>The above notes are taken from <a href="https://towardsdatascience.com/multithreading-and-multiprocessing-in-10-minutes-20d9b3c6a867/">here</a>, because they succinctly explain the points, rather than me writing several more paragraphs</p>
+<h2 id="whats-next">What’s next? <a class="heading-anchor" href="#whats-next" aria-label="Link to this section">#</a></h2>
+<p>So far we have covered the basics, and set up some background for other Kernel stuff that deserve their own posts, for example System calls.</p>
+<p>There are also several libraries to learn when you’re going beyond the extreme low level C and start working on real projects.</p>
+<p>For the next post on this topic, I plan on creating something that’s not a toy example, something that can be actually used. It won’t be in C most likely, but in some other language like Python or Rust.</p>
+<p>Would love any suggestions regarding what to make.</p>
+<p>Until then, stay tuned!</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/linux/">linux</a><a class="tag" href="../tags/multithreading/">multithreading</a><a class="tag" href="../tags/linux-for-beginners/">linux for beginners</a><a class="tag" href="../tags/linux-basics/">linux basics</a><a class="tag" href="../tags/process-management/">process management</a><a class="tag" href="../tags/multiprocessing/">multiprocessing</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/process-synchronization-in-linux/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fprocess-synchronization-in-linux%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fprocess-synchronization-in-linux%2F&amp;text=Process%20Synchronization%20in%20Linux" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fprocess-synchronization-in-linux%2F&amp;title=Process%20Synchronization%20in%20Linux" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Process%20Synchronization%20in%20Linux&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fprocess-synchronization-in-linux%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../what-even-are-llms/" rel="prev"><span class="label">Older</span><span class="pager__title">What even are LLMs?</span></a><a class="pager__link pager__link--newer" href="../nand2tetris-part-1-hardware/" rel="next"><span class="label">Newer</span><span class="pager__title">Nand2Tetris Part 1: Hardware</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-02-28T06:38:17.390Z">28 Feb 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../linux/">Linux</a></p>
+          <h3><a href="../learning-how-to-use-vim/">Learning how to use Vim</a></h3>
+          <p>Look at the basics of what vim is all about and have this handy cheatsheet to get you started</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/terminal/">terminal</a><a class="tag" href="../tags/vim/">vim</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-03-31T16:18:03.231Z">31 Mar 2024</time>
+          <span class="dispatch__read">6 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../linux/">Linux</a></p>
+          <h3><a href="../basics-of-shell-scripting/">Basics of Shell scripting</a></h3>
+          <p>Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/bash/">bash</a><a class="tag" href="../tags/shell/">shell</a><a class="tag" href="../tags/bash-script/">bash script</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

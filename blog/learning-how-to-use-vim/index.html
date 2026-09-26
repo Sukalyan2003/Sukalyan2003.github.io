@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vim basics and Cheatsheet - Engineering Tales</title>
+<meta name="description" content="Look at the basics of what vim is all about and have this handy cheatsheet to get you started">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/learning-how-to-use-vim/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Vim basics and Cheatsheet - Engineering Tales">
+<meta property="og:description" content="Look at the basics of what vim is all about and have this handy cheatsheet to get you started">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/learning-how-to-use-vim/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/learning-how-to-use-vim/og-d02e1680.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2024-02-28T06:38:17.390Z">
+<meta property="article:modified_time" content="2024-02-28T06:38:17.390Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Linux">
+<meta property="article:tag" content="terminal">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vim basics and Cheatsheet - Engineering Tales">
+<meta name="twitter:description" content="Look at the basics of what vim is all about and have this handy cheatsheet to get you started">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/learning-how-to-use-vim/og-d02e1680.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/learning-how-to-use-vim/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/learning-how-to-use-vim/",
+      "url": "https://sukalyan2003.github.io/blog/learning-how-to-use-vim/",
+      "headline": "Learning how to use Vim",
+      "description": "Look at the basics of what vim is all about and have this handy cheatsheet to get you started",
+      "datePublished": "2024-02-28T06:38:17.390Z",
+      "dateModified": "2024-02-28T06:38:17.390Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/learning-how-to-use-vim/og-d02e1680.jpg"
+      ],
+      "keywords": [
+        "terminal",
+        "vim"
+      ],
+      "articleSection": "Linux",
+      "wordCount": 1645,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Linux",
+          "item": "https://sukalyan2003.github.io/blog/linux/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Learning how to use Vim",
+          "item": "https://sukalyan2003.github.io/blog/learning-how-to-use-vim/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/" class="is-current" aria-current="page">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../linux/">Linux</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Learning how to use Vim</h1>
+        <p class="standfirst article__standfirst">Look at the basics of what vim is all about and have this handy cheatsheet to get you started</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2024-02-28T06:38:17.390Z">28 Feb 2024</time></span><span>7 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2024-02-28T06:38:17.390Z">28 Feb 2024</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>7 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../linux/">Linux</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#basics">Basics</a></li><li class="toc__l2"><a href="#customization">Customization</a></li><li class="toc__l2"><a href="#cheatsheet">Cheatsheet</a></li><li class="toc__l2"><a href="#see-you-soon">See you soon</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/a391ef83c91e-d02e1680-480.webp" srcset="img/a391ef83c91e-d02e1680-480.webp 480w, img/a391ef83c91e-d02e1680-960.webp 960w, img/a391ef83c91e-d02e1680-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="264" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>So i've dabbled in Linux for a little bit over the years, never really committing to it, but I've always been fascinated by the Command Line interface.</p>
+<p>To use certain linux tools in windows I used the Git Bash installation of Git in my Desktop PC, which adds a lot of the core terminal features to any OS, which in my case is Windows 10. (Though I have used the same in Windows 7 before as well).</p>
+<p>One of those tools is the one called Vim.</p>
+<figure class="figure"><img src="img/729745d7d101-81cbc651-480.webp" srcset="img/729745d7d101-81cbc651-480.webp 480w, img/729745d7d101-81cbc651-960.webp 960w, img/729745d7d101-81cbc651-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="190" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Vim, or Vi improved is the standard text editing solution for Linux terminal users, the Vim vs Emacs Debate aside. (Nano crying in the corner).</p>
+<figure class="figure"><img src="img/04dd8a9c6397-d02e1680-480.webp" srcset="img/04dd8a9c6397-d02e1680-480.webp 480w, img/04dd8a9c6397-d02e1680-960.webp 960w, img/04dd8a9c6397-d02e1680-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="264" alt="" loading="lazy" decoding="async"></figure>
+
+<p>It has a very bare-bones interface for the untrained eyes, but with a closer look you can see the near infinite possibilities that the different commands, plugins and inbuilt features bring.</p>
+<p>Now the picture above has some modifications from the default, which I will discuss later when talking about the .vimrc file, stay tuned.</p>
+<p>There are many different features of Vim, but me being a basic user, do not know or use most of those. This post will deal with the basics and if demand is there for more, I will learn and talk about the different advanced features present in Vim.</p>
+<h2 id="basics">Basics <a class="heading-anchor" href="#basics" aria-label="Link to this section">#</a></h2>
+<p>Let's deal with the basic controls first,<br />
+When you enter Vim, you see that welcome message and you are in what is called the Normal mode or the Command mode.</p>
+<p>Here you can move around the text using the keys h,j,k,l.<br />
+<code>k</code> moves cursor up <code>j</code> moves it down. <code>l</code> moves it right and <code>h</code> moves it left.</p>
+<p><mark>A tip if you want to remember the key places, the </mark> <code>j</code> <mark> key in most keyboards has a little bit of material poking out, similarly with the </mark> <code>f</code> <mark> key. This can be used to find your way back in the key positions.</mark></p>
+<p>But if you want to edit the text, you have to enter <strong>Insert mode</strong> .<br />
+<code>i</code> to enter insert mode and <code>esc</code> to exit it.<code>o</code> puts you one line below the cursor and <code>O</code> puts above the cursor; and into Insert mode.</p>
+<p>You could also press `I` to insert at the beginning of the line.</p>
+<p>And a to insert (append) after the cursor,</p>
+<p>A - insert (append) at the end of the line.</p>
+<p>Type whatever you want in the insert mode then exit it.</p>
+<figure class="figure"><img src="img/6bf1c48d6606-96d3aeab-480.webp" srcset="img/6bf1c48d6606-96d3aeab-480.webp 480w, img/6bf1c48d6606-96d3aeab-960.webp 960w, img/6bf1c48d6606-96d3aeab-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" loading="lazy" decoding="async"></figure>
+
+<p>There is also a way to use the Vim inbuilt command line. For that press <code>esc</code> ro return to the Command mode, then press <code>:</code> followed by the command.</p>
+<p>For example, You could also make multiple windows in Vim by using the command <code>:split</code> to do a horizontal split or <code>:vsplit</code> to do a vertical split.</p>
+<figure class="figure"><img src="img/1d69e3d267dd-5f54067f-480.webp" srcset="img/1d69e3d267dd-5f54067f-480.webp 480w, img/1d69e3d267dd-5f54067f-960.webp 960w, img/1d69e3d267dd-5f54067f-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" loading="lazy" decoding="async"></figure>
+
+<p><strong>To move between windows, use</strong><code>Ctrl w</code> then normal movement commands like <code>k, l,j, h</code> etc to move.</p>
+<p><mark>And you can close the window by using </mark> <code>:q</code><mark>. This works for any and all windows.</mark></p>
+<p><code>w</code><strong>for saving changes and</strong><code>q</code><strong>for quitting. combine these two as</strong><code>:wq</code><strong>to write and quit.</strong><code>q!</code><strong>is to quit without saving.</strong></p>
+<p>For a large text file, you would want some faster ways of navigating, for that you have the following:</p>
+<p>Any number written before the a command repeats that command that number of times. For eg: <code>50k</code> moves you up by 50 lines.</p>
+<p>And also, <code>gg</code> takes you to the top of a file and <code>G</code> takes you to the bottom.</p>
+<p>For quick deleting, <code>dd</code> deletes the entire line(when in command mode). <code>D</code> deletes everything in the line which is to the right of the cursor.</p>
+<p><code>u</code> to undo an action. <code>Ctrl R</code> is redo.</p>
+<p>Now those are some basics that you'd need, and preferably you will remember these basic things.</p>
+<h2 id="customization">Customization <a class="heading-anchor" href="#customization" aria-label="Link to this section">#</a></h2>
+<p>All installations have a file called <code>.vimrc</code> that deals with customization, let's open it.</p>
+<p>You open a file with vim, using <code>vim filename</code>.</p>
+<figure class="figure"><img src="img/8c6444eee9a7-d1f46f47-480.webp" srcset="img/8c6444eee9a7-d1f46f47-480.webp 480w, img/8c6444eee9a7-d1f46f47-960.webp 960w, img/8c6444eee9a7-d1f46f47-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="243" alt="" loading="lazy" decoding="async"></figure>
+
+<p>The vimrc is located at the home directory denoted by <code>~</code>.</p>
+<p>The following is my Vimrc, let's go through it line by line</p>
+<figure class="figure"><img src="img/48f7e377afb8-e21cc613-480.webp" srcset="img/48f7e377afb8-e21cc613-480.webp 480w, img/48f7e377afb8-e21cc613-960.webp 960w, img/48f7e377afb8-e21cc613-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" loading="lazy" decoding="async"></figure>
+
+<p>The first few lines deal with the file naming, line numbering, colour theme and extension management.</p>
+<p>The important ones are the <code>syntax on</code> and the <code>set relativenumber</code> to enable the syntax features of vim and the line numbers respectively.</p>
+<p>Then there is the Plugin sections, here I have used the <a href="https://github.com/junegunn/vim-plug">Vim Plug</a> plugin manager to install plugins.</p>
+<p>Once you add the needed lines in your vimrc, you need to run <code>:PlugInstall</code> and the rest will be handled by the plugin Manager.<br />
+Check the common ones out for yourself and install as needed.</p>
+<p>The status Line part is something I had copied from a site i cannot remember, which adds the weird little things in the status bar, giving more information about vim and the files it has opened.</p>
+<p>There is also the topic of Vimscript and programming, deciding which plugins to install and other advanced navigation features of vim that I myself haven't completed learned yet.</p>
+<p>One popular alternative to vim is Neovim, which adds Language Server protocol support to vim for massively better language specific tools. It also uses the much more popular language Lua for scripting rather than the obscure Vimscript.</p>
+<p>Since Vim for me has been a way to keep being connected to the terminal, I have not tried Neovim yet. But I'll surely try it out someday.</p>
+<h2 id="cheatsheet">Cheatsheet <a class="heading-anchor" href="#cheatsheet" aria-label="Link to this section">#</a></h2>
+<p>For extended use, there are a few more things, for which i'm listing the short cheatsheet I made for just the basics. There are much more comprehensive cheatsheets out there, but which I believe can be overwhelming for most newbies.</p>
+<p>You can use the following when you need it but i would recommend reading some more tutorials and examples out there and use them to make your own cheatsheet as you go on.</p>
+<p>Another important resource is the <code>vimtutor</code> command on the terminal that launches an interactive tutorial to teach all the basics of Vim. Do check it out.</p>
+<p>Here's my short cheatsheet:</p>
+<ol>
+<li>
+<p><code>k</code> moves cursor up <code>j</code> moves it down. <code>l</code> moves it right and <code>h</code> moves it left.</p>
+</li>
+<li>
+<p>Any number written before the a command repeats that command that number of times. For eg: <code>50k</code> moves you up by 50 lines.</p>
+</li>
+<li>
+<p><code>i</code> to enter insert mode and <code>esc</code> to exit it.<code>o</code> puts you one line below the cursor and <code>O</code> puts above the cursor; and into Insert mode.</p>
+</li>
+<li>
+<p><strong>To move between windows, use</strong><code>Ctrl w</code> then normal movement commands like <code>k, l,j, h</code> etc to move.</p>
+</li>
+<li>
+<p><code>:n</code> takes you to next file in argument, <code>:N</code> takes to previous. For when you have several files in argument, try <code>:bn</code> where <code>n</code> is the number of files you want to move forward. This loops back to the first one after passing over the last. <code>:bp</code> is to go to the previous one.</p>
+</li>
+<li>
+<p><code>w</code> for saving changes and <code>q</code> for quitting. combine these two to write and quit. <code>q!</code> is to quit without saving.</p>
+</li>
+<li>
+<p><code>dd</code> deletes the entire line(when in command mode). <code>D</code> deletes everything in the line which is to the right of the cursor.</p>
+</li>
+<li>
+<p><code>gg</code> takes you to the top of a file and <code>G</code> takes you to the bottom.</p>
+</li>
+<li>
+<p><code>{</code> and <code>}</code> are used to move up and down blocks of code.</p>
+</li>
+<li>
+<p><code>u</code> to undo an action. <code>Ctrl R</code> is redo.</p>
+</li>
+<li>
+<p><code>y</code> to &quot;yank&quot; or copy something. <code>yy</code> to copy a whole line. <code>p</code> to paste below the cursor and <code>P</code> to paste above the cursor.</p>
+</li>
+<li>
+<p><code>Shift V</code> enters visual mode where you can select and highlight blocks of text</p>
+</li>
+<li>
+<p><code>:&quot;number&quot;</code> takes you to that line.</p>
+</li>
+<li>
+<p><code>w</code> and <code>b</code> is used to move forward and backword one word at a time. <code>W</code> and <code>B</code> does the same but ignores punctuation(ie it skips to the next space). <code>0</code> takes you to the beginning of a line.</p>
+</li>
+<li>
+<p><code>t&quot;character&quot;</code> takes you to the position just before the character and <code>f</code> takes you to the character itself. You can mix this with other commands. For eg: <code>dt/</code> deletes everything untill the next <code>/</code> occurence.</p>
+</li>
+<li>
+<p><code>%</code> when used after a command applies that command to all the stuff in that block. For eg <code>B%</code> takes you to the end of a parenthesis if used on a starting parenthesis. similarly <code>d%</code> deletes everything in that parenthesis.</p>
+</li>
+<li>
+<p><code>C</code> is used to change a particular block of text. It deletes that block and puts you in insert mode.</p>
+</li>
+<li>
+<p><code>r</code> is used to replace letters. You can use numbers to repeat it.</p>
+</li>
+<li>
+<p><code>*</code> is used to toggle between the different instances of a word. <code>;</code> to go to the next instance.</p>
+</li>
+<li>
+<p><code>~</code> swaps the cases of letters.</p>
+</li>
+<li>
+<p><code>.</code> repeats the last command. For eg: if you used <code>dd</code> to delete a line, unless you use any other command inbetween, now you can delete a line using <code>.</code> any number of times you want.</p>
+</li>
+<li>
+<p><code>&lt;</code> and <code>&gt;</code> used to indent a block of text left or right respectively.</p>
+</li>
+<li>
+<p>Macros: start recording your keystrokes with <code>q&quot;macroname&quot;</code> and replay them using <code>@macroname</code>.</p>
+</li>
+</ol>
+<h2 id="see-you-soon">See you soon <a class="heading-anchor" href="#see-you-soon" aria-label="Link to this section">#</a></h2>
+<p>This was my first technical blog on Hashnode and I do plan on writing more based on the few sets of notes I've taken in the past regarding different topics.</p>
+<p>Do tell me if there is anything you want me to delve deeper into and I will try my best to write about it.</p>
+<p>Some more resources:</p>
+<p><a href="https://linuxhandbook.com/vim/">https://linuxhandbook.com/vim/</a><br />
+<a href="https://github.com/junegunn/vim-plug">https://github.com/junegunn/vim-plug</a></p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/terminal/">terminal</a><a class="tag" href="../tags/vim/">vim</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/learning-how-to-use-vim/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Flearning-how-to-use-vim%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Flearning-how-to-use-vim%2F&amp;text=Learning%20how%20to%20use%20Vim" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Flearning-how-to-use-vim%2F&amp;title=Learning%20how%20to%20use%20Vim" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Learning%20how%20to%20use%20Vim&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Flearning-how-to-use-vim%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--newer" href="../basics-of-shell-scripting/" rel="next"><span class="label">Newer</span><span class="pager__title">Basics of Shell scripting</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-03-31T16:18:03.231Z">31 Mar 2024</time>
+          <span class="dispatch__read">6 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../linux/">Linux</a></p>
+          <h3><a href="../basics-of-shell-scripting/">Basics of Shell scripting</a></h3>
+          <p>Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/bash/">bash</a><a class="tag" href="../tags/shell/">shell</a><a class="tag" href="../tags/bash-script/">bash script</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-04-03T13:30:50.340Z">3 Apr 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../programming-concepts/">Programming Concepts</a></p>
+          <h3><a href="../my-first-command-line-program/">My first Command Line program</a></h3>
+          <p>Discover how this Python command-line tool, developed as a CS50 final project, generates secure passwords with customizable lengths and character sets, ensu</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/python/">python</a><a class="tag" href="../tags/terminal/">terminal</a><a class="tag" href="../tags/cli/">CLI</a><a class="tag" href="../tags/password-generator/">password generator</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-01-09T13:30:17.012Z">9 Jan 2026</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../linux/">Linux</a></p>
+          <h3><a href="../process-synchronization-in-linux/">Process Synchronization in Linux</a></h3>
+          <p>Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/linux/">linux</a><a class="tag" href="../tags/multithreading/">multithreading</a><a class="tag" href="../tags/linux-for-beginners/">linux for beginners</a><a class="tag" href="../tags/linux-basics/">linux basics</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

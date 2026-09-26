@@ -1,0 +1,31 @@
+/* giscus theme for The Record - paper. Loaded by the giscus iframe, so it
+   starts from giscus's own light theme and overrides the palette only. */
+@import url('https://giscus.app/themes/light.css');
+
+main {
+  --color-canvas-default: #f4f1ea;
+  --color-canvas-overlay: #f4f1ea;
+  --color-canvas-inset: #eae5da;
+  --color-canvas-subtle: #eae5da;
+  --color-fg-default: #17140f;
+  --color-fg-muted: #5a5348;
+  --color-fg-subtle: #5a5348;
+  --color-border-default: #d5cec0;
+  --color-border-muted: #d5cec0;
+  --color-neutral-muted: #d5cec0;
+  --color-accent-fg: #17140f;
+  --color-accent-emphasis: #17140f;
+  --color-btn-primary-bg: #17140f;
+  --color-btn-primary-text: #f4f1ea;
+  --color-btn-primary-hover-bg: #5a5348;
+  --color-btn-primary-border: #17140f;
+  --color-segmented-control-bg: #eae5da;
+  --color-social-reaction-bg-hover: #eae5da;
+  --color-social-reaction-bg-reacted-hover: #d5cec0;
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+main .gsc-comment-box,
+main .gsc-comment > div {
+  border-radius: 0 !important;
+}

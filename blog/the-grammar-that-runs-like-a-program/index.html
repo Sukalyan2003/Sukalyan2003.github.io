@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Grammar That Runs Like a Program - Engineering Tales</title>
+<meta name="description" content="Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="The Grammar That Runs Like a Program - Engineering Tales">
+<meta property="og:description" content="Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/og-238c2d12.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-09-05T05:49:19.955Z">
+<meta property="article:modified_time" content="2026-09-05T05:49:19.955Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Unsung Bits">
+<meta property="article:tag" content="india">
+<meta property="article:tag" content="linguistics">
+<meta property="article:tag" content="sanskrit">
+<meta property="article:tag" content="computer science history">
+<meta property="article:tag" content="formal languages">
+<meta property="article:tag" content="unsung bits">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Grammar That Runs Like a Program - Engineering Tales">
+<meta name="twitter:description" content="Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/og-238c2d12.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/",
+      "url": "https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/",
+      "headline": "The Grammar That Runs Like a Program",
+      "description": "Pāṇini's Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.",
+      "datePublished": "2026-09-05T05:49:19.955Z",
+      "dateModified": "2026-09-05T05:49:19.955Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/og-238c2d12.jpg"
+      ],
+      "keywords": [
+        "india",
+        "linguistics",
+        "sanskrit",
+        "computer science history",
+        "formal languages",
+        "unsung bits"
+      ],
+      "articleSection": "Unsung Bits",
+      "wordCount": 2511,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Unsung Bits",
+          "item": "https://sukalyan2003.github.io/blog/unsung-bits/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "The Grammar That Runs Like a Program",
+          "item": "https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/" class="is-current" aria-current="page">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../unsung-bits/">Unsung Bits</a></li></ol></nav>
+        <p class="article__series label">Part 2 of 5</p>
+        <h1 class="article__title" id="article-title">The Grammar That Runs Like a Program</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time></span><span>11 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>11 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../unsung-bits/">Unsung Bits</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#not-really-a-textbook">Not really a textbook</a></li><li class="toc__l2"><a href="#glossary-of-the-engine">Glossary of the Engine</a></li><li class="toc__l2"><a href="#a-phoneme-list-data-structure">A phoneme list data structure</a></li><li class="toc__l2"><a href="#validity-of-the-comparisons">Validity of the comparisons</a></li><li class="toc__l2"><a href="#the-metarule-mistake-for-2-500-years">The metarule mistake for 2,500 years</a></li><li class="toc__l2"><a href="#why-bnf-should-be-called-panini-backus-form-and-why-it-isn-t">Why BNF should be called Pāṇini-Backus Form, and why it isn&#x27;t</a></li><li class="toc__l2"><a href="#the-formal-claim">The formal claim</a></li><li class="toc__l2"><a href="#first-grammar-undersells-it-by-about-2-000-years-of-precision">&quot;First grammar&quot; undersells it by about 2,000 years of precision</a></li><li class="toc__l2"><a href="#run-the-toy-engine">Run the toy engine</a></li><li class="toc__l2"><a href="#sources-and-further-reading">Sources and further reading</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/d250567f2e39-238c2d12-480.webp" srcset="img/d250567f2e39-238c2d12-480.webp 480w, img/d250567f2e39-238c2d12-960.webp 960w, img/d250567f2e39-238c2d12-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Pāṇini's Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.</p>
+</li>
+<li>
+<p>It employs character classes, rule ordering, context-sensitivity, and conflict-resolution hierarchies.</p>
+</li>
+<li>
+<p>While generative in a formal sense, it requires human cognition to execute, unlike a mechanical compiler.</p>
+</li>
+<li>
+<p>Recent research by Rishi Rajpopat (2022) resolved a centuries-old rule conflict issue, proving the grammar's internal consistency.</p>
+</li>
+<li>
+<p>A toy Python implementation of the rule engine is provided in the repository.</p>
+</li>
+<li>
+<p>Caveat: My linguistic knowledge is limited. I have a CS background and a passing interest in Sanskrit, but I am not a trained linguist. Corrections and clarifications are welcome.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>Project status:</strong> The <code>code/panini_engine.py</code> script is a minimal rewrite-rule engine demonstrating structural ideas like rule ordering and context-sensitivity. It handles simplified sandhi rules successfully. It is an educational toy, not a full implementation of the Aṣṭādhyāyī.</p>
+</blockquote>
+<p>The first time I read a technical description of how the Aṣṭādhyāyī works, I had to stop and reread it twice. It read, almost word for word, like a description of a compiler with Context-sensitive rules, a metalanguage for describing the object language, Ordered rule application, and a conflict-resolution hierarchy.</p>
+<p>Sometime around <a href="https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini">350 BCE</a>, in the Gandhara region of what is now northern Pakistan, a grammarian named Pāṇini compiled a complete formal description of Sanskrit. He called it the Aṣṭādhyāyī, or &quot;Eight Chapters.&quot; It contains <a href="https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini">3,959 sūtras</a>, each one a terse instruction, most of them three or four syllables long. The whole thing was designed to be memorized and recited, not written down.</p>
+<hr />
+<h2 id="not-really-a-textbook">Not really a textbook <a class="heading-anchor" href="#not-really-a-textbook" aria-label="Link to this section">#</a></h2>
+<p>Sanskrit in the 4th century BCE was a ritual and literary language, long past being anyone's casual spoken tongue, and the pressure to speak it correctly (phonetically, morphologically, syntactically) was significant.</p>
+<p>The religious stakes were absolute: Vedic rituals required exact phonetic precision. If the pronunciation drifted, the ritual failed.</p>
+<p>As the daily spoken languages (Prakrits) evolved away from Vedic Sanskrit, the need for an airtight method to preserve and generate the correct archaic forms became an existential necessity.</p>
+<p>There were already earlier grammarians and Pāṇini names <a href="https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini">ten of them</a>. But their treatments were partial or inconsistent, and the language had accreted enormous complexity: vowel changes at word boundaries, consonant mutations before certain sounds, hundreds of verb roots each with their own inflectional patterns.</p>
+<p>Pāṇini's project was to specify Sanskrit <em>completely</em> in the smallest possible space. Not to teach it to beginners (the Aṣṭādhyāyī is notoriously opaque without prior training and years of absorbing context) but to create a formal, complete, non-redundant description that leaves nothing to interpretation.</p>
+<hr />
+<h2 id="glossary-of-the-engine">Glossary of the Engine <a class="heading-anchor" href="#glossary-of-the-engine" aria-label="Link to this section">#</a></h2>
+<p>Before we dive in, here are the key operational concepts Pāṇini used. Think of these as the fundamental operations of his rule engine:</p>
+<ul>
+<li>
+<p><strong>Pratyāhāra:</strong> Character classes. Instead of listing &quot;a, e, i, o, u&quot;, you use a start and end marker to define a continuous sequence of sounds.</p>
+</li>
+<li>
+<p><strong>Anuvṛtti:</strong> State carry-forward or ellipsis. A rule inherits context and conditions from the rule immediately preceding it, acting exactly like variable scope.</p>
+</li>
+<li>
+<p><strong>Samjñā:</strong> Explicit definitions or variables assigned to specific concepts.</p>
+</li>
+<li>
+<p><strong>Asiddha:</strong> &quot;As if not done.&quot; A pipeline ordering semantic where a rule executes but its output is hidden from certain earlier rules.</p>
+</li>
+</ul>
+<hr />
+<h2 id="a-phoneme-list-data-structure">A phoneme list data structure <a class="heading-anchor" href="#a-phoneme-list-data-structure" aria-label="Link to this section">#</a></h2>
+<p>Pāṇini's first move was to compress the phoneme inventory itself. Prefixed to the Aṣṭādhyāyī are 14 short verses, the Śivasūtras, listing the Sanskrit sounds in a specific, non-alphabetical order. It lets any natural phoneme class be named by a two-character code.</p>
+<p>A short vowel followed by a &quot;dummy&quot; marker letter becomes a <em>pratyāhāra</em>, an abbreviation for all sounds between those two points in the list. &quot;AC&quot; means all vowels. &quot;HAL&quot; means all consonants. If you need a rule that applies to any vowel following any consonant, you write it once using pratyāhāras; you don't enumerate all the combinations.</p>
+<p>The pratyāhāra system directly parallels what a regex engine does with <code>[aeiou]</code>.</p>
+<p>You cannot reorder the Śivasūtras without breaking hundreds of pratyāhāras elsewhere in the grammar, which means the grammar's opening 14 lines are load-bearing in the most literal possible sense. This is a data structure.</p>
+<p>The second move is <em>anuvṛtti</em> or carry-forward. A later sūtra can omit elements already established by an earlier one, relying on the derivation process to supply the missing material from context. This is grammatical ellipsis, systematic and precise.</p>
+<p>It works exactly like variable scope inheritance:</p>
+<figure class="figure"><img src="img/d263cf54de0f-ab87a552-480.webp" srcset="img/d263cf54de0f-ab87a552-480.webp 480w, img/d263cf54de0f-ab87a552-948.webp 948w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="421" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Without anuvṛtti, the total wordcount in the Aṣṭādhyāyī would be around 40,000 words instead of 7,000, roughly 6× compression, all achieved by a rule about reading rules.</p>
+<p>The third move is a type system for the rules themselves. Pāṇini distinguishes six kinds of sūtra: definitions (<em>samjñā</em>), general rules (<em>vidhi</em>), restrictions (<em>niyama</em>), analogy rules (<em>atideśa</em>), governing rules (<em>adhikāra</em>), and metarules (<em>paribhāṣā</em>). The governing rules establish a domain: &quot;the following rules, until further notice, apply only to nominal stems ending in -a.&quot;</p>
+<p>The metarules specify how to read everything else.</p>
+<hr />
+<h2 id="validity-of-the-comparisons">Validity of the comparisons <a class="heading-anchor" href="#validity-of-the-comparisons" aria-label="Link to this section">#</a></h2>
+<p>Most of the Aṣṭādhyāyī's productive rules follow the pattern: <strong>A → B / C _ D</strong>. Replace A with B when it appears in left-context C and right-context D. If you've ever written a context-sensitive grammar, or a regular-expression substitution with lookahead and lookbehind, you already know this shape.</p>
+<figure class="figure"><img src="img/6e18a2208ac1-ba025362-480.webp" srcset="img/6e18a2208ac1-ba025362-480.webp 480w, img/6e18a2208ac1-ba025362-551.webp 551w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="1220" alt="" loading="lazy" decoding="async"></figure>
+
+<p>For example: a word-final <em>t</em> becomes <em>d</em> when the next word starts with a voiced consonant. &quot;tat gacchati&quot; → &quot;tad gacchati.&quot; The rule fires <em>because of context</em>: strip the following word and nothing happens. The engine in <code>code/panini_engine.py</code> models exactly this: each rule carries optional left and right constraints, and only triggers when both are satisfied.</p>
+<p>The ordering of rules matters too. When two rules could both apply, the Aṣṭādhyāyī uses a priority hierarchy: exceptions (<em>apavāda</em>) override general rules (<em>utsarga</em>). More specialized rules beat more general ones. If you've set parser precedence in yacc, or wrestled with CSS specificity, this is the same mechanism, and it produces the same guarantee: a deterministic derivation path, not a free-for-all.</p>
+<p>There is also a rule type called <em>asiddha</em>: &quot;as if not done&quot;, applying specifically to Chapter 8. When a rule in Chapter 8 fires, it operates as though the effects of earlier rules haven't happened yet. This is ordering semantics in a transformation pipeline. It is the most explicitly computational thing in the entire grammar, and Pāṇini invented it to handle a specific class of phonological interaction, not because he was theorizing about computation.</p>
+<p>The point where this system diverges from being a compiler analogue is that: all of this still requires a human to execute it.</p>
+<p>There is no mechanical interpreter in 350 BCE, or now, not one that handles the full grammar.</p>
+<p>The rules specify <em>what to do</em> with precision. <em>Doing it</em> requires tracking derivation state, choosing which rules are currently in scope, and resolving conflicts according to the metarule hierarchy. That's cognition, not compilation.</p>
+<hr />
+<h2 id="the-metarule-mistake-for-2-500-years">The metarule mistake for 2,500 years <a class="heading-anchor" href="#the-metarule-mistake-for-2-500-years" aria-label="Link to this section">#</a></h2>
+<p>For most of the Aṣṭādhyāyī's history, scholars thought the grammar had bugs.</p>
+<p>There were derivation cases where two equally-ranked rules both applied, and the traditional interpretation of the conflict-resolution metarule (<em>1.4.2 vipratiṣedhe paraṁ kāryam</em>) often produced grammatically wrong results.</p>
+<p>The fix, for centuries, was patchwork: later commentators added exceptions to handle the cases Pāṇini's grammar supposedly couldn't.</p>
+<p>In <a href="https://www.repository.cam.ac.uk/handle/1810/332654">2022, Rishi Rajpopat</a>, a Sanskrit scholar at Cambridge, reinterpreted that metarule in his PhD thesis. The traditional reading was &quot;the later rule wins&quot; (later in serial order). Rajpopat argues it means: when rules apply to the left side and right side of a word respectively, apply the rule for the right side. With that reading, the grammar resolves conflicts cleanly, without the patchwork. Sanskrit scholars who reviewed the thesis called it revolutionary.</p>
+<p>This matters for the compiler analogy: a grammar with unresolvable bugs isn't a formal system in any useful sense. Rajpopat's reading restores the claim that the Aṣṭādhyāyī is internally consistent: a well-specified rule machine, if not a runnable one. I want to be careful here, though: &quot;now that we've read the metarule correctly, Pāṇini can be taught to computers&quot; was the optimistic 2022 press coverage, and it's still aspirational. Modern computational Sanskrit projects handle large portions of the grammar mechanically, but not all of it. Rajpopat solved the conflict-resolution problem. The full derivation problem is still open.</p>
+<hr />
+<h2 id="why-bnf-should-be-called-panini-backus-form-and-why-it-isn-t">Why BNF should be called Pāṇini-Backus Form, and why it isn't <a class="heading-anchor" href="#why-bnf-should-be-called-panini-backus-form-and-why-it-isn-t" aria-label="Link to this section">#</a></h2>
+<p>In 1959, John Backus developed a notation for specifying the syntax of ALGOL 58. Peter Naur formalized it for ALGOL 60. This became Backus-Naur Form: the standard metalanguage for describing programming language grammars.</p>
+<p>In March 1967, Peter Ingerman published a <a href="https://dl.acm.org/doi/10.1145/363162.363165">one-page note in <em>Communications of the ACM</em></a> suggesting the name be changed to &quot;Pāṇini-Backus Form.&quot; His argument: Pāṇini had developed a notation of equivalent expressive power roughly 2,300 years earlier, and Backus (though he discovered BNF independently) was not the first. Ingerman wanted the name to reflect that.</p>
+<p>Both formalisms use substitution rules to describe strings, both separate the metalanguage from the object language, both are generative. The structural similarity is real.</p>
+<p>What it is not: evidence of historical influence. Backus had never studied Sanskrit grammar. The parallel is two people solving the same structural problem with structurally similar solutions: independent discovery, not transmission.</p>
+<p>The same applies to Chomsky. In his <a href="https://en.wikipedia.org/wiki/Aspects_of_the_Theory_of_Syntax">1965 <em>Aspects of the Theory of Syntax</em></a>, Chomsky wrote that &quot;it seems that even Pāṇini's grammar can be interpreted as a fragment of such a 'generative grammar,' in essentially the contemporary sense of this term.&quot; This is Chomsky recognizing the parallel, not crediting an influence. His generative grammar program developed from American structuralism and mathematical logic. Multiple sources repeat a claim that Chomsky called Pāṇini's grammar &quot;the first modern generative grammar&quot;; the documented primary source is the 1965 citation, which is more careful than that.</p>
+<hr />
+<h2 id="the-formal-claim">The formal claim <a class="heading-anchor" href="#the-formal-claim" aria-label="Link to this section">#</a></h2>
+<p>What holds, specifically: the Aṣṭādhyāyī is generative in the formal language theory sense: from a finite rule base and a finite lexicon, it generates the infinite set of valid Sanskrit surface forms. It uses a metalanguage (the pratyāhāra system, the samjñā definitions) to talk <em>about</em> Sanskrit rather than in it. Its rules are context-sensitive in the A → B / C _ D pattern, placing it at or above context-sensitive languages in the Chomsky hierarchy. And it has ordered rule application with explicit conflict resolution: the priority hierarchy, asiddha semantics, the vipratishedha metarule.</p>
+<p>They are structural features of the Aṣṭādhyāyī that happen to recur in formal language theory two millennia later.</p>
+<hr />
+<h2 id="first-grammar-undersells-it-by-about-2-000-years-of-precision">&quot;First grammar&quot; undersells it by about 2,000 years of precision <a class="heading-anchor" href="#first-grammar-undersells-it-by-about-2-000-years-of-precision" aria-label="Link to this section">#</a></h2>
+<p>The Aṣṭādhyāyī gets described as &quot;the world's first grammar&quot; in popular writing, which is accurate but undersells what it is. A grammar in the ordinary sense is a book that tells you what's correct. What Pāṇini wrote is a <em>formal specification of a natural language</em>: complete, finite, non-redundant, from which all valid forms can be derived.</p>
+<p>There is nothing else like it from the ancient world. Aristotle's logical works are formal, but they describe reasoning, not language. The Stoics studied syntax but didn't formalize it this way. The closest analogue isn't any other ancient grammar. It's the kind of object a theoretical computer scientist would write if asked to specify a natural language in a proof.</p>
+<p>Pāṇini did this roughly 2,400 years before anyone had the mathematical vocabulary to describe what kind of object it is.</p>
+<p>Two semesters of Theory of computation and Compiler design never once mentioned any of this, and weirdly enough, learning about it now, I have a better appreciation of the content of those classes. This provides a kind of context that's perfect for fueling up one's curiosity.</p>
+<p>I hope my explanations survive the scrutiny of Sanskrit scholars. I am not one, and I welcome corrections and clarifications.</p>
+<hr />
+<h2 id="run-the-toy-engine">Run the toy engine <a class="heading-anchor" href="#run-the-toy-engine" aria-label="Link to this section">#</a></h2>
+<p>The code in <code>code/panini_engine.py</code> is a minimal Python rewrite-rule engine demonstrating the structural ideas above: rule ordering, context-sensitivity, apavāda priority, derivation traces. It is a toy implementation. It handles a handful of simplified Sanskrit sandhi rules and gets them right. It does not implement the Aṣṭādhyāyī.</p>
+<p>To understand what the engine is doing without reading the code, let's look at a simple rule: a word-final <em>t</em> becomes <em>d</em> when the next word starts with a voiced consonant (<code>tat gacchati</code> → <code>tad gacchati</code>). The engine checks the input string. It scans for a <code>t</code>. Once it finds it, it looks ahead to see if the next letter is voiced (like <code>g</code>). If both conditions are met, the engine rewrites the <code>t</code> into a <code>d</code> and outputs the new string. It's a simple find-and-replace, but with strict boundary conditions.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="c1"># Simplified rule: a + i → e  (guṇa coalescence, rule 6.1.102)</span>
+<span class="n">Rule</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"6.1.102"</span><span class="p">,</span>
+    <span class="n">target</span><span class="o">=</span><span class="s2">"a|i"</span><span class="p">,</span>
+    <span class="n">replace</span><span class="o">=</span><span class="s2">"e"</span><span class="p">,</span>
+    <span class="n">note</span><span class="o">=</span><span class="s2">"a + i → e  (guṇa coalescence)"</span><span class="p">,</span>
+    <span class="n">priority</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span></code></pre></div>
+<p>Running it:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>[ a + i  →  e  (guṇa coalescence) ]
+Input:  &#x27;rAm|a|iti&#x27;
+  Step 1: [6.1.102]  &#x27;rAm|a|iti&#x27; → &#x27;rAm|eti&#x27;
+          note: a + i → e  (guṇa coalescence)
+Output: &#x27;rAm|eti&#x27;</code></pre></div>
+<p>The higher-priority homogeneous coalescence rules (6.1.77, 6.1.78) demonstrate apavāda: when <em>i+i</em> or <em>u+u</em> are the input, those rules fire instead of the guṇa rules, because exceptions outrank generals.</p>
+<p>For the full engine and tests: <code>code/README.md</code>.</p>
+<p><a href="https://github.com/Sukalyan2003/Unsung-Bits/tree/main/01-panini-grammar/code">https://github.com/Sukalyan2003/Unsung-Bits/tree/main/01-panini-grammar/code</a></p>
+<figure class="figure"><img src="img/e65ccdf8611f-29381a2e-480.webp" srcset="img/e65ccdf8611f-29381a2e-480.webp 480w, img/e65ccdf8611f-29381a2e-768.webp 768w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="489" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Have you tried running the toy engine, or do you have thoughts on the structural convergences? Open an issue in the repo if you'd like to see more complex rules implemented, or drop a comment below.</p>
+<hr />
+<h2 id="sources-and-further-reading">Sources and further reading <a class="heading-anchor" href="#sources-and-further-reading" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Rishi Rajpopat, &quot;In Pāṇini We Trust: Discovering the Algorithm for Rule Conflict Resolution in the Aṣṭādhyāyī,&quot; Cambridge PhD thesis, 2022. <a href="https://www.repository.cam.ac.uk/handle/1810/332654">Cambridge repository</a></p>
+</li>
+<li>
+<p>Peter Ingerman, &quot;Pāṇini-Backus form suggested,&quot; <em>Communications of the ACM</em> 10(3), p. 137, March 1967. <a href="https://dl.acm.org/doi/10.1145/363162.363165">ACM DL</a></p>
+</li>
+<li>
+<p>John Kadvany, &quot;Pāṇini's Grammar and Modern Computation,&quot; <em>History and Philosophy of Logic</em> 37(4), 2016. <a href="https://www.tandfonline.com/doi/abs/10.1080/01445340.2015.1121439">Tandfonline</a></p>
+</li>
+<li>
+<p>Saroja Bhate and Subhash Kak, &quot;Pāṇini's Grammar and Computer Science,&quot; <em>Annals of the Bhandarkar Oriental Research Institute</em> 72(1–4), 1991. <a href="https://www.ece.lsu.edu/kak/bhate.pdf">PDF via LSU</a></p>
+</li>
+<li>
+<p>MacTutor History of Mathematics, &quot;Panini&quot;: <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Panini/">https://mathshistory.st-andrews.ac.uk/Biographies/Panini/</a></p>
+</li>
+<li>
+<p>The Wire Science, &quot;How an Indian PhD Student Made Sanskrit's 'Language Machine' Work&quot;: <a href="https://science.thewire.in/education/sanksrit-language-machine-panini-grammar-rishi-rajpopat/">https://science.thewire.in/education/sanksrit-language-machine-panini-grammar-rishi-rajpopat/</a></p>
+</li>
+<li>
+<p><a href="http://learnsanskrit.org">learnsanskrit.org</a>, &quot;The Structure of the Ashtadhyayi&quot;: <a href="https://www.learnsanskrit.org/panini/structure/">https://www.learnsanskrit.org/panini/structure/</a></p>
+</li>
+</ul>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/linguistics/">linguistics</a><a class="tag" href="../tags/sanskrit/">sanskrit</a><a class="tag" href="../tags/computer-science-history/">computer science history</a><a class="tag" href="../tags/formal-languages/">formal languages</a><a class="tag" href="../tags/unsung-bits/">unsung bits</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-grammar-that-runs-like-a-program%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-grammar-that-runs-like-a-program%2F&amp;text=The%20Grammar%20That%20Runs%20Like%20a%20Program" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-grammar-that-runs-like-a-program%2F&amp;title=The%20Grammar%20That%20Runs%20Like%20a%20Program" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=The%20Grammar%20That%20Runs%20Like%20a%20Program&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-grammar-that-runs-like-a-program%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      <nav class="section series" id="series" aria-labelledby="series-title">
+        <div class="section__head"><h2 class="section__title" id="series-title">Unsung Bits</h2><span class="section__note">The series, in reading order</span></div>
+        <ol class="series__list"><li><span class="section__numeral">01</span><a href="../history-of-computer-science-in-india-part-2/">History of computer science in india Part 2</a></li><li><span class="section__numeral">02</span><span aria-current="page">The Grammar That Runs Like a Program</span></li><li><span class="section__numeral">03</span><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></li><li><span class="section__numeral">04</span><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></li><li><span class="section__numeral">05</span><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></li></ol>
+      </nav>
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../discovering-rags-4-project-updates-all-the-way/" rel="prev"><span class="label">Older</span><span class="pager__title">Discovering RAGs 4: Project updates all the way</span></a><a class="pager__link pager__link--newer" href="../the-poet-who-accidentally-invented-binary-sort-of/" rel="next"><span class="label">Newer</span><span class="pager__title">The Poet Who Accidentally Invented Binary (Sort Of)</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></h3>
+          <p>Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/binary/">binary</a><a class="tag" href="../tags/sanskrit/">sanskrit</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-26T06:50:44.631Z">26 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></h3>
+          <p>Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></h3>
+          <p>Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/algorithms/">algorithms</a><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/number-theory/">number theory</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

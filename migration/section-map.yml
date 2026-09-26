@@ -1,0 +1,36 @@
+# Section assignment applied by scripts/import_hashnode.py when it first
+# writes a post. The live value is the post's own `section:` front matter;
+# the importer never overwrites a section that is already set.
+# Mapping approved by the author on 2026-09-26 (Hashnode nav could not be read:
+# its API is paid-only and the site returns 403 to automated requests).
+
+learning-how-to-use-vim: {section: linux}
+basics-of-shell-scripting: {section: linux}
+process-synchronization-in-linux: {section: linux}
+
+understanding-neural-networks: {section: aiml}
+what-even-are-llms: {section: aiml}
+using-vibecoding-to-learn: {section: aiml}
+transforming-chatbot-interactions-with-retrieval-augmented-generation: {section: aiml}
+ai-prompt-engineering-basics: {section: aiml}
+what-is-agentic-rag: {section: aiml}
+adding-rank-fusion-to-my-rag-retrieval-logic: {section: aiml}
+does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out: {section: aiml}
+one-model-is-the-new-n-1: {section: aiml}
+vibecoding-hackathons: {section: aiml}
+discovering-rags-4-project-updates-all-the-way: {section: aiml}
+
+history-of-computer-science-in-india-part-2: {section: unsung-bits, seriesOrder: 0}
+the-grammar-that-runs-like-a-program: {section: unsung-bits, seriesOrder: 1}
+the-poet-who-accidentally-invented-binary-sort-of: {section: unsung-bits, seriesOrder: 2}
+the-algorithm-that-grinds-problems-to-dust: {section: unsung-bits, seriesOrder: 3}
+the-number-that-shouldn-t-exist: {section: unsung-bits, seriesOrder: 4}
+
+exploring-pointers: {section: programming-concepts}
+my-first-command-line-program: {section: programming-concepts}
+from-tokens-to-trees: {section: programming-concepts}
+
+cs50-my-experience: {section: moocs}
+what-comes-after-cs50x-discover-cs50-ai: {section: moocs}
+what-comes-after-cs50x-discover-cs50-ai-2: {section: moocs}
+nand2tetris-part-1-hardware: {section: moocs}

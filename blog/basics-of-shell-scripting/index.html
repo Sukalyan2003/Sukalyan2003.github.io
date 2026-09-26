@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shell Scripting Basics Guide - Engineering Tales</title>
+<meta name="description" content="Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/basics-of-shell-scripting/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Shell Scripting Basics Guide - Engineering Tales">
+<meta property="og:description" content="Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/basics-of-shell-scripting/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/basics-of-shell-scripting/og-bd89ae7a.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2024-03-31T16:18:03.231Z">
+<meta property="article:modified_time" content="2024-03-31T16:18:03.231Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Linux">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="bash script">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shell Scripting Basics Guide - Engineering Tales">
+<meta name="twitter:description" content="Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/basics-of-shell-scripting/og-bd89ae7a.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/basics-of-shell-scripting/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/basics-of-shell-scripting/",
+      "url": "https://sukalyan2003.github.io/blog/basics-of-shell-scripting/",
+      "headline": "Basics of Shell scripting",
+      "description": "Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks",
+      "datePublished": "2024-03-31T16:18:03.231Z",
+      "dateModified": "2024-03-31T16:18:03.231Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/basics-of-shell-scripting/og-bd89ae7a.jpg"
+      ],
+      "keywords": [
+        "bash",
+        "shell",
+        "bash script"
+      ],
+      "articleSection": "Linux",
+      "wordCount": 1394,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Linux",
+          "item": "https://sukalyan2003.github.io/blog/linux/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Basics of Shell scripting",
+          "item": "https://sukalyan2003.github.io/blog/basics-of-shell-scripting/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/" class="is-current" aria-current="page">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary>More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../linux/">Linux</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">Basics of Shell scripting</h1>
+        <p class="standfirst article__standfirst">Discover the power of Bash scripting in this comprehensive guide. Learn how to create, execute, and customize Bash scripts for automating tasks</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2024-03-31T16:18:03.231Z">31 Mar 2024</time></span><span>6 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2024-03-31T16:18:03.231Z">31 Mar 2024</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>6 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../linux/">Linux</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#commands">Commands</a></li><li class="toc__l2"><a href="#scripting">Scripting</a></li><li class="toc__l3"><a href="#how-to-set-the-file">How to set the file</a></li><li class="toc__l3"><a href="#syntax">Syntax</a></li><li class="toc__l2"><a href="#debugging">Debugging</a></li><li class="toc__l2"><a href="#short-example">Short example</a></li><li class="toc__l3"><a href="#parting-words">Parting words</a></li><li class="toc__l3"><a href="#resources">Resources</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/85ea07495883-bd89ae7a-480.webp" srcset="img/85ea07495883-bd89ae7a-480.webp 480w, img/85ea07495883-bd89ae7a-960.webp 960w, img/85ea07495883-bd89ae7a-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="426" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>Long long ago I wrote this Shell scripting post, mainly out of my own curiosity.</p>
+<p>Since then, i have written a few more posts on different things, forgot that I ever wrote that shell scripting one, and actually added a lot of little things to my notes.</p>
+<p>To be completely up-to date with that, im adding some updates to this.</p>
+<p>In a future post, there will a detailed dive into Linux OS specific Process Synchronization topics.</p>
+<h2 id="commands">Commands <a class="heading-anchor" href="#commands" aria-label="Link to this section">#</a></h2>
+<ol>
+<li>
+<p><code>ls</code> is to list all files in a directory. You can use the <code>ls -al</code> to print a more detailed view of everything. The <code>tree</code> command shows a tree like view of the file system.</p>
+</li>
+<li>
+<p>File permissions explained<br />
+Refer to this guide: <a href="https://www.redhat.com/en/blog/linux-file-permissions-explained">https://www.redhat.com/en/blog/linux-file-permissions-explained</a></p>
+</li>
+<li>
+<p><code>ps</code> to display the process tree. More specifically, <code>ps -ejH</code></p>
+</li>
+<li>
+<p><code>kill PID</code> can be used to kill processes.</p>
+</li>
+<li>
+<p><strong>mkdir</strong> and <strong>rmdir</strong> used to make and remove directories</p>
+</li>
+<li>
+<p>When removing several files using the <code>rm</code> command, you might want to use the <code>rm -i</code> command so that it asks you whether you want to delete each file or not. It might be tedious but it also might save some of your important things you would have deleted mistakenly otherwise.</p>
+</li>
+<li>
+<p><strong>cd</strong> for moving between directories. <strong>pwd</strong> to print the Present Working Directory.</p>
+</li>
+<li>
+<p>There is also the <code>pushd</code> and <code>popd</code> commands to add or remove directories into a stack for faster navigation. To list the elements of the stack use <code>dirs</code>. Once a directory is added to the stack, you can use <code>pushd</code> to switch between the first two elements in the stack. If you want to switch <code>n</code> places in either direction, use <code>pushd +n</code> or <code>pushd -n</code> respectively.</p>
+</li>
+<li>
+<p><strong>cp</strong> and <strong>mv</strong> for copying and moving stuff respectively. <code>-R</code> command to move or copy entire directories.</p>
+</li>
+<li>
+<p><code>ln</code> command can be used to create links. It creates hard links by default. <code>ln -s file_to_be_linked link_name</code> can be used to create soft or Symlinks.</p>
+</li>
+<li>
+<p><strong>head</strong> allows you to view the beginning of a file or piped data directly from the terminal. <strong>tail</strong> works the same but it will show you the end of the file. <code>head -20</code> shows you first 20 lines and similarly for tails. It can be any number instead of 20.</p>
+</li>
+<li>
+<p>Just like <code>cat</code> can be used to print the text of a file forwards. <code>tac</code> can print it backwards. <code>strings</code> command helps us print only the human readable text out of a different filetype file.</p>
+</li>
+<li>
+<p>Use the <code>find</code> command to find stuff. <code>--type</code> to specify the type, where <code>f</code> is for files, <code>d</code> for directories etc. <code>--name</code> to match the file name. <code>find .</code> restricts the searching to the current directory. <code>-user</code> for specific user <code>-size</code> for size. Remember to write as <code>77c</code> for a file of size 77 bytes.</p>
+</li>
+<li>
+<p><code>!!</code> redoes the last command and <code>!n</code> does the nth command in your history. We can use the <code>Ctrl R</code> command to start a search for our previous commands, which we can then execute. This saves a lot of time.</p>
+</li>
+<li>
+<p><strong>&quot;command&quot; --help</strong> or <strong>man &quot;command&quot;</strong> gives you info on the command.(Inverted commas not needed ofc) man can have the following syntax <code>man sectionNumber command</code> where the sectionNumber is an optional argument.<br />
+The table below shows the section numbers of the manual followed by the types of pages they contain.<br />
+1 Executable programs or shell commands<br />
+2 System calls (functions provided by the kernel)<br />
+3 Library calls (functions within program libraries)<br />
+4 Special files (usually found in /dev)<br />
+5 File formats and conventions, e.g. /etc/passwd<br />
+6 Games<br />
+7 Miscellaneous (including macro packages and conventions), e.g. man(7), groff(7), man-pages(7)<br />
+8 System administration commands (usually only for root)<br />
+9 Kernel routines [Non standard]</p>
+</li>
+<li>
+<p>If we wanted this script to run with bash the shebang would be <code>#! /bin/bash</code></p>
+</li>
+<li>
+<p>Piping just means passing the return value of a process as the input value of another process. We can do it with the <code>|</code> symbol like <code>&lt;process1&gt; | &lt;process2&gt;</code>.</p>
+</li>
+<li>
+<p>Strings in bash can be defined with <code>'</code> and <code>&quot;</code> delimiters, but they are not equivalent. Strings delimited with <code>'</code> are literal strings and will not substitute variable values whereas <code>&quot;</code> delimited strings will.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>	foo=bar
+	echo &quot;$foo&quot;
+	# prints bar
+	echo &#x27;$foo&#x27;
+	# prints $foo</code></pre></div>
+</li>
+</ol>
+<h2 id="scripting">Scripting <a class="heading-anchor" href="#scripting" aria-label="Link to this section">#</a></h2>
+<h3 id="how-to-set-the-file">How to set the file <a class="heading-anchor" href="#how-to-set-the-file" aria-label="Link to this section">#</a></h3>
+<ol>
+<li>
+<p>First create a <code>.sh</code> file.</p>
+</li>
+<li>
+<p>Start the first line with <code>#! /bin/bash</code>. This tells that you want to use bash to execute this script</p>
+</li>
+<li>
+<p>Then write the code according to syntax</p>
+</li>
+<li>
+<p>Then go into the shell and type <code>chmod u+x &quot;filename&quot;</code> to make the script executable.</p>
+</li>
+<li>
+<p>Execute the script using <code>bash &quot;filename&quot;</code></p>
+</li>
+<li>
+<p>To add the script to usual commands of your shell, that is you can execute it no-matter where you are by directly typing a specific command, you have to create an alias for it. which is done as following</p>
+<ul>
+<li>
+<p>Press <code>cd</code> to go to root directory</p>
+</li>
+<li>
+<p>Then type <code>vim .bashrc</code> to enter the bash file</p>
+</li>
+<li>
+<p>Then add a line as following: <code>alias command_name=&quot;bash full path of the script&quot;</code></p>
+</li>
+<li>
+<p>To make this easier you create a separate folder to store all the scripts.</p>
+</li>
+<li>
+<p>Once you restart the terminal, all newly added alias commands can be executed from anywhere you are.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="syntax">Syntax <a class="heading-anchor" href="#syntax" aria-label="Link to this section">#</a></h3>
+<ol>
+<li>
+<p><code>#</code> is used to provide comments.</p>
+</li>
+<li>
+<p>To read data from the terminal and store it in a variable, use the following <code>read variable_name</code> To add a custom msg type <code>read -p &quot;Message&quot; variable_name</code></p>
+</li>
+<li>
+<p><code>$@</code> represents the position of command arguments starting from 1. The command itself is argument 0.<br />
+That is,</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="ch">#!/bin/bash</span>
+<span class="k">for</span><span class="w"> </span>x<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$@</span>
+<span class="k">do</span>
+<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Entered arg is </span><span class="nv">$x</span><span class="s2">"</span>
+<span class="w"> </span><span class="k">done</span></code></pre></div>
+</li>
+<li>
+<p>In a script <code>$1</code> denotes first argument, <code>$2</code> denotes 2nd argument.</p>
+</li>
+<li>
+<p>To reference a variable we must put <code>$</code> before the variable name.</p>
+</li>
+<li>
+<p>A variable name should start with either an underscore or a letter. It can contain numbers too.</p>
+</li>
+<li>
+<p>use the <code>echo &quot;text&quot;</code> command to print text to the terminal.</p>
+</li>
+<li>
+<p><code>echo &quot;text&quot; &gt; file.txt</code> to overwrite a file. To append to the end of a file use <code>&gt;&gt;</code> instead. OR if you want other commands to save the output to a file, you do <code>command &gt; text.txt</code>.</p>
+</li>
+</ol>
+<p>To take input we do <code>command &lt; source_file</code></p>
+<p>The std input output and error are indexed as 0,1 and 2 respectively.</p>
+<p>9. To print the output of a command or assign it to a variable we do this:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="nv">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="nb">command</span><span class="sb">`</span></code></pre></div>
+<ol start="10">
+<li>
+<p>We can use <code>wc</code> command to find the number of words in a file.</p>
+</li>
+<li>
+<p>To use conditionals and loops</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="k">if</span><span class="w"> </span><span class="o">[</span>condition<span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+statement
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span>condition<span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+statement<span class="w"> </span>
+<span class="k">else</span>
+default<span class="w"> </span>stuff
+<span class="k">fi</span>
+<span class="w">    </span><span class="sb">```</span>
+
+<span class="w">     </span><span class="sb">`</span>-a<span class="sb">`</span><span class="w"> </span>means<span class="w"> </span><span class="sb">`</span><span class="o">&amp;&amp;</span><span class="sb">`</span><span class="w"> </span>
+<span class="w">   </span><span class="sb">`</span>-o<span class="sb">`</span><span class="w"> </span>means<span class="w"> </span><span class="sb">`</span><span class="o">||</span><span class="sb">`</span>
+<span class="w">   </span><span class="sb">`</span>-gt<span class="sb">`</span><span class="w"> </span>means<span class="w"> </span><span class="sb">`</span>&gt;<span class="sb">`</span><span class="w"> </span>
+<span class="w">    </span><span class="sb">`</span>-lt<span class="sb">`</span><span class="w"> </span>means<span class="w"> </span><span class="sb">`</span>&lt;<span class="sb">`</span>.
+<span class="w">    </span><span class="sb">`</span>-eq<span class="sb">`</span><span class="w"> </span>means<span class="w"> </span><span class="sb">`</span><span class="o">==</span><span class="sb">`</span><span class="w"> </span>
+<span class="w">    </span><span class="sb">`</span>-ne<span class="sb">`</span><span class="w"> </span>means<span class="w"> </span><span class="sb">`</span>!<span class="o">=</span><span class="sb">`</span><span class="w"> </span>
+<span class="w">    </span><span class="sb">```</span>
+While<span class="w"> </span>loop
+<span class="w"> </span><span class="sb">```</span>bash
+<span class="w"> </span><span class="c1">#!/bin/bash</span>
+<span class="w"> </span><span class="nv">i</span><span class="o">=</span><span class="m">1</span>
+<span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span>-le<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span>
+<span class="w"> </span><span class="o">((</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">))</span>
+<span class="w"> </span><span class="k">done</span></code></pre></div>
+<p>For loop</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="ch">#!/bin/bash</span>
+
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..5<span class="o">}</span>
+<span class="k">do</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$i</span>
+<span class="k">done</span></code></pre></div>
+<p>We can also loop strings <code>for X in red green blue</code></p>
+<p><mark>Note: Remember to add spaces after the brackets, that is </mark> <code>[[ condition ]]</code> <mark>rather than </mark> <code>[[condition]]</code><mark>. This small change caused me a lot of headache.</mark></p>
+</li>
+</ol>
+<h2 id="debugging">Debugging <a class="heading-anchor" href="#debugging" aria-label="Link to this section">#</a></h2>
+<p>Write <code>set -x</code> at the beginning of your code to enable debugging mode.</p>
+<p>You could also use <a href="https://www.howtogeek.com/devops/what-is-a-cron-job-and-how-do-you-use-them/">CRON</a> to schedule tasks, though I haven't used it yet. This is mainly a Linux thing.</p>
+<p>More content on GDB to be added in a future post.</p>
+<h2 id="short-example">Short example <a class="heading-anchor" href="#short-example" aria-label="Link to this section">#</a></h2>
+<p>So very recently I was trying out the SSH connection between my android devices and my desktop.<br />
+Basically, you need to setup a username and password for your device which you want to access, then use those in the device you want to connect from.</p>
+<p>So if you want to access your android device from your desktop, you setup <code>sshd</code> on the android device and use <code>ssh</code> on your desktop.</p>
+<p>I have written a short bash script to automate this process, as follows, it also allows to setup sftp interactive mode:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code><span class="ch">#! /bin/bash</span>
+<span class="c1">#! /bin/bash</span>
+
+<span class="nb">read</span><span class="w"> </span>-p<span class="w"> </span><span class="s2">"1. Login 2.copy "</span><span class="w"> </span>choice
+<span class="nb">read</span><span class="w"> </span>-p<span class="w"> </span><span class="s2">"press 1 for tab, 2 for mobile "</span><span class="w"> </span>device
+
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$choice</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$device</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Connecting to Tablet"</span>
+<span class="w">        </span>ssh<span class="w"> </span>username@ip-address<span class="w"> </span>-p<span class="w"> </span><span class="m">8022</span>
+<span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$device</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Connecting to Mobile"</span>
+<span class="w">        </span>ssh<span class="w"> </span>username@ip-address<span class="w"> </span>-p<span class="w"> </span><span class="m">8022</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Wrong Choice"</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="k">elif</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$choice</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$device</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Connecting to Tablet"</span>
+<span class="w">        </span>sftp<span class="w"> </span>-P<span class="w"> </span><span class="m">8022</span><span class="w"> </span>username@ip-address
+<span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$device</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Connecting to Mobile"</span>
+<span class="w">        </span>sftp<span class="w"> </span>-P<span class="w"> </span><span class="m">8022</span><span class="w"> </span>username@ip-address
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Wrong Choice"</span>
+<span class="w">    </span><span class="k">fi</span>
+<span class="k">fi</span></code></pre></div>
+<p>You can add as many devices as you want to this. This was turned into a system command using the steps mentioned in the very beginning.</p>
+<p>There are some other steps like setting up a password in the remote device or setting up the ssh keys, but this simple script does the job thereafter.</p>
+<h3 id="parting-words">Parting words <a class="heading-anchor" href="#parting-words" aria-label="Link to this section">#</a></h3>
+<p>Once you get a hang of shell scripting, you can try out linux challenges such as Over the wire CTF.</p>
+<p>I am a newbie in this myself, so I hope this little post helps you get started on this.</p>
+<h3 id="resources">Resources <a class="heading-anchor" href="#resources" aria-label="Link to this section">#</a></h3>
+<p><a href="https://www.freecodecamp.org/news/how-to-search-files-effectively-in-linux/">https://www.freecodecamp.org/news/how-to-search-files-effectively-in-linux/</a></p>
+<p><a href="https://missing.csail.mit.edu/2020/shell-tools/">https://missing.csail.mit.edu/2020/shell-tools/</a></p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/bash/">bash</a><a class="tag" href="../tags/shell/">shell</a><a class="tag" href="../tags/bash-script/">bash script</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/basics-of-shell-scripting/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fbasics-of-shell-scripting%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fbasics-of-shell-scripting%2F&amp;text=Basics%20of%20Shell%20scripting" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fbasics-of-shell-scripting%2F&amp;title=Basics%20of%20Shell%20scripting" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=Basics%20of%20Shell%20scripting&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fbasics-of-shell-scripting%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../learning-how-to-use-vim/" rel="prev"><span class="label">Older</span><span class="pager__title">Learning how to use Vim</span></a><a class="pager__link pager__link--newer" href="../exploring-pointers/" rel="next"><span class="label">Newer</span><span class="pager__title">Exploring Pointers</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-02-28T06:38:17.390Z">28 Feb 2024</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../linux/">Linux</a></p>
+          <h3><a href="../learning-how-to-use-vim/">Learning how to use Vim</a></h3>
+          <p>Look at the basics of what vim is all about and have this handy cheatsheet to get you started</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/terminal/">terminal</a><a class="tag" href="../tags/vim/">vim</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-01-09T13:30:17.012Z">9 Jan 2026</time>
+          <span class="dispatch__read">7 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../linux/">Linux</a></p>
+          <h3><a href="../process-synchronization-in-linux/">Process Synchronization in Linux</a></h3>
+          <p>Explore how Linux processes and threads enhance multitasking in computing, leveraging CPU cores efficiently for seamless background operations</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/linux/">linux</a><a class="tag" href="../tags/multithreading/">multithreading</a><a class="tag" href="../tags/linux-for-beginners/">linux for beginners</a><a class="tag" href="../tags/linux-basics/">linux basics</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

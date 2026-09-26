@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Algorithm That Grinds Problems to Dust - Engineering Tales</title>
+<meta name="description" content="Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="The Algorithm That Grinds Problems to Dust - Engineering Tales">
+<meta property="og:description" content="Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/og-833e4de6.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-09-19T08:35:22.188Z">
+<meta property="article:modified_time" content="2026-09-19T08:35:22.188Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Unsung Bits">
+<meta property="article:tag" content="algorithms">
+<meta property="article:tag" content="india">
+<meta property="article:tag" content="mathematics">
+<meta property="article:tag" content="number theory">
+<meta property="article:tag" content="computer science history">
+<meta property="article:tag" content="unsung bits">
+<meta property="article:tag" content="aryabhata">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Algorithm That Grinds Problems to Dust - Engineering Tales">
+<meta name="twitter:description" content="Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/og-833e4de6.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/",
+      "url": "https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/",
+      "headline": "The Algorithm That Grinds Problems to Dust",
+      "description": "Aryabhata's kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…",
+      "datePublished": "2026-09-19T08:35:22.188Z",
+      "dateModified": "2026-09-19T08:35:22.188Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/og-833e4de6.jpg"
+      ],
+      "keywords": [
+        "algorithms",
+        "india",
+        "mathematics",
+        "number theory",
+        "computer science history",
+        "unsung bits",
+        "aryabhata"
+      ],
+      "articleSection": "Unsung Bits",
+      "wordCount": 2277,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Unsung Bits",
+          "item": "https://sukalyan2003.github.io/blog/unsung-bits/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "The Algorithm That Grinds Problems to Dust",
+          "item": "https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/" class="is-current" aria-current="page">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../unsung-bits/">Unsung Bits</a></li></ol></nav>
+        <p class="article__series label">Part 4 of 5</p>
+        <h1 class="article__title" id="article-title">The Algorithm That Grinds Problems to Dust</h1>
+        
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time></span><span>10 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>10 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../unsung-bits/">Unsung Bits</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#the-problem-aryabhata-was-actually-trying-to-solve">The problem Aryabhata was actually trying to solve</a></li><li class="toc__l2"><a href="#who-was-aryabhata">Who was Aryabhata?</a></li><li class="toc__l2"><a href="#the-pulveriser-how-it-actually-works">The pulveriser: how it actually works</a></li><li class="toc__l2"><a href="#a-worked-example-137x-60y-10">A worked example: 137x − 60y = 10</a></li><li class="toc__l2"><a href="#why-this-is-an-algorithm-and-the-earlier-posts-aren-t-quite">Why this is an algorithm and the earlier posts aren&#x27;t (quite)</a></li><li class="toc__l2"><a href="#the-extended-euclidean-connection">The extended Euclidean connection</a></li><li class="toc__l2"><a href="#what-it-runs-on-today">What it runs on today</a></li><li class="toc__l2"><a href="#we-do-actually-know-about-it">We do actually know about it</a></li><li class="toc__l2"><a href="#sources-further-reading">Sources &amp; further reading</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/ef24bce23797-833e4de6-480.webp" srcset="img/ef24bce23797-833e4de6-480.webp 480w, img/ef24bce23797-833e4de6-960.webp 960w, img/ef24bce23797-833e4de6-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="270" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Aryabhata's kuṭṭaka is the first known algorithm for solving linear indeterminate equations.</p>
+</li>
+<li>
+<p>It reduces large numbers with Euclidean division, then reverses those steps to recover an integer solution.</p>
+</li>
+<li>
+<p>The procedure is mathematically equivalent to the extended Euclidean method used for modular inverses today.</p>
+</li>
+<li>
+<p>Its original astronomical purpose was finding day counts where multiple cycles met specified positions.</p>
+</li>
+<li>
+<p>The historical claim is about independent discovery, not a known transmission into European mathematics.</p>
+</li>
+</ul>
+<p>Aryabhata, in 499 CE, wrote down a genuine algorithm. An actual step-by-step procedure with defined inputs, a sequence of operations, a termination condition, and a guaranteed output.</p>
+<p>The structure is so clean that when you look at it next to the extended Euclidean algorithm which is a standard tool in modern cryptography and modular arithmetic, you realize they are, up to notation, the same thing.</p>
+<h2 id="the-problem-aryabhata-was-actually-trying-to-solve">The problem Aryabhata was actually trying to solve <a class="heading-anchor" href="#the-problem-aryabhata-was-actually-trying-to-solve" aria-label="Link to this section">#</a></h2>
+<p>The kuṭṭaka came from the following kind of question, which Indian astronomers faced constantly:</p>
+<p>A planet completes its orbital cycle in some large number of days. Another planet completes its cycle in a different large number of days. You want to know the <strong>earliest day</strong> on which both planets will simultaneously be at specified positions in their orbits - when the cycles realign. You need an integer. The days elapsed since the epoch must divide evenly into whole numbers of orbits, plus or minus whatever offset you're targeting.</p>
+<p>This translates directly into what's called a <strong>linear congruence</strong>: find a number <em>t</em> such that <em>t</em> ≡ <em>r₁</em> (mod <em>p₁</em>) and <em>t</em> ≡ <em>r₂</em> (mod <em>p₂</em>).</p>
+<p>More generally: find integer <em>x</em> such that <em>ax</em> ≡ <em>c</em> (mod <em>b</em>).</p>
+<p>Equivalently, find integers <em>x</em> and <em>y</em> such that <em>ax</em> − <em>by</em> = <em>c</em>.</p>
+<p>This is a linear indeterminate equation, or in Western terminology, a linear Diophantine equation.</p>
+<p>Take a small version of that problem. Suppose the day count must leave remainder 3 when divided by 7, so <em>t</em> = 7<em>x</em> + 3. It must also leave remainder 2 when divided by 11. Substitute the first condition into the second:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>7x + 3 ≡ 2 (mod 11)
+7x     ≡ 10 (mod 11)
+7x − 11y = 10</code></pre></div>
+<p>Now the astronomical question has become an equation in integers. Solve it and <em>x</em> leads back to the day count: <em>x</em> = 3 produces <em>t</em> = 7×3 + 3 = <strong>24</strong>.</p>
+<p>Bhāskara I's commentary includes an example involving Saturn and Mars requiring a day-count satisfying specific orbital residue conditions; the smallest solution was a number in the hundreds of millions. You can't find this by trial and error. The systematic procedure is precisely what the kuṭṭaka provides. [<a href="https://en.wikipedia.org/wiki/Ku%E1%B9%AD%E1%B9%ADaka">Wikipedia: Kuṭṭaka</a>]</p>
+<p>I'm being careful about this claim because the temptation with this series is to reach. &quot;First algorithm&quot; is a title you can assign to many things - the Euclidean algorithm for GCD is older, and so are procedures for square roots. What the kuṭṭaka is, specifically and defensibly, is the <strong>first known algorithm for solving linear indeterminate equations</strong>.</p>
+<hr />
+<h2 id="who-was-aryabhata">Who was Aryabhata? <a class="heading-anchor" href="#who-was-aryabhata" aria-label="Link to this section">#</a></h2>
+<p>Aryabhata was born in 476 CE in Kusumapura, near what is now Patna in Bihar. We know his birth year unusually precisely for a fifth-century mathematician: the Āryabhaṭīya itself states he was 23 years old when he composed it, and the astronomical data internal to the text pins the composition to <a href="https://en.wikipedia.org/wiki/Aryabhata">499 CE</a>. He was working inside the Gupta Empire, which had produced Kālidāsa, and inside a mathematical tradition that already had strong foundations in astronomy and arithmetic.</p>
+<p>The Āryabhaṭīya is 121 verses across four chapters (108 in the main body plus 13 introductory stanzas in the Gitikapāda). The mathematical content lives in the Ganitapāda (33 verses), which covers series formulas, square and cube root extraction, an approximation of π accurate to four decimal places (62832/20000 = 3.1416), a sine table at 3°45' intervals, and in just verses 32 and 33, a compressed description of the algorithm later called the kuṭṭaka.</p>
+<p>The entire procedure in two stanzas of Sanskrit, so terse that Bhāskara I's commentary in <a href="https://en.wikipedia.org/wiki/Ku%E1%B9%AD%E1%B9%ADaka">629 CE</a> was needed to make it legible, with 24 worked examples from astronomy. &quot;Mostly obscure and incomprehensible&quot; is how later scholars described the original verses.</p>
+<hr />
+<h2 id="the-pulveriser-how-it-actually-works">The pulveriser: how it actually works <a class="heading-anchor" href="#the-pulveriser-how-it-actually-works" aria-label="Link to this section">#</a></h2>
+<p><em>Kuṭṭaka</em> means &quot;pulverisation&quot; - breaking to powder. The name describes the method: you take large numbers and grind them down until they're manageable.</p>
+<p>Here is the algorithm, spelled out for <em>ax</em> − <em>by</em> = <em>c</em> with positive <em>a</em> and <em>b</em>.</p>
+<p>First compute <em>g</em> = gcd(<em>a</em>, <em>b</em>). If <em>g</em> does not divide <em>c</em>, there is no integer solution. If it does, divide the whole equation by <em>g</em> and work with <em>A</em> = <em>a/g</em>, <em>B</em> = <em>b/g</em>, and <em>C</em> = <em>c/g</em>. Now <em>A</em> and <em>B</em> are coprime.</p>
+<p><strong>Step 1: Grind the numbers down.</strong> Build the valli by running the Euclidean algorithm on <em>A</em> and <em>B</em>, recording the quotient at each step:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>A = q₀·B + r₀
+B = q₁·r₀ + r₁
+r₀ = q₂·r₁ + r₂
+...</code></pre></div>
+<p>The sequence <em>q₀</em>, <em>q₁</em>, ..., <em>q_{n-1}</em> is the <em>valli</em> - Sanskrit for &quot;column&quot; or &quot;creeper.&quot; This is the pulverising phase: each remainder is smaller than the last until the two large inputs have been ground down to 1.</p>
+<p><strong>Step 2: Recover what the grinding hid.</strong> Reverse the divisions to express 1 as a combination of <em>A</em> and <em>B</em>. The quotient recurrence performs that back-substitution mechanically:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>h₋₁ = 1,  h₀ = q₀;  h_i = q_i · h_{i-1} + h_{i-2}
+k₋₁ = 0,  k₀ = 1;   k_i = q_i · k_{i-1} + k_{i-2}</code></pre></div>
+<p>After <em>n</em> steps, <em>h_{n-1}/k_{n-1}</em> = <em>A/B</em> (the reduced ratio). The pair just before the end - <em>h_{n-2}</em> and <em>k_{n-2}</em> - satisfies <em>A</em> · <em>k_{n-2}</em> − <em>B</em> · <em>h_{n-2}</em> = ±1.</p>
+<p><strong>Step 3: Scale and reduce.</strong> Multiply <em>k_{n-2}</em> by <em>C</em>, adjust for the ± sign, and reduce modulo <em>B</em> to get the smallest non-negative <em>x₀</em>. Then <em>y₀</em> follows from the reduced equation directly. The same pair also solves the original equation because all three coefficients were divided by the same <em>g</em>.</p>
+<p>The procedure terminates in as many steps as the Euclidean algorithm takes on (<em>a</em>, <em>b</em>), which is logarithmic in the size of the inputs. That's it.</p>
+<hr />
+<h2 id="a-worked-example-137x-60y-10">A worked example: 137x − 60y = 10 <a class="heading-anchor" href="#a-worked-example-137x-60y-10" aria-label="Link to this section">#</a></h2>
+<p>Valli (quotients of gcd(137, 60)):</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>137 = 2×60 + 17    q=2
+ 60 = 3×17 + 9     q=3
+ 17 = 1×9  + 8     q=1
+  9 = 1×8  + 1     q=1
+  8 = 8×1  + 0     q=8</code></pre></div>
+<p>Valli: [2, 3, 1, 1, 8].</p>
+<p>Now reverse the divisions. This is the part the quotient table below performs without making you rewrite every remainder:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">text</span></div><pre class="code" tabindex="0"><code>1 = 9 − 8
+  = 9 − (17 − 9)
+  = 2×9 − 17
+  = 2×(60 − 3×17) − 17
+  = 2×60 − 7×17
+  = 2×60 − 7×(137 − 2×60)
+  = 16×60 − 7×137</code></pre></div>
+<p>The numbers have been ground down to 1, then unfolded into the combination we need. The same backward fold appears compactly as convergents:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead>
+<tr>
+<th>i</th>
+<th>q</th>
+<th>h</th>
+<th>k</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>−1</td>
+<td>-</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>7</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>9</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>16</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8</td>
+<td>137</td>
+<td>60</td>
+</tr>
+</tbody>
+</table></div>
+<p>Penultimate convergent: 16/7. Check: 137×7 − 60×16 = 959 − 960 = <strong>−1</strong></p>
+<p>Scale by <em>c</em> = 10 and adjust for sign: <em>x₀</em> = 10 × (−1) × 7 = −70. Reduce mod 60: −70 mod 60 = <strong>50</strong>.</p>
+<p><em>y₀</em> = (137×50 − 10) / 60 = <strong>114</strong>.</p>
+<p>Verify: 137×50 − 60×114 = 6850 − 6840 = 10.</p>
+<p>The general solution is <em>x</em> = 50 + 60<em>t</em>, <em>y</em> = 114 + 137<em>t</em> for any integer <em>t</em>. Smaller particular solution: <em>t</em> = −1 gives <em>x</em> = −10 (negative, not physical), <em>t</em> = 0 gives <em>x</em> = 50. The code in <code>code/kuttaka.py</code> runs this example - and three others, including an astronomical one - and cross-checks every result against the modern extended Euclidean algorithm.</p>
+<hr />
+<h2 id="why-this-is-an-algorithm-and-the-earlier-posts-aren-t-quite">Why this is an algorithm and the earlier posts aren't (quite) <a class="heading-anchor" href="#why-this-is-an-algorithm-and-the-earlier-posts-aren-t-quite" aria-label="Link to this section">#</a></h2>
+<p>Pāṇini built a <strong>formal generative system</strong>.</p>
+<p>A finite rule base that produces an infinite set of valid Sanskrit forms. It has computational structure: context-sensitive rules, ordered application, conflict resolution. But deriving a specific word form from those rules is a cognitive process requiring a trained expert; there is no mechanical procedure that takes &quot;input string&quot; and terminates with &quot;output string&quot; without judgment.</p>
+<p>Piṅgala's work on <em>chandas</em> - metrical analysis, enumeration of syllable patterns - anticipates binary representation and combinations. The <em>prastāra</em> (enumeration table) is systematic and structured. But it's closer to a table or a combinatorial scheme than to a procedure: it describes <em>all</em> patterns, not a terminating computation that takes a question and returns an answer.</p>
+<p>The kuṭṭaka takes inputs (<em>a</em>, <em>b</em>, <em>c</em>), executes a defined sequence of steps (Euclidean division, quotient collection, backward recurrence), and terminates with a specific numerical output (<em>x₀</em>, <em>y₀</em>).</p>
+<p>That's what &quot;algorithm&quot; means in the sense a computer science course uses it, and Aryabhata had that thing.</p>
+<p>The caveat: the original verses are so compressed that the step-by-step elaboration is really Bhāskara I's work in 629 CE. Aryabhata clearly described the procedure; how explicit his own understanding of its structure was is harder to establish. What's not in dispute is that the procedure itself is correct, complete, and efficient, and appears in the Indian record around 499 CE, and nowhere in the European record until well into the second millennium CE.</p>
+<hr />
+<h2 id="the-extended-euclidean-connection">The extended Euclidean connection <a class="heading-anchor" href="#the-extended-euclidean-connection" aria-label="Link to this section">#</a></h2>
+<p>The extended Euclidean algorithm, in its modern form, finds integers <em>x</em> and <em>y</em> satisfying <em>ax</em> + <em>by</em> = gcd(<em>a</em>, <em>b</em>). From there, scaling and reducing gives any <em>ax</em> + <em>by</em> = <em>c</em>. The procedure is: run Euclid on (<em>a</em>, <em>b</em>), then back-substitute through the remainders to recover the coefficients.</p>
+<p>The kuṭṭaka and the extended Euclidean algorithm are the same computation. The valli is the Euclidean quotient sequence. The backward fold is back-substitution. The convergents are the intermediate Bézout coefficients.</p>
+<p>The identity that gcd(<em>a</em>, <em>b</em>) can always be expressed as an integer combination of <em>a</em> and <em>b</em> was stated by Bachet (1624) for the case ax − by = 1 and is implicit in Euclid; Bézout extended it to polynomials in 1779.</p>
+<p>The algorithmic procedure for computing those coefficients - back-substituting through the Euclidean remainder sequence - appears in recognizably modern form in 18th–19th century European mathematics, roughly 1,100 to 1,300 years after Aryabhata depending on which milestone you use. [<a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">Wikipedia: Extended Euclidean Algorithm</a>] The standard historical verdict is independent discovery - there is no known pathway from the Āryabhaṭīya to any of these European formulations.</p>
+<p>Brahmagupta (~628 CE) extended the kuṭṭaka and used it as a foundation for the <em>bhāvanā</em> (composition law), which is the method for solving Pell's equation - <em>x</em>² − <em>Ny</em>² = 1 - a much harder problem that European mathematics wouldn't seriously tackle until Fermat and Euler in the 17th–18th centuries.</p>
+<hr />
+<h2 id="what-it-runs-on-today">What it runs on today <a class="heading-anchor" href="#what-it-runs-on-today" aria-label="Link to this section">#</a></h2>
+<p>You can see this in modern RSA encryption, though indirectly. Computing a modular inverse - finding <em>x</em> such that <em>ax</em> ≡ 1 (mod <em>m</em>) - is exactly the kuṭṭaka's core operation, applied to the specific case <em>c</em> = 1. RSA key generation requires this: the private exponent <em>d</em> satisfies <em>e</em> · <em>d</em> ≡ 1 (mod λ(<em>n</em>)), found by running the extended Euclidean algorithm. That algorithm and the kuṭṭaka are structurally the same thing.</p>
+<p>What I find strange about this is that every algorithms textbook I've read covers the extended Euclidean algorithm without a word about where it came from. The method is just there, as if it fell from the sky.</p>
+<p>The code in <code>code/kuttaka.py</code> demonstrates this directly. The modular inverse example (<code>17x ≡ 1 mod 5</code>) runs through the valli, recovers <em>x</em> = 3, and the extended Euclidean cross-check returns the same answer. Not similar - identical. Because it's the same algorithm.</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">python</span></div><pre class="code" tabindex="0"><code><span class="n">python3</span> <span class="n">code</span><span class="o">/</span><span class="n">kuttaka</span><span class="o">.</span><span class="n">py</span></code></pre></div>
+<figure class="figure"><img src="img/e52de9704ea8-2b53ed2b-480.webp" srcset="img/e52de9704ea8-2b53ed2b-480.webp 480w, img/e52de9704ea8-2b53ed2b-643.webp 643w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="780" alt="" loading="lazy" decoding="async"></figure>
+
+<p>The output shows the valli construction for each problem, the backward fold step by step, the Bézout check, and the cross-check against the extended Euclidean method. All four problems agree.</p>
+<hr />
+<h2 id="we-do-actually-know-about-it">We do actually know about it <a class="heading-anchor" href="#we-do-actually-know-about-it" aria-label="Link to this section">#</a></h2>
+<p>The kuṭṭaka is not obscure within Indian mathematics history. Historians of mathematics know it. It appears in Kim Plofker's <em>Mathematics in India</em> (Princeton, 2009), the standard scholarly reference. It has a Wikipedia page with decent citations. Within the field, there is no controversy about what Aryabhata did.</p>
+<p>What's annoying is the gap between &quot;known within the field&quot; and &quot;known by engineering students.&quot; My entire undergraduate curriculum covered algorithms with no mention of this. I sat through multiple courses on number theory and cryptography - both fields where the extended Euclidean algorithm is foundational - and heard nothing about Aryabhata.</p>
+<p>Which means the next time someone draws the course diagram - here are your foundational algorithms, here is where they came from, there's now a choice being made about what to leave out.</p>
+<hr />
+<h2 id="sources-further-reading">Sources &amp; further reading <a class="heading-anchor" href="#sources-further-reading" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>
+<p>Wikipedia, &quot;Kuṭṭaka&quot;: <a href="https://en.wikipedia.org/wiki/Ku%E1%B9%AD%E1%B9%ADaka">https://en.wikipedia.org/wiki/Ku%E1%B9%AD%E1%B9%ADaka</a> - algorithm description, historical timeline, Bhāskara I's examples, astronomical applications</p>
+</li>
+<li>
+<p>Wikipedia, &quot;Aryabhata&quot;: <a href="https://en.wikipedia.org/wiki/Aryabhata">https://en.wikipedia.org/wiki/Aryabhata</a> - biography, Āryabhaṭīya structure, mathematical contributions</p>
+</li>
+<li>
+<p>MacTutor History of Mathematics, &quot;Aryabhata I&quot;: <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Aryabhata_I/">https://mathshistory.st-andrews.ac.uk/Biographies/Aryabhata_I/</a> - biography and Ganitapāda overview</p>
+</li>
+<li>
+<p>Indica Today, &quot;Linear Indeterminate Equations – Kuttaka&quot;: <a href="https://www.indica.today/quick-reads/part-3-linear-indeterminate-equations-kuttaka/">https://www.indica.today/quick-reads/part-3-linear-indeterminate-equations-kuttaka/</a> - worked column examples</p>
+</li>
+<li>
+<p>Chandrahas blogs, &quot;Linear Indeterminate Equations – Kuttaka&quot;: <a href="https://chandrahasblogs.wordpress.com/2024/07/10/linear-indeterminate-equations-kuttaka/">https://chandrahasblogs.wordpress.com/2024/07/10/linear-indeterminate-equations-kuttaka/</a> - valli construction walkthrough</p>
+</li>
+<li>
+<p>Kim Plofker, <em>Mathematics in India</em>, Princeton University Press, 2009 - the standard scholarly reference for this material; cited across secondary literature</p>
+</li>
+<li>
+<p>Wikipedia, &quot;Extended Euclidean Algorithm&quot;: <a href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm">https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm</a> - comparison baseline</p>
+</li>
+<li>
+<p>Wikipedia, &quot;Bézout's identity&quot;: <a href="https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity">https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity</a> - attribution history (Bachet 1624 for integers; Bézout 1779 for polynomials)</p>
+</li>
+<li>
+<p>Wikipedia, &quot;Kali Ahargana&quot;: <a href="https://en.wikipedia.org/wiki/Kali_ahargana">https://en.wikipedia.org/wiki/Kali_ahargana</a> - astronomical day-counting context</p>
+</li>
+</ul>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/algorithms/">algorithms</a><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/number-theory/">number theory</a><a class="tag" href="../tags/computer-science-history/">computer science history</a><a class="tag" href="../tags/unsung-bits/">unsung bits</a><a class="tag" href="../tags/aryabhata/">aryabhata</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/the-algorithm-that-grinds-problems-to-dust/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-algorithm-that-grinds-problems-to-dust%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-algorithm-that-grinds-problems-to-dust%2F&amp;text=The%20Algorithm%20That%20Grinds%20Problems%20to%20Dust" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-algorithm-that-grinds-problems-to-dust%2F&amp;title=The%20Algorithm%20That%20Grinds%20Problems%20to%20Dust" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=The%20Algorithm%20That%20Grinds%20Problems%20to%20Dust&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-algorithm-that-grinds-problems-to-dust%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      <nav class="section series" id="series" aria-labelledby="series-title">
+        <div class="section__head"><h2 class="section__title" id="series-title">Unsung Bits</h2><span class="section__note">The series, in reading order</span></div>
+        <ol class="series__list"><li><span class="section__numeral">01</span><a href="../history-of-computer-science-in-india-part-2/">History of computer science in india Part 2</a></li><li><span class="section__numeral">02</span><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></li><li><span class="section__numeral">03</span><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></li><li><span class="section__numeral">04</span><span aria-current="page">The Algorithm That Grinds Problems to Dust</span></li><li><span class="section__numeral">05</span><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></li></ol>
+      </nav>
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../the-poet-who-accidentally-invented-binary-sort-of/" rel="prev"><span class="label">Older</span><span class="pager__title">The Poet Who Accidentally Invented Binary (Sort Of)</span></a><a class="pager__link pager__link--newer" href="../the-number-that-shouldn-t-exist/" rel="next"><span class="label">Newer</span><span class="pager__title">The Number That Shouldn&#x27;t Exist</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-26T06:50:44.631Z">26 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></h3>
+          <p>Brahmagupta defined explicit arithmetic rules for zero in 628 CE, shifting it from a placeholder to a formal number.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></h3>
+          <p>Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/binary/">binary</a><a class="tag" href="../tags/sanskrit/">sanskrit</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></h3>
+          <p>Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/linguistics/">linguistics</a><a class="tag" href="../tags/sanskrit/">sanskrit</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>

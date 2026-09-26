@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /content/
+Disallow: /migration/
 
 Sitemap: https://sukalyan2003.github.io/sitemap.xml

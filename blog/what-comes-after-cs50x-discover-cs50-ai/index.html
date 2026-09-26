@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore CS50 AI: What&#x27;s Next? - Engineering Tales</title>
+<meta name="description" content="Explore insights and challenges from Harvard&#x27;s CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="Explore CS50 AI: What&#x27;s Next? - Engineering Tales">
+<meta property="og:description" content="Explore insights and challenges from Harvard&#x27;s CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/og-9e3423eb.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-04-24T04:30:00.000Z">
+<meta property="article:modified_time" content="2026-07-03T13:54:10.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Moocs">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="CS50">
+<meta property="article:tag" content="CS50 AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Explore CS50 AI: What&#x27;s Next? - Engineering Tales">
+<meta name="twitter:description" content="Explore insights and challenges from Harvard&#x27;s CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/og-9e3423eb.jpg">
+
+<link rel="preload" href="../../the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../the-record/fonts/fonts.css">
+<link rel="stylesheet" href="../../the-record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=4f0844ff">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../the-record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../the-record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../the-record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/",
+      "url": "https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/",
+      "headline": "What Comes After CS50x? Discover CS50 AI",
+      "description": "Explore insights and challenges from Harvard's CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence",
+      "datePublished": "2026-04-24T04:30:00.000Z",
+      "dateModified": "2026-07-03T13:54:10.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/og-9e3423eb.jpg"
+      ],
+      "keywords": [
+        "AI",
+        "CS50",
+        "CS50 AI"
+      ],
+      "articleSection": "Moocs",
+      "wordCount": 2265,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Moocs",
+          "item": "https://sukalyan2003.github.io/blog/moocs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "What Comes After CS50x? Discover CS50 AI",
+          "item": "https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>26 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li>
+      <li class="more-menu"><details><summary class="is-current">More</summary><ul class="more-menu__list"><li><a href="../unsung-bits/">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/" class="is-current" aria-current="page">Moocs</a></li></ul></details></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../moocs/">Moocs</a></li></ol></nav>
+        
+        <h1 class="article__title" id="article-title">What Comes After CS50x? Discover CS50 AI</h1>
+        <p class="standfirst article__standfirst">Explore insights and challenges from Harvard&#x27;s CS50 AI course, covering search algorithms, probability, and optimization in artificial intelligence</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-04-24T04:30:00.000Z">24 Apr 2026</time></span><span>Updated <time datetime="2026-07-03T13:54:10.000Z">3 Jul 2026</time></span><span>10 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-04-24T04:30:00.000Z">24 Apr 2026</time></dd></div>
+            <div><dt>Updated</dt><dd><time datetime="2026-07-03T13:54:10.000Z">3 Jul 2026</time></dd></div>
+            <div><dt>Reading time</dt><dd>10 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../moocs/">Moocs</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l3"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#week-0-search">Week 0 - Search</a></li><li class="toc__l3"><a href="#degrees">Degrees</a></li><li class="toc__l3"><a href="#tic-tac-toe">Tic Tac Toe</a></li><li class="toc__l2"><a href="#week-1">Week 1</a></li><li class="toc__l3"><a href="#knights">Knights</a></li><li class="toc__l3"><a href="#minesweeper">MineSweeper</a></li><li class="toc__l2"><a href="#week-2">Week 2</a></li><li class="toc__l3"><a href="#pagerank">PageRank</a></li><li class="toc__l3"><a href="#heredity">Heredity</a></li><li class="toc__l2"><a href="#conclusion">Conclusion</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/27620b7b797f-9e3423eb-480.webp" srcset="img/27620b7b797f-9e3423eb-480.webp 480w, img/27620b7b797f-9e3423eb-960.webp 960w, img/27620b7b797f-9e3423eb-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="467" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<p>So… i did it, i gave in to the hype and spent quite some time grinding and finishing the original CS50. Well, actually that was 3 years ago. Now what?</p>
+<p>Now that i’m in my final semester of university , it feels like the perfect time to tackle something substantial and difficult. Hence, the Harvard CS50 AI.</p>
+<p>The notes provided by Harvard themselves might be a lot better for studying, but the following are my observations and problems that i have faced while working on the problem sets.</p>
+<p>Also, the problem statements here are huge, and much much harder than the CS50x problem statements, so this will be broken into two posts.</p>
+<h3 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h3>
+<ul>
+<li>
+<p>CS50 AI is a natural next step after CS50x if you want to understand AI from first principles.</p>
+</li>
+<li>
+<p>It is not just &quot;use a model through an API.&quot; It starts with search, logic, uncertainty, optimization, and learning.</p>
+</li>
+<li>
+<p>The projects are the point: they force you to turn ideas into working programs.</p>
+</li>
+<li>
+<p>This post starts my notes on what the course covers and why I picked it.</p>
+</li>
+</ul>
+<h2 id="week-0-search">Week 0 - Search <a class="heading-anchor" href="#week-0-search" aria-label="Link to this section">#</a></h2>
+<p>This was such a painful start, totally stumped for several days and not being able to understand what to do and how to begin. My first mistake was assuming that since i had studied these topics for my semester exams, that i knew how to apply them. Which is definitely not the case.Had to really go through the material from scratch and try to understand them before being able to complete this.</p>
+<h3 id="degrees">Degrees <a class="heading-anchor" href="#degrees" aria-label="Link to this section">#</a></h3>
+<figure class="figure"><img src="img/f7f0eeb76b95-5cfa4ead-480.webp" srcset="img/f7f0eeb76b95-5cfa4ead-480.webp 480w, img/f7f0eeb76b95-5cfa4ead-551.webp 551w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="169" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Inspired by the game of Six Degrees of Kevin Bacon, this tries to figure out the shortest path between any two people based on the imdb list. With some modifications, this can be run on any database of people with meaningful ways to connect between them.</p>
+<p>First observation: Since we need the guaranteed shortest path, we must use BFS (Breadth First Search).<br />
+And for BFS we use a Queue, which is already provided in the <code>utils.py</code> file by CS50 as the Queue frontier, which in turn is just a modification of the stack frontier as everything is common between them except the removal of elements.</p>
+<p>Another cool thing is that, they have done all the loading and preprocessing steps for us, in this problem statement, you just have to take as input the source and target IDs and then find the path between them.</p>
+<p>Another hint would be from the lecture itself, remember how they kept track of actions? that will help us to find the actual path taken once we do reach the target. (Look at the Node class’s fields)</p>
+<p><strong>Major pitfall:</strong> <code>append</code> <strong>does not</strong> return a new list. It mutates the list in-place and returns <code>None</code>. This made a lot of trouble for me when incrementing the actions list.</p>
+<p>Another thing to keep in mind, even though your code might work for smaller datasets, always check edge cases. For example, my naive implementation had no checks for repeating people, but it still worked for the small dataset, and then timed out when trying to use check50.</p>
+<p>This i fixed by reconstructing the path using parent pointers.</p>
+<p>Pro tip: Use chatgpt in study mode, it wont give you the answer but genuinely helps point you towards the right direction.</p>
+<h3 id="tic-tac-toe">Tic Tac Toe <a class="heading-anchor" href="#tic-tac-toe" aria-label="Link to this section">#</a></h3>
+<figure class="figure"><img src="img/eced44b976e3-4f1d0f99-480.webp" srcset="img/eced44b976e3-4f1d0f99-480.webp 480w, img/eced44b976e3-4f1d0f99-621.webp 621w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="335" alt="" loading="lazy" decoding="async"></figure>
+
+<p>(I lost to the AI lol. I was O)</p>
+<p>This is a game we have all played at some time or the other, and one of the best starting points to learn about the minimax algorithm, as most other games are too complicated to be solved with it unless you do serious optimizations.</p>
+<p>I’ve had studied minimax for my AI sem exams before, but never really understood it. Watching the video here, really really cleared everything up for me.</p>
+<p>First we have to make the game playable without AI, and then we’ll implement the minimax function.</p>
+<p>Once making the game playable, i had gemini rewrite the <a href="http://runner.py">runner.py</a> to enable human vs human playing. I could do that myself but that’s not fully relevant to learning about AI and i really wanted to play the game a bit.</p>
+<p>For my final submission, i’ve implemented alpha-beta pruning, which was quite easy compared to what i thought. The tricky part was figuring out the initial values, but the lectures and the AI study mode hints combined, i was able to finish it myself.</p>
+<p>One hint that stood out to me was the short circuit: At the main minimax function when looping for X and O, if the utility ever becomes -1 or 1, that means it’s the best case for either O or X. No need to go further, break it there.</p>
+<h2 id="week-1">Week 1 <a class="heading-anchor" href="#week-1" aria-label="Link to this section">#</a></h2>
+<p>Even though I have studied Discrete Math in University that had a healthy dose of Propositional Logic,<br />
+most of the code related things that they mention in this lecture beyond this, regarding inference, seems new to me. (Though on a closer look, i have done these exact inference table problems on paper before several times)</p>
+<p>The main idea of this week is how we store knowledge and represent it in traditional data structures. If we go through the <code>logic.py</code> file provided, it’s data structures and methods almost resemble an Abstract Syntax Tree.</p>
+<h3 id="knights">Knights <a class="heading-anchor" href="#knights" aria-label="Link to this section">#</a></h3>
+<p>Knowledge is one big formula built as <code>And(...)</code> of constraints.</p>
+<p>Simple on the surface but really tricky to get it right. Once i figured out the pattern for the knowledge representations, I was running almost on autopilot translating the text into logical statements.</p>
+<p>All this came crashing down once i reached the last question, Even though everything looked right, there were many many subtle problems with the logic, and even when i somehow got it to pass, i don’t think i fully understood it yet.</p>
+<p>The main mistakes i did was adding an extra () when writing an Or clause; And not using variables to represent complex logic sentences, This led to my knowledge3 statement especially, to get really big and confusing.</p>
+<h3 id="minesweeper">MineSweeper <a class="heading-anchor" href="#minesweeper" aria-label="Link to this section">#</a></h3>
+<figure class="figure"><img src="img/16993a2e3cd8-304c0318-480.webp" srcset="img/16993a2e3cd8-304c0318-480.webp 480w, img/16993a2e3cd8-304c0318-621.webp 621w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="340" alt="" loading="lazy" decoding="async"></figure>
+<figure class="figure"><img src="img/dd930ce6c2b5-fda9cdad-480.webp" srcset="img/dd930ce6c2b5-fda9cdad-480.webp 480w, img/dd930ce6c2b5-fda9cdad-611.webp 611w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="338" alt="" loading="lazy" decoding="async"></figure>
+
+<p>(The AI is still not perfect, it doesn’t win everything, but does a good job)</p>
+<p>First step was understanding the game itself. Even though i’ve known minesweeper exists since i first touched a computer, I never tried playing it seriously, always just a bunch of random clicks to see how far I could go.</p>
+<p>The core idea is to understand that the numbers in each cell refers to how many surrounding cells contain a mine. Using this we can reason which ones to avoid and which ones to pick. For example, if a cell at a corner with only 3 neighbors has a number of 3, i should not pick any of them as all are mines, and so on goes the logic.</p>
+<p>Now, with the added appreciation of what the game actually is, and a mental model of how i would play it myself, it is time to develop that mental model into something an AI can reasonably understand.</p>
+<p>The provided runner reduces a lot of work, though like the runners of other gui projects, I plan on revisiting it later to adapt it to a more general playable game.</p>
+<p>The <code>minesweeper.py</code> file is where the main logic gets done, and here I got stuck for several days again.<br />
+Even though i could visualize the logic for myself, it felt really confusing as to how would i encode it in a reasonable amount of LOC (Lines of Code).</p>
+<p><strong>One nontrivial insight</strong> is that whenever your knowledge is updated, it should update all the sentences in your knowledge base and not just the most recent one. This is where i got stuck for a long long time. Took a lot of hints to finally get the loop right.</p>
+<p>Rest of the functions like <code>make safe moves</code> and <code>make random moves</code> were relatively simpler to do, so much so that i finished them before writing the actual add knowledge function.</p>
+<p>My main suggestion for this problem set will be to remember that you must update everything in your knowledge base after every new piece of knowledge added to it, for that, read all the completed functions first cause they have done a lot of heavy lifting for us already. You will need a lot more nested loops than you think, and that’s okay.</p>
+<h2 id="week-2">Week 2 <a class="heading-anchor" href="#week-2" aria-label="Link to this section">#</a></h2>
+<p>This week deals with probabilities and different ways of encoding them. As is the case with the previous weeks, I have encountered most of these topics, with the possible exception of Bayesian networks, in my University courses before, so the lectures were not too insane to grasp.</p>
+<p>Even so, It was quite confusing to see why Markov models were useful at all, <strong>until</strong> the lecture gave the example of speech to text. That was the point where it all clicked, we get some observed variables which is the sound recording, and from there we infer the hidden variables that is the actual words spoken and in what order.</p>
+<p>One confusion that I had while watching was the difference between Markov models and bayesian networks, because on surface, both of them seemed like a directed collection of nodes where the edges represent the dependencies. So i looked up on <a href="https://stats.stackexchange.com/questions/100047/difference-between-bayesian-networks-and-markov-process">stackoverflow</a>.</p>
+<p>So far what I have understood is that, the core difference is that a Markov chain can be cyclic but a Bayesian network is always Acyclic. Both can be considered PGMs or Probabilistic Graphical Models. And we can even use a bayesian network to show a Markov process if we choose the right constraints.</p>
+<h3 id="pagerank">PageRank <a class="heading-anchor" href="#pagerank" aria-label="Link to this section">#</a></h3>
+<figure class="figure"><img src="img/ce3d56a3dfce-359b313a-416.webp" srcset="img/ce3d56a3dfce-359b313a-416.webp 416w" sizes="(max-width: 900px) 100vw, 680px" width="416" height="364" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Have you ever wondered how Google makes their search work? Well this project will give you a slightly old but still reasonably functional glimpse into the whole thing.</p>
+<p>It is quite obvious that the real world search algorithms do not use this anymore, but the implementation was quite interesting to do.</p>
+<p>The most important syntax thing i learned here is to make sure that the key value pairs are properly unpacked. I faced so many errors because of this, because my dict comprehension was returning a KV pair but i wrote the code assuming that I am sending the keys or values only.</p>
+<p>The rest of the implementation can be easily done if you read the specifications carefully. Due to python’s easy syntax, it did not take me much time to write it out.</p>
+<p>One interesting change one could do here is, using the transition_model function to generate a transition matrix and then use matrix methods to iteratively solve pagerank. I have found several implementations of it online that i want to try out later but for now i’ll just link them at the end of this post.</p>
+<h3 id="heredity">Heredity <a class="heading-anchor" href="#heredity" aria-label="Link to this section">#</a></h3>
+<figure class="figure"><img src="img/02cafae758ae-a41598e0-387.webp" srcset="img/02cafae758ae-a41598e0-387.webp 387w" sizes="(max-width: 900px) 100vw, 680px" width="387" height="977" alt="" loading="lazy" decoding="async"></figure>
+
+<p>Using Bayesian Networks and Joint probabilities to predict whether a child has a trait or not, based on the observable traits in their parents.</p>
+<p>Essentially we do it in three steps:</p>
+<ol>
+<li>
+<p>Calculate the joint probability of every possible situation. That is, for every person to either show or not show the trait under the assumption that they either have 0 or 1 or 2 genes, and whether their parents have 0/1/2 genes each.</p>
+</li>
+<li>
+<p>Update the probability dictionary with this new joint probability</p>
+</li>
+<li>
+<p>Normalize everything so that the sum is 1</p>
+</li>
+</ol>
+<p>Key insight is that, for these inferences we must know the relationships between hidden and observable traits, otherwise it is not possible.</p>
+<p>The two main problems I faced here were:</p>
+<ol>
+<li>
+<p>The same KV pair structure mistakes that i was making in the previous one. Often i didn’t unpack everything properly and was trying to index a string person as person[index] instead of doing probabilities[person][index]. The difference looks minor but changes everything.</p>
+</li>
+<li>
+<p>Remembering to think about stuff in terms of probability. I was so lost in debugging the code for dict unpacking, that i got stumped when i actually had to write the product of probabilities. it’s a simple formula of (A happens and B happens) or something like (A and not B) and (not A and B).</p>
+</li>
+</ol>
+<p>One cool modification to this one would be getting some medical datasets and trying to generalize it.</p>
+<h2 id="conclusion">Conclusion <a class="heading-anchor" href="#conclusion" aria-label="Link to this section">#</a></h2>
+<p>The difficulty of the projects notwithstanding, my observation so far has been that they are not complete unless you fully understand all the code that they provide you with. A lot of the details of how to encode the theory, the best practices of representing it in code, etc are all hidden in the pre-written stuff.</p>
+<p>So once i’m done with the course, i would really like to revisit the projects and try to personalize them to do something more.</p>
+<p>Till then though, there’s a few more weeks worth of projects to do, so i’ll see you soon, in the next post.</p>
+<p>Some related cool stuff:<br />
+<a href="https://github.com/LorMolf/WeWereOnABreak">https://github.com/LorMolf/WeWereOnABreak</a></p>
+<p><a href="https://www.geeksforgeeks.org/python/page-rank-algorithm-implementation/">https://www.geeksforgeeks.org/python/page-rank-algorithm-implementation/</a></p>
+<p><a href="https://github.com/mariusprd/page-rank-algorithm">https://github.com/mariusprd/page-rank-algorithm</a> ← This one is in MATLAB</p>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/ai/">AI</a><a class="tag" href="../tags/cs50/">CS50</a><a class="tag" href="../tags/cs50-ai/">CS50 AI</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/what-comes-after-cs50x-discover-cs50-ai/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-comes-after-cs50x-discover-cs50-ai%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-comes-after-cs50x-discover-cs50-ai%2F&amp;text=What%20Comes%20After%20CS50x%3F%20Discover%20CS50%20AI" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-comes-after-cs50x-discover-cs50-ai%2F&amp;title=What%20Comes%20After%20CS50x%3F%20Discover%20CS50%20AI" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=What%20Comes%20After%20CS50x%3F%20Discover%20CS50%20AI&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fwhat-comes-after-cs50x-discover-cs50-ai%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../using-vibecoding-to-learn/" rel="prev"><span class="label">Older</span><span class="pager__title">Using vibecoding to learn</span></a><a class="pager__link pager__link--newer" href="../what-comes-after-cs50x-discover-cs50-ai-2/" rel="next"><span class="label">Newer</span><span class="pager__title">What Comes After CS50x? Discover CS50 AI - 2</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2024-04-02T13:30:31.421Z">2 Apr 2024</time>
+          <span class="dispatch__read">15 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../moocs/">Moocs</a></p>
+          <h3><a href="../cs50-my-experience/">CS50 My experience</a></h3>
+          <p>Explore one student&#x27;s experience taking Harvard&#x27;s renowned CS50 introduction to computer science online course.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/introduction/">introduction</a><a class="tag" href="../tags/cs50/">CS50</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-05-02T04:56:56.224Z">2 May 2026</time>
+          <span class="dispatch__read">8 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../moocs/">Moocs</a></p>
+          <h3><a href="../what-comes-after-cs50x-discover-cs50-ai-2/">What Comes After CS50x? Discover CS50 AI - 2</a></h3>
+          <p>We’re halfway there, we started this journey together and went through several projects that most people won’t even consider “real” AI. Now it’s time to change that.</p>
+          
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-01-16T13:30:43.109Z">16 Jan 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../moocs/">Moocs</a></p>
+          <h3><a href="../nand2tetris-part-1-hardware/">Nand2Tetris Part 1: Hardware</a></h3>
+          <p>Learn to build basic computer hardware with Nand2Tetris: logic gates, ALU, memory, and assembly language</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/hardware/">hardware</a><a class="tag" href="../tags/assembly/">assembly</a><a class="tag" href="../tags/computer-architecture/">computer architecture</a><a class="tag" href="../tags/nand2tetris/">Nand2Tetris</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../the-record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>
