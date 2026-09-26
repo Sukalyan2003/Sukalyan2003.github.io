@@ -54,7 +54,7 @@ ASSETS = ROOT / "blog" / "assets"
 THEME_GUARD = ("<script>try{var t=localStorage.getItem('the-record-theme');"
                "if(t)document.documentElement.dataset.theme=t}catch(e){}</script>")
 THEME_GUARD_HASH = "sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y="
-OG_FALLBACK = {"url": f"{cfg.SITE_URL}/the-record/img/og-card.jpg", "width": 1200, "height": 630}
+OG_FALLBACK = {"url": f"{cfg.SITE_URL}/assets/record/img/og-card.jpg", "width": 1200, "height": 630}
 PLAIN_LANGS = {"", "plaintext", "text", "plain", "txt", "none"}
 # Page element ids a heading slug must not take.
 RESERVED_IDS = {"main", "comments", "toc", "search", "share", "related", "contents",
@@ -572,16 +572,16 @@ class Site:
 <meta name="twitter:description" content="{esc(description)}">
 <meta name="twitter:image" content="{esc(og['url'])}">
 
-<link rel="preload" href="/the-record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/the-record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/the-record/fonts/fonts.css">
-<link rel="stylesheet" href="/the-record/css/styles.css?v=1">
+<link rel="preload" href="/assets/record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/record/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/record/css/styles.css?v=1">
 <link rel="stylesheet" href="/blog/assets/blog.css?v={self.css_v}">
 {THEME_GUARD}
 
-<link rel="icon" href="/the-record/img/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/the-record/img/favicon-32.png">
-<link rel="apple-touch-icon" href="/the-record/img/apple-touch-icon.png">
+<link rel="icon" href="/assets/record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/record/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="alternate" type="application/rss+xml" title="{esc(cfg.BLOG_NAME)} - {esc(cfg.AUTHOR_NAME)}" href="/blog/rss.xml">{ld}
 </head>
@@ -599,7 +599,7 @@ class Site:
 
 {self.footer()}
 
-<script src="/the-record/js/main.js" defer></script>
+<script src="/assets/record/js/main.js" defer></script>
 <script src="/blog/assets/blog.js?v={self.js_v}" defer></script>
 </body>
 </html>
@@ -780,8 +780,9 @@ class Site:
         start_link = f'<span><a href="/blog/{start["slug"]}/">{esc(start["label"])}</a></span>' if start else ""
         return f"""    <section class="colophon" aria-label="About this blog">
       <div class="portrait colophon__portrait">
-        <picture class="portrait__plate portrait__plate--paper"><img src="/the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
-        <picture class="portrait__plate portrait__plate--press"><img src="/the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+        <picture class="portrait__plate portrait__plate--paper"><img src="/assets/record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+        <picture class="portrait__plate portrait__plate--press"><img src="/assets/record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+        <picture class="portrait__colour"><source srcset="/assets/record/img/portrait.avif" type="image/avif"><source srcset="/assets/record/img/portrait.webp" type="image/webp"><img src="/assets/record/img/portrait.jpg" width="440" height="440" alt="" aria-hidden="true" loading="lazy" decoding="async"></picture>
       </div>
       <div class="colophon__body">
         <p class="colophon__name">{esc(cfg.BLOG_NAME)}</p>
@@ -1049,8 +1050,9 @@ class Site:
                            for n, u in cfg.AUTHOR_LINKS.items())
         return f"""<aside class="author" aria-label="About the author">
               <div class="portrait author__portrait">
-                <picture class="portrait__plate portrait__plate--paper"><img src="/the-record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
-                <picture class="portrait__plate portrait__plate--press"><img src="/the-record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--paper"><img src="/assets/record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="/assets/record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__colour"><source srcset="/assets/record/img/portrait.avif" type="image/avif"><source srcset="/assets/record/img/portrait.webp" type="image/webp"><img src="/assets/record/img/portrait.jpg" width="440" height="440" alt="" aria-hidden="true" loading="lazy" decoding="async"></picture>
               </div>
               <div class="author__body">
                 <p class="author__name"><a href="/">{esc(cfg.AUTHOR_NAME)}</a></p>
@@ -1212,7 +1214,7 @@ SRCSET = re.compile(r'(\ssrcset)="([^"]*)"')
 
 
 def relative_url(url: str, page: str) -> str:
-    """'/the-record/css/x.css' as seen from 'blog/slug/index.html' -> '../../the-record/css/x.css'.
+    """'/assets/record/css/x.css' as seen from 'blog/slug/index.html' -> '../../assets/record/css/x.css'.
 
     Templates write root-absolute URLs; every page is rewritten to relative
     ones at the end of the build, so the site works wherever it is served
@@ -1311,7 +1313,7 @@ def sync(files: dict[str, str], images: Images, out_root: Path, write: bool) -> 
 
 
 def copy_preview_assets(out_root: Path) -> None:
-    for rel in ("the-record/css", "the-record/js", "the-record/fonts", "the-record/img", "blog/assets"):
+    for rel in ("assets", "blog/assets"):
         src = ROOT / rel
         dst = out_root / rel
         if dst.exists():

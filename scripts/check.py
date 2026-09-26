@@ -26,7 +26,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC_PAGES = ["index.html", "404.html", "classic/index.html", "the-record/index.html"]
-CSS_FILES = ["the-record/css/styles.css", "blog/assets/blog.css"]
+CSS_FILES = ["assets/record/css/styles.css", "blog/assets/blog.css"]
 DRAFTS = ROOT / "content" / "drafts"
 
 

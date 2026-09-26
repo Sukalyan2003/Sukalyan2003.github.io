@@ -395,7 +395,7 @@ class SiteTests(unittest.TestCase):
     def test_canonical_and_jsonld(self):
         page = self.site.files["blog/post-03/index.html"]
         self.assertIn('<link rel="canonical" href="https://sukalyan2003.github.io/blog/post-03/">', page)
-        self.assertIn('href="../../the-record/css/styles.css?v=1"', page)
+        self.assertIn('href="../../assets/record/css/styles.css?v=1"', page)
         self.assertNotRegex(page, r'(?:href|src|srcset)="/(?!/)')
         self.assertIn('<meta property="og:type" content="article">', page)
         ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', page, re.S).group(1))
@@ -608,7 +608,7 @@ class DiagramTests(unittest.TestCase):
 class RelativeUrlTests(unittest.TestCase):
     def test_relative_url(self):
         r = build_blog.relative_url
-        self.assertEqual(r("/the-record/css/a.css?v=1", "blog/x/index.html"), "../../the-record/css/a.css?v=1")
+        self.assertEqual(r("/assets/record/css/a.css?v=1", "blog/x/index.html"), "../../assets/record/css/a.css?v=1")
         self.assertEqual(r("/blog/", "blog/index.html"), "./")
         self.assertEqual(r("/blog/#search", "blog/x/index.html"), "../#search")
         self.assertEqual(r("/", "blog/tags/y/index.html"), "../../../")

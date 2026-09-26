@@ -1,6 +1,6 @@
 /* ==========================================================================
    The Record - blog (Engineering Tales)
-   Loaded after /the-record/css/styles.css and uses only its tokens. The same
+   Loaded after /assets/record/css/styles.css and uses only its tokens. The same
    three rules hold here: no shadows, no rounded corners, and the signal red
    only where design.md permits it (numerals, link hover, the current-section
    underline in the running head, focus rings).
