@@ -28,9 +28,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -38,7 +38,7 @@ jobs:
 
       # Only used when a post has a Mermaid diagram that was not rendered and
       # committed locally (renders are cached in content/blog/diagrams/).
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
@@ -56,7 +56,10 @@ jobs:
 
       - name: Commit generated output if changed
         run: |
-          git add -A blog content/blog/diagrams sitemap.xml robots.txt index.html
+          git add -A blog sitemap.xml robots.txt index.html
+          # content/blog/diagrams only exists once a post has a Mermaid diagram;
+          # git add fails on a missing path, so add it only when present.
+          if [ -d content/blog/diagrams ]; then git add -A content/blog/diagrams; fi
           if git diff --cached --quiet; then
             echo "Generated output already up to date."
             exit 0
