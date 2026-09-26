@@ -654,7 +654,7 @@ class Site:
     <div class="folio">
       <span><a href="/blog/">{esc(cfg.BLOG_NAME)}</a></span>
       <span><a href="/">{esc(cfg.AUTHOR_NAME)}</a> · {esc(cfg.AUTHOR_LOCATION)}</span>
-      <span><a href="/blog/rss.xml">RSS</a> · <a href="/blog/tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+      <span><a href="/assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener">Résumé</a> · <a href="/blog/rss.xml">RSS</a> · <a href="/blog/tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
     </div>
   </div>
 </footer>"""
@@ -1057,7 +1057,7 @@ class Site:
               <div class="author__body">
                 <p class="author__name"><a href="/">{esc(cfg.AUTHOR_NAME)}</a></p>
                 <p class="author__role">{esc(cfg.AUTHOR_ROLE)}. {esc(cfg.AUTHOR_LOCATION)}.</p>
-                <p class="author__links"><a href="/">Portfolio</a> · {links} · <a href="/blog/rss.xml">RSS</a></p>
+                <p class="author__links"><a href="/">Portfolio</a> · <a href="/assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener">Résumé</a> · {links} · <a href="/blog/rss.xml">RSS</a></p>
               </div>
             </aside>"""
 

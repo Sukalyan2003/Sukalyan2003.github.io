@@ -3,7 +3,8 @@
 #
 #   slug         URL segment: /blog/<slug>/ (lowercase, hyphens)
 #   label        text shown in the nav
-#   nav          primary = shown in the bar; more = inside the "More" menu
+#   nav          primary = shown in the bar; more = inside a "More" menu
+#                (all sections are in the bar today, so no menu is shown)
 #   description  one or two sentences shown at the top of the section page
 #   series       true = posts are an ordered series; each needs seriesOrder
 #   page         a Markdown file under content/blog/ rendered instead of a
@@ -29,16 +30,16 @@
 
 - slug: unsung-bits
   label: Unsung Bits
-  nav: more
+  nav: primary
   series: true
   description: Wildly underrated CS (and proto-CS) contributions by Indians and people of Indian origin, explained one topic at a time.
 
 - slug: programming-concepts
   label: Programming Concepts
-  nav: more
+  nav: primary
   description: Pointers, command-line tools and interpreters, worked through in code.
 
 - slug: moocs
   label: Moocs
-  nav: more
+  nav: primary
   description: Notes from online courses - CS50, CS50 AI and Nand2Tetris.
