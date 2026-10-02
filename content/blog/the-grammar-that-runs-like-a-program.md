@@ -10,6 +10,7 @@ tags: ["india", "linguistics", "sanskrit", "computer-science-history", "formal-l
 cover: "img/the-grammar-that-runs-like-a-program/d250567f2e39.webp"
 coverAlt: ""
 hashnode: {"cuid": "cmtnyqfgj00000agm28nz5bbe", "url": "https://sukalyanroy.hashnode.dev/the-grammar-that-runs-like-a-program"}
+dateUpdated: "2026-10-02T15:48:31.535296Z"
 ---
 
 ## TL;DR
@@ -187,9 +188,17 @@ Output: 'rAm|eti'
 
 The higher-priority homogeneous coalescence rules (6.1.77, 6.1.78) demonstrate apavāda: when *i+i* or *u+u* are the input, those rules fire instead of the guṇa rules, because exceptions outrank generals.
 
-For the full engine and tests: `code/README.md`.
+## Get the code
 
-https://github.com/Sukalyan2003/Unsung-Bits/tree/main/01-panini-grammar/code
+[Download the demo ZIP](/blog/assets/code/the-grammar-that-runs-like-a-program/the-grammar-that-runs-like-a-program.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-grammar-that-runs-like-a-program)
+
+The download includes the script, README, and tests. Extract it, open the extracted `the-grammar-that-runs-like-a-program` folder in a terminal, and run:
+
+```bash
+python3 code/panini_engine.py
+```
+
+The demo uses only the Python standard library. See `code/README.md` for the test command.
 
 ![](img/the-grammar-that-runs-like-a-program/e65ccdf8611f.webp)
 

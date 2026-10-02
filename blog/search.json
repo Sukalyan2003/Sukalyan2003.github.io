@@ -1,5 +1,46 @@
 [
  {
+  "slug": "the-distance-that-knows-how-the-data-moves",
+  "url": "/blog/the-distance-that-knows-how-the-data-moves/",
+  "title": "The Distance That Knows How the Data Moves",
+  "date": "2026-10-03T02:30:00.000Z",
+  "dateLabel": "3 Oct 2026",
+  "section": "unsung-bits",
+  "sectionLabel": "Unsung Bits",
+  "tags": [
+   {
+    "slug": "machine-learning",
+    "label": "machine learning"
+   },
+   {
+    "slug": "statistics",
+    "label": "statistics"
+   },
+   {
+    "slug": "india",
+    "label": "india"
+   },
+   {
+    "slug": "data-science",
+    "label": "data science"
+   },
+   {
+    "slug": "unsung-bits",
+    "label": "unsung bits"
+   },
+   {
+    "slug": "history-of-science",
+    "label": "history of science"
+   },
+   {
+    "slug": "anomaly-detection",
+    "label": "anomaly detection"
+   }
+  ],
+  "summary": "In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.",
+  "minutes": 11
+ },
+ {
   "slug": "the-number-that-shouldn-t-exist",
   "url": "/blog/the-number-that-shouldn-t-exist/",
   "title": "The Number That Shouldn't Exist",
@@ -104,7 +145,7 @@
    }
   ],
   "summary": "Piṅgala's prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.",
-  "minutes": 10
+  "minutes": 11
  },
  {
   "slug": "the-grammar-that-runs-like-a-program",

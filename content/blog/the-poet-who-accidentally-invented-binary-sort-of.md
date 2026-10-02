@@ -10,6 +10,7 @@ tags: ["india", "mathematics", "binary", "sanskrit", "computer-science-history",
 cover: "img/the-poet-who-accidentally-invented-binary-sort-of/4241e3bcecf1.webp"
 coverAlt: ""
 hashnode: {"cuid": "cmtxwl41v00000agmdfyaef1o", "url": "https://sukalyanroy.hashnode.dev/the-poet-who-accidentally-invented-binary-sort-of"}
+dateUpdated: "2026-10-02T15:48:31.590809Z"
 ---
 
 ## TL;DR
@@ -167,6 +168,18 @@ The mātrā-vṛtta problem is not contrived. Ancient Sanskrit poets genuinely c
 It follows from the structure of the problem, from the fact that you have two syllable types with different weights. The same structure underlies the rabbit problem, which is why Fibonacci got there too. Independent convergence on the same structure.
 
 * * *
+
+## Get the code
+
+[Download the demo ZIP](/blog/assets/code/the-poet-who-accidentally-invented-binary-sort-of/the-poet-who-accidentally-invented-binary-sort-of.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-poet-who-accidentally-invented-binary-sort-of)
+
+The download includes the script, README, and tests. Extract it, open the extracted `the-poet-who-accidentally-invented-binary-sort-of` folder in a terminal, and run:
+
+```bash
+python3 code/pingala.py
+```
+
+The demo uses only the Python standard library. See `code/README.md` for the test command.
 
 ## My gripes
 

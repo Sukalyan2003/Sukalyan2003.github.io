@@ -5,8 +5,136 @@
     <link>https://sukalyan2003.github.io/blog/</link>
     <description>A technical lab notebook: RAG systems, interpreters, Nand2Tetris, Linux, ML experiments, and project breakdowns.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 26 Sep 2026 06:50:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2026 02:30:00 +0000</lastBuildDate>
     <atom:link href="https://sukalyan2003.github.io/blog/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>The Distance That Knows How the Data Moves</title>
+      <link>https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/</link>
+      <guid isPermaLink="true">https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/</guid>
+      <pubDate>Sat, 03 Oct 2026 02:30:00 +0000</pubDate>
+      <dc:creator>Sukalyan Roy</dc:creator>
+      <description>In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.</description>
+      <category>machine learning</category>
+      <category>statistics</category>
+      <category>india</category>
+      <category>data science</category>
+      <category>unsung bits</category>
+      <category>history of science</category>
+      <category>anomaly detection</category>
+      <content:encoded><![CDATA[<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>P. C. Mahalanobis framed a covariance-aware generalised distance in 1936, amid closely related contemporary work by Harold Hotelling.</li>
+<li>It measures distance after accounting for the directions in which the data naturally varies.</li>
+<li>The same quadratic form appears inside LDA, Gaussian mixtures, and multivariate anomaly detection, alongside priors and other probability terms.</li>
+<li>Under an exact multivariate normal model, its square has a chi-squared distribution; estimated or misspecified models need more care.</li>
+<li>In high dimensions, estimating and solving with the covariance matrix is the difficult part.</li>
+</ul>
+<p>I wrote my undergraduate machine learning exam without once thinking about where the distance measure came from.</p>
+<p>The exam had a question on distance metrics. I could recite the properties of Euclidean distance, L1, cosine similarity, and Mahalanobis distance in sequence, the formula, the covariance matrix, when you'd prefer it over Euclidean.</p>
+<p>I never asked who Mahalanobis was, and the course never said.</p>
+<p>The person got edited out, and I absorbed the implicit message that the idea arrived from nowhere in particular. Statistical distance arrived from somewhere in particular: Calcutta, 1936. A Bengali physicist who had spent years making statistics usable on a large scale.</p>
+<p>His name was Prasanta Chandra Mahalanobis.</p>
+<hr />
+<h2 id="the-man-before-the-formula">The man before the formula <a class="heading-anchor" href="#the-man-before-the-formula" aria-label="Link to this section">#</a></h2>
+<p>Mahalanobis was born in Calcutta on <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Mahalanobis/">29 June 1893</a>. He studied at Presidency College, went to Cambridge to read mathematics and natural sciences, and came back to India in 1915 as a physics lecturer. The statistics came sideways, on a trip to England he stumbled across a bound volume of <em>Biometrika</em>, Karl Pearson's journal, and could not put it down.</p>
+<p>There was no established Indian statistical institution or consistent national data infrastructure to plug into. He spent the 1920s building the prerequisites: methods for large-scale surveys, standards for agricultural sampling, techniques for estimating crop yields across a subcontinent with no central database.</p>
+<p>In 1931 he founded the Indian Statistical Institute in Calcutta, growing out of the small Statistical Laboratory he had set up at Presidency College. Its journal <em>Sankhyā</em>, which he started in 1933, is still running. The ISI became an Institution of National Importance in 1959. <a href="https://www2.isical.ac.in/~deanweb/GNRLRULES-REGULATIONS.pdf">Indian Statistical Institute, official history</a></p>
+<p>This is the context the 1936 paper comes from: a man who had spent a decade working with messy, real data at scale, and who had noticed a problem that the existing tools couldn't handle.</p>
+<hr />
+<h2 id="what-euclidean-distance-gets-wrong">What Euclidean distance gets wrong <a class="heading-anchor" href="#what-euclidean-distance-gets-wrong" aria-label="Link to this section">#</a></h2>
+<p>The problem is easiest to see with a picture you can build in your head.</p>
+<p>Imagine a cloud of data points: height and arm span, measured in centimetres, for a large population. The two dimensions are correlated, taller people tend to have longer arms. If you plot the cloud, it is not a circle. It is an ellipse, stretched diagonally.</p>
+<p>Now take two new people and ask: which one is more unusual?</p>
+<p>Person A is moderately above average on one measurement and moderately below average on the other. In raw terms, they sit reasonably close to the centre. But they cut across the direction of the cloud, where the population almost never goes. Their combination is unusual even though neither coordinate is extreme by itself.</p>
+<p>Person B is much further above average on both measurements. They sit further from the centre in raw distance. But they lie <em>along</em> the main axis of the cloud, exactly the direction the data expects.</p>
+<p>Euclidean distance will call Person A more normal because they are closer in raw units. A covariance-aware measure calls Person A more unusual because that combination cuts against the population pattern.</p>
+<figure class="figure"><img src="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/mahalanobis-ellipse-comparison-f0311ebd-480.webp" srcset="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/mahalanobis-ellipse-comparison-f0311ebd-480.webp 480w, https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/mahalanobis-ellipse-comparison-f0311ebd-960.webp 960w, https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/mahalanobis-ellipse-comparison-f0311ebd-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="Correlated data forming a diagonal ellipse, with nearby Point A across the narrow axis and distant Point B along the long axis." loading="lazy" decoding="async"></figure>
+
+<p>His 1936 paper, <a href="https://doi.org/10.1007/s13171-019-00164-5">&quot;On the generalised distance in statistics,&quot; <em>Proceedings of the National Institute of Sciences of India</em>, Vol. 2, No. 1</a>, proposed a distance measure that accounts for the structure of the distribution itself.</p>
+<hr />
+<h2 id="one-formula-doing-a-lot-of-work">One formula, doing a lot of work <a class="heading-anchor" href="#one-formula-doing-a-lot-of-work" aria-label="Link to this section">#</a></h2>
+<p>Before the formula, three pieces of notation:</p>
+<ul>
+<li>A <strong>vector</strong> is just an ordered list of measurements. For height and arm span, <strong>x</strong> might be <code>[180, 188]</code>.</li>
+<li><strong>μ</strong> is the mean vector, the average value of each measurement.</li>
+<li><strong>Σ</strong> is the covariance matrix. Its diagonal records how much each measurement varies; its off-diagonal entries record whether two measurements tend to rise and fall together.</li>
+</ul>
+<p>The Mahalanobis distance from a point <strong>x</strong> to that distribution is:</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>D</mi><mi>M</mi></msub><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><mo>&#x0002C;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msqrt><mrow><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><mo>&#x02212;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><msup><mo stretchy="false">&#x00029;</mo><mrow><mi mathvariant="sans-serif">T</mi></mrow></msup><msup><mrow><mi mathvariant="bold-italic">&#x003A3;</mi></mrow><mrow><mo>&#x02212;</mo><mn>1</mn></mrow></msup><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><mo>&#x02212;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><mo stretchy="false">&#x00029;</mo></mrow></msqrt></mrow></math></div>
+<p>Read it from the inside out. Subtract <strong>μ</strong> to measure how far the point is from the centre. Multiply by <strong>Σ⁻¹</strong> to rescale and untangle the correlated directions. The superscript <strong>T</strong> turns the first vector sideways so the multiplication produces one number. The square root puts that number back on a distance scale.</p>
+<p>The <strong>Σ⁻¹</strong> term, the inverse of the covariance matrix, is doing all the work. It makes movement along high-variance directions count less and movement along low-variance directions count more. Equivalently, you can whiten the data first, turning its tilted ellipse into a circle, and then use ordinary Euclidean distance. The formula knows the difference.</p>
+<figure class="figure diagram-figure"><div class="diagram__scroll"><a class="diagram-plate diagram-plate--paper" href="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/a27ca7ed176d4bce-paper.svg" target="_blank" rel="noopener"><img src="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/a27ca7ed176d4bce-paper.svg" width="196" height="692" alt="Diagram (opens full size)" loading="lazy" decoding="async"></a><a class="diagram-plate diagram-plate--press" href="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/f502ca6e70bd0101-press.svg" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/f502ca6e70bd0101-press.svg" width="196" height="692" alt="" loading="lazy" decoding="async"></a></div></figure>
+<p>Three special cases help make it concrete.</p>
+<p><strong>1. Identity covariance.</strong> When <strong>Σ = I</strong> (ones down the diagonal and zeroes elsewhere), <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>D</mi><mi>M</mi></msub></mrow></math> collapses exactly to Euclidean distance. Every dimension is independent and already on the same scale.</p>
+<p><strong>2. Different scales, no correlation.</strong> When <strong>Σ</strong> is diagonal but its variances differ, the formula becomes:</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>D</mi><mi>M</mi></msub><mo>&#x0003D;</mo><msqrt><mrow><mfrac><mrow><mo stretchy="false">&#x00028;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>&#x02212;</mo><msub><mi>&#x003BC;</mi><mn>1</mn></msub><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow><mrow><msubsup><mi>&#x003C3;</mi><mn>1</mn><mn>2</mn></msubsup></mrow></mfrac><mo>&#x0002B;</mo><mfrac><mrow><mo stretchy="false">&#x00028;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&#x02212;</mo><msub><mi>&#x003BC;</mi><mn>2</mn></msub><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow><mrow><msubsup><mi>&#x003C3;</mi><mn>2</mn><mn>2</mn></msubsup></mrow></mfrac><mo>&#x0002B;</mo><mo>&#x022EF;</mo></mrow></msqrt></mrow></math></div>
+<p>Each difference is measured in units of that feature's usual variation. A ten-centimetre deviation matters less for a feature that routinely varies by twenty centimetres than for one that varies by two.</p>
+<p><strong>3. Correlated measurements.</strong> The general case, with off-diagonal terms, rotates as well as rescales the coordinate system so the long and narrow directions of the data cloud are treated differently.</p>
+<p>There is also a statistical interpretation that makes the distance genuinely useful: if <strong>x</strong> is drawn from a multivariate normal distribution <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>N</mi><mo stretchy="false">&#x00028;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><mo>&#x0002C;</mo><mrow><mi mathvariant="bold-italic">&#x003A3;</mi></mrow><mo stretchy="false">&#x00029;</mo></mrow></math> and those population parameters are known, then <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>D</mi><mi>M</mi></msub><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow></math> follows a chi-squared distribution with <em>d</em> degrees of freedom, where <em>d</em> is the number of measurements. A chi-squared table tells you how large a squared distance would be unusual under that model, which gives outlier detection a principled threshold. Once the mean and covariance are estimated from finite data, or the normal model is wrong, that calibration needs more care.</p>
+<p>Don't worry about the matrix inversion for now. It's not a trivial computation; in high dimensions, inverting <strong>Σ</strong> costs O(d³) and requires enough data to estimate it reliably (you need more samples than dimensions, or the matrix becomes singular).</p>
+<p>This is a real practical constraint in large-scale ML, and it's why people use diagonal approximations and low-rank tricks in practice.</p>
+<hr />
+<h2 id="where-it-lives-in-modern-ml">Where it lives in modern ML <a class="heading-anchor" href="#where-it-lives-in-modern-ml" aria-label="Link to this section">#</a></h2>
+<p>It appears in a specific set of methods:</p>
+<p><strong>Linear Discriminant Analysis (LDA)</strong> is a classifier: given a new point, it decides which labelled group probably produced it. It scores the point using its Mahalanobis distance from each class mean under one shared covariance matrix, while also accounting for how common each class is. With equally common classes, this becomes nearest mean by Mahalanobis distance.</p>
+<p><strong>Quadratic Discriminant Analysis (QDA)</strong> gives each class its own covariance matrix. That allows differently shaped clouds, but the probability score must also account for the volume represented by each covariance matrix through its determinant. <a href="https://scikit-learn.org/stable/modules/lda_qda.html">Scikit-learn, &quot;Linear and Quadratic Discriminant Analysis&quot;</a></p>
+<p><strong>Gaussian Mixture Models (GMMs)</strong> treat a dataset as several overlapping bell-shaped clouds. The Expectation-Maximization algorithm, or EM, alternates between estimating which cloud probably owns each point and updating the clouds from those soft assignments. In its assignment step, squared Mahalanobis distance measures how well the point fits each cloud's shape, alongside the cloud's size and prevalence. The formula is present even when the name is not.</p>
+<p>When I first worked through this in a probabilistic ML course, the connection was not mentioned. It was presented as &quot;the EM algorithm updates soft assignments,&quot; with the formula given in exponential form. The Mahalanobis distance was invisible, present in the math and absent from the framing. That is the curriculum problem that bothers me more than the biographical one: we miss what the underlying structure actually is. (Not to mention that the class was one of the most underexplained and underdocumented courses I have ever taken.)</p>
+<p><strong>Multivariate outlier detection</strong> is the most direct application. Under a fitted multivariate Gaussian, you compute D_M for each new point and compare it with a reference threshold. When the model and parameter estimates are reliable, the chi-squared relationship gives that threshold a statistical interpretation. When they are not, it is a baseline, not an oracle.</p>
+<p>I still find its persistence odd. We have spent ninety years adding neural layers, attention mechanisms, and billion-parameter models to the pile, and this old quadratic form remains a useful first comparison. The 1930s are inside the 2020s.</p>
+<p><strong>Mahalanobis distance in neural networks:</strong> a 2018 NeurIPS paper fitted class-conditional Gaussians to a network's learned features and used a Mahalanobis-based confidence score for out-of-distribution detection. The representation is learned; the quadratic form is still the old one. <a href="https://proceedings.neurips.cc/paper_files/paper/2018/hash/abdeb6f575ac5c6676b747bca8d09cc2-Abstract.html">Lee et al., NeurIPS 2018</a></p>
+<hr />
+<h2 id="one-small-code-demo">One small code demo <a class="heading-anchor" href="#one-small-code-demo" aria-label="Link to this section">#</a></h2>
+<p>The Python script in <code>code/demo.py</code> makes the contrast concrete. It generates a 500-point cloud from a bivariate Gaussian with correlation 0.9, plots its covariance ellipses, and compares two test points using the known mean and covariance of that generating distribution:</p>
+<ul>
+<li><strong>Point A: (1.0, −1.0).</strong> Raw Euclidean distance from centre: 1.41. Mahalanobis: 2.24.</li>
+<li><strong>Point B: (3.0, 3.0).</strong> Raw Euclidean distance from centre: 4.24. Mahalanobis: 1.54.</li>
+</ul>
+<p>Point A is physically closer to the centre. Mahalanobis rates it as more unusual because it sits in the direction the cloud rarely goes. Point B is three times further away in raw units but is consistent with a cloud that moves diagonally. Moderate coordinates can still form a strange combination.</p>
+<figure class="figure"><img src="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/terminal-output-ec275748-480.webp" srcset="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/terminal-output-ec275748-480.webp 480w, https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/img/terminal-output-ec275748-595.webp 595w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="320" alt="Terminal output showing Point A closer by Euclidean distance but farther by Mahalanobis distance than Point B." loading="lazy" decoding="async"></figure>
+
+<h2 id="get-the-code">Get the code <a class="heading-anchor" href="#get-the-code" aria-label="Link to this section">#</a></h2>
+<p><a href="https://sukalyan2003.github.io/blog/assets/code/the-distance-that-knows-how-the-data-moves/the-distance-that-knows-how-the-data-moves.zip">Download the demo ZIP</a> · <a href="https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-distance-that-knows-how-the-data-moves">View source on GitHub</a></p>
+<p>The download includes the script, README, and tests, plus the demo dependencies. Extract it, open the extracted <code>the-distance-that-knows-how-the-data-moves</code> folder in a terminal, and run:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>code/requirements.txt
+python3<span class="w"> </span>code/demo.py</code></pre></div>
+<p>See <code>code/README.md</code> for the test command.</p>
+<p>The script also writes the ellipse plot used above. The formula is a few lines of NumPy. The insight behind it is ninety years old.</p>
+<hr />
+<h2 id="the-other-thing-he-built">The other thing he built <a class="heading-anchor" href="#the-other-thing-he-built" aria-label="Link to this section">#</a></h2>
+<p>I have been writing about the distance, but Mahalanobis spent as much of his career on surveys as on the formula. In the 1930s and 1940s he developed methods for large-scale random sample surveys, optimum sampling design, pilot survey techniques, methods for estimating crop yields across a country that had no census infrastructure worth speaking of.</p>
+<p>The National Sample Survey of India (NSS), launched in 1950, was built on this work. The methods influenced the International Statistical Institute's approach to survey methodology globally.</p>
+<p>He also shaped India's Second Five-Year Plan (1956–1961). The &quot;Mahalanobis model&quot; prioritized heavy industry and capital goods over consumer goods and agriculture, arguing that building the capacity to make machines was the prerequisite for everything else. The plan's outcomes were mixed, industry grew, but agricultural pressure and consumer goods shortages were real.</p>
+<p>His largest real-world application of statistics-to-planning produced contested results.</p>
+<p>The Royal Society elected him a Fellow in 1945, two years before Partition and independence. India would later name <a href="https://mospi.gov.in/national-statistics-day">29 June as National Statistics Day</a> in his honour.</p>
+<hr />
+<h2 id="what-doesn-t-fit">What doesn't fit <a class="heading-anchor" href="#what-doesn-t-fit" aria-label="Link to this section">#</a></h2>
+<p>Mahalanobis was not an unambiguous computing pioneer.</p>
+<p>The 1936 paper is statistics instead of computer science. The connection to ML is real but downstream. Mahalanobis was thinking about how to compare populations. The later applications are something that happened to his work.</p>
+<p>Nor did the quadratic form appear in a vacuum. Harold Hotelling's 1931 T² statistic used closely related covariance-aware mathematics before Mahalanobis's generalised-distance paper. Mahalanobis's distinct contribution was to frame and develop the quantity explicitly as a distance between statistical populations. The history is concurrent work followed by a durable formulation. <a href="https://www.jstor.org/stable/2957535">Hotelling, &quot;The Generalization of Student's Ratio,&quot; 1931</a>; <a href="https://doi.org/10.1007/s13171-019-00164-5">Mahalanobis, &quot;On the Generalised Distance in Statistics,&quot; 1936 reprint</a></p>
+<p>The formula assumes you can estimate the covariance matrix reliably. In high-dimensional ML, the empirical covariance can be singular or unstable.</p>
+<p>Diagonal approximations, shrinkage estimators, and low-rank approximations are engineering responses to that gap. Mahalanobis proposed the distance for modest collections of measurements; a vision model with ten thousand features is a different numerical problem.</p>
+<p>That is how a lot of statistics travels into ML. A formulation from the 1920s or 1930s shows up inside a modern method, with its assumptions covered by the abstraction layer above it. When the approximation fails, you are better placed if you know what the original assumption was.</p>
+<hr />
+<h2 id="the-thing-to-come-back-to">The thing to come back to <a class="heading-anchor" href="#the-thing-to-come-back-to" aria-label="Link to this section">#</a></h2>
+<p>Mahalanobis is a case where the history is well-documented, he is not obscure, the paper has a clear citation trail, the ISI is a real institution with a real address in Kolkata, and yet I completed an ML module that used methods directly traceable to his 1936 paper and never knew exactly who he was.</p>
+<p>The Mahalanobis in the Mahalanobis distance is just a random word, not a person.</p>
+<p>That specific invisibility pattern is what this series is about. Not unknown history, rather known history that just did not travel as far as the method it produced.</p>
+<p>The distance is scale-invariant and covariance-aware. The curriculum, it turns out, was neither.</p>
+<hr />
+<p>Try changing the correlation in <code>code/demo.py</code> from 0 to 0.5, 0.9, and 0.99, then watch what happens to Point A. If you find a covariance matrix the validation mishandles, open an issue on the repository.</p>
+<h2 id="sources-and-further-reading">Sources and further reading <a class="heading-anchor" href="#sources-and-further-reading" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>Mahalanobis, P. C. <a href="https://doi.org/10.1007/s13171-019-00164-5">&quot;On the generalised distance in statistics&quot;</a>. <em>Proceedings of the National Institute of Sciences of India</em>, Vol. 2, No. 1, pp. 49–55, 1936. Primary paper, linked through the 2018 <em>Sankhyā</em> reprint.</li>
+<li>Scikit-learn, <a href="https://scikit-learn.org/stable/modules/lda_qda.html">&quot;Linear and Quadratic Discriminant Analysis&quot;</a>. LDA and QDA likelihoods, priors, covariance determinants, and Mahalanobis interpretation.</li>
+<li>Lee, Kimin, et al. <a href="https://proceedings.neurips.cc/paper_files/paper/2018/hash/abdeb6f575ac5c6676b747bca8d09cc2-Abstract.html">&quot;A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks&quot;</a>. NeurIPS 2018.</li>
+<li>Indian Statistical Institute, <a href="https://www2.isical.ac.in/~deanweb/GNRLRULES-REGULATIONS.pdf">official history and regulations</a>.</li>
+<li>Ministry of Statistics, Government of India, <a href="https://mospi.gov.in/national-statistics-day">National Statistics Day</a>.</li>
+<li>MacTutor History of Mathematics, <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Mahalanobis/">&quot;Prasanta Chandra Mahalanobis&quot;</a>.</li>
+<li>Hotelling, H. <a href="https://www.jstor.org/stable/2957535">&quot;The Generalization of Student's Ratio&quot;</a>. <em>Annals of Mathematical Statistics</em> 2(3): 360–378, 1931.</li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>The Number That Shouldn&#x27;t Exist</title>
       <link>https://sukalyan2003.github.io/blog/the-number-that-shouldn-t-exist/</link>
@@ -93,6 +221,11 @@
 <span class="n">show_addition</span><span class="p">(</span><span class="mi">347</span><span class="p">,</span> <span class="mi">485</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># → 1101000000 (= 832)</span></code></pre></div>
 <p>Binary is literally the same positional structure as Decimal with base 2 instead of base 10. The computer's adder circuits are built on the local, carry-propagating column algorithm. The reason you can implement addition in hardware, in gates, in silicon, is that each bit position needs only its two input bits plus one carry bit from the right. That locality comes from the positional structure. That positional structure, in the form the whole world uses, comes from India. <a href="https://en.wikipedia.org/wiki/Positional_notation">Wikipedia, &quot;Positional notation&quot;</a></p>
 <hr />
+<h2 id="get-the-code">Get the code <a class="heading-anchor" href="#get-the-code" aria-label="Link to this section">#</a></h2>
+<p><a href="https://sukalyan2003.github.io/blog/assets/code/the-number-that-shouldn-t-exist/the-number-that-shouldn-t-exist.zip">Download the demo ZIP</a> · <a href="https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-number-that-shouldn-t-exist">View source on GitHub</a></p>
+<p>The download includes the script, README, and tests. Extract it, open the extracted <code>the-number-that-shouldn-t-exist</code> folder in a terminal, and run:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code>python3<span class="w"> </span>code/place_value.py</code></pre></div>
+<p>The demo uses only the Python standard library. See <code>code/README.md</code> for the test command.</p>
 <h2 id="baghdad-then-pisa-then-everywhere">Baghdad, then Pisa, then everywhere <a class="heading-anchor" href="#baghdad-then-pisa-then-everywhere" aria-label="Link to this section">#</a></h2>
 <p>Brahmagupta's <em>Brāhmasphuṭasiddhānta</em> was written in 628. About 200 years later, a Persian mathematician named Muḥammad ibn Mūsā al-Khwārizmī, working in the House of Wisdom in Baghdad, wrote a treatise on Hindu numerals, <em>De numero Indorum</em> in its Latin title, that gave a full account of the Indian place-value system including zero. The text is described as likely based on an Arabic translation of Brahmagupta's work. <a href="https://www.britannica.com/biography/al-Khwarizmi">Britannica, &quot;Al-Khwarizmi&quot;</a></p>
 <p>Al-Khwārizmī also wrote <em>Kitāb al-mukhtaṣar fī ḥisāb al-jabr wal-muqābala</em>, &quot;The Compendious Book on Calculation by Completion and Balancing.&quot; The Arabic <em>al-jabr</em> from that title gives us &quot;algebra.&quot; The Latinization of al-Khwārizmī's own name, <em>Algoritmi</em>, gives us &quot;algorithm.&quot; Both words that define computational thinking trace back to the same man, who was transmitting Indian mathematics westward. <a href="https://historyofinformation.com/detail.php?id=202">History of Information</a></p>
@@ -326,6 +459,11 @@ k₋₁ = 0,  k₀ = 1;   k_i = q_i · k_{i-1} + k_{i-2}</code></pre></div>
 
 <p>The output shows the valli construction for each problem, the backward fold step by step, the Bézout check, and the cross-check against the extended Euclidean method. All four problems agree.</p>
 <hr />
+<h2 id="get-the-code">Get the code <a class="heading-anchor" href="#get-the-code" aria-label="Link to this section">#</a></h2>
+<p><a href="https://sukalyan2003.github.io/blog/assets/code/the-algorithm-that-grinds-problems-to-dust/the-algorithm-that-grinds-problems-to-dust.zip">Download the demo ZIP</a> · <a href="https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-algorithm-that-grinds-problems-to-dust">View source on GitHub</a></p>
+<p>The download includes the script, README, and tests. Extract it, open the extracted <code>the-algorithm-that-grinds-problems-to-dust</code> folder in a terminal, and run:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code>python3<span class="w"> </span>code/kuttaka.py</code></pre></div>
+<p>The demo uses only the Python standard library. See <code>code/README.md</code> for the test command.</p>
 <h2 id="we-do-actually-know-about-it">We do actually know about it <a class="heading-anchor" href="#we-do-actually-know-about-it" aria-label="Link to this section">#</a></h2>
 <p>The kuṭṭaka is not obscure within Indian mathematics history. Historians of mathematics know it. It appears in Kim Plofker's <em>Mathematics in India</em> (Princeton, 2009), the standard scholarly reference. It has a Wikipedia page with decent citations. Within the field, there is no controversy about what Aryabhata did.</p>
 <p>What's annoying is the gap between &quot;known within the field&quot; and &quot;known by engineering students.&quot; My entire undergraduate curriculum covered algorithms with no mention of this. I sat through multiple courses on number theory and cryptography - both fields where the extended Euclidean algorithm is foundational - and heard nothing about Aryabhata.</p>
@@ -600,6 +738,11 @@ k₋₁ = 0,  k₀ = 1;   k_i = q_i · k_{i-1} + k_{i-2}</code></pre></div>
 <p>The mātrā-vṛtta problem is not contrived. Ancient Sanskrit poets genuinely cared about how many different metrical forms were available in a given mora count.</p>
 <p>It follows from the structure of the problem, from the fact that you have two syllable types with different weights. The same structure underlies the rabbit problem, which is why Fibonacci got there too. Independent convergence on the same structure.</p>
 <hr />
+<h2 id="get-the-code">Get the code <a class="heading-anchor" href="#get-the-code" aria-label="Link to this section">#</a></h2>
+<p><a href="https://sukalyan2003.github.io/blog/assets/code/the-poet-who-accidentally-invented-binary-sort-of/the-poet-who-accidentally-invented-binary-sort-of.zip">Download the demo ZIP</a> · <a href="https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-poet-who-accidentally-invented-binary-sort-of">View source on GitHub</a></p>
+<p>The download includes the script, README, and tests. Extract it, open the extracted <code>the-poet-who-accidentally-invented-binary-sort-of</code> folder in a terminal, and run:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code>python3<span class="w"> </span>code/pingala.py</code></pre></div>
+<p>The demo uses only the Python standard library. See <code>code/README.md</code> for the test command.</p>
 <h2 id="my-gripes">My gripes <a class="heading-anchor" href="#my-gripes" aria-label="Link to this section">#</a></h2>
 <p>The prastāra is not an obscure curio. It is a fully worked algorithmic system for binary enumeration that predates Leibniz by two thousand years. The Fibonacci attribution we use in every CS curriculum is missing at minimum three Indian scholars who came before him.</p>
 <p>There's a version of this story where you wave the flag and declare victory - ancient India, binary, two thousand years ahead of the West.</p>
@@ -773,8 +916,11 @@ Input:  &#x27;rAm|a|iti&#x27;
           note: a + i → e  (guṇa coalescence)
 Output: &#x27;rAm|eti&#x27;</code></pre></div>
 <p>The higher-priority homogeneous coalescence rules (6.1.77, 6.1.78) demonstrate apavāda: when <em>i+i</em> or <em>u+u</em> are the input, those rules fire instead of the guṇa rules, because exceptions outrank generals.</p>
-<p>For the full engine and tests: <code>code/README.md</code>.</p>
-<p><a href="https://github.com/Sukalyan2003/Unsung-Bits/tree/main/01-panini-grammar/code">https://github.com/Sukalyan2003/Unsung-Bits/tree/main/01-panini-grammar/code</a></p>
+<h2 id="get-the-code">Get the code <a class="heading-anchor" href="#get-the-code" aria-label="Link to this section">#</a></h2>
+<p><a href="https://sukalyan2003.github.io/blog/assets/code/the-grammar-that-runs-like-a-program/the-grammar-that-runs-like-a-program.zip">Download the demo ZIP</a> · <a href="https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-grammar-that-runs-like-a-program">View source on GitHub</a></p>
+<p>The download includes the script, README, and tests. Extract it, open the extracted <code>the-grammar-that-runs-like-a-program</code> folder in a terminal, and run:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code>python3<span class="w"> </span>code/panini_engine.py</code></pre></div>
+<p>The demo uses only the Python standard library. See <code>code/README.md</code> for the test command.</p>
 <figure class="figure"><img src="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/img/e65ccdf8611f-29381a2e-480.webp" srcset="https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/img/e65ccdf8611f-29381a2e-480.webp 480w, https://sukalyan2003.github.io/blog/the-grammar-that-runs-like-a-program/img/e65ccdf8611f-29381a2e-768.webp 768w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="489" alt="" loading="lazy" decoding="async"></figure>
 
 <p>Have you tried running the toy engine, or do you have thoughts on the structural convergences? Open an issue in the repo if you'd like to see more complex rules implemented, or drop a comment below.</p>
@@ -4960,83 +5106,6 @@ At the very end, everything is read from the buffer and added up for one last ti
 <p>For the next post on this topic, I plan on creating something that’s not a toy example, something that can be actually used. It won’t be in C most likely, but in some other language like Python or Rust.</p>
 <p>Would love any suggestions regarding what to make.</p>
 <p>Until then, stay tuned!</p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>What even are LLMs?</title>
-      <link>https://sukalyan2003.github.io/blog/what-even-are-llms/</link>
-      <guid isPermaLink="true">https://sukalyan2003.github.io/blog/what-even-are-llms/</guid>
-      <pubDate>Tue, 10 Dec 2024 12:32:27 +0000</pubDate>
-      <dc:creator>Sukalyan Roy</dc:creator>
-      <description>Explore the world of Large Language Models (LLMs) driving AI chatbots and their future applications, challenges, and recent advancements</description>
-      <category>LLM</category>
-      <category>RAG</category>
-      <content:encoded><![CDATA[<h3 id="what-exactly-is-an-llm">What exactly is an LLM? <a class="heading-anchor" href="#what-exactly-is-an-llm" aria-label="Link to this section">#</a></h3>
-<p>It’s what drives ChatgGPT. No, really. That’s what an LLM is. From Chatgpt to Claude to Bing to Gemini, the technical term for these magical chatbots is a Large Language Model (LLM).</p>
-<p>For a clear first impression, watching <a href="https://www.youtube.com/watch?v=zjkBMFhNj_g%5D(https://www.youtube.com/watch?v=zjkBMFhNj_g)">This video</a> is essential; barely anyone else can explain LLMs like Andrej.<br />
-Consider this post as simultaneously a TLDR of the video and a somewhat deeper dive into the topics through supplementary articles.</p>
-<p>And if you're curious about Neural networks in general, you should check out another post of mine, <a href="https://sukalyan2003.github.io/blog/understanding-neural-networks/">here</a></p>
-<p>To summarize the idea, LLMs or Large Language Models are the product of a new way of thinking about text processing.</p>
-<p>It works on the fairly new attention-based transformer architecture to encode all its training data into a set of internal representations. Given how the training data is a several terabyte scrape of the internet, one could, as Andrej explains it, think of it like a semantic, lossy compression of the internet itself.</p>
-<p>These representations work like a probabilistic &quot;next word predictor&quot; of sorts, which takes in some context and generates new words. It then takes those words back into it's context and repeats this process for a set amount of iterations.</p>
-<p>The training step is the actual heavy-duty process and something that most of us do not need to care about, as users of the API or the open-weight/open-source files/models.</p>
-<p>Speaking of the architecture itself, here is a diagram from the paper &quot;Attention is all you need&quot;:</p>
-<figure class="figure"><img src="https://sukalyan2003.github.io/blog/what-even-are-llms/img/11274d0e7dbb-9542cb31-480.webp" srcset="https://sukalyan2003.github.io/blog/what-even-are-llms/img/11274d0e7dbb-9542cb31-480.webp 480w, https://sukalyan2003.github.io/blog/what-even-are-llms/img/11274d0e7dbb-9542cb31-635.webp 635w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="587" alt="Diagram of the Transformer model architecture, showing the encoder and decoder stacks. Each consists of layers of multi-head attention and feed-forward neural networks, with add and norm steps. Positional encoding is applied to input and output embeddings. The decoder includes masked multi-head attention. Output probabilities are obtained after a linear layer and softmax." loading="lazy" decoding="async"></figure>
-
-<p>this has a lot of parts and if there is enough demand for this, I will immediately start working on my own explanation of this seminal paper.</p>
-<h3 id="what-s-the-reversal-curse">What's the reversal curse? <a class="heading-anchor" href="#what-s-the-reversal-curse" aria-label="Link to this section">#</a></h3>
-<p>The reversal curse is the tendency of LLMs to not have bidirectional reasoning among it's internal logic.</p>
-<p>(Note: This is mostly true for Autoencoder models, which happen to be the most common type in use. For stuff like Google’s BERT, this might be less of a problem)</p>
-<p>It means that, if it is trained on sentences like <code>X is Y</code>, then it will learn precisely that, but it won't be able to answer questions like &quot;What is Y&quot;.</p>
-<p>More precisely, if a model is trained mostly on data that says <code>name is description</code> Then it won't be able to reason that <code>description refers to name</code>.</p>
-<p>For example: if it is trained on <code>Rabindranath Tagore was the first asian to win the Nobel prize</code>.</p>
-<p>If you ask who Rabindranath Tagore is, it will respond about the Nobel Prize.</p>
-<p>But if you ask &quot;Who was the first Asian to win a Nobel Prize?&quot; then the model won't be able to answer.</p>
-<p>Now to be clear about this, for my particular example, there are countless examples of both the former and the latter form of this bit of data on the internet, so an average model trained on it will be able to answer it.</p>
-<p><strong>But</strong> there are many many cases where both the direct and indirect form of the knowledge will not be present. For most cases it won't be sufficiently present. So the model will fail here.</p>
-<p>There have been several attempts to retrain or finetune models to work around this but with no noticeable improvement so far.</p>
-<p>Do humans have something similar? think about the last time you tried to rattle out the alphabet or a random poem in reverse.</p>
-<h3 id="how-might-one-make-their-own-transformers">How might one make their own transformers? <a class="heading-anchor" href="#how-might-one-make-their-own-transformers" aria-label="Link to this section">#</a></h3>
-<p>there are several tutorials online, but as a principle, you will start by learning about the transformer architecture and attention mechanism, followed by a fair amount of programming. Soon, I will be trying out the best tutorial on the internet by Andrej Karpathy and write up my journey as I go. Stay tuned for that.</p>
-<h3 id="intro-to-finetuning-models">Intro to finetuning models <a class="heading-anchor" href="#intro-to-finetuning-models" aria-label="Link to this section">#</a></h3>
-<p>Once the major training period on vast amount of data is done(quantity over quality), we have what is called a base model.</p>
-<p>This base model now forms the foundation for different models in use. However, this base model by itself is useless, we need to train these models further on the specific use case we are hoping to use it for. We need to &quot;finetune&quot; it using domain or interaction specific data. (quality over quantity)</p>
-<p>Often this data comes from proprietary sources or is done manually by humans who write up sample conversations (There are outsourcing companies for this like ScaleAi). In many cases such as that of Chatgpt, it uses user ratings on given responses, asks the users about alternatives to internally keep updating the model's behavior.</p>
-<p>Even though it is cheaper than full fledged base model creation; Effective finetuning takes a nontrivial amount of hardware which is often not found on Low end or budget Desktops and laptops. In that case, online providers like Google Colab is a relatively cheap and effective solution to experiment with this.</p>
-<p>I have delved into some aspects of finetuning before when working on my chatbot for a hackathon. Still, there is a lot i need to learn myself before I can come up with a detailed exposition on this topic. Stay tuned for that.</p>
-<h3 id="breaking-and-toying-with-llms">Breaking and Toying with LLMs <a class="heading-anchor" href="#breaking-and-toying-with-llms" aria-label="Link to this section">#</a></h3>
-<p>There are many ways to bend LLMs to your will, most of them relevant to Online or API based Models because they have the most restrictions, whereas the Open source models are much more open about content.</p>
-<p>Disclaimer: There are many many more that I discovered from reading research papers and articles online, which i do not feel comfortable sharing for the fear of misuse. I myself shall always refrain from using these LLMs for malicious purposes.</p>
-<p>Some of those include things like</p>
-<ol>
-<li>
-<p>Jailbreaks: essentially roleplaying with the LLM in a way to convince it that it has no restrictions.</p>
-</li>
-<li>
-<p>Asking your &quot;forbidden&quot; question in languages other than english, because even though the models are trained on many different languages, most of the security measures are implemented in english.</p>
-</li>
-<li>
-<p>Prompt injection attacks: Used by websites to gain control over models that actively query data from sites. Usually these are instructions for the model, written in white text inside the web pages so that it is invisible to the users, but often these are effective enough that it can change the behaviour of the responses.</p>
-</li>
-</ol>
-<h3 id="recent-developments">Recent Developments <a class="heading-anchor" href="#recent-developments" aria-label="Link to this section">#</a></h3>
-<p>In his book Thinking fast and slow, Daniel Kahneman explains his theory about two systems in the human brain. System 1 is intuitive, fast(split second), not correct all the time but good enough. It is in many ways important for us to survive our day to day lives without overthinking everything.</p>
-<p>System 2 on the other hand, is all about effortful thinking, deliberating, analysis and decision making. This is the system of our brain that leads to nontrivial developments in human knowledge, which helps us to make the really important decisions in our life.</p>
-<p>In recent times, models like chatgpt have been slowly incorporating more System 2 thinking in their models, so that instead of acting like next word generators with no thinking, it actually does some &quot;thinking&quot; internally which is not shown to the user, before the final answer is given. Now according to my current understanding, this is just some form of self prompting using tried and tested prompt engineering techniques implemented directly into the model and not some philosophical or biological equivalent of actual human thinking.</p>
-<h3 id="future-prospects">Future prospects? <a class="heading-anchor" href="#future-prospects" aria-label="Link to this section">#</a></h3>
-<p>There are some researchers working on making LLMs collaborate with each other. Where a general purpose model starts working on something, and based on certain &quot;switches&quot; they decide when to ask an expert model for more elaboration.</p>
-<p>In this way, most of the work is done by a lightweight general puporse model, and the detailed finetuned ones are only called when a depth of data is needed.</p>
-<h4 id="new-paradigm-in-operating-systems">New paradigm in Operating Systems <a class="heading-anchor" href="#new-paradigm-in-operating-systems" aria-label="Link to this section">#</a></h4>
-<p>There is a growing interest in the application of LLMs as the central hub or kernel that would sit at the centre of a next generation Operating system. Instead of traditional Operating systems, you would have a direct interface to the LLM and it will orchestrate all your daily needs. Almost like a real life Jarvis.</p>
-<p>there are many implementations that &quot;sort of&quot; work today and many more research papers detailing different approaches to balance the load between traditional OS and LLM based solutions.</p>
-<h3 id="references-and-further-reading">References and further reading <a class="heading-anchor" href="#references-and-further-reading" aria-label="Link to this section">#</a></h3>
-<p>To wrap it all up, i’ve put forward the most succinct explanations of the basics I could, and there are many great resources online to learn more.</p>
-<p>Do check these links out, and drop all your suggestions for further posts or any questions related to the content covered down in the comment section.</p>
-<p><a href="https://www.lesswrong.com/posts/SCqDipWAhZ49JNdmL/paper-llms-trained-on-a-is-b-fail-to-learn-b-is-a">https://www.lesswrong.com/posts/SCqDipWAhZ49JNdmL/paper-llms-trained-on-a-is-b-fail-to-learn-b-is-a</a> This goes deeper into the reversal curse.</p>
-<p><a href="https://news.mit.edu/2024/enhancing-llm-collaboration-smarter-more-efficient-solutions-0916">https://news.mit.edu/2024/enhancing-llm-collaboration-smarter-more-efficient-solutions-0916</a> This talks about inter LLM collaborations for more effective expert knowledge.</p>
-<p>The following two delve into the topic of LLM OS.</p>
-<p><a href="https://community.aws/content/2eojjD2E7TBgPFJmB2FGAtrSSBh/the-rise-of-the-llm-os-from-aios-to-memgpt-and-beyond">https://community.aws/content/2eojjD2E7TBgPFJmB2FGAtrSSBh/the-rise-of-the-llm-os-from-aios-to-memgpt-and-beyond</a></p>
-<p><a href="https://mansour-damanpak.medium.com/llm-os-and-software-2-0-the-dawn-of-a-new-computing-era-12d59a007ef8">https://mansour-damanpak.medium.com/llm-os-and-software-2-0-the-dawn-of-a-new-computing-era-12d59a007ef8</a></p>
 ]]></content:encoded>
     </item>
   </channel>

@@ -10,6 +10,7 @@ tags: ["algorithms", "india", "mathematics", "number-theory", "computer-science-
 cover: "img/the-algorithm-that-grinds-problems-to-dust/ef24bce23797.webp"
 coverAlt: ""
 hashnode: {"cuid": "cmu84tvoo00000agm6g1wdf33", "url": "https://sukalyanroy.hashnode.dev/the-algorithm-that-grinds-problems-to-dust"}
+dateUpdated: "2026-10-02T15:48:31.646147Z"
 ---
 
 ## TL;DR
@@ -199,6 +200,18 @@ python3 code/kuttaka.py
 The output shows the valli construction for each problem, the backward fold step by step, the Bézout check, and the cross-check against the extended Euclidean method. All four problems agree.
 
 * * *
+
+## Get the code
+
+[Download the demo ZIP](/blog/assets/code/the-algorithm-that-grinds-problems-to-dust/the-algorithm-that-grinds-problems-to-dust.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-algorithm-that-grinds-problems-to-dust)
+
+The download includes the script, README, and tests. Extract it, open the extracted `the-algorithm-that-grinds-problems-to-dust` folder in a terminal, and run:
+
+```bash
+python3 code/kuttaka.py
+```
+
+The demo uses only the Python standard library. See `code/README.md` for the test command.
 
 ## We do actually know about it
 

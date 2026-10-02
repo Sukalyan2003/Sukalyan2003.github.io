@@ -10,6 +10,7 @@ tags: ["india", "mathematics", "computer-science-history"]
 cover: "img/the-number-that-shouldn-t-exist/a1950162fd6f.webp"
 coverAlt: ""
 hashnode: {"cuid": "cmui16ak300000agmhf1h7xl5", "url": "https://sukalyanroy.hashnode.dev/the-number-that-shouldn-t-exist"}
+dateUpdated: "2026-10-02T15:48:31.705155Z"
 ---
 
 ## TL;DR
@@ -136,6 +137,18 @@ show_addition(347, 485, base=2)    # → 1101000000 (= 832)
 Binary is literally the same positional structure as Decimal with base 2 instead of base 10. The computer's adder circuits are built on the local, carry-propagating column algorithm. The reason you can implement addition in hardware, in gates, in silicon, is that each bit position needs only its two input bits plus one carry bit from the right. That locality comes from the positional structure. That positional structure, in the form the whole world uses, comes from India. [Wikipedia, "Positional notation"](https://en.wikipedia.org/wiki/Positional_notation)
 
 * * *
+
+## Get the code
+
+[Download the demo ZIP](/blog/assets/code/the-number-that-shouldn-t-exist/the-number-that-shouldn-t-exist.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-number-that-shouldn-t-exist)
+
+The download includes the script, README, and tests. Extract it, open the extracted `the-number-that-shouldn-t-exist` folder in a terminal, and run:
+
+```bash
+python3 code/place_value.py
+```
+
+The demo uses only the Python standard library. See `code/README.md` for the test command.
 
 ## Baghdad, then Pisa, then everywhere
 

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Distance That Knows How the Data Moves - Engineering Tales</title>
+<meta name="description" content="In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.">
+<meta name="author" content="Sukalyan Roy">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self' 'sha256-pP5MwfJZWvCxkSS0iO9M4STcOUeW0jl58hfmJEgF9/Y='; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="Engineering Tales">
+<meta property="og:title" content="The Distance That Knows How the Data Moves - Engineering Tales">
+<meta property="og:description" content="In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.">
+<meta property="og:url" content="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/">
+<meta property="og:image" content="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/og-f0311ebd.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-03T02:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-03T02:30:00.000Z">
+<meta property="article:author" content="https://sukalyan2003.github.io/">
+<meta property="article:section" content="Unsung Bits">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="statistics">
+<meta property="article:tag" content="india">
+<meta property="article:tag" content="data science">
+<meta property="article:tag" content="unsung bits">
+<meta property="article:tag" content="history of science">
+<meta property="article:tag" content="anomaly detection">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Distance That Knows How the Data Moves - Engineering Tales">
+<meta name="twitter:description" content="In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.">
+<meta name="twitter:image" content="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/og-f0311ebd.jpg">
+
+<link rel="preload" href="../../assets/record/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/record/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/record/fonts/fonts.css">
+<link rel="stylesheet" href="../../assets/record/css/styles.css?v=1">
+<link rel="stylesheet" href="../assets/blog.css?v=a1b88f52">
+<script>try{var t=localStorage.getItem('the-record-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<link rel="icon" href="../../assets/record/img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/record/img/favicon-32.png">
+<link rel="apple-touch-icon" href="../../assets/record/img/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Engineering Tales - Sukalyan Roy" href="../rss.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/#article",
+      "mainEntityOfPage": "https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/",
+      "url": "https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/",
+      "headline": "The Distance That Knows How the Data Moves",
+      "description": "In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.",
+      "datePublished": "2026-10-03T02:30:00.000Z",
+      "dateModified": "2026-10-03T02:30:00.000Z",
+      "author": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "url": "https://sukalyan2003.github.io/"
+      },
+      "image": [
+        "https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/og-f0311ebd.jpg"
+      ],
+      "keywords": [
+        "machine learning",
+        "statistics",
+        "india",
+        "data science",
+        "unsung bits",
+        "history of science",
+        "anomaly detection"
+      ],
+      "articleSection": "Unsung Bits",
+      "wordCount": 2631,
+      "inLanguage": "en",
+      "isPartOf": {
+        "@type": "Blog",
+        "@id": "https://sukalyan2003.github.io/blog/#blog",
+        "name": "Engineering Tales",
+        "url": "https://sukalyan2003.github.io/blog/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sukalyan2003.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://sukalyan2003.github.io/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Unsung Bits",
+          "item": "https://sukalyan2003.github.io/blog/unsung-bits/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "The Distance That Knows How the Data Moves",
+          "item": "https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="blog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="masthead masthead--blog masthead--compact">
+  <div class="sheet">
+    <p class="masthead__name blog-nameplate"><a href="../">Engineering Tales</a></p>
+    <hr class="masthead__rule">
+    <div class="masthead__strap">
+      <p class="dateline">
+        <span><a href="../../">Sukalyan Roy</a></span><span>Technical lab notebook</span><span>27 posts</span>
+      </p>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-pressed="false">
+        <span class="theme-toggle__on" data-theme-label>Paper</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="contents blog-nav" aria-label="Blog sections">
+  <div class="sheet">
+    <ul class="contents__list blog-nav__list">
+      <li><a href="../start-here/">Start here</a></li><li><a href="../linux/">Linux</a></li><li><a href="../aiml/">AIML</a></li><li><a href="../unsung-bits/" class="is-current" aria-current="page">Unsung Bits</a></li><li><a href="../programming-concepts/">Programming Concepts</a></li><li><a href="../moocs/">Moocs</a></li>
+      <li class="blog-nav__search-item"><a class="blog-nav__search" href="../#search">Search</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="sheet">
+    <article class="article" aria-labelledby="article-title">
+      <header class="article__head">
+        <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../">Blog</a></li><li><a href="../unsung-bits/">Unsung Bits</a></li></ol></nav>
+        <p class="article__series label">Part 6 of 6</p>
+        <h1 class="article__title" id="article-title">The Distance That Knows How the Data Moves</h1>
+        <p class="standfirst article__standfirst">In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning.</p>
+        <p class="dateline article__dateline"><span>By <a href="../../">Sukalyan Roy</a></span><span>Published <time datetime="2026-10-03T02:30:00.000Z">3 Oct 2026</time></span><span>11 min read</span></p>
+      </header>
+      <div class="article__layout">
+        <aside class="article__rail" aria-label="Article details">
+          <dl class="article__facts">
+            <div><dt>Published</dt><dd><time datetime="2026-10-03T02:30:00.000Z">3 Oct 2026</time></dd></div>
+            
+            <div><dt>Reading time</dt><dd>11 min</dd></div>
+            <div><dt>Section</dt><dd><a href="../unsung-bits/">Unsung Bits</a></dd></div>
+          </dl>
+          <nav class="toc" aria-label="On this page"><details class="toc__box" data-toc><summary class="label">On this page</summary><ol class="toc__list"><li class="toc__l2"><a href="#tl-dr">TL;DR</a></li><li class="toc__l2"><a href="#the-man-before-the-formula">The man before the formula</a></li><li class="toc__l2"><a href="#what-euclidean-distance-gets-wrong">What Euclidean distance gets wrong</a></li><li class="toc__l2"><a href="#one-formula-doing-a-lot-of-work">One formula, doing a lot of work</a></li><li class="toc__l2"><a href="#where-it-lives-in-modern-ml">Where it lives in modern ML</a></li><li class="toc__l2"><a href="#one-small-code-demo">One small code demo</a></li><li class="toc__l2"><a href="#get-the-code">Get the code</a></li><li class="toc__l2"><a href="#the-other-thing-he-built">The other thing he built</a></li><li class="toc__l2"><a href="#what-doesn-t-fit">What doesn&#x27;t fit</a></li><li class="toc__l2"><a href="#the-thing-to-come-back-to">The thing to come back to</a></li><li class="toc__l2"><a href="#sources-and-further-reading">Sources and further reading</a></li></ol></details></nav>
+        </aside>
+        <div class="article__main">
+          <figure class="article__cover"><img src="img/mahalanobis-ellipse-comparison-f0311ebd-480.webp" srcset="img/mahalanobis-ellipse-comparison-f0311ebd-480.webp 480w, img/mahalanobis-ellipse-comparison-f0311ebd-960.webp 960w, img/mahalanobis-ellipse-comparison-f0311ebd-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="" fetchpriority="high" decoding="async"></figure>
+          <div class="prose">
+<h2 id="tl-dr">TL;DR <a class="heading-anchor" href="#tl-dr" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>P. C. Mahalanobis framed a covariance-aware generalised distance in 1936, amid closely related contemporary work by Harold Hotelling.</li>
+<li>It measures distance after accounting for the directions in which the data naturally varies.</li>
+<li>The same quadratic form appears inside LDA, Gaussian mixtures, and multivariate anomaly detection, alongside priors and other probability terms.</li>
+<li>Under an exact multivariate normal model, its square has a chi-squared distribution; estimated or misspecified models need more care.</li>
+<li>In high dimensions, estimating and solving with the covariance matrix is the difficult part.</li>
+</ul>
+<p>I wrote my undergraduate machine learning exam without once thinking about where the distance measure came from.</p>
+<p>The exam had a question on distance metrics. I could recite the properties of Euclidean distance, L1, cosine similarity, and Mahalanobis distance in sequence, the formula, the covariance matrix, when you'd prefer it over Euclidean.</p>
+<p>I never asked who Mahalanobis was, and the course never said.</p>
+<p>The person got edited out, and I absorbed the implicit message that the idea arrived from nowhere in particular. Statistical distance arrived from somewhere in particular: Calcutta, 1936. A Bengali physicist who had spent years making statistics usable on a large scale.</p>
+<p>His name was Prasanta Chandra Mahalanobis.</p>
+<hr />
+<h2 id="the-man-before-the-formula">The man before the formula <a class="heading-anchor" href="#the-man-before-the-formula" aria-label="Link to this section">#</a></h2>
+<p>Mahalanobis was born in Calcutta on <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Mahalanobis/">29 June 1893</a>. He studied at Presidency College, went to Cambridge to read mathematics and natural sciences, and came back to India in 1915 as a physics lecturer. The statistics came sideways, on a trip to England he stumbled across a bound volume of <em>Biometrika</em>, Karl Pearson's journal, and could not put it down.</p>
+<p>There was no established Indian statistical institution or consistent national data infrastructure to plug into. He spent the 1920s building the prerequisites: methods for large-scale surveys, standards for agricultural sampling, techniques for estimating crop yields across a subcontinent with no central database.</p>
+<p>In 1931 he founded the Indian Statistical Institute in Calcutta, growing out of the small Statistical Laboratory he had set up at Presidency College. Its journal <em>Sankhyā</em>, which he started in 1933, is still running. The ISI became an Institution of National Importance in 1959. <a href="https://www2.isical.ac.in/~deanweb/GNRLRULES-REGULATIONS.pdf">Indian Statistical Institute, official history</a></p>
+<p>This is the context the 1936 paper comes from: a man who had spent a decade working with messy, real data at scale, and who had noticed a problem that the existing tools couldn't handle.</p>
+<hr />
+<h2 id="what-euclidean-distance-gets-wrong">What Euclidean distance gets wrong <a class="heading-anchor" href="#what-euclidean-distance-gets-wrong" aria-label="Link to this section">#</a></h2>
+<p>The problem is easiest to see with a picture you can build in your head.</p>
+<p>Imagine a cloud of data points: height and arm span, measured in centimetres, for a large population. The two dimensions are correlated, taller people tend to have longer arms. If you plot the cloud, it is not a circle. It is an ellipse, stretched diagonally.</p>
+<p>Now take two new people and ask: which one is more unusual?</p>
+<p>Person A is moderately above average on one measurement and moderately below average on the other. In raw terms, they sit reasonably close to the centre. But they cut across the direction of the cloud, where the population almost never goes. Their combination is unusual even though neither coordinate is extreme by itself.</p>
+<p>Person B is much further above average on both measurements. They sit further from the centre in raw distance. But they lie <em>along</em> the main axis of the cloud, exactly the direction the data expects.</p>
+<p>Euclidean distance will call Person A more normal because they are closer in raw units. A covariance-aware measure calls Person A more unusual because that combination cuts against the population pattern.</p>
+<figure class="figure"><img src="img/mahalanobis-ellipse-comparison-f0311ebd-480.webp" srcset="img/mahalanobis-ellipse-comparison-f0311ebd-480.webp 480w, img/mahalanobis-ellipse-comparison-f0311ebd-960.webp 960w, img/mahalanobis-ellipse-comparison-f0311ebd-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="360" alt="Correlated data forming a diagonal ellipse, with nearby Point A across the narrow axis and distant Point B along the long axis." loading="lazy" decoding="async"></figure>
+
+<p>His 1936 paper, <a href="https://doi.org/10.1007/s13171-019-00164-5">&quot;On the generalised distance in statistics,&quot; <em>Proceedings of the National Institute of Sciences of India</em>, Vol. 2, No. 1</a>, proposed a distance measure that accounts for the structure of the distribution itself.</p>
+<hr />
+<h2 id="one-formula-doing-a-lot-of-work">One formula, doing a lot of work <a class="heading-anchor" href="#one-formula-doing-a-lot-of-work" aria-label="Link to this section">#</a></h2>
+<p>Before the formula, three pieces of notation:</p>
+<ul>
+<li>A <strong>vector</strong> is just an ordered list of measurements. For height and arm span, <strong>x</strong> might be <code>[180, 188]</code>.</li>
+<li><strong>μ</strong> is the mean vector, the average value of each measurement.</li>
+<li><strong>Σ</strong> is the covariance matrix. Its diagonal records how much each measurement varies; its off-diagonal entries record whether two measurements tend to rise and fall together.</li>
+</ul>
+<p>The Mahalanobis distance from a point <strong>x</strong> to that distribution is:</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>D</mi><mi>M</mi></msub><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><mo>&#x0002C;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><msqrt><mrow><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><mo>&#x02212;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><msup><mo stretchy="false">&#x00029;</mo><mrow><mi mathvariant="sans-serif">T</mi></mrow></msup><msup><mrow><mi mathvariant="bold-italic">&#x003A3;</mi></mrow><mrow><mo>&#x02212;</mo><mn>1</mn></mrow></msup><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><mo>&#x02212;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><mo stretchy="false">&#x00029;</mo></mrow></msqrt></mrow></math></div>
+<p>Read it from the inside out. Subtract <strong>μ</strong> to measure how far the point is from the centre. Multiply by <strong>Σ⁻¹</strong> to rescale and untangle the correlated directions. The superscript <strong>T</strong> turns the first vector sideways so the multiplication produces one number. The square root puts that number back on a distance scale.</p>
+<p>The <strong>Σ⁻¹</strong> term, the inverse of the covariance matrix, is doing all the work. It makes movement along high-variance directions count less and movement along low-variance directions count more. Equivalently, you can whiten the data first, turning its tilted ellipse into a circle, and then use ordinary Euclidean distance. The formula knows the difference.</p>
+<figure class="figure diagram-figure"><div class="diagram__scroll"><a class="diagram-plate diagram-plate--paper" href="img/a27ca7ed176d4bce-paper.svg" target="_blank" rel="noopener"><img src="img/a27ca7ed176d4bce-paper.svg" width="196" height="692" alt="Diagram (opens full size)" loading="lazy" decoding="async"></a><a class="diagram-plate diagram-plate--press" href="img/f502ca6e70bd0101-press.svg" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="img/f502ca6e70bd0101-press.svg" width="196" height="692" alt="" loading="lazy" decoding="async"></a></div></figure>
+<p>Three special cases help make it concrete.</p>
+<p><strong>1. Identity covariance.</strong> When <strong>Σ = I</strong> (ones down the diagonal and zeroes elsewhere), <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>D</mi><mi>M</mi></msub></mrow></math> collapses exactly to Euclidean distance. Every dimension is independent and already on the same scale.</p>
+<p><strong>2. Different scales, no correlation.</strong> When <strong>Σ</strong> is diagonal but its variances differ, the formula becomes:</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>D</mi><mi>M</mi></msub><mo>&#x0003D;</mo><msqrt><mrow><mfrac><mrow><mo stretchy="false">&#x00028;</mo><msub><mi>x</mi><mn>1</mn></msub><mo>&#x02212;</mo><msub><mi>&#x003BC;</mi><mn>1</mn></msub><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow><mrow><msubsup><mi>&#x003C3;</mi><mn>1</mn><mn>2</mn></msubsup></mrow></mfrac><mo>&#x0002B;</mo><mfrac><mrow><mo stretchy="false">&#x00028;</mo><msub><mi>x</mi><mn>2</mn></msub><mo>&#x02212;</mo><msub><mi>&#x003BC;</mi><mn>2</mn></msub><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow><mrow><msubsup><mi>&#x003C3;</mi><mn>2</mn><mn>2</mn></msubsup></mrow></mfrac><mo>&#x0002B;</mo><mo>&#x022EF;</mo></mrow></msqrt></mrow></math></div>
+<p>Each difference is measured in units of that feature's usual variation. A ten-centimetre deviation matters less for a feature that routinely varies by twenty centimetres than for one that varies by two.</p>
+<p><strong>3. Correlated measurements.</strong> The general case, with off-diagonal terms, rotates as well as rescales the coordinate system so the long and narrow directions of the data cloud are treated differently.</p>
+<p>There is also a statistical interpretation that makes the distance genuinely useful: if <strong>x</strong> is drawn from a multivariate normal distribution <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>N</mi><mo stretchy="false">&#x00028;</mo><mrow><mi mathvariant="bold-italic">&#x003BC;</mi></mrow><mo>&#x0002C;</mo><mrow><mi mathvariant="bold-italic">&#x003A3;</mi></mrow><mo stretchy="false">&#x00029;</mo></mrow></math> and those population parameters are known, then <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>D</mi><mi>M</mi></msub><mo stretchy="false">&#x00028;</mo><mi>&#x1D431;</mi><msup><mo stretchy="false">&#x00029;</mo><mn>2</mn></msup></mrow></math> follows a chi-squared distribution with <em>d</em> degrees of freedom, where <em>d</em> is the number of measurements. A chi-squared table tells you how large a squared distance would be unusual under that model, which gives outlier detection a principled threshold. Once the mean and covariance are estimated from finite data, or the normal model is wrong, that calibration needs more care.</p>
+<p>Don't worry about the matrix inversion for now. It's not a trivial computation; in high dimensions, inverting <strong>Σ</strong> costs O(d³) and requires enough data to estimate it reliably (you need more samples than dimensions, or the matrix becomes singular).</p>
+<p>This is a real practical constraint in large-scale ML, and it's why people use diagonal approximations and low-rank tricks in practice.</p>
+<hr />
+<h2 id="where-it-lives-in-modern-ml">Where it lives in modern ML <a class="heading-anchor" href="#where-it-lives-in-modern-ml" aria-label="Link to this section">#</a></h2>
+<p>It appears in a specific set of methods:</p>
+<p><strong>Linear Discriminant Analysis (LDA)</strong> is a classifier: given a new point, it decides which labelled group probably produced it. It scores the point using its Mahalanobis distance from each class mean under one shared covariance matrix, while also accounting for how common each class is. With equally common classes, this becomes nearest mean by Mahalanobis distance.</p>
+<p><strong>Quadratic Discriminant Analysis (QDA)</strong> gives each class its own covariance matrix. That allows differently shaped clouds, but the probability score must also account for the volume represented by each covariance matrix through its determinant. <a href="https://scikit-learn.org/stable/modules/lda_qda.html">Scikit-learn, &quot;Linear and Quadratic Discriminant Analysis&quot;</a></p>
+<p><strong>Gaussian Mixture Models (GMMs)</strong> treat a dataset as several overlapping bell-shaped clouds. The Expectation-Maximization algorithm, or EM, alternates between estimating which cloud probably owns each point and updating the clouds from those soft assignments. In its assignment step, squared Mahalanobis distance measures how well the point fits each cloud's shape, alongside the cloud's size and prevalence. The formula is present even when the name is not.</p>
+<p>When I first worked through this in a probabilistic ML course, the connection was not mentioned. It was presented as &quot;the EM algorithm updates soft assignments,&quot; with the formula given in exponential form. The Mahalanobis distance was invisible, present in the math and absent from the framing. That is the curriculum problem that bothers me more than the biographical one: we miss what the underlying structure actually is. (Not to mention that the class was one of the most underexplained and underdocumented courses I have ever taken.)</p>
+<p><strong>Multivariate outlier detection</strong> is the most direct application. Under a fitted multivariate Gaussian, you compute D_M for each new point and compare it with a reference threshold. When the model and parameter estimates are reliable, the chi-squared relationship gives that threshold a statistical interpretation. When they are not, it is a baseline, not an oracle.</p>
+<p>I still find its persistence odd. We have spent ninety years adding neural layers, attention mechanisms, and billion-parameter models to the pile, and this old quadratic form remains a useful first comparison. The 1930s are inside the 2020s.</p>
+<p><strong>Mahalanobis distance in neural networks:</strong> a 2018 NeurIPS paper fitted class-conditional Gaussians to a network's learned features and used a Mahalanobis-based confidence score for out-of-distribution detection. The representation is learned; the quadratic form is still the old one. <a href="https://proceedings.neurips.cc/paper_files/paper/2018/hash/abdeb6f575ac5c6676b747bca8d09cc2-Abstract.html">Lee et al., NeurIPS 2018</a></p>
+<hr />
+<h2 id="one-small-code-demo">One small code demo <a class="heading-anchor" href="#one-small-code-demo" aria-label="Link to this section">#</a></h2>
+<p>The Python script in <code>code/demo.py</code> makes the contrast concrete. It generates a 500-point cloud from a bivariate Gaussian with correlation 0.9, plots its covariance ellipses, and compares two test points using the known mean and covariance of that generating distribution:</p>
+<ul>
+<li><strong>Point A: (1.0, −1.0).</strong> Raw Euclidean distance from centre: 1.41. Mahalanobis: 2.24.</li>
+<li><strong>Point B: (3.0, 3.0).</strong> Raw Euclidean distance from centre: 4.24. Mahalanobis: 1.54.</li>
+</ul>
+<p>Point A is physically closer to the centre. Mahalanobis rates it as more unusual because it sits in the direction the cloud rarely goes. Point B is three times further away in raw units but is consistent with a cloud that moves diagonally. Moderate coordinates can still form a strange combination.</p>
+<figure class="figure"><img src="img/terminal-output-ec275748-480.webp" srcset="img/terminal-output-ec275748-480.webp 480w, img/terminal-output-ec275748-595.webp 595w" sizes="(max-width: 900px) 100vw, 680px" width="480" height="320" alt="Terminal output showing Point A closer by Euclidean distance but farther by Mahalanobis distance than Point B." loading="lazy" decoding="async"></figure>
+
+<h2 id="get-the-code">Get the code <a class="heading-anchor" href="#get-the-code" aria-label="Link to this section">#</a></h2>
+<p><a href="../assets/code/the-distance-that-knows-how-the-data-moves/the-distance-that-knows-how-the-data-moves.zip">Download the demo ZIP</a> · <a href="https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-distance-that-knows-how-the-data-moves">View source on GitHub</a></p>
+<p>The download includes the script, README, and tests, plus the demo dependencies. Extract it, open the extracted <code>the-distance-that-knows-how-the-data-moves</code> folder in a terminal, and run:</p>
+<div class="code-block"><div class="code-block__bar"><span class="code-block__lang">bash</span></div><pre class="code" tabindex="0"><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>code/requirements.txt
+python3<span class="w"> </span>code/demo.py</code></pre></div>
+<p>See <code>code/README.md</code> for the test command.</p>
+<p>The script also writes the ellipse plot used above. The formula is a few lines of NumPy. The insight behind it is ninety years old.</p>
+<hr />
+<h2 id="the-other-thing-he-built">The other thing he built <a class="heading-anchor" href="#the-other-thing-he-built" aria-label="Link to this section">#</a></h2>
+<p>I have been writing about the distance, but Mahalanobis spent as much of his career on surveys as on the formula. In the 1930s and 1940s he developed methods for large-scale random sample surveys, optimum sampling design, pilot survey techniques, methods for estimating crop yields across a country that had no census infrastructure worth speaking of.</p>
+<p>The National Sample Survey of India (NSS), launched in 1950, was built on this work. The methods influenced the International Statistical Institute's approach to survey methodology globally.</p>
+<p>He also shaped India's Second Five-Year Plan (1956–1961). The &quot;Mahalanobis model&quot; prioritized heavy industry and capital goods over consumer goods and agriculture, arguing that building the capacity to make machines was the prerequisite for everything else. The plan's outcomes were mixed, industry grew, but agricultural pressure and consumer goods shortages were real.</p>
+<p>His largest real-world application of statistics-to-planning produced contested results.</p>
+<p>The Royal Society elected him a Fellow in 1945, two years before Partition and independence. India would later name <a href="https://mospi.gov.in/national-statistics-day">29 June as National Statistics Day</a> in his honour.</p>
+<hr />
+<h2 id="what-doesn-t-fit">What doesn't fit <a class="heading-anchor" href="#what-doesn-t-fit" aria-label="Link to this section">#</a></h2>
+<p>Mahalanobis was not an unambiguous computing pioneer.</p>
+<p>The 1936 paper is statistics instead of computer science. The connection to ML is real but downstream. Mahalanobis was thinking about how to compare populations. The later applications are something that happened to his work.</p>
+<p>Nor did the quadratic form appear in a vacuum. Harold Hotelling's 1931 T² statistic used closely related covariance-aware mathematics before Mahalanobis's generalised-distance paper. Mahalanobis's distinct contribution was to frame and develop the quantity explicitly as a distance between statistical populations. The history is concurrent work followed by a durable formulation. <a href="https://www.jstor.org/stable/2957535">Hotelling, &quot;The Generalization of Student's Ratio,&quot; 1931</a>; <a href="https://doi.org/10.1007/s13171-019-00164-5">Mahalanobis, &quot;On the Generalised Distance in Statistics,&quot; 1936 reprint</a></p>
+<p>The formula assumes you can estimate the covariance matrix reliably. In high-dimensional ML, the empirical covariance can be singular or unstable.</p>
+<p>Diagonal approximations, shrinkage estimators, and low-rank approximations are engineering responses to that gap. Mahalanobis proposed the distance for modest collections of measurements; a vision model with ten thousand features is a different numerical problem.</p>
+<p>That is how a lot of statistics travels into ML. A formulation from the 1920s or 1930s shows up inside a modern method, with its assumptions covered by the abstraction layer above it. When the approximation fails, you are better placed if you know what the original assumption was.</p>
+<hr />
+<h2 id="the-thing-to-come-back-to">The thing to come back to <a class="heading-anchor" href="#the-thing-to-come-back-to" aria-label="Link to this section">#</a></h2>
+<p>Mahalanobis is a case where the history is well-documented, he is not obscure, the paper has a clear citation trail, the ISI is a real institution with a real address in Kolkata, and yet I completed an ML module that used methods directly traceable to his 1936 paper and never knew exactly who he was.</p>
+<p>The Mahalanobis in the Mahalanobis distance is just a random word, not a person.</p>
+<p>That specific invisibility pattern is what this series is about. Not unknown history, rather known history that just did not travel as far as the method it produced.</p>
+<p>The distance is scale-invariant and covariance-aware. The curriculum, it turns out, was neither.</p>
+<hr />
+<p>Try changing the correlation in <code>code/demo.py</code> from 0 to 0.5, 0.9, and 0.99, then watch what happens to Point A. If you find a covariance matrix the validation mishandles, open an issue on the repository.</p>
+<h2 id="sources-and-further-reading">Sources and further reading <a class="heading-anchor" href="#sources-and-further-reading" aria-label="Link to this section">#</a></h2>
+<ul>
+<li>Mahalanobis, P. C. <a href="https://doi.org/10.1007/s13171-019-00164-5">&quot;On the generalised distance in statistics&quot;</a>. <em>Proceedings of the National Institute of Sciences of India</em>, Vol. 2, No. 1, pp. 49–55, 1936. Primary paper, linked through the 2018 <em>Sankhyā</em> reprint.</li>
+<li>Scikit-learn, <a href="https://scikit-learn.org/stable/modules/lda_qda.html">&quot;Linear and Quadratic Discriminant Analysis&quot;</a>. LDA and QDA likelihoods, priors, covariance determinants, and Mahalanobis interpretation.</li>
+<li>Lee, Kimin, et al. <a href="https://proceedings.neurips.cc/paper_files/paper/2018/hash/abdeb6f575ac5c6676b747bca8d09cc2-Abstract.html">&quot;A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks&quot;</a>. NeurIPS 2018.</li>
+<li>Indian Statistical Institute, <a href="https://www2.isical.ac.in/~deanweb/GNRLRULES-REGULATIONS.pdf">official history and regulations</a>.</li>
+<li>Ministry of Statistics, Government of India, <a href="https://mospi.gov.in/national-statistics-day">National Statistics Day</a>.</li>
+<li>MacTutor History of Mathematics, <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Mahalanobis/">&quot;Prasanta Chandra Mahalanobis&quot;</a>.</li>
+<li>Hotelling, H. <a href="https://www.jstor.org/stable/2957535">&quot;The Generalization of Student's Ratio&quot;</a>. <em>Annals of Mathematical Statistics</em> 2(3): 360–378, 1931.</li>
+</ul>
+
+          </div>
+          <footer class="article__foot">
+            <div class="tags"><a class="tag" href="../tags/machine-learning/">machine learning</a><a class="tag" href="../tags/statistics/">statistics</a><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/data-science/">data science</a><a class="tag" href="../tags/unsung-bits/">unsung bits</a><a class="tag" href="../tags/history-of-science/">history of science</a><a class="tag" href="../tags/anomaly-detection/">anomaly detection</a></div>
+            <div class="share">
+              <p class="label">Share</p>
+              <ul class="share__list">
+                <li><button class="action" type="button" data-share hidden>Share</button></li>
+                <li><button class="action" type="button" data-copy-link="https://sukalyan2003.github.io/blog/the-distance-that-knows-how-the-data-moves/" hidden>Copy link</button></li>
+                <li><a class="action" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-distance-that-knows-how-the-data-moves%2F" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a class="action" href="https://x.com/intent/post?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-distance-that-knows-how-the-data-moves%2F&amp;text=The%20Distance%20That%20Knows%20How%20the%20Data%20Moves" target="_blank" rel="noopener">X</a></li>
+                <li><a class="action" href="https://www.reddit.com/submit?url=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-distance-that-knows-how-the-data-moves%2F&amp;title=The%20Distance%20That%20Knows%20How%20the%20Data%20Moves" target="_blank" rel="noopener">Reddit</a></li>
+                <li><a class="action" href="mailto:?subject=The%20Distance%20That%20Knows%20How%20the%20Data%20Moves&amp;body=https%3A%2F%2Fsukalyan2003.github.io%2Fblog%2Fthe-distance-that-knows-how-the-data-moves%2F">Email</a></li>
+              </ul>
+              <output class="share__status" aria-live="polite" data-share-status></output>
+            </div>
+            <aside class="author" aria-label="About the author">
+              <div class="portrait author__portrait">
+                <picture class="portrait__plate portrait__plate--paper"><img src="../../assets/record/img/portrait-halftone-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__plate portrait__plate--press"><img src="../../assets/record/img/portrait-halftone-press-240.webp" width="240" height="240" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="portrait__colour"><source srcset="../../assets/record/img/portrait.avif" type="image/avif"><source srcset="../../assets/record/img/portrait.webp" type="image/webp"><img src="../../assets/record/img/portrait.jpg" width="440" height="440" alt="" aria-hidden="true" loading="lazy" decoding="async"></picture>
+              </div>
+              <div class="author__body">
+                <p class="author__name"><a href="../../">Sukalyan Roy</a></p>
+                <p class="author__role">Backend Engineer · Python, Data &amp; ML Systems. Kolkata, India.</p>
+                <p class="author__links"><a href="../../">Portfolio</a> · <a href="../../assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener">Résumé</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">GitHub</a> · <a href="https://www.linkedin.com/in/sukalyan-roy-457040362/" target="_blank" rel="me noopener">LinkedIn</a> · <a href="../rss.xml">RSS</a></p>
+              </div>
+            </aside>
+          </footer>
+        </div>
+      </div>
+      <nav class="section series" id="series" aria-labelledby="series-title">
+        <div class="section__head"><h2 class="section__title" id="series-title">Unsung Bits</h2><span class="section__note">The series, in reading order</span></div>
+        <ol class="series__list"><li><span class="section__numeral">01</span><a href="../history-of-computer-science-in-india-part-2/">History of computer science in india Part 2</a></li><li><span class="section__numeral">02</span><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></li><li><span class="section__numeral">03</span><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></li><li><span class="section__numeral">04</span><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></li><li><span class="section__numeral">05</span><a href="../the-number-that-shouldn-t-exist/">The Number That Shouldn&#x27;t Exist</a></li><li><span class="section__numeral">06</span><span aria-current="page">The Distance That Knows How the Data Moves</span></li></ol>
+      </nav>
+      <nav class="pager" aria-label="Older and newer posts"><a class="pager__link pager__link--older" href="../the-number-that-shouldn-t-exist/" rel="prev"><span class="label">Older</span><span class="pager__title">The Number That Shouldn&#x27;t Exist</span></a></nav>
+      <section class="section related" id="related" aria-labelledby="related-title">
+        <div class="section__head"><h2 class="section__title" id="related-title">Related</h2><span class="section__note">By shared topics</span></div>
+        <div class="dispatches">
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-05T05:49:19.955Z">5 Sep 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-grammar-that-runs-like-a-program/">The Grammar That Runs Like a Program</a></h3>
+          <p>Pāṇini&#x27;s Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/linguistics/">linguistics</a><a class="tag" href="../tags/sanskrit/">sanskrit</a><a class="tag" href="../tags/computer-science-history/">computer science history</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-19T08:35:22.188Z">19 Sep 2026</time>
+          <span class="dispatch__read">10 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-algorithm-that-grinds-problems-to-dust/">The Algorithm That Grinds Problems to Dust</a></h3>
+          <p>Aryabhata&#x27;s kuṭṭaka is the first known algorithm for solving linear indeterminate equations. It reduces large numbers with Euclidean division, then reverses those steps to recover…</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/algorithms/">algorithms</a><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/number-theory/">number theory</a></div></div>
+        </div>
+      </article>
+      <article class="dispatch">
+        <div class="dispatch__date">
+          <time datetime="2026-09-12T04:46:54.437Z">12 Sep 2026</time>
+          <span class="dispatch__read">11 min read</span>
+        </div>
+        <div class="dispatch__body">
+          <p class="dispatch__kicker"><a href="../unsung-bits/">Unsung Bits</a></p>
+          <h3><a href="../the-poet-who-accidentally-invented-binary-sort-of/">The Poet Who Accidentally Invented Binary (Sort Of)</a></h3>
+          <p>Piṅgala&#x27;s prosody procedures enumerate every short-and-long syllable pattern in a structure equivalent to binary counting.</p>
+          <div class="dispatch__meta"><div class="tags"><a class="tag" href="../tags/india/">india</a><a class="tag" href="../tags/mathematics/">mathematics</a><a class="tag" href="../tags/binary/">binary</a><a class="tag" href="../tags/sanskrit/">sanskrit</a></div></div>
+        </div>
+      </article>
+    </div>
+      </section>
+      
+      <p><a class="more-link" href="../">Back to all posts</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="blog-footer">
+  <div class="sheet">
+    <div class="folio">
+      <span><a href="../">Engineering Tales</a></span>
+      <span><a href="../../">Sukalyan Roy</a> · Kolkata, India</span>
+      <span><a href="../../assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener">Résumé</a> · <a href="../rss.xml">RSS</a> · <a href="../tags/">Tags</a> · <a href="https://github.com/Sukalyan2003" target="_blank" rel="me noopener">Source</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/record/js/main.js" defer></script>
+<script src="../assets/blog.js?v=087b03e8" defer></script>
+</body>
+</html>
