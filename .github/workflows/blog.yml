@@ -1,9 +1,7 @@
-name: Build blog
+name: Build site
 
-# Regenerates /blog (plus sitemap.xml, robots.txt and the Writing section of
-# index.html) from content/blog/*.md, runs the tests and the design/HTML
-# checks, and commits the output if it changed. Replaces the old Hashnode RSS
-# sync: the posts now live in this repository.
+# Regenerates the portfolio and /blog from their content records, runs tests and
+# syntax/design/HTML checks, and commits generated output if it changed.
 #
 # Needs Settings > Actions > General > Workflow permissions: "Read and write".
 on:
@@ -13,6 +11,8 @@ on:
       - 'content/**'
       - 'scripts/**'
       - 'blog/assets/**'
+      - 'assets/**'
+      - 'js/**'
       - 'index.html'
       - '.github/workflows/blog.yml'
   workflow_dispatch:
@@ -48,15 +48,21 @@ jobs:
       - name: Unit tests
         run: python3 -m unittest discover -s scripts/tests -v
 
+      - name: JavaScript syntax
+        run: |
+          for file in assets/record/js/*.js blog/assets/*.js js/*.js; do
+            node --check "$file"
+          done
+
       - name: Build
-        run: python3 scripts/build_blog.py
+        run: python3 scripts/blog.py build
 
       - name: Design and HTML checks
         run: python3 scripts/check.py
 
       - name: Commit generated output if changed
         run: |
-          git add -A blog sitemap.xml robots.txt index.html
+          git add -A blog sitemap.xml robots.txt index.html work about library
           # content/blog/diagrams only exists once a post has a Mermaid diagram;
           # git add fails on a missing path, so add it only when present.
           if [ -d content/blog/diagrams ]; then git add -A content/blog/diagrams; fi

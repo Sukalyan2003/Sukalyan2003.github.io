@@ -165,11 +165,11 @@ def load_file(path: Path) -> dict:
     post["tags"] = [str(t).strip() for t in (meta.get("tags") or []) if str(t).strip()]
     post["draft"] = bool(meta.get("draft"))
     post["description"] = str(meta.get("description") or "").strip()
-    if meta.get("datePublished"):
-        post["date"] = parse_date(meta["datePublished"])
-    else:
-        post["date"] = None
-    post["updated"] = parse_date(meta["dateUpdated"]) if meta.get("dateUpdated") else None
+    for key, target in (("datePublished", "date"), ("dateUpdated", "updated")):
+        try:
+            post[target] = parse_date(meta[key]) if meta.get(key) else None
+        except (ValueError, TypeError) as exc:
+            raise ContentError(f"{path.name}: invalid {key}: {meta[key]!r}") from exc
     return post
 
 

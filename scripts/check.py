@@ -26,13 +26,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC_PAGES = ["index.html", "404.html", "classic/index.html", "the-record/index.html"]
-CSS_FILES = ["assets/record/css/styles.css", "blog/assets/blog.css"]
+CSS_FILES = ["assets/record/css/styles.css", "assets/record/css/portfolio.css", "blog/assets/blog.css"]
 DRAFTS = ROOT / "content" / "drafts"
 
 
 def pages() -> list[str]:
     blog = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "blog").rglob("index.html"))
-    return STATIC_PAGES + blog
+    portfolio = sorted(p.relative_to(ROOT).as_posix()
+                       for folder in (ROOT / "work", ROOT / "about", ROOT / "library")
+                       for p in folder.rglob("index.html"))
+    return STATIC_PAGES + portfolio + blog
 
 # design.md > Elevation & Depth, and > Shapes.
 BANNED_CSS = {
@@ -98,7 +101,10 @@ def check() -> list[str]:
             if not candidate.resolve().exists():
                 problems.append(f"{page}: missing local file '{ref}'")
 
-        ids = set(re.findall(r'id="([^"]+)"', html))
+        id_list = re.findall(r'\bid="([^"]+)"', html)
+        ids = set(id_list)
+        if len(ids) != len(id_list):
+            problems.append(f"{page}: duplicate element IDs")
         for anchor in sorted(set(re.findall(r'href="#([^"]+)"', html))):
             if anchor not in ids:
                 problems.append(f"{page}: dead anchor '#{anchor}'")

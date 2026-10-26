@@ -1,0 +1,1322 @@
+{
+  "source_note": "Transcribed from the existing public homepage. Pending CV, project and Avinya updates are not incorporated. Copy revised against the relevant voice, clarity and evidence rules in the Unsung Bits writing guide; no pending CV or project updates added.",
+  "projects": [
+    {
+      "slug": "eeg-platform",
+      "title": "Cloud EEG Ingestion & Analysis Platform",
+      "category": "Backend & data",
+      "status": "Production work",
+      "headline": "Reading the part of an EEG recording a viewer needs.",
+      "summary": "A five-service backend for storing, processing and streaming EEG recordings.",
+      "metric": "783 ms",
+      "metric_label": "p50 first chunk",
+      "facets": {
+        "Problem": "EEG recordings can be too large to load into memory at once. The platform needed to ingest them, run analysis, export results and let a viewer request a short section of the signal.",
+        "Built": "I worked on a five-service platform with 50+ APIs. PostgreSQL and TimescaleDB hold structured data; Azure Blob Storage holds large files. Redis coordinates background jobs. The streaming path reads the requested time window rather than loading the whole recording.",
+        "Tradeoff": "Heavy analysis runs outside the HTTP request. Object storage replaces local disk. Live viewing has to share resources with batch frequency-band analysis and EDF+/PDF export jobs, so those workloads are scheduled separately.",
+        "Evidence": "Bounded time-window streaming cancels stale requests when the viewer moves on. A binary format that groups values by column cut the payload per chunk from about 1.3&nbsp;MB to 288&nbsp;KB. Profiling took median (p50) first-chunk latency from roughly 2.2&nbsp;s to 783&nbsp;ms, and server send time from about 250&nbsp;ms to 12&nbsp;ms. Database fetches account for 87% of the remaining time."
+      },
+      "tags": [
+        "FastAPI",
+        "PostgreSQL",
+        "TimescaleDB",
+        "Redis",
+        "Azure Blob",
+        "WebSockets"
+      ],
+      "links_html": "<a href=\"https://www.avinyaneurotech.com/\" target=\"_blank\" rel=\"noopener\">Company context</a>",
+      "diagram_html": "<figure class=\"diagram\">\n              <div class=\"diagram__scroll\">\n                <svg class=\"dg\" viewBox=\"0 0 720 210\" role=\"img\" aria-labelledby=\"dg1-t dg1-d\">\n                  <title id=\"dg1-t\">Data flow of the EEG platform</title>\n                  <desc id=\"dg1-d\">The dashboard calls file-service over HTTP; file-service runs time-windowed reads against PostgreSQL with TimescaleDB and returns results to the dashboard over a WebSocket in bounded frames, cancelling stale requests. Heavy work is enqueued through the orchestrator onto a Redis queue, processed by workers, and written to Azure Blob Storage. Auth-Service-V2 verifies every request token.</desc>\n                  <text class=\"dg-e\" x=\"160\" y=\"12\" text-anchor=\"middle\">WebSocket · bounded frames · stale-request cancellation</text>\n                  <path class=\"dg-line\" d=\"M 253 46 L 253 26 L 67 26 L 67 40\"/>\n                  <path class=\"dg-head\" d=\"M 63.5 39 L 70.5 39 L 67 46 Z\"/>\n\n                  <text class=\"dg-e\" x=\"156\" y=\"40\" text-anchor=\"middle\">HTTP</text>\n                  <text class=\"dg-e\" x=\"358\" y=\"40\" text-anchor=\"middle\">time-windowed reads</text>\n\n                  <rect class=\"dg-box\" x=\"8\" y=\"46\" width=\"118\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"67\" y=\"70\" text-anchor=\"middle\">Dashboard</text>\n                  <rect class=\"dg-box\" x=\"190\" y=\"46\" width=\"126\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"253\" y=\"70\" text-anchor=\"middle\">file-service</text>\n                  <rect class=\"dg-box\" x=\"400\" y=\"46\" width=\"180\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"490\" y=\"63\" text-anchor=\"middle\">PostgreSQL /</text>\n                  <text class=\"dg-t\" x=\"490\" y=\"77\" text-anchor=\"middle\">TimescaleDB</text>\n\n                  <path class=\"dg-line\" d=\"M 126 65 L 183 65\"/>\n                  <path class=\"dg-head\" d=\"M 183 61.5 L 190 65 L 183 68.5 Z\"/>\n                  <path class=\"dg-line\" d=\"M 316 65 L 393 65\"/>\n                  <path class=\"dg-head\" d=\"M 393 61.5 L 400 65 L 393 68.5 Z\"/>\n\n                  <text class=\"dg-e\" x=\"250\" y=\"110\">async jobs</text>\n                  <path class=\"dg-line\" d=\"M 240 84 L 240 122\"/>\n                  <path class=\"dg-head\" d=\"M 236.5 122 L 243.5 122 L 240 129 Z\"/>\n\n                  <rect class=\"dg-box\" x=\"175\" y=\"129\" width=\"118\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"234\" y=\"153\" text-anchor=\"middle\">orchestrator</text>\n                  <rect class=\"dg-box\" x=\"337\" y=\"129\" width=\"104\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"389\" y=\"153\" text-anchor=\"middle\">Redis queue</text>\n                  <rect class=\"dg-box\" x=\"485\" y=\"129\" width=\"88\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"529\" y=\"153\" text-anchor=\"middle\">workers</text>\n                  <rect class=\"dg-box\" x=\"617\" y=\"129\" width=\"95\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"664\" y=\"153\" text-anchor=\"middle\">Azure Blob</text>\n\n                  <path class=\"dg-line\" d=\"M 293 148 L 330 148\"/>\n                  <path class=\"dg-head\" d=\"M 330 144.5 L 337 148 L 330 151.5 Z\"/>\n                  <path class=\"dg-line\" d=\"M 441 148 L 478 148\"/>\n                  <path class=\"dg-head\" d=\"M 478 144.5 L 485 148 L 478 151.5 Z\"/>\n                  <path class=\"dg-line\" d=\"M 573 148 L 610 148\"/>\n                  <path class=\"dg-head\" d=\"M 610 144.5 L 617 148 L 610 151.5 Z\"/>\n\n                  <text class=\"dg-n\" x=\"8\" y=\"196\">Auth-Service-V2 verifies every request token · Prometheus/Grafana on every service</text>\n                </svg>\n              </div>\n              <figcaption class=\"diagram__cap\">Read path and job path. The streaming return leg is the one profiled to 783 ms p50 first chunk.</figcaption>\n            </figure>",
+      "rail_html": "\n            <div class=\"rail__item\"><span class=\"rail-key\">Status</span><span class=\"rail-val rail-val--plain\">In production</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Scale</span><span class=\"rail-val\">5 services · 50+ APIs</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">First chunk</span><span class=\"rail-val\">783 ms p50</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Server send</span><span class=\"rail-val\">~12 ms</span></div>\n          ",
+      "map_label": "EEG platform"
+    },
+    {
+      "slug": "medipredict",
+      "title": "MediPredict ML Microservice",
+      "category": "ML & retrieval",
+      "status": "Service & research",
+      "headline": "The model scored well with an input it could not have.",
+      "summary": "An insurance prediction service and an audit of a misleading result.",
+      "metric": "0.925 → ~0.15",
+      "metric_label": "reported vs quote-time R²",
+      "facets": {
+        "Problem": "Predict an insurance premium from information available when a new applicant asks for a quote. A strong offline score is little use if the model needs information that arrives later.",
+        "Built": "I built the FastAPI ML microservice: typed prediction schemas, model loading from saved artifacts, preprocessing shared with training, health and readiness endpoints, SHAP feature explanations and Docker packaging. The rest of the team built the Spring Boot backend and React frontend that call it. Those parts are not my work.",
+        "Tradeoff": "I separated inputs available at quote time from signals available at renewal. Realised annual medical cost belongs to the latter. Histogram gradient boosting replaced random forest in the served model; SHAP exposes how features affect its predictions.",
+        "Evidence": "The reported R² of 0.925 used realised annual medical cost, which does not exist when a new applicant receives a quote. R² measures fit against a mean-only prediction; it is not a percentage accuracy. Removing unavailable features while holding the model fixed put the quote-time result near R²&nbsp;0.15. A cross-dataset audit reproduced the collapse while leaving leakage-free datasets untouched. Replacing random forest with histogram gradient boosting cut the served artifact from 95.8&nbsp;MB to 0.39&nbsp;MB and single-row inference from roughly 45&nbsp;ms to 0.5&nbsp;ms, at unchanged cross-validated accuracy. The manuscript is unpublished."
+      },
+      "tags": [
+        "FastAPI",
+        "scikit-learn",
+        "SHAP",
+        "Docker",
+        "Pytest"
+      ],
+      "links_html": "<a href=\"https://github.com/Sukalyan2003/ml-microservice\" target=\"_blank\" rel=\"noopener\">View ML service</a>",
+      "diagram_html": "<figure class=\"diagram\">\n              <div class=\"diagram__scroll\">\n                <svg class=\"dg\" viewBox=\"0 0 720 176\" role=\"img\" aria-labelledby=\"dg4-t dg4-d\">\n                  <title id=\"dg4-t\">Where my work stops and the team's begins</title>\n                  <desc id=\"dg4-d\">On the left, inside a dashed boundary labelled \"built by the project team\", a React frontend calls a Spring Boot backend. That backend calls across an HTTP typed contract into a solid boundary labelled \"built by me\": a FastAPI microservice whose request passes through validation, preprocessing, a histogram gradient boosting model and a SHAP explanation stage.</desc>\n                  <text class=\"dg-h\" x=\"8\" y=\"34\">Built by the project team</text>\n                  <rect class=\"dg-group-dash\" x=\"8\" y=\"42\" width=\"196\" height=\"112\"/>\n                  <rect class=\"dg-box\" x=\"22\" y=\"58\" width=\"168\" height=\"34\"/>\n                  <text class=\"dg-t\" x=\"106\" y=\"79\" text-anchor=\"middle\">React frontend</text>\n                  <path class=\"dg-line\" d=\"M 106 92 L 106 101\"/>\n                  <path class=\"dg-head\" d=\"M 102.5 101 L 109.5 101 L 106 108 Z\"/>\n                  <rect class=\"dg-box\" x=\"22\" y=\"108\" width=\"168\" height=\"34\"/>\n                  <text class=\"dg-t\" x=\"106\" y=\"129\" text-anchor=\"middle\">Spring Boot backend</text>\n\n                  <text class=\"dg-e\" x=\"244\" y=\"90\" text-anchor=\"middle\">HTTP</text>\n                  <path class=\"dg-line\" d=\"M 204 98 L 276 98\"/>\n                  <path class=\"dg-head\" d=\"M 276 94.5 L 283 98 L 276 101.5 Z\"/>\n                  <text class=\"dg-e\" x=\"244\" y=\"116\" text-anchor=\"middle\">typed contract</text>\n\n                  <text class=\"dg-h\" x=\"290\" y=\"22\">Built by me · FastAPI ML microservice</text>\n                  <rect class=\"dg-group\" x=\"290\" y=\"30\" width=\"422\" height=\"136\"/>\n                  <rect class=\"dg-box\" x=\"302\" y=\"44\" width=\"88\" height=\"34\"/>\n                  <text class=\"dg-t\" x=\"346\" y=\"65\" text-anchor=\"middle\">Validation</text>\n                  <path class=\"dg-line\" d=\"M 390 61 L 403 61\"/>\n                  <path class=\"dg-head\" d=\"M 403 57.5 L 410 61 L 403 64.5 Z\"/>\n                  <rect class=\"dg-box\" x=\"410\" y=\"44\" width=\"96\" height=\"34\"/>\n                  <text class=\"dg-t\" x=\"458\" y=\"65\" text-anchor=\"middle\">Preprocessing</text>\n                  <path class=\"dg-line\" d=\"M 506 61 L 519 61\"/>\n                  <path class=\"dg-head\" d=\"M 519 57.5 L 526 61 L 519 64.5 Z\"/>\n                  <rect class=\"dg-box\" x=\"526\" y=\"44\" width=\"76\" height=\"34\"/>\n                  <text class=\"dg-t\" x=\"564\" y=\"65\" text-anchor=\"middle\">HistGBM</text>\n                  <path class=\"dg-line\" d=\"M 602 61 L 615 61\"/>\n                  <path class=\"dg-head\" d=\"M 615 57.5 L 622 61 L 615 64.5 Z\"/>\n                  <rect class=\"dg-box\" x=\"622\" y=\"44\" width=\"84\" height=\"34\"/>\n                  <text class=\"dg-t\" x=\"664\" y=\"65\" text-anchor=\"middle\">SHAP</text>\n\n                  <text class=\"dg-n\" x=\"302\" y=\"104\">artifact-driven load · preprocessing shared with training</text>\n                  <text class=\"dg-m\" x=\"302\" y=\"126\">95.8 MB → 0.39 MB · ~45 ms → ~0.5 ms per row</text>\n                  <text class=\"dg-n\" x=\"302\" y=\"148\">health and readiness endpoints · Docker</text>\n                </svg>\n              </div>\n              <figcaption class=\"diagram__cap\">The dashed boundary is not mine. I wrote the service on the right and the contract between them.</figcaption>\n            </figure>",
+      "rail_html": "\n            <div class=\"rail__item\"><span class=\"rail-key\">Ownership</span><span class=\"rail-val rail-val--plain\">ML service only</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Reported vs quote-time R²</span><span class=\"rail-val\">0.925 → ~0.15</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Served artifact</span><span class=\"rail-val\">95.8 MB → 0.39 MB</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Single row</span><span class=\"rail-val\">~45 ms → ~0.5 ms</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Status</span><span class=\"rail-val rail-val--plain\">Study unpublished</span></div>\n          ",
+      "map_label": "MediPredict"
+    },
+    {
+      "slug": "eeg-benchmark",
+      "title": "Windowed EEG Benchmark",
+      "category": "Backend & data",
+      "status": "Benchmark",
+      "headline": "A fast EEG window can still give the wrong answer.",
+      "summary": "Checking signal-processing results and timing each window directly.",
+      "metric": "6.46 ms",
+      "metric_label": "p95 · 8-channel CHB-MIT",
+      "facets": {
+        "Problem": "Processing an EEG recording in small windows can silently change the result. I wanted to find where window boundaries, padding and scheduling break equivalence with processing the whole recording.",
+        "Built": "NumPy, SciPy and MNE experiments compare overlap-add reconstruction, safe-window scheduling, boundary handling and bandpower, the signal power within a frequency band.",
+        "Tradeoff": "The benchmark checks correctness and measures each window directly. It does not establish how much traffic a complete framework can handle.",
+        "Evidence": "The worst measured p95 filter-plus-feature latency was 6.46&nbsp;ms on 8-channel CHB-MIT and 1.63&nbsp;ms on 2-channel Sleep-EDF. p95 is the 95th-percentile latency. These figures apply to those window-processing experiments."
+      },
+      "tags": [
+        "Python",
+        "NumPy",
+        "SciPy",
+        "MNE",
+        "EDF"
+      ],
+      "links_html": "<a href=\"https://github.com/Sukalyan2003/eeg-streaming-benchmark\" target=\"_blank\" rel=\"noopener\">View repo</a>",
+      "diagram_html": "<figure class=\"diagram\">\n              <div class=\"diagram__scroll\">\n                <svg class=\"dg\" viewBox=\"0 0 720 150\" role=\"img\" aria-labelledby=\"dg2-t dg2-d\">\n                  <title id=\"dg2-t\">Measured per-window latency against the display-refresh budget</title>\n                  <desc id=\"dg2-d\">Two horizontal bars drawn to scale inside a 16.7 millisecond budget. The 8-channel CHB-MIT case uses 6.46 milliseconds at p95; the 2-channel Sleep-EDF case uses 1.63 milliseconds at p95.</desc>\n                  <text class=\"dg-e\" x=\"626\" y=\"20\" text-anchor=\"end\">16.7 ms display-refresh budget</text>\n                  <path class=\"dg-dash\" d=\"M 630 26 L 630 122\"/>\n\n                  <text class=\"dg-t\" x=\"8\" y=\"61\">8-ch CHB-MIT</text>\n                  <rect class=\"dg-track\" x=\"170\" y=\"44\" width=\"460\" height=\"24\"/>\n                  <rect class=\"dg-fill\" x=\"170\" y=\"44\" width=\"178\" height=\"24\"/>\n                  <text class=\"dg-m\" x=\"358\" y=\"61\">6.46 ms p95</text>\n\n                  <text class=\"dg-t\" x=\"8\" y=\"101\">2-ch Sleep-EDF</text>\n                  <rect class=\"dg-track\" x=\"170\" y=\"84\" width=\"460\" height=\"24\"/>\n                  <rect class=\"dg-fill\" x=\"170\" y=\"84\" width=\"45\" height=\"24\"/>\n                  <text class=\"dg-m\" x=\"225\" y=\"101\">1.63 ms p95</text>\n\n                  <text class=\"dg-n\" x=\"170\" y=\"138\">0 ms</text>\n                  <text class=\"dg-n\" x=\"630\" y=\"138\" text-anchor=\"end\">16.7 ms</text>\n                </svg>\n              </div>\n              <figcaption class=\"diagram__cap\">Filter plus feature time per window, drawn to scale. Measured on these two cases only; not a general throughput claim.</figcaption>\n            </figure>",
+      "rail_html": "\n            <div class=\"rail__item\"><span class=\"rail-key\">p95 · 8ch CHB-MIT</span><span class=\"rail-val\">6.46 ms</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">p95 · 2ch Sleep-EDF</span><span class=\"rail-val\">1.63 ms</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Method</span><span class=\"rail-val rail-val--plain\">Directly timed</span></div>\n          ",
+      "map_label": "EEG benchmark"
+    },
+    {
+      "slug": "local-retrieval",
+      "title": "Local-First RAG Chatbot",
+      "category": "ML & retrieval",
+      "status": "Local-first project",
+      "headline": "Search that shows how it ranked the results.",
+      "summary": "Local document search that combines meaning with exact-term matches.",
+      "metric": "18 queries",
+      "metric_label": "fixed synthetic regression set",
+      "facets": {
+        "Problem": "Search private documents without sending them to a hosted service. The interface, command line and programmatic clients need to expose how retrieval chose its results.",
+        "Built": "FAISS finds documents with similar meaning through vector search. BM25 ranks exact-term matches. Reciprocal Rank Fusion combines their positions in the two lists. SQLite stores metadata, and a Model Context Protocol (MCP) server gives clients structured access.",
+        "Tradeoff": "The local store has one writer. That keeps updates and retrieval behaviour easier to inspect, at the cost of distributed scale.",
+        "Evidence": "On a fixed synthetic set of 18 queries, hybrid search kept Hit Rate@3 at 1.000 and raised mean reciprocal rank (MRR) from 0.972 to 1.000. Hit Rate@3 asks whether the expected result appears in the first three; MRR rewards finding it nearer the top. This is a regression guard, not a general quality benchmark."
+      },
+      "tags": [
+        "Python",
+        "FAISS",
+        "BM25",
+        "SQLite",
+        "MCP",
+        "Ollama"
+      ],
+      "links_html": "<a href=\"https://github.com/Sukalyan2003/RAG-Chatbot\" target=\"_blank\" rel=\"noopener\">View repo</a>\n              <a href=\"blog/adding-rank-fusion-to-my-rag-retrieval-logic/\">Read the write-up</a>",
+      "diagram_html": "<figure class=\"diagram\">\n              <div class=\"diagram__scroll\">\n                <svg class=\"dg\" viewBox=\"0 0 720 200\" role=\"img\" aria-labelledby=\"dg3-t dg3-d\">\n                  <title id=\"dg3-t\">Hybrid retrieval flow</title>\n                  <desc id=\"dg3-d\">A query fans out to a FAISS dense search and a BM25 sparse search. Both result lists are combined by reciprocal rank fusion, which reads inspectable metadata from SQLite, and returns ranked hits. Clients reach the pipeline through an MCP JSON-RPC server, a Streamlit interface or the command line.</desc>\n                  <text class=\"dg-n\" x=\"8\" y=\"14\">Clients: MCP server (JSON-RPC) · Streamlit · CLI</text>\n\n                  <rect class=\"dg-box\" x=\"8\" y=\"76\" width=\"96\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"56\" y=\"100\" text-anchor=\"middle\">Query</text>\n\n                  <path class=\"dg-line\" d=\"M 104 95 L 128 95 L 128 52 L 163 52\"/>\n                  <path class=\"dg-head\" d=\"M 163 48.5 L 170 52 L 163 55.5 Z\"/>\n                  <path class=\"dg-line\" d=\"M 128 95 L 128 138 L 163 138\"/>\n                  <path class=\"dg-head\" d=\"M 163 134.5 L 170 138 L 163 141.5 Z\"/>\n\n                  <rect class=\"dg-box\" x=\"170\" y=\"33\" width=\"150\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"245\" y=\"57\" text-anchor=\"middle\">FAISS dense</text>\n                  <rect class=\"dg-box\" x=\"170\" y=\"119\" width=\"150\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"245\" y=\"143\" text-anchor=\"middle\">BM25 sparse</text>\n\n                  <path class=\"dg-line\" d=\"M 320 52 L 348 52 L 348 95 L 385 95\"/>\n                  <path class=\"dg-line\" d=\"M 320 138 L 348 138 L 348 95\"/>\n                  <path class=\"dg-head\" d=\"M 385 91.5 L 392 95 L 385 98.5 Z\"/>\n\n                  <rect class=\"dg-box\" x=\"392\" y=\"76\" width=\"160\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"472\" y=\"100\" text-anchor=\"middle\">Rank fusion</text>\n                  <rect class=\"dg-box\" x=\"392\" y=\"142\" width=\"160\" height=\"30\"/>\n                  <text class=\"dg-t\" x=\"472\" y=\"162\" text-anchor=\"middle\">SQLite metadata</text>\n                  <path class=\"dg-line\" d=\"M 472 142 L 472 114\"/>\n\n                  <path class=\"dg-line\" d=\"M 552 95 L 597 95\"/>\n                  <path class=\"dg-head\" d=\"M 597 91.5 L 604 95 L 597 98.5 Z\"/>\n                  <rect class=\"dg-box\" x=\"604\" y=\"76\" width=\"108\" height=\"38\"/>\n                  <text class=\"dg-t\" x=\"658\" y=\"100\" text-anchor=\"middle\">Ranked hits</text>\n\n                  <text class=\"dg-m\" x=\"8\" y=\"192\">Hit Rate@3 1.000 · MRR 0.972 → 1.000</text>\n                  <text class=\"dg-n\" x=\"300\" y=\"192\">on a fixed 18-query synthetic regression set, not a general benchmark</text>\n                </svg>\n              </div>\n              <figcaption class=\"diagram__cap\">Both retrievers always run; fusion decides the order. Everything stays on the local machine.</figcaption>\n            </figure>",
+      "rail_html": "\n            <div class=\"rail__item\"><span class=\"rail-key\">Hit Rate@3</span><span class=\"rail-val\">1.000</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">MRR</span><span class=\"rail-val\">0.972 → 1.000</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Regression set</span><span class=\"rail-val rail-val--plain\">18 queries, fixed</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Caveat</span><span class=\"rail-val rail-val--plain\">Not a general benchmark</span></div>\n          ",
+      "map_label": "Local search"
+    },
+    {
+      "slug": "tempo",
+      "title": "Tempo Priority Assistant",
+      "category": "Developer tools",
+      "status": "Local-first project",
+      "headline": "A model drafts the task. Code sets the schedule.",
+      "summary": "A local planning assistant with date handling outside the language model.",
+      "metric": "Deterministic",
+      "metric_label": "scheduling authority",
+      "facets": {
+        "Problem": "Turn loosely written tasks into a feasible daily plan without giving a language model control over dates, files or external actions.",
+        "Built": "React and Express pass schema-constrained output from a local Ollama model to a typed Python service. That service resolves relative dates and schedules tasks.",
+        "Tradeoff": "Inference runs serially to fit limited video memory (VRAM). Explicit tool permissions restrict what the model can request. This limits flexibility but makes the behaviour easier to inspect.",
+        "Evidence": "Locked Node and Python test suites run in CI. They cover scheduling, queue cancellation, provider failures, tool policy and persistence in the browser."
+      },
+      "tags": [
+        "TypeScript",
+        "React",
+        "Express",
+        "Python",
+        "Ollama"
+      ],
+      "links_html": "<a href=\"https://github.com/Sukalyan2003/Tempo\" target=\"_blank\" rel=\"noopener\">View repo</a>",
+      "diagram_html": "",
+      "rail_html": "\n            <div class=\"rail__item\"><span class=\"rail-key\">Model authority</span><span class=\"rail-val\">None over dates</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Scheduling</span><span class=\"rail-val rail-val--plain\">Deterministic, typed</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Tests</span><span class=\"rail-val rail-val--plain\">Node + Python, in CI</span></div>\n          ",
+      "map_label": "Tempo"
+    },
+    {
+      "slug": "nand2tetris",
+      "title": "Nand2Tetris Hardware Stack & Two-Pass Assembler",
+      "category": "Systems",
+      "status": "Learning project",
+      "headline": "From NAND gates to 16-bit machine code.",
+      "summary": "The Nand2Tetris hardware stack and a two-pass assembler written in Python.",
+      "metric": "18 operations",
+      "metric_label": "ALU · 6 control bits",
+      "facets": {
+        "Problem": "Build the hardware of a small computer from basic logic gates, then translate Hack assembly into 16-bit machine code.",
+        "Built": "Logic gates written in a hardware description language (HDL), an arithmetic logic unit (ALU), memory, a program counter and memory-mapped input/output. The Python assembler separates parsing, code generation, symbol handling and orchestration.",
+        "Tradeoff": "Explicit translation tables keep instruction encoding readable. A first pass records label addresses; a second resolves symbols and emits instructions. I used Python so I could write and inspect the translation rather than copy the tutorial implementation.",
+        "Evidence": "Built through the hardware portion, reached 16K memory, implemented an ALU capable of 18 operations via 6 control bits, and generated <code>.hack</code> binaries from <code>.asm</code> programs."
+      },
+      "tags": [
+        "Python",
+        "HDL",
+        "Assembly",
+        "Computer Architecture"
+      ],
+      "links_html": "<a href=\"blog/nand2tetris-part-1-hardware/\">Read the write-up</a>\n              <a href=\"https://github.com/Sukalyan2003/Nand2Tetris\" target=\"_blank\" rel=\"noopener\">View repo</a>",
+      "diagram_html": "",
+      "rail_html": "\n            <div class=\"rail__item\"><span class=\"rail-key\">Span</span><span class=\"rail-val\">NAND → assembler</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">ALU</span><span class=\"rail-val\">18 ops · 6 control bits</span></div>\n            <div class=\"rail__item\"><span class=\"rail-key\">Memory</span><span class=\"rail-val\">16K</span></div>\n          ",
+      "map_label": "Nand2Tetris"
+    },
+    {
+      "slug": "premiere-assist",
+      "title": "Premiere Assist CLI",
+      "summary": "Local media analysis becomes an edit plan you can review. FFmpeg supplies the evidence; a deterministic resolver validates candidate IDs and writes an edit decision list and Premiere delivery package. The model never executes a command. Packages have been imported in manual use; editorial quality still needs evaluation.",
+      "category": "Developer tools",
+      "status": "Private project",
+      "tags": [
+        "Python",
+        "FFmpeg",
+        "Premiere XML",
+        "EDL",
+        "Pytest"
+      ],
+      "note": "Private repository",
+      "map_label": "Premiere Assist"
+    },
+    {
+      "slug": "newstrellis",
+      "title": "NewsTrellis Evidence Organizer",
+      "summary": "Organises RSS and Atom feeds into a finite daily reading list while keeping sources and corrections attached. Ingestion requires approval, validates URLs against server-side request forgery (SSRF), removes duplicates and groups related items. The existing suite has 145 tests; the interface still needs usability work.",
+      "category": "Developer tools",
+      "status": "Private project",
+      "tags": [
+        "Python",
+        "FastAPI",
+        "SQLite",
+        "RSS/Atom",
+        "Pytest"
+      ],
+      "note": "Private repository · 145 tests",
+      "map_label": "NewsTrellis"
+    },
+    {
+      "slug": "internal-rag",
+      "title": "Internal RAG Knowledge Assistant",
+      "summary": "Built during my Aecho AI internship. A Python pipeline ingests 300+ pages of internal documentation. A Streamlit interface retrieves relevant passages before answering with a local model in LM Studio. Sensitive material stays local; routine lookup fell from minutes to seconds.",
+      "category": "ML & retrieval",
+      "status": "Internal work",
+      "tags": [
+        "Python",
+        "RAG",
+        "Streamlit",
+        "LM Studio"
+      ],
+      "note": "Internal work · not public",
+      "map_label": "Internal RAG"
+    }
+  ],
+  "bio_html": "<p class=\"standfirst\">I build backend systems for data that does not fit in memory, and for models that should not be trusted blindly.</p>\n<p>I did not set out to work on brains. I set out to work as a backend engineer, and the role that found me happened to involve EEG. Clinical recordings can be large enough for one careless query to exhaust memory. Processing them in windows can change the result without throwing an error. Someone may use that output to make a decision about a patient.</p>\n<blockquote class=\"pull\">Models propose. Deterministic code decides.</blockquote>\n<p>In <a href=\"https://github.com/Sukalyan2003/Tempo\" target=\"_blank\" rel=\"noopener\">Tempo</a>, a local model drafts tasks but a typed Python service owns the dates and schedule. In Premiere Assist, FFmpeg supplies evidence to a resolver that writes the edit list; the model never runs a command. My <a href=\"https://github.com/Sukalyan2003/RAG-Chatbot\" target=\"_blank\" rel=\"noopener\">retrieval system</a> exposes how semantic and exact-term search contribute to each result. I trade flexibility for behaviour I can reproduce and explain.</p>\n<p>I would rather write down a decision than assume everyone has the same context. The expensive failures I have watched were rarely technical; they were two people each confident they had already agreed.</p>\n<p>My final-year insurance project became a leakage audit when the offline score looked too good. The EEG benchmark came from checking whether processing a short window gave the same answer as processing the whole recording. Those questions are why I keep the measurement conditions beside the numbers.</p>\n<p>The habit I am working against is overengineering: building for a scale and a set of cases a system may never meet. Naming it has not cured it, but it has made me slower to reach for the abstraction.</p>",
+  "record_html": "<div class=\"record\">\n        <div class=\"record__row\">\n          <div class=\"record__when\">Jun 2025 - present</div>\n          <div class=\"record__what\">\n            <h3>Backend Developer</h3>\n            <span class=\"record__where\"><a href=\"https://www.avinyaneurotech.com/\" target=\"_blank\" rel=\"noopener\">Avinya Neurotech</a> · Kolkata</span>\n            <p>Reworked a five-service FastAPI platform with 50+ endpoints for EEG ingestion, analysis, export and visualisation. Designed TimescaleDB storage, bounded WebSocket streaming with stale-request cancellation, Redis-backed job queues and Azure Blob workflows. Contributed bandpower, aEEG/qEEG, filter-parity and Linux support to a separate cross-platform desktop viewer.</p>\n          </div>\n        </div>\n\n        <div class=\"record__row\">\n          <div class=\"record__when\">Nov 2024 - Jan 2025</div>\n          <div class=\"record__what\">\n            <h3>Tech Development Intern</h3>\n            <span class=\"record__where\">Aecho AI</span>\n            <p>Built a retrieval-augmented generation (RAG) assistant over 300+ pages of internal documentation using Python, Streamlit and local LM Studio inference, so sensitive knowledge stayed off hosted APIs while routine lookup dropped from minutes to seconds.</p>\n          </div>\n        </div>\n\n        <div class=\"record__row\">\n          <div class=\"record__when\">Graduated 2026</div>\n          <div class=\"record__what\">\n            <h3>B.Tech, Computer Science &amp; Engineering</h3>\n            <span class=\"record__where\">Netaji Subhash Engineering College, Kolkata · MAKAUT</span>\n            <p>CGPA 8.0/10.0. Final-year project: MediPredict: medical insurance premium modelling with an independently built ML microservice and a leakage-aware interpretability study.</p>\n          </div>\n        </div>\n      </div>",
+  "credentials_html": "<div class=\"creds\">\n        <article class=\"cred\">\n          <h3><a href=\"https://drive.google.com/file/d/19_Ww1V-FoHvupU37yqUPH1nFiK-SgEyK/view?usp=sharing\" target=\"_blank\" rel=\"noopener\">Smart India Hackathon 2023</a></h3>\n          <p>National Finalist, Government of India. CodeRedX team; built the AI chatbot model for a mental-health assistant using TensorFlow with Flutter/Firebase integration.</p>\n        </article>\n\n        <article class=\"cred\">\n          <h3>Harvard CS50 track</h3>\n          <p>CS50x, CS50 Cybersecurity and CS50 AI: C, SQL, Python, networking, security, transformers, and project-based problem solving. 2023-2026.</p>\n          <div class=\"cred__links\">\n            <a href=\"https://certificates.cs50.io/58941d2e-c300-4cbc-a45f-38301180463c.pdf?size=letter\" target=\"_blank\" rel=\"noopener\">Core</a>\n            <a href=\"https://cs50.harvard.edu/certificates/7070c121-ec8b-4290-baba-7d29764c5bbb\" target=\"_blank\" rel=\"noopener\">Cybersecurity</a>\n            <a href=\"https://certificates.cs50.io/94fa3516-9bc1-42b7-9e00-82d1d3dcc6a2.pdf\" target=\"_blank\" rel=\"noopener\">AI</a>\n          </div>\n        </article>\n\n        <article class=\"cred\">\n          <h3><a href=\"https://coursera.org/share/9d72a12685ad3a91dd8515ab64cf4b84\" target=\"_blank\" rel=\"noopener\">Google Project Management</a></h3>\n          <p>Professional Certificate, 2025. Agile delivery, stakeholder communication, and project workflows assisted by generative AI.</p>\n        </article>\n      </div>",
+  "structured_data": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://sukalyan2003.github.io/#website",
+        "url": "https://sukalyan2003.github.io/",
+        "name": "Sukalyan Roy",
+        "inLanguage": "en",
+        "publisher": {
+          "@id": "https://sukalyan2003.github.io/#person"
+        }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://sukalyan2003.github.io/#page",
+        "url": "https://sukalyan2003.github.io/",
+        "name": "Sukalyan Roy - Backend Engineer",
+        "isPartOf": {
+          "@id": "https://sukalyan2003.github.io/#website"
+        },
+        "about": {
+          "@id": "https://sukalyan2003.github.io/#person"
+        },
+        "mainEntity": {
+          "@id": "https://sukalyan2003.github.io/#person"
+        },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://sukalyan2003.github.io/assets/record/img/og-card.jpg",
+          "width": 1200,
+          "height": 630
+        },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://sukalyan2003.github.io/#person",
+        "name": "Sukalyan Roy",
+        "givenName": "Sukalyan",
+        "familyName": "Roy",
+        "jobTitle": "Backend Engineer",
+        "description": "Backend Engineer working on EEG data infrastructure, distributed systems, and interpretable ML infrastructure. Smart India Hackathon 2023 National Finalist.",
+        "email": "mailto:sukalyanroyofficial@gmail.com",
+        "url": "https://sukalyan2003.github.io/",
+        "image": "https://sukalyan2003.github.io/assets/record/img/og-card.jpg",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kolkata",
+          "addressRegion": "West Bengal",
+          "addressCountry": "IN"
+        },
+        "homeLocation": {
+          "@type": "Place",
+          "name": "Kolkata, India"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/sukalyan-roy-457040362/",
+          "https://github.com/Sukalyan2003",
+          "https://sukalyanroy.hashnode.dev/"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Netaji Subhash Engineering College",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kolkata",
+            "addressRegion": "West Bengal",
+            "addressCountry": "IN"
+          }
+        },
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Avinya Neurotech",
+          "url": "https://www.avinyaneurotech.com/"
+        },
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Backend Engineer",
+          "occupationalCategory": "15-1252.00",
+          "skills": "Python, FastAPI, PostgreSQL, TimescaleDB, Redis, Docker, Azure, time-series data systems, streaming, EEG signal processing, interpretable machine learning"
+        },
+        "knowsAbout": [
+          "Backend Development",
+          "Data-Intensive Systems",
+          "Python",
+          "FastAPI",
+          "PostgreSQL",
+          "TimescaleDB",
+          "Redis",
+          "WebSockets",
+          "Docker",
+          "Azure",
+          "Machine Learning",
+          "PyTorch",
+          "scikit-learn",
+          "SHAP",
+          "EEG Signal Processing",
+          "System Design"
+        ],
+        "knowsLanguage": [
+          "English",
+          "Bengali",
+          "Hindi"
+        ],
+        "award": "Smart India Hackathon 2023 National Finalist",
+        "subjectOf": [
+          {
+            "@type": "SoftwareSourceCode",
+            "name": "Local-First RAG Chatbot",
+            "codeRepository": "https://github.com/Sukalyan2003/RAG-Chatbot",
+            "programmingLanguage": "Python"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "name": "Windowed EEG Benchmark",
+            "codeRepository": "https://github.com/Sukalyan2003/eeg-streaming-benchmark",
+            "programmingLanguage": "Python"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "name": "MediPredict ML Microservice",
+            "codeRepository": "https://github.com/Sukalyan2003/ml-microservice",
+            "programmingLanguage": "Python"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "name": "Tempo Priority Assistant",
+            "codeRepository": "https://github.com/Sukalyan2003/Tempo",
+            "programmingLanguage": "TypeScript"
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "name": "Nand2Tetris Hardware Stack & Assembler",
+            "codeRepository": "https://github.com/Sukalyan2003/Nand2Tetris",
+            "programmingLanguage": "Python"
+          }
+        ]
+      }
+    ]
+  },
+  "films": [
+    {
+      "position": 1,
+      "title": "3 Idiots",
+      "year": "2009",
+      "url": "https://www.imdb.com/title/tt1187043/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Rajkumar Hirani",
+      "runtime": "170"
+    },
+    {
+      "position": 2,
+      "title": "PK",
+      "year": "2014",
+      "url": "https://www.imdb.com/title/tt2338151/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Musical, Sci-Fi",
+      "director": "Rajkumar Hirani",
+      "runtime": "153"
+    },
+    {
+      "position": 3,
+      "title": "Black",
+      "year": "2005",
+      "url": "https://www.imdb.com/title/tt0375611/",
+      "type": "Movie",
+      "genres": "Drama",
+      "director": "Sanjay Leela Bhansali",
+      "runtime": "122"
+    },
+    {
+      "position": 4,
+      "title": "La La Land",
+      "year": "2016",
+      "url": "https://www.imdb.com/title/tt3783958/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Music, Musical, Romance",
+      "director": "Damien Chazelle",
+      "runtime": "128"
+    },
+    {
+      "position": 5,
+      "title": "The Dictator",
+      "year": "2012",
+      "url": "https://www.imdb.com/title/tt1645170/",
+      "type": "Movie",
+      "genres": "Comedy",
+      "director": "Larry Charles",
+      "runtime": "83"
+    },
+    {
+      "position": 6,
+      "title": "Shaun of the Dead",
+      "year": "2004",
+      "url": "https://www.imdb.com/title/tt0365748/",
+      "type": "Movie",
+      "genres": "Comedy, Horror",
+      "director": "Edgar Wright",
+      "runtime": "99"
+    },
+    {
+      "position": 7,
+      "title": "Megamind",
+      "year": "2010",
+      "url": "https://www.imdb.com/title/tt1001526/",
+      "type": "Movie",
+      "genres": "Animation, Action, Adventure, Comedy, Crime, Family, Fantasy, Sci-Fi",
+      "director": "Tom McGrath",
+      "runtime": "95"
+    },
+    {
+      "position": 8,
+      "title": "The Imitation Game",
+      "year": "2014",
+      "url": "https://www.imdb.com/title/tt2084970/",
+      "type": "Movie",
+      "genres": "Biography, Drama, Thriller, War",
+      "director": "Morten Tyldum",
+      "runtime": "114"
+    },
+    {
+      "position": 9,
+      "title": "The Grand Budapest Hotel",
+      "year": "2014",
+      "url": "https://www.imdb.com/title/tt2278388/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Wes Anderson",
+      "runtime": "99"
+    },
+    {
+      "position": 10,
+      "title": "Bullet Train",
+      "year": "2022",
+      "url": "https://www.imdb.com/title/tt12593682/",
+      "type": "Movie",
+      "genres": "Action, Comedy, Thriller",
+      "director": "David Leitch",
+      "runtime": "127"
+    },
+    {
+      "position": 11,
+      "title": "Rocket Singh: Salesman of the Year",
+      "year": "2009",
+      "url": "https://www.imdb.com/title/tt1434447/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Shimit Amin",
+      "runtime": "150"
+    },
+    {
+      "position": 12,
+      "title": "Ratatouille",
+      "year": "2007",
+      "url": "https://www.imdb.com/title/tt0382932/",
+      "type": "Movie",
+      "genres": "Animation, Adventure, Comedy, Family, Fantasy",
+      "director": "Brad Bird, Jan Pinkava",
+      "runtime": "111"
+    },
+    {
+      "position": 13,
+      "title": "Groundhog Day",
+      "year": "1993",
+      "url": "https://www.imdb.com/title/tt0107048/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Fantasy, Romance",
+      "director": "Harold Ramis",
+      "runtime": "101"
+    },
+    {
+      "position": 14,
+      "title": "Tropic Thunder",
+      "year": "2008",
+      "url": "https://www.imdb.com/title/tt0942385/",
+      "type": "Movie",
+      "genres": "Action, Comedy, War",
+      "director": "Ben Stiller",
+      "runtime": "107"
+    },
+    {
+      "position": 15,
+      "title": "Django Unchained",
+      "year": "2012",
+      "url": "https://www.imdb.com/title/tt1853728/",
+      "type": "Movie",
+      "genres": "Drama, Western",
+      "director": "Quentin Tarantino",
+      "runtime": "165"
+    },
+    {
+      "position": 16,
+      "title": "Arrival",
+      "year": "2016",
+      "url": "https://www.imdb.com/title/tt2543164/",
+      "type": "Movie",
+      "genres": "Drama, Mystery, Sci-Fi",
+      "director": "Denis Villeneuve",
+      "runtime": "116"
+    },
+    {
+      "position": 17,
+      "title": "The Truman Show",
+      "year": "1998",
+      "url": "https://www.imdb.com/title/tt0120382/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Peter Weir",
+      "runtime": "103"
+    },
+    {
+      "position": 18,
+      "title": "Zindagi Na Milegi Dobara",
+      "year": "2011",
+      "url": "https://www.imdb.com/title/tt1562872/",
+      "type": "Movie",
+      "genres": "Adventure, Comedy, Drama, Musical, Romance",
+      "director": "Zoya Akhtar",
+      "runtime": "155"
+    },
+    {
+      "position": 19,
+      "title": "The Hero",
+      "year": "1966",
+      "url": "https://www.imdb.com/title/tt0060742/",
+      "type": "Movie",
+      "genres": "Drama",
+      "director": "Satyajit Ray",
+      "runtime": "117"
+    },
+    {
+      "position": 20,
+      "title": "Sivaji",
+      "year": "2007",
+      "url": "https://www.imdb.com/title/tt0479751/",
+      "type": "Movie",
+      "genres": "Action, Crime, Drama, Thriller",
+      "director": "Shankar Shanmugham",
+      "runtime": "188"
+    },
+    {
+      "position": 21,
+      "title": "OMG: Oh My God!",
+      "year": "2012",
+      "url": "https://www.imdb.com/title/tt2283748/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Fantasy",
+      "director": "Umesh Shukla",
+      "runtime": "125"
+    },
+    {
+      "position": 22,
+      "title": "Billu",
+      "year": "2009",
+      "url": "https://www.imdb.com/title/tt1230448/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Priyadarshan",
+      "runtime": "137"
+    },
+    {
+      "position": 23,
+      "title": "The Secret Life of Walter Mitty",
+      "year": "2013",
+      "url": "https://www.imdb.com/title/tt0359950/",
+      "type": "Movie",
+      "genres": "Adventure, Comedy, Drama, Fantasy, Romance",
+      "director": "Ben Stiller",
+      "runtime": "114"
+    },
+    {
+      "position": 24,
+      "title": "The Lift Boy",
+      "year": "2019",
+      "url": "https://www.imdb.com/title/tt6937368/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Jonathan Augustin",
+      "runtime": "107"
+    },
+    {
+      "position": 25,
+      "title": "Agent Sai Srinivasa Athreya",
+      "year": "2019",
+      "url": "https://www.imdb.com/title/tt10214826/",
+      "type": "Movie",
+      "genres": "Comedy, Crime, Mystery, Thriller",
+      "director": "Swaroop Rsj",
+      "runtime": "148"
+    },
+    {
+      "position": 26,
+      "title": "Meet the Robinsons",
+      "year": "2007",
+      "url": "https://www.imdb.com/title/tt0396555/",
+      "type": "Movie",
+      "genres": "Animation, Adventure, Comedy, Family, Sci-Fi",
+      "director": "Stephen J. Anderson",
+      "runtime": "95"
+    },
+    {
+      "position": 27,
+      "title": "Lucky Baskhar",
+      "year": "2024",
+      "url": "https://www.imdb.com/title/tt27540542/",
+      "type": "Movie",
+      "genres": "Crime, Drama, Thriller",
+      "director": "Venky Atluri",
+      "runtime": "148"
+    },
+    {
+      "position": 28,
+      "title": "Gangs of Wasseypur",
+      "year": "2012",
+      "url": "https://www.imdb.com/title/tt1954470/",
+      "type": "Movie",
+      "genres": "Action, Comedy, Crime, Drama, Thriller",
+      "director": "Anurag Kashyap",
+      "runtime": "321"
+    },
+    {
+      "position": 29,
+      "title": "Schindler's List",
+      "year": "1993",
+      "url": "https://www.imdb.com/title/tt0108052/",
+      "type": "Movie",
+      "genres": "Biography, Drama, History",
+      "director": "Steven Spielberg",
+      "runtime": "196"
+    },
+    {
+      "position": 30,
+      "title": "My Name Is Khan",
+      "year": "2010",
+      "url": "https://www.imdb.com/title/tt1188996/",
+      "type": "Movie",
+      "genres": "Drama, Romance",
+      "director": "Karan Johar",
+      "runtime": "165"
+    },
+    {
+      "position": 31,
+      "title": "Rocketry: The Nambi Effect",
+      "year": "2022",
+      "url": "https://www.imdb.com/title/tt9263550/",
+      "type": "Movie",
+      "genres": "Biography, Drama",
+      "director": "Madhavan",
+      "runtime": "157"
+    },
+    {
+      "position": 32,
+      "title": "A Wednesday",
+      "year": "2008",
+      "url": "https://www.imdb.com/title/tt1280558/",
+      "type": "Movie",
+      "genres": "Action, Crime, Drama, Mystery, Thriller",
+      "director": "Neeraj Pandey",
+      "runtime": "104"
+    },
+    {
+      "position": 33,
+      "title": "Khosla Ka Ghosla!",
+      "year": "2006",
+      "url": "https://www.imdb.com/title/tt0466460/",
+      "type": "Movie",
+      "genres": "Comedy, Crime, Drama",
+      "director": "Dibakar Banerjee, Pravin E. Birje",
+      "runtime": "135"
+    },
+    {
+      "position": 34,
+      "title": "Ugly",
+      "year": "2013",
+      "url": "https://www.imdb.com/title/tt2882328/",
+      "type": "Movie",
+      "genres": "Crime, Drama, Mystery, Thriller",
+      "director": "Anurag Kashyap",
+      "runtime": "128"
+    },
+    {
+      "position": 35,
+      "title": "Yeh Jawaani Hai Deewani",
+      "year": "2013",
+      "url": "https://www.imdb.com/title/tt2178470/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Musical, Romance",
+      "director": "Ayan Mukerji",
+      "runtime": "160"
+    },
+    {
+      "position": 36,
+      "title": "Andhadhun",
+      "year": "2018",
+      "url": "https://www.imdb.com/title/tt8108198/",
+      "type": "Movie",
+      "genres": "Comedy, Crime, Mystery, Thriller",
+      "director": "Sriram Raghavan",
+      "runtime": "139"
+    },
+    {
+      "position": 37,
+      "title": "Dead Boy Detectives",
+      "year": "2024",
+      "url": "https://www.imdb.com/title/tt15358446/",
+      "type": "TV Series",
+      "genres": "Action, Adventure, Comedy, Crime, Drama, Fantasy, Horror, Mystery",
+      "director": "",
+      "runtime": "60"
+    },
+    {
+      "position": 38,
+      "title": "22 Shey Shraban",
+      "year": "2011",
+      "url": "https://www.imdb.com/title/tt2075108/",
+      "type": "Movie",
+      "genres": "Action, Crime, Drama, Mystery, Thriller",
+      "director": "Srijit Mukherji",
+      "runtime": "139"
+    },
+    {
+      "position": 39,
+      "title": "Nayak: The Real Hero",
+      "year": "2001",
+      "url": "https://www.imdb.com/title/tt0291376/",
+      "type": "Movie",
+      "genres": "Action, Drama, Thriller",
+      "director": "Shankar Shanmugham",
+      "runtime": "187"
+    },
+    {
+      "position": 40,
+      "title": "Karthik Calling Karthik",
+      "year": "2010",
+      "url": "https://www.imdb.com/title/tt1373156/",
+      "type": "Movie",
+      "genres": "Drama, Mystery, Romance, Thriller",
+      "director": "Vijay Lalwani",
+      "runtime": "135"
+    },
+    {
+      "position": 41,
+      "title": "Hot Fuzz",
+      "year": "2007",
+      "url": "https://www.imdb.com/title/tt0425112/",
+      "type": "Movie",
+      "genres": "Action, Comedy, Mystery, Thriller",
+      "director": "Edgar Wright",
+      "runtime": "121"
+    },
+    {
+      "position": 42,
+      "title": "Catch Me If You Can",
+      "year": "2002",
+      "url": "https://www.imdb.com/title/tt0264464/",
+      "type": "Movie",
+      "genres": "Biography, Crime, Drama",
+      "director": "Steven Spielberg",
+      "runtime": "141"
+    },
+    {
+      "position": 43,
+      "title": "Edge of Tomorrow",
+      "year": "2014",
+      "url": "https://www.imdb.com/title/tt1631867/",
+      "type": "Movie",
+      "genres": "Action, Adventure, Sci-Fi",
+      "director": "Doug Liman",
+      "runtime": "113"
+    },
+    {
+      "position": 44,
+      "title": "Baasha",
+      "year": "1995",
+      "url": "https://www.imdb.com/title/tt0139876/",
+      "type": "Movie",
+      "genres": "Action, Crime, Drama, Musical",
+      "director": "Suresh Krishna",
+      "runtime": "145"
+    },
+    {
+      "position": 45,
+      "title": "Code Geass: Lelouch of the Rebellion",
+      "year": "2006",
+      "url": "https://www.imdb.com/title/tt0994314/",
+      "type": "TV Series",
+      "genres": "Animation, Action, Drama, Fantasy, Sci-Fi, Thriller",
+      "director": "",
+      "runtime": "24"
+    },
+    {
+      "position": 46,
+      "title": "Inside Job",
+      "year": "2021",
+      "url": "https://www.imdb.com/title/tt10231312/",
+      "type": "TV Series",
+      "genres": "Animation, Adventure, Comedy, Fantasy, Sci-Fi",
+      "director": "",
+      "runtime": "30"
+    },
+    {
+      "position": 47,
+      "title": "The Disastrous Life of Saiki K.",
+      "year": "2016",
+      "url": "https://www.imdb.com/title/tt6354518/",
+      "type": "TV Series",
+      "genres": "Animation, Comedy, Fantasy",
+      "director": "",
+      "runtime": "24"
+    },
+    {
+      "position": 48,
+      "title": "tick, tick... BOOM!",
+      "year": "2021",
+      "url": "https://www.imdb.com/title/tt8721424/",
+      "type": "Movie",
+      "genres": "Biography, Comedy, Drama, Musical",
+      "director": "Lin-Manuel Miranda",
+      "runtime": "115"
+    },
+    {
+      "position": 49,
+      "title": "The Devil's Advocate",
+      "year": "1997",
+      "url": "https://www.imdb.com/title/tt0118971/",
+      "type": "Movie",
+      "genres": "Drama, Fantasy, Mystery, Thriller",
+      "director": "Taylor Hackford",
+      "runtime": "144"
+    },
+    {
+      "position": 50,
+      "title": "Glee",
+      "year": "2009",
+      "url": "https://www.imdb.com/title/tt1327801/",
+      "type": "TV Series",
+      "genres": "Comedy, Drama, Music, Musical",
+      "director": "",
+      "runtime": "45"
+    },
+    {
+      "position": 51,
+      "title": "Thank You for Smoking",
+      "year": "2005",
+      "url": "https://www.imdb.com/title/tt0427944/",
+      "type": "Movie",
+      "genres": "Comedy, Drama",
+      "director": "Jason Reitman",
+      "runtime": "92"
+    },
+    {
+      "position": 52,
+      "title": "Toonpur Ka Superrhero",
+      "year": "2010",
+      "url": "https://www.imdb.com/title/tt1189006/",
+      "type": "Movie",
+      "genres": "Animation, Action, Adventure, Comedy, Family, Fantasy",
+      "director": "Kireet Khurana",
+      "runtime": "95"
+    },
+    {
+      "position": 53,
+      "title": "Vaah! Life Ho Toh Aisi!",
+      "year": "2005",
+      "url": "https://www.imdb.com/title/tt0475645/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Family, Fantasy, Musical",
+      "director": "Mahesh Manjrekar",
+      "runtime": "153"
+    },
+    {
+      "position": 54,
+      "title": "Chain Kulii Ki Main Kulii",
+      "year": "2007",
+      "url": "https://www.imdb.com/title/tt1016159/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Family, Fantasy, Sport",
+      "director": "Karanjeet Saluja",
+      "runtime": "118"
+    },
+    {
+      "position": 55,
+      "title": "Bhavesh Joshi Superhero",
+      "year": "2018",
+      "url": "https://www.imdb.com/title/tt6129302/",
+      "type": "Movie",
+      "genres": "Action, Drama",
+      "director": "Vikramaditya Motwane",
+      "runtime": "154"
+    },
+    {
+      "position": 56,
+      "title": "The Menu",
+      "year": "2022",
+      "url": "https://www.imdb.com/title/tt9764362/",
+      "type": "Movie",
+      "genres": "Comedy, Horror, Thriller",
+      "director": "Mark Mylod",
+      "runtime": "107"
+    },
+    {
+      "position": 57,
+      "title": "Crazy, Stupid, Love.",
+      "year": "2011",
+      "url": "https://www.imdb.com/title/tt1570728/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Romance",
+      "director": "Glenn Ficarra, John Requa",
+      "runtime": "118"
+    },
+    {
+      "position": 58,
+      "title": "A Gentleman",
+      "year": "2017",
+      "url": "https://www.imdb.com/title/tt5613834/",
+      "type": "Movie",
+      "genres": "Action, Comedy",
+      "director": "Krishna D.K., Raj Nidimoru",
+      "runtime": "145"
+    },
+    {
+      "position": 59,
+      "title": "Chowringhee",
+      "year": "1968",
+      "url": "https://www.imdb.com/title/tt0244460/",
+      "type": "Movie",
+      "genres": "Drama",
+      "director": "Pinaki Bhushan Mukherji",
+      "runtime": "140"
+    },
+    {
+      "position": 60,
+      "title": "Tumbbad",
+      "year": "2018",
+      "url": "https://www.imdb.com/title/tt8239946/",
+      "type": "Movie",
+      "genres": "Drama, Fantasy, Horror, Thriller",
+      "director": "Rahi Anil Barve, Anand Gandhi, Adesh Prasad",
+      "runtime": "108"
+    },
+    {
+      "position": 61,
+      "title": "Elementary",
+      "year": "2012",
+      "url": "https://www.imdb.com/title/tt2191671/",
+      "type": "TV Series",
+      "genres": "Action, Adventure, Crime, Drama, Mystery, Thriller",
+      "director": "",
+      "runtime": "60"
+    },
+    {
+      "position": 62,
+      "title": "The Namesake",
+      "year": "2006",
+      "url": "https://www.imdb.com/title/tt0433416/",
+      "type": "Movie",
+      "genres": "Drama",
+      "director": "Mira Nair",
+      "runtime": "122"
+    },
+    {
+      "position": 63,
+      "title": "The Bad Guys",
+      "year": "2022",
+      "url": "https://www.imdb.com/title/tt8115900/",
+      "type": "Movie",
+      "genres": "Animation, Adventure, Comedy, Crime, Family",
+      "director": "Pierre Perifel",
+      "runtime": "100"
+    },
+    {
+      "position": 64,
+      "title": "Arcane",
+      "year": "2021",
+      "url": "https://www.imdb.com/title/tt11126994/",
+      "type": "TV Series",
+      "genres": "Animation, Action, Adventure, Drama, Fantasy, Sci-Fi",
+      "director": "",
+      "runtime": "40"
+    },
+    {
+      "position": 65,
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "year": "2001",
+      "url": "https://www.imdb.com/title/tt0120737/",
+      "type": "Movie",
+      "genres": "Adventure, Drama, Fantasy",
+      "director": "Peter Jackson",
+      "runtime": "178"
+    },
+    {
+      "position": 66,
+      "title": "The Sound of Music",
+      "year": "1965",
+      "url": "https://www.imdb.com/title/tt0059742/",
+      "type": "Movie",
+      "genres": "Biography, Drama, Family, Musical, Romance",
+      "director": "Robert Wise",
+      "runtime": "174"
+    },
+    {
+      "position": 67,
+      "title": "School of Rock",
+      "year": "2003",
+      "url": "https://www.imdb.com/title/tt0332379/",
+      "type": "Movie",
+      "genres": "Comedy, Music",
+      "director": "Richard Linklater",
+      "runtime": "109"
+    },
+    {
+      "position": 68,
+      "title": "Inglourious Basterds",
+      "year": "2009",
+      "url": "https://www.imdb.com/title/tt0361748/",
+      "type": "Movie",
+      "genres": "Drama, War",
+      "director": "Quentin Tarantino",
+      "runtime": "153"
+    },
+    {
+      "position": 69,
+      "title": "Har Kisse Ke Hisse: Kaamyaab",
+      "year": "2018",
+      "url": "https://www.imdb.com/title/tt7881550/",
+      "type": "Movie",
+      "genres": "Drama",
+      "director": "Hardik Mehta",
+      "runtime": "109"
+    },
+    {
+      "position": 70,
+      "title": "That Girl in Yellow Boots",
+      "year": "2010",
+      "url": "https://www.imdb.com/title/tt1580704/",
+      "type": "Movie",
+      "genres": "Crime, Drama, Mystery, Thriller",
+      "director": "Anurag Kashyap",
+      "runtime": "103"
+    },
+    {
+      "position": 71,
+      "title": "Lage Raho Munna Bhai",
+      "year": "2006",
+      "url": "https://www.imdb.com/title/tt0456144/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Romance",
+      "director": "Rajkumar Hirani",
+      "runtime": "144"
+    },
+    {
+      "position": 72,
+      "title": "Love, Death & Robots",
+      "year": "2019",
+      "url": "https://www.imdb.com/title/tt9561862/",
+      "type": "TV Series",
+      "genres": "Animation, Short, Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Sci-Fi, Thriller",
+      "director": "",
+      "runtime": "15"
+    },
+    {
+      "position": 73,
+      "title": "Paprika",
+      "year": "2006",
+      "url": "https://www.imdb.com/title/tt0851578/",
+      "type": "Movie",
+      "genres": "Animation, Drama, Fantasy, Mystery, Sci-Fi, Thriller",
+      "director": "Satoshi Kon",
+      "runtime": "90"
+    },
+    {
+      "position": 74,
+      "title": "Trumbo",
+      "year": "2015",
+      "url": "https://www.imdb.com/title/tt3203606/",
+      "type": "Movie",
+      "genres": "Biography, Drama",
+      "director": "Jay Roach",
+      "runtime": "124"
+    },
+    {
+      "position": 75,
+      "title": "Tokyo Trial",
+      "year": "2016",
+      "url": "https://www.imdb.com/title/tt4040530/",
+      "type": "TV Mini Series",
+      "genres": "Drama, History",
+      "director": "",
+      "runtime": "50"
+    },
+    {
+      "position": 76,
+      "title": "Citizen Kane",
+      "year": "1941",
+      "url": "https://www.imdb.com/title/tt0033467/",
+      "type": "Movie",
+      "genres": "Drama, Mystery",
+      "director": "Orson Welles",
+      "runtime": "119"
+    },
+    {
+      "position": 77,
+      "title": "Robber",
+      "year": "2013",
+      "url": "https://www.imdb.com/title/tt2224317/",
+      "type": "Movie",
+      "genres": "Drama, Romance",
+      "director": "Vikramaditya Motwane",
+      "runtime": "136"
+    },
+    {
+      "position": 78,
+      "title": "Soorarai Pottru",
+      "year": "2020",
+      "url": "https://www.imdb.com/title/tt10189514/",
+      "type": "Movie",
+      "genres": "Drama",
+      "director": "Sudha Kongara",
+      "runtime": "153"
+    },
+    {
+      "position": 79,
+      "title": "Ra.One",
+      "year": "2011",
+      "url": "https://www.imdb.com/title/tt1562871/",
+      "type": "Movie",
+      "genres": "Action, Sci-Fi, Thriller",
+      "director": "Anubhav Sinha",
+      "runtime": "156"
+    },
+    {
+      "position": 80,
+      "title": "Futurama",
+      "year": "1999",
+      "url": "https://www.imdb.com/title/tt0149460/",
+      "type": "TV Series",
+      "genres": "Animation, Adventure, Comedy, Sci-Fi",
+      "director": "",
+      "runtime": "22"
+    },
+    {
+      "position": 81,
+      "title": "Pawn Sacrifice",
+      "year": "2014",
+      "url": "https://www.imdb.com/title/tt1596345/",
+      "type": "Movie",
+      "genres": "Biography, Drama, History, Sport, Thriller",
+      "director": "Edward Zwick",
+      "runtime": "115"
+    },
+    {
+      "position": 82,
+      "title": "Ella Enchanted",
+      "year": "2004",
+      "url": "https://www.imdb.com/title/tt0327679/",
+      "type": "Movie",
+      "genres": "Comedy, Family, Fantasy, Romance",
+      "director": "Tommy O'Haver",
+      "runtime": "96"
+    },
+    {
+      "position": 83,
+      "title": "Kapoor & Sons",
+      "year": "2016",
+      "url": "https://www.imdb.com/title/tt4900716/",
+      "type": "Movie",
+      "genres": "Comedy, Drama, Family, Romance",
+      "director": "Shakun Batra, Manish Rana",
+      "runtime": "132"
+    },
+    {
+      "position": 84,
+      "title": "Millennium Actress",
+      "year": "2001",
+      "url": "https://www.imdb.com/title/tt0291350/",
+      "type": "Movie",
+      "genres": "Animation, Drama, Fantasy, Romance",
+      "director": "Satoshi Kon",
+      "runtime": "87"
+    }
+  ],
+  "books": [
+    {
+      "title": "A Christmas Carol",
+      "author": "Charles Dickens",
+      "url": "https://www.goodreads.com/book/show/5326.A_Christmas_Carol",
+      "image": "assets/record/img/books/5326.jpg",
+      "width": 191,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1406512317l/5326._SY300_.jpg"
+    },
+    {
+      "title": "Being Mortal",
+      "author": "Atul Gawande",
+      "url": "https://www.goodreads.com/book/show/20696006-being-mortal",
+      "image": "assets/record/img/books/20696006.jpg",
+      "width": 198,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408324949l/20696006._SY300_.jpg"
+    },
+    {
+      "title": "The House in the Cerulean Sea",
+      "author": "T.J. Klune",
+      "url": "https://www.goodreads.com/book/show/45047384-the-house-in-the-cerulean-sea",
+      "image": "assets/record/img/books/45047384.jpg",
+      "width": 200,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1569514209l/45047384._SY300_.jpg"
+    },
+    {
+      "title": "The Wisdom of Insecurity",
+      "author": "Alan W. Watts",
+      "url": "https://www.goodreads.com/book/show/551520.The_Wisdom_of_Insecurity",
+      "image": "assets/record/img/books/551520.jpg",
+      "width": 149,
+      "height": 260,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1411152436l/551520._SY300_.jpg"
+    },
+    {
+      "title": "The Little Prince",
+      "author": "Antoine de Saint-Exupéry",
+      "url": "https://www.goodreads.com/book/show/157993.The_Little_Prince",
+      "image": "assets/record/img/books/157993.jpg",
+      "width": 200,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1367545443l/157993._SY300_.jpg"
+    },
+    {
+      "title": "When Breath Becomes Air",
+      "author": "Paul Kalanithi",
+      "url": "https://www.goodreads.com/book/show/25899336-when-breath-becomes-air",
+      "image": "assets/record/img/books/25899336.jpg",
+      "width": 203,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1492677644l/25899336._SY300_.jpg"
+    },
+    {
+      "title": "A Man Called Ove",
+      "author": "Fredrik Backman",
+      "url": "https://www.goodreads.com/book/show/18774964-a-man-called-ove",
+      "image": "assets/record/img/books/18774964.jpg",
+      "width": 195,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1405259930l/18774964._SY300_.jpg"
+    },
+    {
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "url": "https://www.goodreads.com/book/show/54493401-project-hail-mary",
+      "image": "assets/record/img/books/54493401.jpg",
+      "width": 199,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1764703833l/54493401._SY300_.jpg"
+    },
+    {
+      "title": "Unsong",
+      "author": "Scott Alexander",
+      "url": "https://www.goodreads.com/book/show/28589297-unsong",
+      "image": "assets/record/img/books/28589297.jpg",
+      "width": 229,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1632785897l/28589297._SY300_.jpg"
+    },
+    {
+      "title": "The Fifth Science",
+      "author": "Exurb1a",
+      "url": "https://www.goodreads.com/book/show/41580260-the-fifth-science",
+      "image": "assets/record/img/books/41580260.jpg",
+      "width": 188,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1535736994l/41580260._SY300_.jpg"
+    },
+    {
+      "title": "Ramayan 3392 AD, Vol. 1",
+      "author": "Shamik Dasgupta",
+      "url": "https://www.goodreads.com/book/show/546611.Ramayan_3392_AD_Vol_1",
+      "image": "assets/record/img/books/546611.jpg",
+      "width": 196,
+      "height": 300,
+      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1352764836l/546611._SY300_.jpg"
+    }
+  ],
+  "personal_sources": {
+    "books": "https://www.goodreads.com/user/show/122426384-suka",
+    "book_shelf": "https://www.goodreads.com/review/list/122426384-suka?tag=re-read-worthy",
+    "films": "User-provided IMDb export, 84 entries, imported 2026-10-26; no ratings, timestamps or notes imported.",
+    "film_list": "https://www.imdb.com/list/ls591727943/",
+    "essays": "https://casuallyoverthinking.substack.com/feed",
+    "retrieved": "2026-10-26"
+  },
+  "essays": [
+    {
+      "title": "What I read in school? Part 2",
+      "url": "https://casuallyoverthinking.substack.com/p/what-i-read-in-school-part-2",
+      "description": "English literature from my school years."
+    },
+    {
+      "title": "Borrowed Authority: Why is Pierre Bordieu suddenly in all our reels?",
+      "url": "https://casuallyoverthinking.substack.com/p/borrowed-authority-why-is-pierre",
+      "description": "How a philosopher's name can stand in for explaining an idea."
+    }
+  ]
+}

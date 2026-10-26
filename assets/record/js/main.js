@@ -126,7 +126,7 @@
 
   /* -------------------------------------------------------------- portrait */
   var portrait = document.querySelector('.portrait');
-  if (portrait && window.matchMedia && !window.matchMedia('(hover: hover)').matches) {
+  if (portrait && !portrait.hasAttribute('role') && window.matchMedia && !window.matchMedia('(hover: hover)').matches) {
     portrait.addEventListener('click', function () {
       portrait.classList.toggle('is-revealed');
     });

@@ -75,6 +75,13 @@ def quiet(func, *args, **kwargs):
 
 # =============================================================== importer
 class ImporterTests(unittest.TestCase):
+    def test_import_rejects_a_slug_that_could_escape_the_content_tree(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'export.md'
+            path.write_text('---\ntitle: Example\nslug: ../outside\n---\nBody\n')
+            with self.assertRaisesRegex(ValueError, 'not URL-safe'):
+                imp.read_source(path)
+
     def test_source_front_matter_tolerates_hashnode_quirks(self):
         block = ('title: "What is Agentic RAG? \n"\n'
                  'seoDescription: "Learn to use AI-driven "vibecoding" safely"\n'
@@ -235,6 +242,15 @@ class ContentModelTests(unittest.TestCase):
         for slug in links:
             self.assertIn(slug, slugs)
 
+    def test_invalid_dates_are_reported_as_content_errors(self):
+        tmp = TempContent()
+        self.addCleanup(tmp.cleanup)
+        for field in ('datePublished', 'dateUpdated'):
+            with self.subTest(field=field):
+                path = tmp.add('bad-date', **{field: 'not-a-date'})
+                with self.assertRaisesRegex(blog_lib.ContentError, f'invalid {field}'):
+                    blog_lib.load_file(path)
+
 
 # ===================================================================== CLI
 class CliTests(unittest.TestCase):
@@ -299,6 +315,35 @@ class CliTests(unittest.TestCase):
         code, out = quiet(blog.main, ["publish", "taken"])
         self.assertEqual(code, 1)
         self.assertIn("already uses slug", out)
+
+    def test_new_rejects_paths_reserved_routes_and_section_names(self):
+        for slug in ('../outside', '/absolute', 'with space', 'assets', 'linux'):
+            with self.subTest(slug=slug):
+                code, _ = quiet(blog.main, ['new', 'linux', 'Example', '--slug', slug])
+                self.assertEqual(code, 1)
+                self.assertFalse(self.tmp.drafts.exists())
+
+    def test_publish_rejects_invalid_metadata_before_moving_the_draft(self):
+        for slug, date in (('good-slug', 'invalid-date'), ('assets', '2026-10-26')):
+            with self.subTest(slug=slug, date=date):
+                draft = self.tmp.add(slug, where=self.tmp.drafts, draft=True)
+                image = self.tmp.drafts / 'img' / slug / 'test.png'
+                image.parent.mkdir(parents=True)
+                image.write_bytes(b'keep')
+                before = draft.read_text()
+                code, _ = quiet(blog.main, ['publish', slug, '--date', date])
+                self.assertEqual(code, 1)
+                self.assertEqual(draft.read_text(), before)
+                self.assertTrue(image.exists())
+                self.assertFalse((self.tmp.content / (slug + '.md')).exists())
+
+    def test_build_and_check_cover_both_generators_and_propagate_failure(self):
+        with mock.patch.object(blog, 'run_script', return_value=0) as run:
+            self.assertEqual(blog.main(['build']), 0)
+            self.assertEqual(run.call_args_list, [mock.call('build_blog.py'), mock.call('build_portfolio.py')])
+        with mock.patch.object(blog, 'run_script', side_effect=[0, 1]) as run:
+            self.assertEqual(blog.main(['check']), 1)
+            self.assertEqual(run.call_args_list, [mock.call('build_blog.py', '--check'), mock.call('build_portfolio.py', '--check')])
 
     def test_move_changes_only_section(self):
         path = self.tmp.add("p", body="Keep\n  exactly\n")
@@ -391,6 +436,12 @@ class SiteTests(unittest.TestCase):
             self.assertIn(rel, files)
         self.assertNotIn("blog/page/3/index.html", files)  # 19 posts: 5 front + 10 + 4
         self.assertEqual(self.site.problems, [])
+
+    def test_paginated_archive_has_a_primary_heading(self):
+        for rel in ('blog/index.html', 'blog/page/2/index.html'):
+            self.assertEqual(len(re.findall(r'<h1\b', self.site.files[rel])), 1, rel)
+        self.assertIn('<h1 class="section__title" id="archive-title">Archive</h1>',
+                      self.site.files['blog/page/2/index.html'])
 
     def test_canonical_and_jsonld(self):
         page = self.site.files["blog/post-03/index.html"]

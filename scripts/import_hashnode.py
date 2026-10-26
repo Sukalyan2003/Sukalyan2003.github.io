@@ -96,7 +96,11 @@ def read_source(path: Path) -> tuple[dict, str]:
     match = SOURCE_FM.match(text)
     if not match:
         raise ValueError(f"{path.name}: no front matter")
-    return parse_source_front_matter(match.group(1)), text[match.end():]
+    meta = parse_source_front_matter(match.group(1))
+    slug = meta.get('slug')
+    if slug and slugify(slug) != slug:
+        raise ValueError(f"{path.name}: slug is not URL-safe: {slug!r}")
+    return meta, text[match.end():]
 
 
 def git_dates_updated(repo: Path, name: str, published) -> str | None:

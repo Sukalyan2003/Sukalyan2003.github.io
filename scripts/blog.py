@@ -30,8 +30,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from blog_lib import (  # noqa: E402
-    CONTENT, DRAFTS, ROOT, ContentError, compose, iso, load_file, load_posts,
-    load_sections, optimize_folder, set_key, slugify, validate,
+    CONTENT, DRAFTS, ROOT, RESERVED_SLUGS, ContentError, compose, iso, load_file, load_posts,
+    load_sections, optimize_folder, parse_date, set_key, slugify, validate,
 )
 
 
@@ -45,6 +45,8 @@ def post_sections(sections) -> dict:
 
 
 def find(directory: Path, slug: str) -> Path | None:
+    if slugify(slug) != slug:
+        return None
     path = directory / f"{slug}.md"
     if path.exists():
         return path
@@ -137,6 +139,8 @@ def cmd_new(args) -> int:
     if args.section not in post_sections(sections):
         return fail(f"unknown section '{args.section}'")
     slug = args.slug or slugify(args.title)
+    if slugify(slug) != slug or slug in RESERVED_SLUGS or slug in {s['slug'] for s in sections}:
+        return fail(f"slug '{slug}' is reserved or not URL-safe; choose another --slug")
     if find(CONTENT, slug) or find(DRAFTS, slug):
         return fail(f"slug '{slug}' already exists (pass --slug to choose another)")
     meta = {"title": args.title, "slug": slug, "section": args.section, "draft": True,
@@ -171,6 +175,18 @@ def cmd_publish(args) -> int:
 
     text = src.read_text(encoding="utf-8")
     date = args.date or iso(datetime.now(timezone.utc))
+    try:
+        published_date = parse_date(date)
+    except (ValueError, TypeError):
+        return fail(f"invalid publication date '{date}'; use an ISO 8601 date")
+    # Validate the proposed post before moving assets or removing the draft.
+    candidate = dict(draft, draft=False, section=section, date=published_date,
+                     meta=dict(draft['meta']))
+    if order is not None:
+        candidate['meta']['seriesOrder'] = order
+    errors = validate(sections, posts + [candidate])
+    if errors:
+        return fail('\n'.join(errors))
     text = set_key(text, "draft", None)
     text = set_key(text, "section", section)
     if order is not None:
@@ -259,12 +275,12 @@ def cmd_import(args) -> int:
 
 
 def cmd_build(args) -> int:
-    return run_script("build_blog.py")
+    return run_script("build_blog.py") or run_script("build_portfolio.py")
 
 
 def cmd_check(args) -> int:
     code = run_script("build_blog.py", "--check")
-    return code or run_script("check.py")
+    return code or run_script("build_portfolio.py", "--check") or run_script("check.py")
 
 
 def cmd_preview(args) -> int:
@@ -319,7 +335,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--overwrite", action="store_true")
     p.set_defaults(func=cmd_import)
 
-    sub.add_parser("build", help="regenerate /blog").set_defaults(func=cmd_build)
+    sub.add_parser("build", help="regenerate blog and portfolio pages").set_defaults(func=cmd_build)
     sub.add_parser("check", help="verify output is current and passes check.py").set_defaults(func=cmd_check)
     p = sub.add_parser("preview", help="build with drafts into .preview/ and serve it")
     p.add_argument("--port", type=int, default=8000)

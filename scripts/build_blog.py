@@ -792,7 +792,8 @@ class Site:
     </section>"""
 
     def archive_block(self, chunk, n, pages, *, finder: bool) -> str:
-        head = self.section_head("Archive", numeral="02", note=f"Page {n} of {pages}", hid="archive-title")
+        head = self.section_head("Archive", numeral="02", note=f"Page {n} of {pages}",
+                                 hid="archive-title", level="h1" if n > 1 else "h2")
         finder_html = self.finder() if finder else ""
         return f"""    <section class="section archive" id="search" aria-labelledby="archive-title">
       {head}
@@ -1160,6 +1161,14 @@ class Site:
         latest = max((p["modified"] for p in self.posts), default=None)
         latest_day = latest.strftime("%Y-%m-%d") if latest else home_lastmod
         entries = [(f"{cfg.SITE_URL}/", max(home_lastmod, latest_day), "1.0")]
+        # Portfolio pages remain discoverable after an automatic blog rebuild.
+        # Read only the explicit portfolio route record, never draft folders.
+        portfolio_source = ROOT / "content" / "portfolio.json"
+        if portfolio_source.exists():
+            portfolio = json.loads(portfolio_source.read_text(encoding="utf-8"))
+            routes = ["work/", "about/", "library/"]
+            routes += [f"work/{p['slug']}/" for p in portfolio["projects"] if p.get("facets")]
+            entries += [(cfg.SITE_URL + "/" + route, home_lastmod, "0.8") for route in routes]
         for rel in sorted(k for k in self.files if k.endswith("index.html")):
             url = cfg.SITE_URL + "/" + rel.removesuffix("index.html")
             post = next((p for p in self.posts if f"blog/{p['slug']}/index.html" == rel), None)
@@ -1321,6 +1330,12 @@ def copy_preview_assets(out_root: Path) -> None:
         shutil.copytree(src, dst)
     for rel in ("index.html", "manifest.json", "404.html"):
         shutil.copyfile(ROOT / rel, out_root / rel)
+    # The homepage now navigates to dedicated portfolio pages as well as /blog.
+    for folder in ("work", "about", "library"):
+        for src in (ROOT / folder).rglob("index.html"):
+            dst = out_root / src.relative_to(ROOT)
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(src, dst)
 
 
 def run(check: bool = False, drafts: bool = False, out: Path | None = None) -> int:
