@@ -204,7 +204,7 @@ def demo(slug: str) -> str:
 <div class="ablation-readout"><span>Quote-time comparison · R²</span><output data-ablation-score aria-live="polite">~0.15</output></div>
 <svg viewBox="0 0 600 52" role="img" aria-label="Recorded R squared comparison, approximately 0.15"><rect class="ablation-track" x="0" y="8" width="600" height="28"/><rect class="ablation-fill" data-ablation-bar x="0" y="8" width="90" height="28"/></svg>
 <p data-ablation-explanation>Realised annual cost is not available for a new applicant at quote time. The fixed-model ablation put the quote-time result near R² 0.15.</p>
-<p class="explainer-note">These are reported results, not a newly trained model. The manuscript is unpublished.</p></div>'''
+<p class="explainer-note">These are reported results, not a newly trained model. The paper is accepted at ICIDA 2026 and not yet published.</p></div>'''
     if slug == 'local-retrieval':
         return explore.fusion_demo()
     return ''
