@@ -14,6 +14,7 @@ __pycache__/
 # Build output. The Pages workflow builds and deploys it on every push to main;
 # run `python3 scripts/blog.py build` for a local preview.
 /index.html
+/classic/index.html
 /work/
 /about/
 /library/

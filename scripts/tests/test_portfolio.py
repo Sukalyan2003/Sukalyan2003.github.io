@@ -54,6 +54,41 @@ class PortfolioTests(unittest.TestCase):
                 self.assertNotIn(route, self.pages)
         self.assertEqual(self.pages['work/index.html'].count('data-category='), len(self.data['projects']))
 
+    def test_classic_keeps_current_evidence_and_every_project(self):
+        page = self.pages['classic/index.html']
+        self.assertIn('../css/styles.css', page)
+        self.assertNotIn('assets/record/css', page)
+        self.assertIn(portfolio.relative(self.data['bio_html'], '../'), page)
+        self.assertIn(portfolio.relative(self.data['record_html'], '../'), page)
+        self.assertIn(portfolio.relative(self.data['credentials_html'], '../'), page)
+        for project in self.data['projects']:
+            with self.subTest(project=project['slug']):
+                self.assertIn(f'id="project-{project["slug"]}"', page)
+                for text in project.get('facets', {}).values():
+                    self.assertIn(portfolio.relative(text, '../'), page)
+                if project.get('facets'):
+                    self.assertIn(f'../work/{project["slug"]}/', Links(page).hrefs)
+                else:
+                    self.assertNotIn(f'../work/{project["slug"]}/', Links(page).hrefs)
+
+    def test_classic_lists_all_published_writing_and_library_entries(self):
+        links = Links(self.pages['classic/index.html']).hrefs
+        posts = json.loads((portfolio.ROOT / 'blog/search.json').read_text())
+        for post in posts:
+            self.assertIn('..' + post['url'], links)
+        for item in self.data['books'] + self.data['films'] + self.data['essays']:
+            self.assertIn(item['url'], links)
+        self.assertIn('../', links)
+        self.assertIn('../blog/', links)
+
+    def test_classic_updates_when_content_records_change(self):
+        data = copy.deepcopy(self.data)
+        data['projects'][0]['facets']['Evidence'] = 'A new measured result, under stated conditions.'
+        data['books'].append(dict(data['books'][0], url='https://example.com/new-book'))
+        page = portfolio.build(data)['classic/index.html']
+        self.assertIn('A new measured result, under stated conditions.', page)
+        self.assertIn('https://example.com/new-book', Links(page).hrefs)
+
     def test_writing_updates_preserve_surrounding_portfolio(self):
         home = self.pages['index.html']
         replacement = '<!-- WRITING:START -->\n<p>A later dispatch</p>\n<!-- WRITING:END -->'
@@ -194,7 +229,10 @@ class PortfolioTests(unittest.TestCase):
         for host in hosts:
             self.assertIn(f'https://{host}', library)
         for rel, page in self.pages.items():
-            if rel != 'library/index.html':
+            if rel == 'classic/index.html':
+                # The retained Bootstrap page has no CSP; it still uses only local images.
+                self.assertNotRegex(page, r'<img\b[^>]+src="https?://')
+            elif rel != 'library/index.html':
                 self.assertIn("img-src 'self';", page, rel)
 
     def test_blog_sitemap_keeps_public_portfolio_routes_and_excludes_private_cases(self):
@@ -207,7 +245,9 @@ class PortfolioTests(unittest.TestCase):
                 site.build_sitemap('2026-10-26')
             xml = ET.fromstring(site.files['sitemap.xml'])
             urls = [el.text for el in xml.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-            expected = {portfolio.SITE + '/' + rel.removesuffix('index.html') for rel in self.pages}
+            # The alternate classic presentation stays out of the main sitemap.
+            expected = {portfolio.SITE + '/' + rel.removesuffix('index.html')
+                        for rel in self.pages if rel != 'classic/index.html'}
             self.assertEqual(set(urls), expected)
             self.assertEqual(len(urls), len(set(urls)))
 

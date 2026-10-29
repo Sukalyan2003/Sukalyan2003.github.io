@@ -37,28 +37,26 @@ def test_a_plus_a_merges_to_long_A():
 
 def test_a_plus_i_guna():
     assert surface("rAm|a|iti") == "rAm|eti"
-    assert steps("rAm|a|iti") == ["6.1.102"]
+    assert steps("rAm|a|iti") == ["6.1.87"]
 
 def test_a_plus_u_guna():
     assert surface("rAm|a|uvAca") == "rAm|ovAca"
-    assert steps("rAm|a|uvAca") == ["6.1.103"]
+    assert steps("rAm|a|uvAca") == ["6.1.87"]
 
 # ---------------------------------------------------------------------------
-# Homogeneous coalescence (apavāda — exception over general rule)
-# The high-priority rules 6.1.77 / 6.1.78 must fire before the guṇa rules
-# could mis-handle them.
+# Homogeneous vowel lengthening. Different targets do not compete with guṇa.
 # ---------------------------------------------------------------------------
 
-def test_i_plus_i_apavada():
-    """6.1.77 (priority 15) must fire, not the lower-priority guṇa rules."""
+def test_i_plus_i_lengthening():
+    """The trace names the sutra for homogeneous vowel lengthening."""
     result = ENGINE.derive("kav|i|iti")
     assert result.surface == "kav|Iti"
-    assert result.steps[0].rule_name == "6.1.77"
+    assert result.steps[0].rule_name == "6.1.101"
 
-def test_u_plus_u_apavada():
+def test_u_plus_u_lengthening():
     result = ENGINE.derive("sAdh|u|uvAca")
     assert result.surface == "sAdh|UvAca"
-    assert result.steps[0].rule_name == "6.1.78"
+    assert result.steps[0].rule_name == "6.1.101"
 
 # ---------------------------------------------------------------------------
 # Context-sensitive consonant sandhi
@@ -66,11 +64,11 @@ def test_u_plus_u_apavada():
 
 def test_t_voices_before_voiced_stop():
     assert surface("tatgacchati") == "tadgacchati"
-    assert steps("tatgacchati") == ["8.4.53"]
+    assert steps("tatgacchati") == ["toy-t-voicing"]
 
 def test_k_voices_before_voiced_stop():
     assert surface("vakbodha") == "vagbodha"
-    assert steps("vakbodha") == ["8.4.54"]
+    assert steps("vakbodha") == ["toy-k-voicing"]
 
 def test_consonant_rule_does_not_fire_before_unvoiced():
     # 't' before 'c' (voiceless) should not change
@@ -78,20 +76,18 @@ def test_consonant_rule_does_not_fire_before_unvoiced():
     assert steps("tatca") == []
 
 # ---------------------------------------------------------------------------
-# Visarga sandhi — specific exception vs. general rule
+# Invented alphabet: a specific left context competes with a general pattern.
 # ---------------------------------------------------------------------------
 
-def test_visarga_specific_rule_fires_for_aH_plus_a():
-    """8.3.17 (priority 9) must outrank 8.3.15 (priority 8)."""
-    result = ENGINE.derive("saH|api")
-    assert result.surface == "saopi"
-    assert result.steps[0].rule_name == "8.3.17"
+def test_invented_specific_rule_wins_for_matching_context():
+    result = ENGINE.derive("ax|yb")
+    assert result.surface == "aZb"
+    assert result.steps[0].rule_name == "toy-specific"
 
-def test_visarga_general_rule_fires_before_other_vowel():
-    """8.3.15 fires when 8.3.17's left-context condition isn't met."""
-    result = ENGINE.derive("namaH|iti")
-    assert result.surface == "namariti"
-    assert result.steps[0].rule_name == "8.3.15"
+def test_invented_general_rule_wins_without_specific_context():
+    result = ENGINE.derive("bx|yb")
+    assert result.surface == "bWb"
+    assert result.steps[0].rule_name == "toy-general"
 
 # ---------------------------------------------------------------------------
 # No-op: no rule should fire on an already-correct string
@@ -111,7 +107,7 @@ def test_derivation_result_has_correct_before_after():
     step = result.steps[0]
     assert step.before == "rAm|a|iti"
     assert step.after  == "rAm|eti"
-    assert step.rule_name == "6.1.102"
+    assert step.rule_name == "6.1.87"
 
 def test_priority_ordering():
     """
@@ -136,13 +132,13 @@ if __name__ == "__main__":
         test_a_plus_a_merges_to_long_A,
         test_a_plus_i_guna,
         test_a_plus_u_guna,
-        test_i_plus_i_apavada,
-        test_u_plus_u_apavada,
+        test_i_plus_i_lengthening,
+        test_u_plus_u_lengthening,
         test_t_voices_before_voiced_stop,
         test_k_voices_before_voiced_stop,
         test_consonant_rule_does_not_fire_before_unvoiced,
-        test_visarga_specific_rule_fires_for_aH_plus_a,
-        test_visarga_general_rule_fires_before_other_vowel,
+        test_invented_specific_rule_wins_for_matching_context,
+        test_invented_general_rule_wins_without_specific_context,
         test_no_rules_fire_on_plain_consonants,
         test_derivation_result_has_correct_before_after,
         test_priority_ordering,

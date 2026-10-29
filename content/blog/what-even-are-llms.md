@@ -16,7 +16,7 @@ hashnode: {"cuid": "cm4ifys3b000i0amn0f5qdulw", "url": "https://sukalyanroy.hash
 
 It’s what drives ChatgGPT. No, really. That’s what an LLM is. From Chatgpt to Claude to Bing to Gemini, the technical term for these magical chatbots is a Large Language Model (LLM).
 
-For a clear first impression, watching [This video](https://www.youtube.com/watch?v=zjkBMFhNj_g%5D\(https://www.youtube.com/watch?v=zjkBMFhNj_g\)) is essential; barely anyone else can explain LLMs like Andrej.  
+For a clear first impression, watching [This video](https://www.youtube.com/watch?v=zjkBMFhNj_g) is essential; barely anyone else can explain LLMs like Andrej.
 Consider this post as simultaneously a TLDR of the video and a somewhat deeper dive into the topics through supplementary articles.
 
 And if you're curious about Neural networks in general, you should check out another post of mine, [here](/blog/understanding-neural-networks/)

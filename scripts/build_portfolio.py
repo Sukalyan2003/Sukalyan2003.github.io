@@ -15,6 +15,7 @@ from pathlib import Path
 
 import update_writing
 import portfolio_explore as explore
+import build_classic
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "content" / "portfolio.json"
@@ -267,6 +268,7 @@ def build(data: dict) -> dict[str, str]:
     graph = data['structured_data']
     detailed = [p for p in data['projects'] if p.get('facets')]
     pages = {'index.html': home(data, graph), 'work/index.html': work(data, graph), 'about/index.html': about(data, graph), 'library/index.html': library(data, graph)}
+    pages['classic/index.html'] = build_classic.render(data, json.loads((ROOT / 'blog/search.json').read_text()), ROOT)
     for project in detailed:
         pages[f'work/{project["slug"]}/index.html'] = case(project, detailed, graph, data)
     return pages

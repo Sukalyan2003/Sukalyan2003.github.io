@@ -922,6 +922,20 @@ a.tag:focus-visible {
   border: 1px solid var(--rule);
 }
 
+.media-player {
+  background: #14120e;
+  border: 1px solid var(--rule);
+  display: block;
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.media-player--youtube {
+  aspect-ratio: 16 / 9;
+  min-height: 200px;
+}
+
 .figure figcaption {
   color: var(--ink-muted);
   font-family: var(--mono);
@@ -1033,6 +1047,10 @@ a.tag:focus-visible {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+.prose .table-align-left { text-align: left; }
+.prose .table-align-center { text-align: center; }
+.prose .table-align-right { text-align: right; }
 
 .prose .footnotes {
   color: var(--ink-muted);

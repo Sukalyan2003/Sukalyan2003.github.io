@@ -82,9 +82,9 @@ class PaniniEngine:
     Ordered, context-sensitive rewrite-rule engine.
 
     Rules are stored in priority order (highest priority first).
-    Within the same priority, the rule listed earlier wins — this mirrors
-    the 'earlier in the grammar wins' default of the Ashtadhyayi (before
-    Rajpopat's 2022 re-reading, which reinterprets the conflict metarule).
+    Within the same priority, the rule listed earlier wins. This is the toy's
+    deterministic tie-break, not an implementation of the historical
+    conflict-resolution metarule or of Rajpopat's proposed interpretation.
 
     The engine keeps applying rules until no rule fires (fixpoint), up to
     a configurable maximum number of passes.
@@ -198,35 +198,37 @@ DEMO_RULES: list[Rule] = [
         priority=10,
     ),
     Rule(
-        name="6.1.102",
+        name="6.1.87",
         target="a|i",
         replace="e",
         note="a + i → e  (guṇa coalescence)",
         priority=10,
     ),
     Rule(
-        name="6.1.103",
+        name="6.1.87",
         target="a|u",
         replace="o",
         note="a + u → o  (guṇa coalescence)",
         priority=10,
     ),
 
-    # --- Homogeneous coalescence — exception (apavāda) over guṇa ---
-    # Higher priority so these fire before the guṇa rules can mis-apply.
+    # --- Homogeneous lengthening: simplified examples of 6.1.101 ---
+    # These targets do not overlap the a+i / a+u targets. Priority is not
+    # responsible for choosing between them; the invented examples below
+    # demonstrate competing matches.
 
     Rule(
-        name="6.1.77",
+        name="6.1.101",
         target="i|i",
         replace="I",
-        note="i + i → ī  (homogeneous coalescence; apavāda beats guṇa rule)",
+        note="i + i → ī  (homogeneous vowel lengthening)",
         priority=15,
     ),
     Rule(
-        name="6.1.78",
+        name="6.1.101",
         target="u|u",
         replace="U",
-        note="u + u → ū  (homogeneous coalescence; apavāda beats guṇa rule)",
+        note="u + u → ū  (homogeneous vowel lengthening)",
         priority=15,
     ),
 
@@ -234,7 +236,7 @@ DEMO_RULES: list[Rule] = [
     # RIGHT context is a voiced stop class.
 
     Rule(
-        name="8.4.53",
+        name="toy-t-voicing",
         target="t",
         replace="d",
         right="[bgdGDjzv]",
@@ -242,7 +244,7 @@ DEMO_RULES: list[Rule] = [
         priority=5,
     ),
     Rule(
-        name="8.4.54",
+        name="toy-k-voicing",
         target="k",
         replace="g",
         right="[bgdGDjzv]",
@@ -250,23 +252,21 @@ DEMO_RULES: list[Rule] = [
         priority=5,
     ),
 
-    # --- Visarga sandhi ---
-    # Rule 8.3.17 (specific: aH+a) outranks 8.3.15 (general: H before vowel).
-
+    # --- Invented alphabet: priority between genuinely competing rules ---
+    # These are programming exercises, not Sanskrit rules or derivations.
     Rule(
-        name="8.3.17",
-        target="H|a",
-        replace="o",
+        name="toy-specific",
+        target="x|y",
+        replace="Z",
         left="a",
-        note="aḥ + a → o  (e.g. saḥ api → so'pi; specific exception)",
+        note="invented alphabet: x|y becomes Z after a",
         priority=9,
     ),
     Rule(
-        name="8.3.15",
-        target="H|",
-        replace="r",
-        right="[aeiouAEIOU]",
-        note="ḥ → r before any vowel  (general rule)",
+        name="toy-general",
+        target="x|y",
+        replace="W",
+        note="invented alphabet: x|y otherwise becomes W",
         priority=8,
     ),
 ]
@@ -285,17 +285,17 @@ def run_demos():
         ("a + a  →  ā  (vowel sandhi)",          "rAm|a|aZva",    None),
         ("a + i  →  e  (guṇa coalescence)",      "rAm|a|iti",     None),
         ("a + u  →  o  (guṇa coalescence)",      "rAm|a|uvAca",   None),
-        ("i + i  →  ī  (apavāda exception)",     "kav|i|iti",     None),
-        ("u + u  →  ū  (apavāda exception)",     "sAdh|u|uvAca",  None),
+        ("i + i  →  ī  (homogeneous lengthening)",     "kav|i|iti",     None),
+        ("u + u  →  ū  (homogeneous lengthening)",     "sAdh|u|uvAca",  None),
         ("t → d before voiced stop (ctx-sense)", "tatgacchati",   None),
         ("k → g before voiced stop (ctx-sense)", "vakbodha",      None),
-        ("ḥ + a  →  o  (visarga specific rule)", "saH|api",       None),
-        ("ḥ + i  →  r  (visarga general rule)",  "namaH|iti",     None),
+        ("invented alphabet: specific rule",      "ax|yb",         None),
+        ("invented alphabet: general rule",       "bx|yb",         None),
     ]
 
     print("=" * 60)
     print("Pāṇini-style Rule Engine  —  TOY / ILLUSTRATIVE MODEL")
-    print("Rules are simplified; not a real Sanskrit grammar.")
+    print("Vowel labels refer to simplified examples; toy-* rules are invented.")
     print("=" * 60)
     print()
 

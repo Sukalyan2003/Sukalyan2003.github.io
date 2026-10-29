@@ -378,6 +378,52 @@ class MarkdownTests(unittest.TestCase):
         out = self.render("## Main\n")
         self.assertIn('id="main-section"', out["html"])
 
+    def test_youtube_links_embed_below_prose_once_without_autoplay(self):
+        html = self.render('Watch [the explanation](https://youtu.be/zjkBMFhNj_g?si=tracking).\n\n'
+                           'Again: https://www.youtube.com/watch?v=zjkBMFhNj_g\n')["html"]
+        self.assertEqual(html.count('<iframe '), 1)
+        self.assertIn('https://www.youtube-nocookie.com/embed/zjkBMFhNj_g', html)
+        self.assertIn('</p>\n<figure class="figure media-figure">', html)
+        self.assertIn('loading="lazy"', html)
+        self.assertIn('title="the explanation"', html)
+        self.assertNotIn('autoplay', html)
+        self.assertNotIn('si=tracking', html.split('<iframe ', 1)[1].split('</iframe>', 1)[0])
+
+    def test_youtube_playlists_embed_and_other_sites_stay_links(self):
+        html = self.render('[Series](https://www.youtube.com/playlist?list=PL123_abc)\n\n'
+                           '[Unrelated](https://example.com/watch?v=zjkBMFhNj_g)\n')["html"]
+        self.assertIn('/embed/videoseries?list=PL123_abc', html)
+        self.assertEqual(html.count('<iframe '), 1)
+        for url in ('https://youtube.com.evil.example/watch?v=zjkBMFhNj_g',
+                    'javascript:alert(1)', 'https://www.youtube.com/watch?v=bad',
+                    'https://youtu.be/zjkBMFhNj_g/extra'):
+            self.assertIsNone(build_blog.youtube_embed(url))
+
+    def test_local_video_has_poster_dimensions_and_reader_controls(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            media = root / 'blog/assets/media/demo'
+            media.mkdir(parents=True)
+            (media / 'clip.mp4').write_bytes(b'test fixture')
+            build_blog.Image.new('RGB', (1280, 720)).save(media / 'clip.poster.jpg')
+            with mock.patch.object(build_blog, 'ROOT', root), mock.patch.object(build_blog, 'ASSETS', root / 'blog/assets'):
+                out = self.render('![Cloud animation](/blog/assets/media/demo/clip.mp4 "Press play")\n')
+                linked = self.render('See [the animation](/blog/assets/media/demo/clip.mp4).\n')
+            for result in (out, linked):
+                html = result['html']
+                self.assertEqual(result['problems'], [])
+                self.assertIn('<video ', html)
+                self.assertIn('controls playsinline preload="metadata"', html)
+                self.assertIn('poster="/blog/assets/media/demo/clip.poster.jpg"', html)
+                self.assertIn('width="1280" height="720"', html)
+                self.assertNotIn('autoplay', html)
+                self.assertNotIn('<p><figure', html)
+
+    def test_missing_video_poster_is_reported(self):
+        env = {'problems': []}
+        self.assertIsNone(build_blog.local_video('/blog/assets/media/missing/clip.mp4', 'Animation', env))
+        self.assertEqual(len(env['problems']), 1)
+
     def test_code_tables_images_links(self):
         out = self.render("```python\ndef f():\n    return 1\n```\n\n```\nplain <b>\n```\n\n"
                           "| a | b |\n|---|---|\n| 1 | 2 |\n\n![alt](img/x.png \"Cap\")\n\nSee https://example.com now.\n")
@@ -391,6 +437,17 @@ class MarkdownTests(unittest.TestCase):
         self.assertNotIn("<p><figure", html)
         self.assertIn('<a href="https://example.com">https://example.com</a>', html)
         self.assertEqual(len(out["problems"]), 1)  # the unresolved image is reported
+
+    def test_table_alignment_uses_classes_compatible_with_csp(self):
+        html = self.render("| Left | Centre | Right | Default |\n"
+                           "| :--- | :---: | ---: | --- |\n"
+                           "| a | b | c | d |\n")["html"]
+        self.assertNotIn('style=', html)
+        for tag in ('th', 'td'):
+            for alignment in ('left', 'center', 'right'):
+                self.assertIn(f'<{tag} class="table-align-{alignment}">', html)
+        self.assertIn('<th>Default</th>', html)
+        self.assertIn('<td>d</td>', html)
 
     def test_math_becomes_mathml_and_prices_stay_text(self):
         html = self.render("Area $a^2$ costs $250, not $ 5 $.\n\n$$\\frac{1}{2}$$\n")["html"]
@@ -495,6 +552,19 @@ class SiteTests(unittest.TestCase):
     def test_no_comments_without_giscus_ids(self):
         page = self.site.files["blog/post-01/index.html"]
         self.assertNotIn("giscus", page)
+
+    def test_media_csp_allows_only_the_players_used_on_a_page(self):
+        plain = self.site.csp(comments=False)
+        self.assertNotIn('media-src', plain)
+        self.assertNotIn('frame-src', plain)
+        local = self.site.csp(comments=False, media=True)
+        self.assertIn("media-src 'self'", local)
+        self.assertNotIn('youtube', local)
+        youtube = self.site.csp(comments=False, youtube=True)
+        self.assertIn('frame-src https://www.youtube-nocookie.com;', youtube)
+        both = self.site.csp(comments=True, youtube=True, media=True)
+        self.assertIn('frame-src https://giscus.app https://www.youtube-nocookie.com;', both)
+        self.assertIn("media-src 'self'", both)
 
 
 def png_bytes(image) -> bytes:

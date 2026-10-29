@@ -27,9 +27,10 @@ import tempfile
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit, parse_qs
 
 from markdown_it import MarkdownIt
+from markdown_it.token import Token
 from latex2mathml.converter import convert as latex_to_mathml
 from mdit_py_plugins.anchors import anchors_plugin
 from mdit_py_plugins.dollarmath import dollarmath_plugin
@@ -311,6 +312,99 @@ def mark_figures(state) -> None:
                 child.meta["block"] = True
 
 
+def youtube_embed(url: str) -> str | None:
+    """Recognise video/playlist links, never arbitrary iframe destinations."""
+    parsed = urlsplit(url)
+    if parsed.scheme != 'https':
+        return None
+    query = parse_qs(parsed.query)
+    if parsed.netloc == 'youtu.be':
+        video = parsed.path.lstrip('/')
+    elif parsed.netloc in ('www.youtube.com', 'youtube.com', 'm.youtube.com'):
+        if parsed.path == '/playlist':
+            playlist = query.get('list', [''])[0]
+            if re.fullmatch(r'PL[A-Za-z0-9_-]+', playlist):
+                return f'https://www.youtube-nocookie.com/embed/videoseries?list={playlist}'
+            return None
+        if parsed.path == '/watch':
+            video = query.get('v', [''])[0]
+        elif parsed.path.startswith(('/shorts/', '/embed/')):
+            video = parsed.path.split('/')[2]
+        else:
+            return None
+    else:
+        return None
+    if re.fullmatch(r'[A-Za-z0-9_-]{11}', video):
+        return f'https://www.youtube-nocookie.com/embed/{video}'
+    return None
+
+
+def local_video(src: str, label: str, env: dict) -> str | None:
+    """Native playback with an always-visible poster, without auto-playing."""
+    parsed = urlsplit(src)
+    suffix = Path(parsed.path).suffix.lower()
+    if parsed.scheme or parsed.netloc or not parsed.path.startswith('/blog/assets/media/') or suffix not in ('.mp4', '.webm'):
+        return None
+    path = (ROOT / parsed.path.lstrip('/')).resolve()
+    if not path.is_relative_to((ASSETS / 'media').resolve()):
+        return None
+    poster = path.with_suffix('.poster.jpg')
+    if not path.is_file() or not poster.is_file():
+        env['problems'].append(f'video or poster file missing: {src}')
+        return None
+    with Image.open(poster) as image:
+        width, height = image.size
+    poster_url = '/' + poster.relative_to(ROOT).as_posix()
+    mime = 'video/mp4' if suffix == '.mp4' else 'video/webm'
+    return (f'<video class="media-player" controls playsinline preload="metadata" '
+            f'width="{width}" height="{height}" poster="{esc(poster_url)}" aria-label="{esc(label)}">'
+            f'<source src="{esc(src)}" type="{mime}">'
+            f'<a href="{esc(src)}">Open the video</a></video>')
+
+
+def embed_linked_media(state) -> None:
+    """Keep the prose/citations and place each linked player directly below it."""
+    seen = set()
+    result = []
+    additions = []
+    for token in state.tokens:
+        result.append(token)
+        if token.type == 'inline':
+            children = token.children or []
+            for i, child in enumerate(children):
+                if child.type != 'link_open':
+                    continue
+                url = child.attrGet('href') or ''
+                embed = youtube_embed(url)
+                key = embed or url
+                if key in seen:
+                    continue
+                label_parts = []
+                for text in children[i + 1:]:
+                    if text.type == 'link_close':
+                        break
+                    label_parts.append(text.content)
+                label = ''.join(label_parts) or 'Video'
+                if embed:
+                    player = (f'<iframe class="media-player media-player--youtube" src="{esc(embed)}" '
+                              f'title="{esc(label)}" width="640" height="360" loading="lazy" '
+                              'referrerpolicy="strict-origin-when-cross-origin" '
+                              'allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>')
+                else:
+                    player = local_video(url, label, state.env)
+                if not player:
+                    continue
+                seen.add(key)
+                figure = Token('html_block', '', 0)
+                figure.content = (f'<figure class="figure media-figure">{player}'
+                                  f'<figcaption><a href="{esc(url)}">{esc(label)}</a></figcaption></figure>\n')
+                additions.append(figure)
+        if token.type == 'paragraph_close':
+            result.extend(additions)
+            additions = []
+    state.tokens = result
+
+
 def highlight_code(code: str, lang: str) -> tuple[str, str]:
     lang = (lang or "").lower()
     if lang in PLAIN_LANGS:
@@ -341,6 +435,12 @@ def render_image(self, tokens, idx, options, env) -> str:
     src = token.attrGet("src") or ""
     alt = self.renderInlineAsText(token.children or [], options, env)
     title = token.attrGet("title") or ""
+    video = local_video(src, alt or title or 'Animation', env)
+    if video:
+        if token.meta.get('block'):
+            caption = f'<figcaption>{esc(title or alt)} · <a href="{esc(src)}">Open video</a></figcaption>'
+            return f'<figure class="figure media-figure">{video}{caption}</figure>\n'
+        return video
     info = env["resolve_image"](src)
     if info:
         img = img_tag(info, alt, "(max-width: 900px) 100vw, 680px")
@@ -383,6 +483,15 @@ def render_table_close(self, tokens, idx, options, env) -> str:
     return "</table></div>\n"
 
 
+def render_table_cell_open(self, tokens, idx, options, env) -> str:
+    # Markdown-it emits inline alignment styles, blocked by our CSP.
+    token = tokens[idx]
+    alignment = token.attrs.pop("style", "").removeprefix("text-align:")
+    if alignment in ("left", "center", "right"):
+        token.attrJoin("class", f"table-align-{alignment}")
+    return self.renderToken(tokens, idx, options, env)
+
+
 def make_markdown() -> MarkdownIt:
     # linkify: Hashnode rendered bare URLs as links, so the migration keeps that.
     md = MarkdownIt("commonmark", {"html": True, "linkify": True}).enable(["table", "strikethrough", "linkify"])
@@ -396,12 +505,15 @@ def make_markdown() -> MarkdownIt:
     md.use(anchors_plugin, min_level=2, max_level=4, slug_func=heading_slug)
     md.core.ruler.before("anchor", "shift_headings", shift_headings)
     md.core.ruler.push("figures", mark_figures)
+    md.core.ruler.push("media", embed_linked_media)
     md.add_render_rule("fence", render_fence)
     md.add_render_rule("code_block", render_fence)
     md.add_render_rule("image", render_image)
     md.add_render_rule("heading_close", render_heading_close)
     md.add_render_rule("table_open", render_table_open)
     md.add_render_rule("table_close", render_table_close)
+    md.add_render_rule("th_open", render_table_cell_open)
+    md.add_render_rule("td_open", render_table_cell_open)
     return md
 
 
@@ -512,13 +624,18 @@ class Site:
         return sorted(members, key=lambda p: (p["meta"].get("seriesOrder", 0), p["date"]))
 
     # --------------------------------------------------------------- layout
-    def csp(self, *, comments: bool) -> str:
+    def csp(self, *, comments: bool, youtube: bool = False, media: bool = False) -> str:
         script = f"'self' '{THEME_GUARD_HASH}'"
-        style, frame = "'self'", ""
+        style, frames = "'self'", []
         if comments:
             script += " https://giscus.app"
             style += " https://giscus.app"
-            frame = "; frame-src https://giscus.app"
+            frames.append('https://giscus.app')
+        if youtube:
+            frames.append('https://www.youtube-nocookie.com')
+        frame = '; frame-src ' + ' '.join(frames) if frames else ''
+        if media:
+            frame += "; media-src 'self'"
         return (f"default-src 'none'; img-src 'self'; style-src {style}; font-src 'self'; "
                 f"script-src {script}; connect-src 'self'; manifest-src 'self'{frame}; "
                 "base-uri 'none'; form-action 'none'")
@@ -551,7 +668,7 @@ class Site:
 <meta name="description" content="{esc(description)}">
 <meta name="author" content="{esc(cfg.AUTHOR_NAME)}">
 <meta name="robots" content="{robots}">
-<meta http-equiv="Content-Security-Policy" content="{self.csp(comments=comments)}">
+<meta http-equiv="Content-Security-Policy" content="{self.csp(comments=comments, youtube='https://www.youtube-nocookie.com/embed/' in content, media='<video ' in content)}">
 <meta name="color-scheme" content="light dark">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">

@@ -4,6 +4,7 @@ slug: "the-distance-that-knows-how-the-data-moves"
 section: "unsung-bits"
 seriesOrder: 5
 datePublished: "2026-10-03T02:30:00Z"
+dateUpdated: "2026-10-29T12:12:06Z"
 description: "In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning."
 tags: ["machine-learning", "statistics", "india", "data-science", "unsung-bits", "history-of-science", "anomaly-detection"]
 cover: "img/the-distance-that-knows-how-the-data-moves/mahalanobis-ellipse-comparison.webp"
@@ -56,7 +57,6 @@ Person B is much further above average on both measurements. They sit further fr
 
 Euclidean distance will call Person A more normal because they are closer in raw units. A covariance-aware measure calls Person A more unusual because that combination cuts against the population pattern.
 
-![Correlated data forming a diagonal ellipse, with nearby Point A across the narrow axis and distant Point B along the long axis.](img/the-distance-that-knows-how-the-data-moves/mahalanobis-ellipse-comparison.webp)
 
 His 1936 paper, ["On the generalised distance in statistics," *Proceedings of the National Institute of Sciences of India*, Vol. 2, No. 1](https://doi.org/10.1007/s13171-019-00164-5), proposed a distance measure that accounts for the structure of the distribution itself.
 
@@ -79,9 +79,14 @@ D_M(\mathbf{x}, \boldsymbol{\mu})
 (\mathbf{x}-\boldsymbol{\mu})}
 $$
 
-Read it from the inside out. Subtract **μ** to measure how far the point is from the centre. Multiply by **Σ⁻¹** to rescale and untangle the correlated directions. The superscript **T** turns the first vector sideways so the multiplication produces one number. The square root puts that number back on a distance scale.
+Read it from the inside out. Subtract **μ** to measure how far the point is from the centre. Solve with **Σ** (equivalently, apply **Σ⁻¹**) and take the dot product with the original centred vector. This gives the squared distance. Whitening the vector itself instead uses **Σ⁻¹ᐟ²**, the inverse square root, before taking its Euclidean length. The superscript **T** turns the first vector sideways so the multiplication produces one number. The square root puts that number back on a distance scale.
 
 The **Σ⁻¹** term, the inverse of the covariance matrix, is doing all the work. It makes movement along high-variance directions count less and movement along low-variance directions count more. Equivalently, you can whiten the data first, turning its tilted ellipse into a circle, and then use ordinary Euclidean distance. The formula knows the difference.
+
+
+In the animation, an ordinary ruler puts A (1.41) nearer the centre than B (4.24). Apply the inverse square root of the covariance and the cloud turns round. The same ruler now reads 2.24 for A and 1.54 for B, and mapping back turns those circles into ellipses shaped like the cloud.
+
+![Whitening the data cloud changes the distance rankings of points A and B.](/blog/assets/media/the-distance-that-knows-how-the-data-moves/whitening.mp4 "Whitening and Mahalanobis distance. Press play to watch the animation.")
 
 ```mermaid
 flowchart TD
@@ -95,7 +100,7 @@ flowchart TD
 
 Three special cases help make it concrete.
 
-**1. Identity covariance.** When **Σ = I** (ones down the diagonal and zeroes elsewhere), $D_M$ collapses exactly to Euclidean distance. Every dimension is independent and already on the same scale.
+**1. Identity covariance.** When **Σ = I** (ones down the diagonal and zeroes elsewhere), $D_M$ collapses exactly to Euclidean distance. The dimensions have unit variance and are uncorrelated. Independence follows in the multivariate normal model, but not for arbitrary distributions.
 
 **2. Different scales, no correlation.** When **Σ** is diagonal but its variances differ, the formula becomes:
 
@@ -108,9 +113,9 @@ Each difference is measured in units of that feature's usual variation. A ten-ce
 
 **3. Correlated measurements.** The general case, with off-diagonal terms, rotates as well as rescales the coordinate system so the long and narrow directions of the data cloud are treated differently.
 
-There is also a statistical interpretation that makes the distance genuinely useful: if **x** is drawn from a multivariate normal distribution $N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ and those population parameters are known, then $D_M(\mathbf{x})^2$ follows a chi-squared distribution with *d* degrees of freedom, where *d* is the number of measurements. A chi-squared table tells you how large a squared distance would be unusual under that model, which gives outlier detection a principled threshold. Once the mean and covariance are estimated from finite data, or the normal model is wrong, that calibration needs more care.
+There is also a statistical interpretation that makes the distance genuinely useful: if **x** is drawn from a multivariate normal distribution $N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ and those population parameters are known, then $D_M(\mathbf{x})^2$ follows a chi-squared distribution with *d* degrees of freedom, where *d* is the number of measurements. A chi-squared threshold is a cutoff chosen so that only a specified fraction of model-generated squared distances exceeds it. It tells you how unusual the observed value is under that model, which gives outlier detection a principled threshold. Once the mean and covariance are estimated from finite data, or the normal model is wrong, that calibration needs more care.
 
-Don't worry about the matrix inversion for now. It's not a trivial computation; in high dimensions, inverting **Σ** costs O(d³) and requires enough data to estimate it reliably (you need more samples than dimensions, or the matrix becomes singular).
+The covariance must be **positive definite**, giving positive variation in every non-zero direction. The usual centred sample covariance needs more samples than dimensions to have full rank, but that is not sufficient: duplicate or collinear features can still make it singular. Dense factorization generally costs O(d³). The demo solves a linear system instead of explicitly constructing an inverse.
 
 This is a real practical constraint in large-scale ML, and it's why people use diagonal approximations and low-rank tricks in practice.
 
@@ -145,20 +150,13 @@ The Python script in `code/demo.py` makes the contrast concrete. It generates a 
 
 Point A is physically closer to the centre. Mahalanobis rates it as more unusual because it sits in the direction the cloud rarely goes. Point B is three times further away in raw units but is consistent with a cloud that moves diagonally. Moderate coordinates can still form a strange combination.
 
-![Terminal output showing Point A closer by Euclidean distance but farther by Mahalanobis distance than Point B.](img/the-distance-that-knows-how-the-data-moves/terminal-output.webp)
 
-## Get the code
-
-[Download the demo ZIP](/blog/assets/code/the-distance-that-knows-how-the-data-moves/the-distance-that-knows-how-the-data-moves.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-distance-that-knows-how-the-data-moves)
-
-The download includes the script, README, and tests, plus the demo dependencies. Extract it, open the extracted `the-distance-that-knows-how-the-data-moves` folder in a terminal, and run:
+You can run it yourself:
 
 ```bash
-python3 -m pip install -r code/requirements.txt
-python3 code/demo.py
+pip install -r requirements.txt
+python3 demo.py
 ```
-
-See `code/README.md` for the test command.
 
 The script also writes the ellipse plot used above. The formula is a few lines of NumPy. The insight behind it is ninety years old.
 
@@ -209,12 +207,19 @@ The distance is scale-invariant and covariance-aware. The curriculum, it turns o
 
 Try changing the correlation in `code/demo.py` from 0 to 0.5, 0.9, and 0.99, then watch what happens to Point A. If you find a covariance matrix the validation mishandles, open an issue on the repository.
 
+## Get the code
+
+[Download the demo ZIP](/blog/assets/code/the-distance-that-knows-how-the-data-moves/the-distance-that-knows-how-the-data-moves.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-distance-that-knows-how-the-data-moves)
+
+Extract the ZIP and open the `the-distance-that-knows-how-the-data-moves` folder. The `code/README.md` includes the run and test commands, and `code/requirements.txt` lists the dependencies.
+
 ## Sources and further reading
 
-- Mahalanobis, P. C. ["On the generalised distance in statistics"](https://doi.org/10.1007/s13171-019-00164-5). *Proceedings of the National Institute of Sciences of India*, Vol. 2, No. 1, pp. 49–55, 1936. Primary paper, linked through the 2018 *Sankhyā* reprint.
+- Mahalanobis, P. C. ["On the generalised distance in statistics"](https://doi.org/10.1007/s13171-019-00164-5). *Proceedings of the National Institute of Sciences of India*, Vol. 2, No. 1, pp. 49–55, 1936. Primary paper, linked through the *Sankhyā A* volume dated 2018; Springer lists online publication on 29 March 2019.
 - Scikit-learn, ["Linear and Quadratic Discriminant Analysis"](https://scikit-learn.org/stable/modules/lda_qda.html). LDA and QDA likelihoods, priors, covariance determinants, and Mahalanobis interpretation.
 - Lee, Kimin, et al. ["A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks"](https://proceedings.neurips.cc/paper_files/paper/2018/hash/abdeb6f575ac5c6676b747bca8d09cc2-Abstract.html). NeurIPS 2018.
 - Indian Statistical Institute, [official history and regulations](https://www2.isical.ac.in/~deanweb/GNRLRULES-REGULATIONS.pdf).
 - Ministry of Statistics, Government of India, [National Statistics Day](https://mospi.gov.in/national-statistics-day).
 - MacTutor History of Mathematics, ["Prasanta Chandra Mahalanobis"](https://mathshistory.st-andrews.ac.uk/Biographies/Mahalanobis/).
 - Hotelling, H. ["The Generalization of Student's Ratio"](https://www.jstor.org/stable/2957535). *Annals of Mathematical Statistics* 2(3): 360–378, 1931.
+- [Springer reprint metadata](https://link.springer.com/article/10.1007/s13171-019-00164-5).

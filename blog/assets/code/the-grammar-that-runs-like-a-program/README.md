@@ -1,140 +1,50 @@
-# Pāṇini-style Rule Engine -- Toy / Illustrative Model
+# Illustrative rewrite engine
 
-**This is a teaching aid, not a real Sanskrit grammar engine.**
-It demonstrates the *structural ideas* behind Pāṇini's Aṣṭādhyāyī using a
-small Python rewrite-rule system. The rules are simplified analogues --
-do not use this to generate real Sanskrit.
+A small Python rule engine for the Pāṇini post, not a Sanskrit grammar implementation.
 
-## What it shows
+## Run
 
-| Pāṇini concept | How the engine models it |
-|---|---|
-| Sūtra ordering | Rules are applied in priority order (highest first) |
-| Context-sensitive rules | `left` / `right` regex fields gate each rule |
-| Apavāda (exception > general) | Higher `priority` weight beats lower |
-| Anuvṛtti (carry-forward) | `domain` field -- rule only fires inside active domain |
-| Derivation trace | Every step logged with rule name, before, after, note |
-
-## Run the demo
-
-```
-python panini_engine.py
+```bash
+python3 panini_engine.py
+python3 test_panini_engine.py
+# Or, with pytest installed:
+python3 -m pytest -q test_panini_engine.py
 ```
 
-## Run the tests
+Python standard library only for the engine and direct test runner.
 
-```
-python test_panini_engine.py
-# or, if pytest is available:
-python -m pytest test_panini_engine.py -v
-```
+## What the labels mean
 
-## Requirements
+The a+a, i+i, and u+u examples are restricted illustrations of vowel lengthening under
+6.1.101. The a+i and a+u examples illustrate guṇa under 6.1.87. These targets do not
+overlap, so priority is not what selects between them. Sutra references identify the
+relevant vowel rule, not a complete derivation with all of its grammatical conditions.
 
-Python 3.8+. Standard library only -- no extra packages needed.
+The `toy-t-voicing` and `toy-k-voicing` rules are simplified context-dependent rewrites,
+without a claim that one numbered Sanskrit rule alone produces the whole derivation.
+The `toy-specific` and `toy-general` rules use an invented alphabet: both match x|y,
+but the more specific rule wins when a is on the left. They demonstrate priority without
+passing off incorrect visarga rewrites as Sanskrit.
 
----
+The engine does not implement full phonology, grammatical domains, asiddha visibility,
+or Rajpopat's proposed conflict rule. ASCII uppercase A/I/U represents long vowels in
+these examples; | is an explicit input boundary marker.
 
-## Real output (pasted verbatim)
+## Actual output excerpt
 
-```
-============================================================
-Pāṇini-style Rule Engine  --  TOY / ILLUSTRATIVE MODEL
-Rules are simplified; not a real Sanskrit grammar.
-============================================================
-
-[ a + a  →  ā  (vowel sandhi) ]
-Input:  'rAm|a|aZva'
-  Step 1: [6.1.101]  'rAm|a|aZva' → 'rAm|AZva'
-          note: a + a → ā  (two short a's merge to long ā; vowel sandhi)
-Output: 'rAm|AZva'
-
+```text
 [ a + i  →  e  (guṇa coalescence) ]
 Input:  'rAm|a|iti'
-  Step 1: [6.1.102]  'rAm|a|iti' → 'rAm|eti'
+  Step 1: [6.1.87]  'rAm|a|iti' → 'rAm|eti'
           note: a + i → e  (guṇa coalescence)
 Output: 'rAm|eti'
-
-[ a + u  →  o  (guṇa coalescence) ]
-Input:  'rAm|a|uvAca'
-  Step 1: [6.1.103]  'rAm|a|uvAca' → 'rAm|ovAca'
-          note: a + u → o  (guṇa coalescence)
-Output: 'rAm|ovAca'
-
-[ i + i  →  ī  (apavāda exception) ]
-Input:  'kav|i|iti'
-  Step 1: [6.1.77]  'kav|i|iti' → 'kav|Iti'
-          note: i + i → ī  (homogeneous coalescence; apavāda beats guṇa rule)
-Output: 'kav|Iti'
-
-[ u + u  →  ū  (apavāda exception) ]
-Input:  'sAdh|u|uvAca'
-  Step 1: [6.1.78]  'sAdh|u|uvAca' → 'sAdh|UvAca'
-          note: u + u → ū  (homogeneous coalescence; apavāda beats guṇa rule)
-Output: 'sAdh|UvAca'
-
-[ t → d before voiced stop (ctx-sense) ]
-Input:  'tatgacchati'
-  Step 1: [8.4.53]  'tatgacchati' → 'tadgacchati'
-          note: t → d before a voiced consonant  (e.g. tat+gacchati → tad gacchati)
-Output: 'tadgacchati'
-
-[ k → g before voiced stop (ctx-sense) ]
-Input:  'vakbodha'
-  Step 1: [8.4.54]  'vakbodha' → 'vagbodha'
-          note: k → g before a voiced consonant
-Output: 'vagbodha'
-
-[ ḥ + a  →  o  (visarga specific rule) ]
-Input:  'saH|api'
-  Step 1: [8.3.17]  'saH|api' → 'saopi'
-          note: aḥ + a → o  (e.g. saḥ api → so'pi; specific exception)
-Output: 'saopi'
-
-[ ḥ + i  →  r  (visarga general rule) ]
-Input:  'namaH|iti'
-  Step 1: [8.3.15]  'namaH|iti' → 'namariti'
-          note: ḥ → r before any vowel  (general rule)
-Output: 'namariti'
 ```
 
-### Test run output
+## Sources for the vowel labels
 
-```
-  PASS  test_a_plus_a_merges_to_long_A
-  PASS  test_a_plus_i_guna
-  PASS  test_a_plus_u_guna
-  PASS  test_i_plus_i_apavada
-  PASS  test_u_plus_u_apavada
-  PASS  test_t_voices_before_voiced_stop
-  PASS  test_k_voices_before_voiced_stop
-  PASS  test_consonant_rule_does_not_fire_before_unvoiced
-  PASS  test_visarga_specific_rule_fires_for_aH_plus_a
-  PASS  test_visarga_general_rule_fires_before_other_vowel
-  PASS  test_no_rules_fire_on_plain_consonants
-  PASS  test_derivation_result_has_correct_before_after
-  PASS  test_priority_ordering
+- https://www.learnsanskrit.org/vyakarana/sounds/ac-sandhi/
+- https://www.learnsanskrit.org/static/pdf/vyakarana.pdf
 
-13 passed, 0 failed
-```
-
-## Input notation
-
-The `|` character marks a morpheme boundary (where sandhi can apply).
-ASCII proxies for Sanskrit sounds used in demos:
-
-| ASCII | Approximate Sanskrit sound |
-|---|---|
-| A | ā (long a) |
-| I | ī (long i) |
-| U | ū (long u) |
-| H | ḥ (visarga) |
-| Z | ś (palatal sibilant) |
-
-## Files
-
-```
-panini_engine.py        -- engine + demo rules + CLI demo
-test_panini_engine.py   -- 13 unit tests
-README.md               -- this file
-```
+Tests check the small model's output, trace labels, context restrictions, and priority
+between genuinely competing invented rules. They do not establish linguistic completeness
+or certify all Sanskrit rule attributions.

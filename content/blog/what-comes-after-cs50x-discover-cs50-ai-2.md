@@ -146,11 +146,11 @@ I consider myself fairly good at english overall, including english grammar, but
 
 ## Attention
 
-![](img/what-comes-after-cs50x-discover-cs50-ai-2/ae518024f494.gif)
+![Attention heads from the CS50 AI transformer visualization.](/blog/assets/media/what-comes-after-cs50x-discover-cs50-ai-2/attention.mp4 "Transformer attention visualization. Press play to watch.")
 
 The goal of this project was less about making a transformer and more about analysing the behavior of a built one.
 
-The transformer was imported from huggingface. Then there was some functions to write that used the fields from the library, and then generate the visualization from it, that you see in the GIF above.
+The transformer was imported from huggingface. Then there was some functions to write that used the fields from the library, and then generate the visualization from it, that you see in the animation above.
 
 Important note: At least in the version of CS50 AI that i took, the course hasn't been updated in a while and was oblivious to the deprecation of tensorflow support for the transformers module. So remember to use the 4.4.0 version of transformers if the course isnt updated to use pytorch when you are doing it.
 

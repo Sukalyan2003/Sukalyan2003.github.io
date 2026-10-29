@@ -4,41 +4,35 @@ slug: "the-grammar-that-runs-like-a-program"
 section: "unsung-bits"
 seriesOrder: 1
 datePublished: "2026-09-05T05:49:19.955Z"
-description: "Pāṇini's Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers."
-descriptionSource: "excerpt"
-tags: ["india", "linguistics", "sanskrit", "computer-science-history", "formal-languages", "unsung-bits"]
+dateUpdated: "2026-10-29T12:12:06Z"
+description: "Pāṇini's compact Sanskrit grammar controls rules, context, and derivations in ways a programmer can recognize. The parallels are real; their limits matter too."
+tags: ["computer-science-history", "linguistics", "india", "formal-languages", "sanskrit", "unsung-bits", "programming-languages"]
 cover: "img/the-grammar-that-runs-like-a-program/d250567f2e39.webp"
 coverAlt: ""
 hashnode: {"cuid": "cmtnyqfgj00000agm28nz5bbe", "url": "https://sukalyanroy.hashnode.dev/the-grammar-that-runs-like-a-program"}
-dateUpdated: "2026-10-02T15:48:31.535296Z"
 ---
 
 ## TL;DR
 
-*   Pāṇini's Aṣṭādhyāyī (c. 350 BCE) is a formal, generative specification of Sanskrit, using structures strikingly similar to modern compilers.
-    
-*   It employs character classes, rule ordering, context-sensitivity, and conflict-resolution hierarchies.
-    
-*   While generative in a formal sense, it requires human cognition to execute, unlike a mechanical compiler.
-    
-*   Recent research by Rishi Rajpopat (2022) resolved a centuries-old rule conflict issue, proving the grammar's internal consistency.
-    
-*   A toy Python implementation of the rule engine is provided in the repository.
-    
-*   Caveat: My linguistic knowledge is limited. I have a CS background and a passing interest in Sanskrit, but I am not a trained linguist. Corrections and clarifications are welcome.
-    
+- Pāṇini's Aṣṭādhyāyī describes Sanskrit forms through a compact system of rules and rules about rules.
+- It names groups of sounds, carries conditions between rules, and controls which changes other rules can see.
+- These structures invite comparisons with programming languages, but a similarity is not proof of historical influence or identical expressive power.
+- Rishi Rajpopat's 2022 thesis proposes a different reading of a conflict rule; it does not prove that every part of the grammar is internally consistent.
+- The Python demo implements a small rewrite engine, not the full Sanskrit grammar.
+
+My linguistic knowledge is limited. I have a CS background and a passing interest in Sanskrit, but I am not a trained linguist. Corrections and clarifications are welcome.
 
 > **Project status:** The `code/panini_engine.py` script is a minimal rewrite-rule engine demonstrating structural ideas like rule ordering and context-sensitivity. It handles simplified sandhi rules successfully. It is an educational toy, not a full implementation of the Aṣṭādhyāyī.
 
-The first time I read a technical description of how the Aṣṭādhyāyī works, I had to stop and reread it twice. It read, almost word for word, like a description of a compiler with Context-sensitive rules, a metalanguage for describing the object language, Ordered rule application, and a conflict-resolution hierarchy.
+The first time I read a technical description of how the Aṣṭādhyāyī works, I had to stop and reread it twice. It read, almost word for word, like a description of a compiler with Context-sensitive rules, a metalanguage for describing the object language, Ordered rule application, and a conflict-resolution hierarchy. A **metalanguage** is the notation used to describe another language: the rule labels and instructions, rather than the Sanskrit forms they generate.
 
-Sometime around [350 BCE](https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini), in the Gandhara region of what is now northern Pakistan, a grammarian named Pāṇini compiled a complete formal description of Sanskrit. He called it the Aṣṭādhyāyī, or "Eight Chapters." It contains [3,959 sūtras](https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini), each one a terse instruction, most of them three or four syllables long. The whole thing was designed to be memorized and recited, not written down.
+Sometime around [350 BCE](https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini), in the Gandhara region of what is now northern Pakistan, a grammarian named Pāṇini compiled a compact, highly structured description of Sanskrit. He called it the Aṣṭādhyāyī, or "Eight Chapters." It contains [3,959 sūtras](https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini), each one a terse instruction, most of them three or four syllables long. The whole thing was designed to be memorized and recited, not written down.
 
 * * *
 
 ## Not really a textbook
 
-Sanskrit in the 4th century BCE was a ritual and literary language, long past being anyone's casual spoken tongue, and the pressure to speak it correctly (phonetically, morphologically, syntactically) was significant.
+Sanskrit was a language of ritual, scholarship, and literary expression. Pāṇini's grammar treats both Vedic and contemporary usages; reducing its purpose to preserving a language nobody spoke would miss part of the project.
 
 The religious stakes were absolute: Vedic rituals required exact phonetic precision. If the pronunciation drifted, the ritual failed.
 
@@ -46,7 +40,7 @@ As the daily spoken languages (Prakrits) evolved away from Vedic Sanskrit, the n
 
 There were already earlier grammarians and Pāṇini names [ten of them](https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini). But their treatments were partial or inconsistent, and the language had accreted enormous complexity: vowel changes at word boundaries, consonant mutations before certain sounds, hundreds of verb roots each with their own inflectional patterns.
 
-Pāṇini's project was to specify Sanskrit *completely* in the smallest possible space. Not to teach it to beginners (the Aṣṭādhyāyī is notoriously opaque without prior training and years of absorbing context) but to create a formal, complete, non-redundant description that leaves nothing to interpretation.
+Pāṇini's project was to specify Sanskrit *completely* in the smallest possible space. Not to teach it to beginners (the Aṣṭādhyāyī is notoriously opaque without prior training and years of absorbing context) but to describe forms through a compact network of rules, whose interpretation still requires substantial grammatical knowledge.
 
 * * *
 
@@ -55,19 +49,19 @@ Pāṇini's project was to specify Sanskrit *completely* in the smallest possibl
 Before we dive in, here are the key operational concepts Pāṇini used. Think of these as the fundamental operations of his rule engine:
 
 *   **Pratyāhāra:** Character classes. Instead of listing "a, e, i, o, u", you use a start and end marker to define a continuous sequence of sounds.
-    
-*   **Anuvṛtti:** State carry-forward or ellipsis. A rule inherits context and conditions from the rule immediately preceding it, acting exactly like variable scope.
-    
+
+*   **Anuvṛtti:** State carry-forward or ellipsis. A later rule can inherit material stated earlier. Variable scope is a useful programming analogy, not an exact identity.
+
 *   **Samjñā:** Explicit definitions or variables assigned to specific concepts.
-    
+
 *   **Asiddha:** "As if not done." A pipeline ordering semantic where a rule executes but its output is hidden from certain earlier rules.
-    
+
 
 * * *
 
 ## A phoneme list data structure
 
-Pāṇini's first move was to compress the phoneme inventory itself. Prefixed to the Aṣṭādhyāyī are 14 short verses, the Śivasūtras, listing the Sanskrit sounds in a specific, non-alphabetical order. It lets any natural phoneme class be named by a two-character code.
+A **phoneme** is a contrasting speech sound. Pāṇini's first move was to compress the sound inventory itself. Prefixed to the Aṣṭādhyāyī are 14 short verses, the Śivasūtras, listing the Sanskrit sounds in a specific, non-alphabetical order. It lets recurring groups of sounds be named compactly rather than listed each time.
 
 A short vowel followed by a "dummy" marker letter becomes a *pratyāhāra*, an abbreviation for all sounds between those two points in the list. "AC" means all vowels. "HAL" means all consonants. If you need a rule that applies to any vowel following any consonant, you write it once using pratyāhāras; you don't enumerate all the combinations.
 
@@ -77,13 +71,20 @@ You cannot reorder the Śivasūtras without breaking hundreds of pratyāhāras e
 
 The second move is *anuvṛtti* or carry-forward. A later sūtra can omit elements already established by an earlier one, relying on the derivation process to supply the missing material from context. This is grammatical ellipsis, systematic and precise.
 
-It works exactly like variable scope inheritance:
+Here is a schematic comparison with scope: later instructions reuse a declared context. These are invented labels, not quotations or numbers from the Aṣṭādhyāyī:
 
-![](img/the-grammar-that-runs-like-a-program/d263cf54de0f.webp)
+```mermaid
+graph TD
+    Sutra1["Context declaration: nominal stems"] --> RuleA["Rule A applies to [Nominal Stems]"]
+    Sutra1 -. "anuvṛtti (carry-forward)" .-> Sutra2
+    Sutra2["Later instruction: if ending in '-a'"] --> RuleB["Rule B applies to [Nominal Stems] ending in '-a'"]
+    Sutra2 -. "anuvṛtti" .-> Sutra3
+    Sutra3["Next instruction: if plural, transform ending"] --> RuleC["Rule C applies to [Nominal Stems] ending in '-a', plural"]
+```
 
-Without anuvṛtti, the total wordcount in the Aṣṭādhyāyī would be around 40,000 words instead of 7,000, roughly 6× compression, all achieved by a rule about reading rules.
+The saving comes from not repeating the same conditions in every instruction. The reader reconstructs what an isolated rule leaves unstated.
 
-The third move is a type system for the rules themselves. Pāṇini distinguishes six kinds of sūtra: definitions (*samjñā*), general rules (*vidhi*), restrictions (*niyama*), analogy rules (*atideśa*), governing rules (*adhikāra*), and metarules (*paribhāṣā*). The governing rules establish a domain: "the following rules, until further notice, apply only to nominal stems ending in -a."
+The third move is to distinguish what different kinds of rule do. Calling this a type system is an analogy; it does not imply the checks performed by a programming-language type checker. Pāṇini distinguishes six kinds of sūtra: definitions (*samjñā*), general rules (*vidhi*), restrictions (*niyama*), analogy rules (*atideśa*), governing rules (*adhikāra*), and metarules (*paribhāṣā*). The governing rules establish a domain: "the following rules, until further notice, apply only to nominal stems ending in -a."
 
 The metarules specify how to read everything else.
 
@@ -93,35 +94,45 @@ The metarules specify how to read everything else.
 
 Most of the Aṣṭādhyāyī's productive rules follow the pattern: **A → B / C \_ D**. Replace A with B when it appears in left-context C and right-context D. If you've ever written a context-sensitive grammar, or a regular-expression substitution with lookahead and lookbehind, you already know this shape.
 
-![](img/the-grammar-that-runs-like-a-program/6e18a2208ac1.webp)
+```mermaid
 
-For example: a word-final *t* becomes *d* when the next word starts with a voiced consonant. "tat gacchati" → "tad gacchati." The rule fires *because of context*: strip the following word and nothing happens. The engine in `code/panini_engine.py` models exactly this: each rule carries optional left and right constraints, and only triggers when both are satisfied.
+flowchart TD
+    Input["Input String: 'tatgacchati' (toy input)"] --> CheckLeft{"Does left context C match?"}
 
-The ordering of rules matters too. When two rules could both apply, the Aṣṭādhyāyī uses a priority hierarchy: exceptions (*apavāda*) override general rules (*utsarga*). More specialized rules beat more general ones. If you've set parser precedence in yacc, or wrestled with CSS specificity, this is the same mechanism, and it produces the same guarantee: a deterministic derivation path, not a free-for-all.
+    CheckLeft -->|Yes| CheckTarget{"Does target A match?"}
+    CheckLeft -->|No| Skip["Skip Rule"]
 
-There is also a rule type called *asiddha*: "as if not done", applying specifically to Chapter 8. When a rule in Chapter 8 fires, it operates as though the effects of earlier rules haven't happened yet. This is ordering semantics in a transformation pipeline. It is the most explicitly computational thing in the entire grammar, and Pāṇini invented it to handle a specific class of phonological interaction, not because he was theorizing about computation.
+    CheckTarget -->|"Yes: 't'"| CheckRight{"Does right context D match?"}
+    CheckTarget -->|No| Skip
+
+    CheckRight -->|"Yes: 'g' (voiced)"| Apply["Apply Rewrite: A → B"]
+    CheckRight -->|No| Skip
+
+    Apply --> Output["Result: 'tad gacchati'"]
+
+```
+
+A real example, simplified: a word-final *t* becomes *d* when the next word starts with a voiced consonant. "tat gacchati" → "tad gacchati." The rule fires *because of context*: strip the following word and nothing happens. The engine in `code/panini_engine.py` models a simplified version on concatenated ASCII input such as `tatgacchati`: each rule carries optional left and right constraints, and only triggers when both are satisfied.
+
+The ordering of rules matters too. When two rules could both apply, the Aṣṭādhyāyī uses a priority hierarchy: exceptions (*apavāda*) override general rules (*utsarga*). More specialized rules beat more general ones. If you've set parser precedence in yacc, or wrestled with CSS specificity, the engineering problem will be familiar: several transformations may be eligible, and a policy must choose between them. That comparison does not settle every grammatical conflict.
+
+The **asiddha** relation, "not effected," controls visibility between operations. Under rule 8.2.1, the final three sections, called the *Tripādī*, are treated as not effected with respect to preceding rules. A later operation's output cannot simply trigger an earlier operation as though all rules saw every change. This is a useful comparison with ordered transformation passes, not a claim that Sanskrit derivation is an ordinary compiler pipeline. [Joshi and Kiparsky, section 1](https://web.stanford.edu/~kiparsky/Papers/siddha.new.pdf)
 
 The point where this system diverges from being a compiler analogue is that: all of this still requires a human to execute it.
 
-There is no mechanical interpreter in 350 BCE, or now, not one that handles the full grammar.
+Modern implementations cover subsets and make explicit interpretive choices; this toy does much less.
 
 The rules specify *what to do* with precision. *Doing it* requires tracking derivation state, choosing which rules are currently in scope, and resolving conflicts according to the metarule hierarchy. That's cognition, not compilation.
 
-* * *
 
-## The metarule mistake for 2,500 years
 
-For most of the Aṣṭādhyāyī's history, scholars thought the grammar had bugs.
+---
 
-There were derivation cases where two equally-ranked rules both applied, and the traditional interpretation of the conflict-resolution metarule (*1.4.2 vipratiṣedhe paraṁ kāryam*) often produced grammatically wrong results.
+## A disputed instruction about competing rules
 
-The fix, for centuries, was patchwork: later commentators added exceptions to handle the cases Pāṇini's grammar supposedly couldn't.
+The metarule *1.4.2 vipratiṣedhe paraṁ kāryam* concerns competing rules. Its familiar interpretation gives precedence to the later rule. In his [2022 Cambridge thesis](https://www.repository.cam.ac.uk/handle/1810/332654), Rishi Rajpopat instead argues for a right-side preference in the conflicts he examines: where rules apply to the two sides of a word, prefer the operation on the right.
 
-In [2022, Rishi Rajpopat](https://www.repository.cam.ac.uk/handle/1810/332654), a Sanskrit scholar at Cambridge, reinterpreted that metarule in his PhD thesis. The traditional reading was "the later rule wins" (later in serial order). Rajpopat argues it means: when rules apply to the left side and right side of a word respectively, apply the rule for the right side. With that reading, the grammar resolves conflicts cleanly, without the patchwork. Sanskrit scholars who reviewed the thesis called it revolutionary.
-
-This matters for the compiler analogy: a grammar with unresolvable bugs isn't a formal system in any useful sense. Rajpopat's reading restores the claim that the Aṣṭādhyāyī is internally consistent: a well-specified rule machine, if not a runnable one. I want to be careful here, though: "now that we've read the metarule correctly, Pāṇini can be taught to computers" was the optimistic 2022 press coverage, and it's still aspirational. Modern computational Sanskrit projects handle large portions of the grammar mechanically, but not all of it. Rajpopat solved the conflict-resolution problem. The full derivation problem is still open.
-
-* * *
+That is a proposed interpretation supported by worked derivations. It is not a proof that every rule in the Aṣṭādhyāyī is consistent, that every Sanskrit form has a unique derivation, or that implementing the entire grammar is now straightforward. Nor would a disputed interpretation make the whole system cease to be formal. The compiler comparison is useful without asking one thesis to settle all those questions.
 
 ## Why BNF should be called Pāṇini-Backus Form, and why it isn't
 
@@ -135,40 +146,47 @@ What it is not: evidence of historical influence. Backus had never studied Sansk
 
 The same applies to Chomsky. In his [1965 *Aspects of the Theory of Syntax*](https://en.wikipedia.org/wiki/Aspects_of_the_Theory_of_Syntax), Chomsky wrote that "it seems that even Pāṇini's grammar can be interpreted as a fragment of such a 'generative grammar,' in essentially the contemporary sense of this term." This is Chomsky recognizing the parallel, not crediting an influence. His generative grammar program developed from American structuralism and mathematical logic. Multiple sources repeat a claim that Chomsky called Pāṇini's grammar "the first modern generative grammar"; the documented primary source is the 1965 citation, which is more careful than that.
 
-* * *
+---
 
 ## The formal claim
 
-What holds, specifically: the Aṣṭādhyāyī is generative in the formal language theory sense: from a finite rule base and a finite lexicon, it generates the infinite set of valid Sanskrit surface forms. It uses a metalanguage (the pratyāhāra system, the samjñā definitions) to talk *about* Sanskrit rather than in it. Its rules are context-sensitive in the A → B / C \_ D pattern, placing it at or above context-sensitive languages in the Chomsky hierarchy. And it has ordered rule application with explicit conflict resolution: the priority hierarchy, asiddha semantics, the vipratishedha metarule.
+The comparisons that hold are concrete: a finite collection of rules generates forms; special notation describes the language; conditions depend on surrounding material; and metarules govern interaction between operations.
+
+A context-dependent rewrite does not, by itself, establish where the resulting language belongs in the **Chomsky hierarchy**, a classification by what kinds of formal grammar or machine can describe a language. That would require an explicit formalization and an expressive-power argument. The toy engine establishes neither.
 
 They are structural features of the Aṣṭādhyāyī that happen to recur in formal language theory two millennia later.
 
-* * *
+---
 
 ## "First grammar" undersells it by about 2,000 years of precision
 
-The Aṣṭādhyāyī gets described as "the world's first grammar" in popular writing, which is accurate but undersells what it is. A grammar in the ordinary sense is a book that tells you what's correct. What Pāṇini wrote is a *formal specification of a natural language*: complete, finite, non-redundant, from which all valid forms can be derived.
+The Aṣṭādhyāyī gets described as "the world's first grammar" in popular writing. That priority claim obscures the more useful question: what kind of grammatical description is it? A grammar in the ordinary sense is a book that tells you what's correct. What Pāṇini wrote is a *formal specification of a natural language*: compact rules, technical notation, and a system for relating instructions to one another.
 
 There is nothing else like it from the ancient world. Aristotle's logical works are formal, but they describe reasoning, not language. The Stoics studied syntax but didn't formalize it this way. The closest analogue isn't any other ancient grammar. It's the kind of object a theoretical computer scientist would write if asked to specify a natural language in a proof.
 
 Pāṇini did this roughly 2,400 years before anyone had the mathematical vocabulary to describe what kind of object it is.
 
+
 Two semesters of Theory of computation and Compiler design never once mentioned any of this, and weirdly enough, learning about it now, I have a better appreciation of the content of those classes. This provides a kind of context that's perfect for fueling up one's curiosity.
+
+Pāṇini did not build a compiler. But the idea that formal specification of language structure was a Western innovation of the 20th century doesn't hold up with the presence of the Aṣṭādhyāyī.
 
 I hope my explanations survive the scrutiny of Sanskrit scholars. I am not one, and I welcome corrections and clarifications.
 
-* * *
+---
 
 ## Run the toy engine
 
 The code in `code/panini_engine.py` is a minimal Python rewrite-rule engine demonstrating the structural ideas above: rule ordering, context-sensitivity, apavāda priority, derivation traces. It is a toy implementation. It handles a handful of simplified Sanskrit sandhi rules and gets them right. It does not implement the Aṣṭādhyāyī.
 
+Have you tried running the toy engine, or do you have thoughts on the structural convergences? Open an issue in the repo if you'd like to see more complex rules implemented, or drop a comment below.
+
 To understand what the engine is doing without reading the code, let's look at a simple rule: a word-final *t* becomes *d* when the next word starts with a voiced consonant (`tat gacchati` → `tad gacchati`). The engine checks the input string. It scans for a `t`. Once it finds it, it looks ahead to see if the next letter is voiced (like `g`). If both conditions are met, the engine rewrites the `t` into a `d` and outputs the new string. It's a simple find-and-replace, but with strict boundary conditions.
 
 ```python
-# Simplified rule: a + i → e  (guṇa coalescence, rule 6.1.102)
+# Simplified example of 6.1.87: a + i → e (guṇa coalescence)
 Rule(
-    name="6.1.102",
+    name="6.1.87",
     target="a|i",
     replace="e",
     note="a + i → e  (guṇa coalescence)",
@@ -178,46 +196,37 @@ Rule(
 
 Running it:
 
-```plaintext
+```text
 [ a + i  →  e  (guṇa coalescence) ]
 Input:  'rAm|a|iti'
-  Step 1: [6.1.102]  'rAm|a|iti' → 'rAm|eti'
+  Step 1: [6.1.87]  'rAm|a|iti' → 'rAm|eti'
           note: a + i → e  (guṇa coalescence)
 Output: 'rAm|eti'
 ```
 
-The higher-priority homogeneous coalescence rules (6.1.77, 6.1.78) demonstrate apavāda: when *i+i* or *u+u* are the input, those rules fire instead of the guṇa rules, because exceptions outrank generals.
+The *i+i* and *u+u* examples illustrate homogeneous vowel lengthening under 6.1.101. The *a+i* and *a+u* examples illustrate guṇa under 6.1.87. These patterns do not compete in the toy, so their priority numbers do not demonstrate apavāda. Separate, explicitly invented rules exercise priority when two patterns do match. [Sandhi rules and their text](https://www.learnsanskrit.org/vyakarana/sounds/ac-sandhi/)
+
+For the full engine and tests: `code/README.md`.
+
+![A terminal derivation trace from the illustrative rewrite engine.](img/the-grammar-that-runs-like-a-program/rule-engine-trace.png)
+
+---
 
 ## Get the code
 
 [Download the demo ZIP](/blog/assets/code/the-grammar-that-runs-like-a-program/the-grammar-that-runs-like-a-program.zip) · [View source on GitHub](https://github.com/Sukalyan2003/Sukalyan2003.github.io/tree/main/blog/assets/code/the-grammar-that-runs-like-a-program)
 
-The download includes the script, README, and tests. Extract it, open the extracted `the-grammar-that-runs-like-a-program` folder in a terminal, and run:
-
-```bash
-python3 code/panini_engine.py
-```
-
-The demo uses only the Python standard library. See `code/README.md` for the test command.
-
-![](img/the-grammar-that-runs-like-a-program/e65ccdf8611f.webp)
-
-Have you tried running the toy engine, or do you have thoughts on the structural convergences? Open an issue in the repo if you'd like to see more complex rules implemented, or drop a comment below.
-
-* * *
+Extract the ZIP and open the `the-grammar-that-runs-like-a-program` folder. The `code/README.md` includes the run and test commands.
 
 ## Sources and further reading
 
-*   Rishi Rajpopat, "In Pāṇini We Trust: Discovering the Algorithm for Rule Conflict Resolution in the Aṣṭādhyāyī," Cambridge PhD thesis, 2022. [Cambridge repository](https://www.repository.cam.ac.uk/handle/1810/332654)
-    
-*   Peter Ingerman, "Pāṇini-Backus form suggested," *Communications of the ACM* 10(3), p. 137, March 1967. [ACM DL](https://dl.acm.org/doi/10.1145/363162.363165)
-    
-*   John Kadvany, "Pāṇini's Grammar and Modern Computation," *History and Philosophy of Logic* 37(4), 2016. [Tandfonline](https://www.tandfonline.com/doi/abs/10.1080/01445340.2015.1121439)
-    
-*   Saroja Bhate and Subhash Kak, "Pāṇini's Grammar and Computer Science," *Annals of the Bhandarkar Oriental Research Institute* 72(1–4), 1991. [PDF via LSU](https://www.ece.lsu.edu/kak/bhate.pdf)
-    
-*   MacTutor History of Mathematics, "Panini": https://mathshistory.st-andrews.ac.uk/Biographies/Panini/
-    
-*   The Wire Science, "How an Indian PhD Student Made Sanskrit's 'Language Machine' Work": https://science.thewire.in/education/sanksrit-language-machine-panini-grammar-rishi-rajpopat/
-    
-*   learnsanskrit.org, "The Structure of the Ashtadhyayi": https://www.learnsanskrit.org/panini/structure/
+- Rishi Rajpopat, "In Pāṇini We Trust: Discovering the Algorithm for Rule Conflict Resolution in the Aṣṭādhyāyī," Cambridge PhD thesis, 2022. [Cambridge repository](https://www.repository.cam.ac.uk/handle/1810/332654)
+- Peter Ingerman, "Pāṇini-Backus form suggested," *Communications of the ACM* 10(3), p. 137, March 1967. [ACM DL](https://dl.acm.org/doi/10.1145/363162.363165)
+- John Kadvany, "Pāṇini's Grammar and Modern Computation," *History and Philosophy of Logic* 37(4), 2016. [Tandfonline](https://www.tandfonline.com/doi/abs/10.1080/01445340.2015.1121439)
+- Saroja Bhate and Subhash Kak, "Pāṇini's Grammar and Computer Science," *Annals of the Bhandarkar Oriental Research Institute* 72(1–4), 1991. [PDF via LSU](https://www.ece.lsu.edu/kak/bhate.pdf)
+- Wikipedia, "Pāṇini": https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini (for dating discussion, the 3,959 sūtra count, and technical summary; well-cited)
+- MacTutor History of Mathematics, "Panini": https://mathshistory.st-andrews.ac.uk/Biographies/Panini/
+- The Wire Science, "How an Indian PhD Student Made Sanskrit's 'Language Machine' Work": https://science.thewire.in/education/sanksrit-language-machine-panini-grammar-rishi-rajpopat/
+- learnsanskrit.org, "The Structure of the Ashtadhyayi": https://www.learnsanskrit.org/panini/structure/
+- [Joshi and Kiparsky, The extended siddha-principle, section 1](https://web.stanford.edu/~kiparsky/Papers/siddha.new.pdf).
+- [Learn Sanskrit, ac sandhi, quoted rule texts](https://www.learnsanskrit.org/vyakarana/sounds/ac-sandhi/).

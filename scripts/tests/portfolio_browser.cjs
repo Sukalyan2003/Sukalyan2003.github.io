@@ -123,9 +123,26 @@ async function main() {
     const {data} = await cmd('Page.captureScreenshot', {format: 'png'});
     fs.writeFileSync(path.join(reviewDir, name + '.png'), Buffer.from(data, 'base64'));
   };
+ const publishedRecords=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../blog/search.json'),'utf8'));
+ const projectCount=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../content/portfolio.json'),'utf8')).projects.length;
  const results=[];const assert=(name,value)=>{results.push({name,pass:!!value});if(!value)console.log('FAIL',name);};
- const routes=['','work/','about/','library/','work/eeg-platform/','work/medipredict/','work/eeg-benchmark/','work/local-retrieval/','work/tempo/','work/nand2tetris/'];
- for(const width of [1440,768,390,320]){await viewport(width);for(const path of routes){await go(path);const a=await evaluate(`({width:innerWidth,scroll:document.documentElement.scrollWidth,badImages:[...document.images].filter(i=>i.loading!=='lazy'&&(!i.complete||!i.naturalWidth)).length,h1:document.querySelectorAll('h1').length,enhanced:[...document.querySelectorAll('[data-enhance]')].every(e=>!e.hidden)})`);assert(`${width} ${path||'home'} layout/assets`,a.scroll<=a.width&&a.badImages===0&&a.h1===1);if(a.scroll>a.width)console.log('OVERFLOW',width,path,await evaluate("[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,10).map(e=>({tag:e.tagName,cls:e.className,right:e.getBoundingClientRect().right}))"));if((width===1440&&['','work/','work/eeg-platform/','library/'].includes(path))||(width===390&&['','about/','work/medipredict/','library/'].includes(path)))await shot((path||'home').replaceAll('/','-')+width);}}
+ const routes=['','work/','about/','library/','work/eeg-platform/','work/medipredict/','work/eeg-benchmark/','work/local-retrieval/','work/tempo/','work/nand2tetris/','classic/'];
+ for(const width of [1440,768,390,320]){await viewport(width);for(const path of routes){await go(path);const a=await evaluate(`({width:innerWidth,scroll:document.documentElement.scrollWidth,badImages:[...document.images].filter(i=>i.loading!=='lazy'&&(!i.complete||!i.naturalWidth)).length,h1:document.querySelectorAll('h1').length,enhanced:[...document.querySelectorAll('[data-enhance]')].every(e=>!e.hidden)})`);assert(`${width} ${path||'home'} layout/assets`,a.scroll<=a.width&&a.badImages===0&&a.h1===1);if(a.scroll>a.width)console.log('OVERFLOW',width,path,await evaluate("[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,10).map(e=>({tag:e.tagName,cls:e.className,right:e.getBoundingClientRect().right}))"));if((width===1440&&['','work/','work/eeg-platform/','library/','classic/'].includes(path))||(width===390&&['','about/','work/medipredict/','library/','classic/'].includes(path)))await shot((path||'home').replaceAll('/','-')+width);}}
+ // Classic stays readable with every disclosure expanded and its mobile nav open.
+ for (const width of [1440, 768, 390, 320]) {
+   await viewport(width); await go('classic/');
+   assert(`${width} classic content`, await evaluate(`document.querySelectorAll('[id^="project-"]').length === ${projectCount} && document.querySelectorAll('.writing-card').length === ${publishedRecords.length} && document.querySelector('link[rel="canonical"]').href.endsWith('/classic/')`));
+   await evaluate("document.querySelectorAll('details').forEach(d => d.open = true)");
+   assert(`${width} classic expanded content fits`, await evaluate('document.documentElement.scrollWidth <= innerWidth'));
+   if (width < 992) {
+     await click('.navbar-toggler');
+     assert(`${width} classic menu opens`, await evaluate("document.querySelector('.navbar-toggler').getAttribute('aria-expanded') === 'true'"));
+     await click('.nav-link[href="#library"]');
+     assert(`${width} classic menu closes and navigates`, await evaluate("location.hash === '#library' && document.querySelector('.navbar-toggler').getAttribute('aria-expanded') === 'false'"));
+     await evaluate("window.scrollBy(0, 1)");
+     assert(`${width} classic anchor clears fixed navigation`, await evaluate("document.querySelector('#library').getBoundingClientRect().top >= document.querySelector('.navbar').getBoundingClientRect().bottom - 2"));
+   }
+ }
  await viewport(1440);await go('work/');
  for(const [filter,n] of [['Backend & data',2],['ML & retrieval',3],['Developer tools',3],['Systems',1],['all',9]]){await click('[data-filter="'+filter+'"]');assert('filter '+filter,await evaluate(`document.querySelectorAll('.work-entry:not([hidden])').length===${n} && document.querySelector('[data-filter-count]').textContent.startsWith('${n} ')`));}
  await go('');await click('#theme-toggle');await go('about/');assert('theme persists',await evaluate("document.documentElement.dataset.theme==='dark'&&document.querySelector('#theme-toggle').getAttribute('aria-pressed')==='true'"));await shot('about-dark');await click('#theme-toggle');
@@ -246,6 +263,47 @@ async function main() {
  const blogRoutes=[];
  const collect=folder=>{for(const entry of fs.readdirSync(folder,{withFileTypes:true})){const location=path.join(folder,entry.name);if(entry.isDirectory()&&entry.name!=='assets')collect(location);else if(entry.isFile()&&entry.name==='index.html')blogRoutes.push('blog/'+path.relative(blogRoot,folder).split(path.sep).filter(Boolean).join('/')+(folder===blogRoot?'':'/'));}};
  collect(blogRoot);
+ const updatedPosts=publishedRecords.filter(p=>fs.existsSync(path.join(blogRoot,'assets/code',p.slug)));
+ for(const width of [1440,390]) {
+   await viewport(width);
+   for(const post of updatedPosts) {
+     await go(post.url);
+     assert(`${width} ${post.slug} title`,await evaluate(`document.querySelector('h1').textContent.trim()===${JSON.stringify(post.title)}`));
+     const images=await evaluate(`(async()=>{for(const img of document.images)img.loading='eager';await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.onload=img.onerror=resolve;setTimeout(resolve,5000)})));return [...document.images].every(img=>img.complete&&img.naturalWidth>0)})()`);
+     assert(`${width} ${post.slug} images and diagrams load`,images);
+     assert(`${width} ${post.slug} demo download`,await evaluate(`!!document.querySelector('a[href$=".zip"]')`));
+   }
+   await go('classic/'); await detailShot('classic-work-'+width,'#portfolio');
+   await evaluate("document.querySelectorAll('#library details').forEach(d=>d.open=true)");
+   await detailShot('classic-library-'+width,'#library');
+ }
+ await go('blog/the-distance-that-knows-how-the-data-moves/');
+ assert('Mahalanobis animation is served locally as MP4',await evaluate("fetch('../assets/media/the-distance-that-knows-how-the-data-moves/whitening.mp4',{method:'HEAD'}).then(r=>r.ok&&r.headers.get('content-type').includes('video/mp4'))"));
+
+ // Embedded local animations are visible, paused initially, and controllable without JS.
+ for (const width of [1440,768,390,320]) {
+   await viewport(width);
+   for (const slug of ['the-distance-that-knows-how-the-data-moves','what-comes-after-cs50x-discover-cs50-ai-2']) {
+     await go('blog/'+slug+'/');
+     await evaluate("document.querySelector('video').scrollIntoView({block:'center',behavior:'instant'})");
+     const media = await evaluate(`(async()=>{const v=document.querySelector('video');const poster=new Image();poster.src=v.poster;await poster.decode();return {paused:v.paused,controls:v.controls,poster:poster.naturalWidth,visible:v.getBoundingClientRect().width>0,autoplay:v.autoplay,width:document.documentElement.scrollWidth}})()`);
+     assert(`${width} ${slug} preview and controls`,media.paused&&media.controls&&media.poster>0&&media.visible&&!media.autoplay&&media.width<=width);
+     await evaluate("document.querySelector('video').focus()");await key(' ','Space');await sleep(300);
+     assert(`${width} ${slug} plays on request`,await evaluate("!document.querySelector('video').paused&&document.querySelector('video').currentTime>0"));
+     await key(' ','Space');
+     assert(`${width} ${slug} pauses on request`,await evaluate("document.querySelector('video').paused"));
+     if (width===390) {
+       const {data}=await cmd('Page.captureScreenshot',{format:'png'});
+       fs.writeFileSync(path.join(reviewDir,slug+'-player-mobile.png'),Buffer.from(data,'base64'));
+     }
+   }
+ }
+ await viewport(390);await go('blog/what-even-are-llms/');
+ assert('YouTube player is embedded with no autoplay',await evaluate("(()=>{const v=document.querySelector('iframe');return v&&v.src==='https://www.youtube-nocookie.com/embed/zjkBMFhNj_g'&&v.title&&!v.closest('details')&&v.getBoundingClientRect().width<=innerWidth&&!v.allow.includes('autoplay')})()"));
+ await cmd('Emulation.setScriptExecutionDisabled',{value:true});await go('blog/the-distance-that-knows-how-the-data-moves/');
+ assert('native media works without page JavaScript',await evaluate("document.querySelector('video').controls&&!!document.querySelector('video').poster"));
+ await cmd('Emulation.setScriptExecutionDisabled',{value:false});
+
  for(const width of [1440,390]){await viewport(width);for(const route of blogRoutes){await go(route);assert(width+' '+route+' blog layout',await evaluate("document.documentElement.scrollWidth<=innerWidth&&document.querySelectorAll('h1').length===1&&!!document.querySelector('main')"));}}
  await go('blog/');
  const blogQuery=await evaluate("!!document.querySelector('#finder-q')");
