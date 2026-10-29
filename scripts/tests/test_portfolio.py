@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 from unittest import mock
+from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import build_blog
@@ -172,12 +173,29 @@ class PortfolioTests(unittest.TestCase):
         films = self.data['films']
         self.assertEqual(len(films), 84)
         self.assertEqual(len({film['url'] for film in films}), 84)
-        allowed = {'position', 'title', 'year', 'url', 'type', 'genres', 'director', 'runtime'}
+        catalogue = {'position', 'title', 'year', 'url', 'type', 'genres', 'director', 'runtime'}
+        poster = {'poster', 'poster_width', 'poster_height'}
         self.assertEqual([film['position'] for film in films], list(range(1, 85)))
         for film in films:
-            self.assertEqual(set(film), allowed)
+            self.assertIn(set(film), (catalogue, catalogue | poster))
             self.assertRegex(film['url'], r'^https://www\.imdb\.com/title/tt\d+/$')
         self.assertEqual(sum(film['type'] == 'Movie' for film in films), 74)
+
+    def test_library_images_are_remote_urls_allowed_only_on_the_library_page(self):
+        hosts = {'upload.wikimedia.org', 'thumb.wikimedia.org', 'i.gr-assets.com'}
+        urls = [f['poster'] for f in self.data['films'] if 'poster' in f] + [b['image'] for b in self.data['books']]
+        self.assertTrue(urls)
+        for url in urls:
+            self.assertIn(urlparse(url).netloc, hosts)
+            self.assertEqual(urlparse(url).scheme, 'https')
+            self.assertFalse(urlparse(url).query)
+        library = self.pages['library/index.html']
+        self.assertEqual(library.count('data-remote-img'), len(urls))
+        for host in hosts:
+            self.assertIn(f'https://{host}', library)
+        for rel, page in self.pages.items():
+            if rel != 'library/index.html':
+                self.assertIn("img-src 'self';", page, rel)
 
     def test_blog_sitemap_keeps_public_portfolio_routes_and_excludes_private_cases(self):
         with tempfile.TemporaryDirectory() as tmp:

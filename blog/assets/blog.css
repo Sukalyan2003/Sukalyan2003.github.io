@@ -45,6 +45,45 @@
    Masthead - the blog's nameplate. Full size on the front page, compact on
    every inner page so the article starts above the fold.
    -------------------------------------------------------------------------- */
+/* The way back to the main site, above the nameplate on every blog page. */
+.site-return {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-xs) var(--sp-md);
+  padding-bottom: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.site-return a {
+  text-decoration: none;
+}
+
+.site-return a:hover {
+  color: var(--signal);
+}
+
+.site-return__home {
+  color: var(--ink);
+}
+
+.site-return__links {
+  display: flex;
+  gap: var(--sp-md);
+}
+
+.site-return__links a {
+  color: var(--ink-muted);
+}
+
 .masthead--blog .masthead__name {
   font-size: clamp(2.1rem, 7.6vw, 5.6rem);
   line-height: 0.9;

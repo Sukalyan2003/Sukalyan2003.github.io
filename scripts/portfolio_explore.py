@@ -132,7 +132,7 @@ def personal_shelves(data, prefix):
     sources = data.get('personal_sources', {})
     books = data.get('books', [])
     if books:
-        cards = ''.join(f'''<li data-shelf-item><a class="book-card" href="{esc(book['url'])}" target="_blank" rel="noopener" aria-labelledby="book-{i}"><div class="book-cover"><img src="{prefix}{esc(book['image'])}" width="{book['width']}" height="{book['height']}" loading="lazy" decoding="async" alt="Cover of {esc(book['title'])}"></div><h4 id="book-{i}">{esc(book['title'])}</h4><p>{esc(book['author'])}</p></a></li>''' for i, book in enumerate(books))
+        cards = ''.join(f'''<li data-shelf-item><a class="book-card" href="{esc(book['url'])}" target="_blank" rel="noopener" aria-labelledby="book-{i}"><div class="book-cover" data-img-box><img src="{esc(book['image'])}" width="{book['width']}" height="{book['height']}" loading="lazy" decoding="async" referrerpolicy="no-referrer" alt="Cover of {esc(book['title'])}" data-remote-img></div><h4 id="book-{i}">{esc(book['title'])}</h4><p>{esc(book['author'])}</p></a></li>''' for i, book in enumerate(books))
         sections.append(shelf('books', 'Books I’d read again', sources['books'], 'All Goodreads shelves', cards))
     films = data.get('films', [])
     if films:
@@ -140,7 +140,9 @@ def personal_shelves(data, prefix):
         for film in films:
             kind = 'film' if film['type'] == 'Movie' else 'series'
             runtime = f" · {film['runtime']} min" if kind == 'film' and film.get('runtime') else ''
-            cards.append(f'''<li data-shelf-item data-film-type="{kind}"><a class="film-ticket" href="{esc(film['url'])}" target="_blank" rel="noopener"><div class="ticket-stub"><span>{esc(film['year'])}</span><span>{'Film' if kind == 'film' else 'Series'}{esc(runtime)}</span></div><span class="ticket-number" aria-hidden="true">No. {film['position']:02d}</span><h4>{esc(film['title'])}</h4><p class="ticket-director">{esc(film.get('director', '')) or 'Television series'}</p><p class="ticket-genres">{esc(film['genres'])}</p><span class="ticket-link">On IMDb ↗</span></a></li>''')
+            poster = (f'''<div class="ticket-poster" data-img-box><img src="{esc(film['poster'])}" width="{film['poster_width']}" height="{film['poster_height']}" loading="lazy" decoding="async" referrerpolicy="no-referrer" alt="Poster for {esc(film['title'])}" data-remote-img></div>'''
+                      if film.get('poster') else '')
+            cards.append(f'''<li data-shelf-item data-film-type="{kind}"><a class="film-ticket{' has-poster' if poster else ''}" href="{esc(film['url'])}" target="_blank" rel="noopener">{poster}<div class="ticket-stub"><span>{esc(film['year'])}</span><span>{'Film' if kind == 'film' else 'Series'}{esc(runtime)}</span></div><span class="ticket-number" aria-hidden="true">No. {film['position']:02d}</span><h4>{esc(film['title'])}</h4><p class="ticket-director">{esc(film.get('director', '')) or 'Television series'}</p><p class="ticket-genres">{esc(film['genres'])}</p><span class="ticket-link">On IMDb ↗</span></a></li>''')
         film_controls = '<div class="film-options" data-enhance hidden><label for="film-kind">Show</label><select id="film-kind" data-film-filter><option value="all">Films &amp; series</option><option value="film">Films</option><option value="series">Series</option></select><button class="quiet-button" type="button" data-shelf-surprise>Surprise me ↗</button></div>'
         sections.append(shelf('films', 'Films & series I recommend', sources['film_list'], 'Full IMDb list', ''.join(cards), film_controls))
     essays = data.get('essays', [])
@@ -151,6 +153,6 @@ def personal_shelves(data, prefix):
 
 
 def shelf(key, title, url, link_label, cards, extra=''):
-    return f'''<section class="personal-shelf" data-shelf role="region" aria-roledescription="carousel" aria-labelledby="{key}-heading"><div class="shelf-heading"><h3 id="{key}-heading">{esc(title)}</h3><a href="{esc(url)}" target="_blank" rel="noopener">{link_label} ↗</a></div>{extra}
-<div class="shelf-controls" data-enhance hidden><button class="quiet-button" type="button" data-shelf-prev aria-label="Previous {key}" aria-controls="{key}-track" disabled>←</button><output data-shelf-position aria-live="polite">Browse the shelf</output><button class="quiet-button" type="button" data-shelf-next aria-label="Next {key}" aria-controls="{key}-track">→</button></div>
-<ul class="shelf-track" id="{key}-track" data-shelf-track tabindex="0" aria-label="{esc(title)}. Scroll horizontally to browse.">{cards}</ul></section>'''
+    return f'''<section class="personal-shelf" data-shelf aria-labelledby="{key}-heading"><div class="shelf-heading"><h3 id="{key}-heading">{esc(title)}</h3><a href="{esc(url)}" target="_blank" rel="noopener">{link_label} ↗</a></div>{extra}
+<ul class="shelf-grid" id="{key}-grid" data-shelf-grid>{cards}</ul>
+<button class="quiet-button shelf-more" type="button" data-shelf-more data-enhance hidden aria-controls="{key}-grid" aria-expanded="false">Show all</button></section>'''

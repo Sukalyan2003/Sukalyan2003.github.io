@@ -612,6 +612,10 @@ class Site:
         count = len(self.posts)
         return f"""<header class="masthead masthead--blog{compact}">
   <div class="sheet">
+    <nav class="site-return" aria-label="Main site">
+      <a class="site-return__home" href="/">← {esc(cfg.AUTHOR_NAME)} · Portfolio</a>
+      <span class="site-return__links"><a href="/work/">Work</a><a href="/about/">About</a><a href="/assets/Sukalyan_Roy_Public_CV.pdf" target="_blank" rel="noopener">Résumé ↗</a></span>
+    </nav>
     <{tag} class="masthead__name blog-nameplate"><a href="/blog/">{esc(cfg.BLOG_NAME)}</a></{tag}>
     <hr class="masthead__rule">
     <div class="masthead__strap">
@@ -1260,14 +1264,11 @@ def rfc822(dt: datetime) -> str:
 
 
 def current_home_lastmod() -> str:
+    """The portfolio's last-updated date, kept in content/portfolio.json ("updated")."""
     try:
-        text = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
-        match = re.search(rf"<loc>{re.escape(cfg.SITE_URL)}/</loc>\s*<lastmod>([\d-]+)</lastmod>", text)
-        if match:
-            return match.group(1)
-    except OSError:
-        pass
-    return "2026-01-01"
+        return json.loads((ROOT / "content" / "portfolio.json").read_text(encoding="utf-8"))["updated"]
+    except (OSError, ValueError, KeyError):
+        return "2026-01-01"
 
 
 # ======================================================================= main
@@ -1373,7 +1374,9 @@ def run(check: bool = False, drafts: bool = False, out: Path | None = None) -> i
         site.diagrams.prune(CONTENT / "diagrams")  # drop renders no post uses any more
     changed = sync(site.files, images, out_root, write=not check)
 
-    if not preview:
+    # On a fresh checkout index.html does not exist yet; build_portfolio.py writes it,
+    # Writing section included, straight after this script.
+    if not preview and update_writing.TARGET.exists():
         index = update_writing.TARGET.read_text(encoding="utf-8")
         updated = update_writing.splice(index, update_writing.render(update_writing.posts_from_records(
             json.loads(site.files["blog/search.json"]))))

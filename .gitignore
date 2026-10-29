@@ -10,3 +10,14 @@ __pycache__/
 /.preview/
 /.venv/
 /BLOG.md
+
+# Build output. The Pages workflow builds and deploys it on every push to main;
+# run `python3 scripts/blog.py build` for a local preview.
+/index.html
+/work/
+/about/
+/library/
+/sitemap.xml
+/robots.txt
+/blog/*
+!/blog/assets/

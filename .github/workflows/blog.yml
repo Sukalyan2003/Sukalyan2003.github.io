@@ -1,28 +1,27 @@
-name: Build site
+name: Build and deploy site
 
-# Regenerates the portfolio and /blog from their content records, runs tests and
-# syntax/design/HTML checks, and commits generated output if it changed.
+# Builds the portfolio and /blog from their sources, runs tests and
+# syntax/design/HTML checks, and deploys the result to GitHub Pages.
+# Generated pages are not committed; this workflow is the only publisher.
 #
-# Needs Settings > Actions > General > Workflow permissions: "Read and write".
+# Needs Settings > Pages > Build and deployment > Source: "GitHub Actions".
 on:
   push:
     branches: [main]
-    paths:
-      - 'content/**'
-      - 'scripts/**'
-      - 'blog/assets/**'
-      - 'assets/**'
-      - 'js/**'
-      - 'index.html'
-      - '.github/workflows/blog.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: build-blog
+  group: pages
   cancel-in-progress: false
+
+env:
+  # Keep __pycache__ out of the published artifact.
+  PYTHONDONTWRITEBYTECODE: '1'
 
 jobs:
   build:
@@ -45,6 +44,11 @@ jobs:
       - name: Install build dependencies
         run: pip install -r scripts/requirements-blog.txt
 
+      # The unit tests read the generated search index and blog pages,
+      # so the site is built first.
+      - name: Build
+        run: python3 scripts/blog.py build
+
       - name: Unit tests
         run: python3 -m unittest discover -s scripts/tests -v
 
@@ -54,23 +58,21 @@ jobs:
             node --check "$file"
           done
 
-      - name: Build
-        run: python3 scripts/blog.py build
+      - name: Freshness, design and HTML checks
+        run: python3 scripts/blog.py check
 
-      - name: Design and HTML checks
-        run: python3 scripts/check.py
+      - uses: actions/configure-pages@v5
 
-      - name: Commit generated output if changed
-        run: |
-          git add -A blog sitemap.xml robots.txt index.html work about library
-          # content/blog/diagrams only exists once a post has a Mermaid diagram;
-          # git add fails on a missing path, so add it only when present.
-          if [ -d content/blog/diagrams ]; then git add -A content/blog/diagrams; fi
-          if git diff --cached --quiet; then
-            echo "Generated output already up to date."
-            exit 0
-          fi
-          git config user.name  'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'chore: rebuild blog'
-          git push
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

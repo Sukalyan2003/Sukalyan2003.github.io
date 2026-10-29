@@ -1,5 +1,6 @@
 {
   "source_note": "Transcribed from the existing public homepage, then updated on 27 October 2026 from the CV_Versions sources (public_cv.tex for public claims; master_cv.tex for the private-project details already listed here). Copy revised against the relevant voice, clarity and evidence rules in the Unsung Bits writing guide.",
+  "updated": "2026-10-29",
   "projects": [
     {
       "slug": "eeg-platform",
@@ -365,7 +366,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Rajkumar Hirani",
-      "runtime": "170"
+      "runtime": "170",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg",
+      "poster_width": 262,
+      "poster_height": 379
     },
     {
       "position": 2,
@@ -375,7 +379,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Musical, Sci-Fi",
       "director": "Rajkumar Hirani",
-      "runtime": "153"
+      "runtime": "153",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/c3/PK_poster.jpg",
+      "poster_width": 260,
+      "poster_height": 400
     },
     {
       "position": 3,
@@ -385,7 +392,10 @@
       "type": "Movie",
       "genres": "Drama",
       "director": "Sanjay Leela Bhansali",
-      "runtime": "122"
+      "runtime": "122",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/3/3c/Black_Film.jpg",
+      "poster_width": 262,
+      "poster_height": 379
     },
     {
       "position": 4,
@@ -395,7 +405,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Music, Musical, Romance",
       "director": "Damien Chazelle",
-      "runtime": "128"
+      "runtime": "128",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/a/ab/La_La_Land_%28film%29.png",
+      "poster_width": 260,
+      "poster_height": 385
     },
     {
       "position": 5,
@@ -405,7 +418,10 @@
       "type": "Movie",
       "genres": "Comedy",
       "director": "Larry Charles",
-      "runtime": "83"
+      "runtime": "83",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/4/4b/The_Dictator_Poster.jpg",
+      "poster_width": 259,
+      "poster_height": 384
     },
     {
       "position": 6,
@@ -415,7 +431,10 @@
       "type": "Movie",
       "genres": "Comedy, Horror",
       "director": "Edgar Wright",
-      "runtime": "99"
+      "runtime": "99",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/8/8d/Shaun_of_the_Dead_film_poster.jpg/330px-Shaun_of_the_Dead_film_poster.jpg",
+      "poster_width": 300,
+      "poster_height": 225
     },
     {
       "position": 7,
@@ -425,7 +444,10 @@
       "type": "Movie",
       "genres": "Animation, Action, Adventure, Comedy, Crime, Family, Fantasy, Sci-Fi",
       "director": "Tom McGrath",
-      "runtime": "95"
+      "runtime": "95",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/8/89/Megamind2010Poster.jpg",
+      "poster_width": 252,
+      "poster_height": 395
     },
     {
       "position": 8,
@@ -435,7 +457,10 @@
       "type": "Movie",
       "genres": "Biography, Drama, Thriller, War",
       "director": "Morten Tyldum",
-      "runtime": "114"
+      "runtime": "114",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/8/87/The_Imitation_Game_%282014%29.png",
+      "poster_width": 220,
+      "poster_height": 346
     },
     {
       "position": 9,
@@ -445,7 +470,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Wes Anderson",
-      "runtime": "99"
+      "runtime": "99",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/1c/The_Grand_Budapest_Hotel.png",
+      "poster_width": 220,
+      "poster_height": 344
     },
     {
       "position": 10,
@@ -455,7 +483,10 @@
       "type": "Movie",
       "genres": "Action, Comedy, Thriller",
       "director": "David Leitch",
-      "runtime": "127"
+      "runtime": "127",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/13/Bullet_Train_%28poster%29.jpeg",
+      "poster_width": 250,
+      "poster_height": 371
     },
     {
       "position": 11,
@@ -465,7 +496,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Shimit Amin",
-      "runtime": "150"
+      "runtime": "150",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/c3/Rocket_Singh_Salesman_of_the_Year.jpg",
+      "poster_width": 220,
+      "poster_height": 342
     },
     {
       "position": 12,
@@ -475,7 +509,10 @@
       "type": "Movie",
       "genres": "Animation, Adventure, Comedy, Family, Fantasy",
       "director": "Brad Bird, Jan Pinkava",
-      "runtime": "111"
+      "runtime": "111",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/5/50/RatatouillePoster.jpg",
+      "poster_width": 220,
+      "poster_height": 327
     },
     {
       "position": 13,
@@ -485,7 +522,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Fantasy, Romance",
       "director": "Harold Ramis",
-      "runtime": "101"
+      "runtime": "101",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/b/b1/Groundhog_Day_%28movie_poster%29.jpg",
+      "poster_width": 259,
+      "poster_height": 385
     },
     {
       "position": 14,
@@ -495,7 +535,10 @@
       "type": "Movie",
       "genres": "Action, Comedy, War",
       "director": "Ben Stiller",
-      "runtime": "107"
+      "runtime": "107",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg",
+      "poster_width": 265,
+      "poster_height": 373
     },
     {
       "position": 15,
@@ -505,7 +548,10 @@
       "type": "Movie",
       "genres": "Drama, Western",
       "director": "Quentin Tarantino",
-      "runtime": "165"
+      "runtime": "165",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/8/8b/Django_Unchained_Poster.jpg",
+      "poster_width": 220,
+      "poster_height": 326
     },
     {
       "position": 16,
@@ -515,7 +561,10 @@
       "type": "Movie",
       "genres": "Drama, Mystery, Sci-Fi",
       "director": "Denis Villeneuve",
-      "runtime": "116"
+      "runtime": "116",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/df/Arrival%2C_Movie_Poster.jpg",
+      "poster_width": 220,
+      "poster_height": 343
     },
     {
       "position": 17,
@@ -525,7 +574,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Peter Weir",
-      "runtime": "103"
+      "runtime": "103",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/cd/Trumanshow.jpg",
+      "poster_width": 220,
+      "poster_height": 327
     },
     {
       "position": 18,
@@ -535,7 +587,10 @@
       "type": "Movie",
       "genres": "Adventure, Comedy, Drama, Musical, Romance",
       "director": "Zoya Akhtar",
-      "runtime": "155"
+      "runtime": "155",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/17/Zindagi_Na_Milegi_Dobara.jpg",
+      "poster_width": 263,
+      "poster_height": 378
     },
     {
       "position": 19,
@@ -545,7 +600,10 @@
       "type": "Movie",
       "genres": "Drama",
       "director": "Satyajit Ray",
-      "runtime": "117"
+      "runtime": "117",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/a/a5/Nayak_Indian_film_poster.jpg",
+      "poster_width": 268,
+      "poster_height": 371
     },
     {
       "position": 20,
@@ -555,7 +613,10 @@
       "type": "Movie",
       "genres": "Action, Crime, Drama, Thriller",
       "director": "Shankar Shanmugham",
-      "runtime": "188"
+      "runtime": "188",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/ce/Sivaji_The_Boss.jpg",
+      "poster_width": 270,
+      "poster_height": 303
     },
     {
       "position": 21,
@@ -565,7 +626,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Fantasy",
       "director": "Umesh Shukla",
-      "runtime": "125"
+      "runtime": "125",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/e/e0/OMG_Poster.png",
+      "poster_width": 250,
+      "poster_height": 405
     },
     {
       "position": 22,
@@ -575,7 +639,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Priyadarshan",
-      "runtime": "137"
+      "runtime": "137",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/cd/Billu-poster.jpg",
+      "poster_width": 263,
+      "poster_height": 378
     },
     {
       "position": 23,
@@ -585,7 +652,10 @@
       "type": "Movie",
       "genres": "Adventure, Comedy, Drama, Fantasy, Romance",
       "director": "Ben Stiller",
-      "runtime": "114"
+      "runtime": "114",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/f/f2/The_Secret_Life_of_Walter_Mitty_2013_poster.jpg",
+      "poster_width": 250,
+      "poster_height": 370
     },
     {
       "position": 24,
@@ -595,7 +665,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Jonathan Augustin",
-      "runtime": "107"
+      "runtime": "107",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/9/9d/The_lift_boy.jpg",
+      "poster_width": 252,
+      "poster_height": 396
     },
     {
       "position": 25,
@@ -605,7 +678,10 @@
       "type": "Movie",
       "genres": "Comedy, Crime, Mystery, Thriller",
       "director": "Swaroop Rsj",
-      "runtime": "148"
+      "runtime": "148",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/61/Agent_Sai_Srinivasa_Athreya_poster.jpg",
+      "poster_width": 250,
+      "poster_height": 375
     },
     {
       "position": 26,
@@ -615,7 +691,10 @@
       "type": "Movie",
       "genres": "Animation, Adventure, Comedy, Family, Sci-Fi",
       "director": "Stephen J. Anderson",
-      "runtime": "95"
+      "runtime": "95",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/dc/Meet_the_robinsons.jpg",
+      "poster_width": 256,
+      "poster_height": 379
     },
     {
       "position": 27,
@@ -625,7 +704,10 @@
       "type": "Movie",
       "genres": "Crime, Drama, Thriller",
       "director": "Venky Atluri",
-      "runtime": "148"
+      "runtime": "148",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/6c/Lucky_Baskhar_film_poster.jpg",
+      "poster_width": 258,
+      "poster_height": 387
     },
     {
       "position": 28,
@@ -635,7 +717,10 @@
       "type": "Movie",
       "genres": "Action, Comedy, Crime, Drama, Thriller",
       "director": "Anurag Kashyap",
-      "runtime": "321"
+      "runtime": "321",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/6a/Gangs_of_Wasseypur_poster.jpg",
+      "poster_width": 263,
+      "poster_height": 380
     },
     {
       "position": 29,
@@ -645,7 +730,10 @@
       "type": "Movie",
       "genres": "Biography, Drama, History",
       "director": "Steven Spielberg",
-      "runtime": "196"
+      "runtime": "196",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg",
+      "poster_width": 220,
+      "poster_height": 330
     },
     {
       "position": 30,
@@ -655,7 +743,10 @@
       "type": "Movie",
       "genres": "Drama, Romance",
       "director": "Karan Johar",
-      "runtime": "165"
+      "runtime": "165",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/5/5d/My_Name_Is_Khan_film_poster.jpg",
+      "poster_width": 259,
+      "poster_height": 385
     },
     {
       "position": 31,
@@ -665,7 +756,10 @@
       "type": "Movie",
       "genres": "Biography, Drama",
       "director": "Madhavan",
-      "runtime": "157"
+      "runtime": "157",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/2/2f/Rocketry_The_Nambi_Effect.jpg",
+      "poster_width": 274,
+      "poster_height": 365
     },
     {
       "position": 32,
@@ -675,7 +769,10 @@
       "type": "Movie",
       "genres": "Action, Crime, Drama, Mystery, Thriller",
       "director": "Neeraj Pandey",
-      "runtime": "104"
+      "runtime": "104",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/7/77/A_Wednesday_Poster.JPG",
+      "poster_width": 270,
+      "poster_height": 360
     },
     {
       "position": 33,
@@ -685,7 +782,10 @@
       "type": "Movie",
       "genres": "Comedy, Crime, Drama",
       "director": "Dibakar Banerjee, Pravin E. Birje",
-      "runtime": "135"
+      "runtime": "135",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/5/59/Khosla_Ka_Ghosla.jpg",
+      "poster_width": 263,
+      "poster_height": 380
     },
     {
       "position": 34,
@@ -695,7 +795,10 @@
       "type": "Movie",
       "genres": "Crime, Drama, Mystery, Thriller",
       "director": "Anurag Kashyap",
-      "runtime": "128"
+      "runtime": "128",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/61/Movie_Poster_Ugly.jpg",
+      "poster_width": 263,
+      "poster_height": 380
     },
     {
       "position": 35,
@@ -705,7 +808,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Musical, Romance",
       "director": "Ayan Mukerji",
-      "runtime": "160"
+      "runtime": "160",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/15/Yeh_jawani_hai_deewani.jpg",
+      "poster_width": 262,
+      "poster_height": 379
     },
     {
       "position": 36,
@@ -715,7 +821,10 @@
       "type": "Movie",
       "genres": "Comedy, Crime, Mystery, Thriller",
       "director": "Sriram Raghavan",
-      "runtime": "139"
+      "runtime": "139",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/4/47/Andhadhun_poster.jpg",
+      "poster_width": 263,
+      "poster_height": 380
     },
     {
       "position": 37,
@@ -725,7 +834,10 @@
       "type": "TV Series",
       "genres": "Action, Adventure, Comedy, Crime, Drama, Fantasy, Horror, Mystery",
       "director": "",
-      "runtime": "60"
+      "runtime": "60",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/09/Dead_Boy_Detectives_%28TV_series%29_Title_Card.png/330px-Dead_Boy_Detectives_%28TV_series%29_Title_Card.png",
+      "poster_width": 300,
+      "poster_height": 138
     },
     {
       "position": 38,
@@ -735,7 +847,10 @@
       "type": "Movie",
       "genres": "Action, Crime, Drama, Mystery, Thriller",
       "director": "Srijit Mukherji",
-      "runtime": "139"
+      "runtime": "139",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/8/84/Baishe_srabon_movie_poster.jpg",
+      "poster_width": 273,
+      "poster_height": 365
     },
     {
       "position": 39,
@@ -745,7 +860,10 @@
       "type": "Movie",
       "genres": "Action, Drama, Thriller",
       "director": "Shankar Shanmugham",
-      "runtime": "187"
+      "runtime": "187",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/8/84/Nayak_The_Real_Hero_poster.jpg",
+      "poster_width": 220,
+      "poster_height": 316
     },
     {
       "position": 40,
@@ -755,7 +873,10 @@
       "type": "Movie",
       "genres": "Drama, Mystery, Romance, Thriller",
       "director": "Vijay Lalwani",
-      "runtime": "135"
+      "runtime": "135",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/db/Karthik_Calling_Karthik.jpg",
+      "poster_width": 220,
+      "poster_height": 320
     },
     {
       "position": 41,
@@ -765,7 +886,10 @@
       "type": "Movie",
       "genres": "Action, Comedy, Mystery, Thriller",
       "director": "Edgar Wright",
-      "runtime": "121"
+      "runtime": "121",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c9/HotFuzzUKposter.jpg/330px-HotFuzzUKposter.jpg",
+      "poster_width": 300,
+      "poster_height": 225
     },
     {
       "position": 42,
@@ -775,7 +899,10 @@
       "type": "Movie",
       "genres": "Biography, Crime, Drama",
       "director": "Steven Spielberg",
-      "runtime": "141"
+      "runtime": "141",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/4/4d/Catch_Me_If_You_Can_2002_movie.jpg",
+      "poster_width": 259,
+      "poster_height": 383
     },
     {
       "position": 43,
@@ -785,7 +912,10 @@
       "type": "Movie",
       "genres": "Action, Adventure, Sci-Fi",
       "director": "Doug Liman",
-      "runtime": "113"
+      "runtime": "113",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/f/f9/Edge_of_Tomorrow_Poster.jpg",
+      "poster_width": 220,
+      "poster_height": 326
     },
     {
       "position": 44,
@@ -795,7 +925,10 @@
       "type": "Movie",
       "genres": "Action, Crime, Drama, Musical",
       "director": "Suresh Krishna",
-      "runtime": "145"
+      "runtime": "145",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/9/97/Baashha_poster.jpg",
+      "poster_width": 250,
+      "poster_height": 350
     },
     {
       "position": 45,
@@ -805,7 +938,10 @@
       "type": "TV Series",
       "genres": "Animation, Action, Drama, Fantasy, Sci-Fi, Thriller",
       "director": "",
-      "runtime": "24"
+      "runtime": "24",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/3/30/CodeGeassmovieposter.png",
+      "poster_width": 249,
+      "poster_height": 350
     },
     {
       "position": 46,
@@ -815,7 +951,10 @@
       "type": "TV Series",
       "genres": "Animation, Adventure, Comedy, Fantasy, Sci-Fi",
       "director": "",
-      "runtime": "30"
+      "runtime": "30",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/f/ff/Inside_Job_%282021_TV_series%29.jpg",
+      "poster_width": 282,
+      "poster_height": 353
     },
     {
       "position": 47,
@@ -835,7 +974,10 @@
       "type": "Movie",
       "genres": "Biography, Comedy, Drama, Musical",
       "director": "Lin-Manuel Miranda",
-      "runtime": "115"
+      "runtime": "115",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/9/91/Tick_Tick_Boom_Movie_poster.jpg",
+      "poster_width": 259,
+      "poster_height": 384
     },
     {
       "position": 49,
@@ -845,7 +987,10 @@
       "type": "Movie",
       "genres": "Drama, Fantasy, Mystery, Thriller",
       "director": "Taylor Hackford",
-      "runtime": "144"
+      "runtime": "144",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/3/3f/Devilsadvocate.jpg",
+      "poster_width": 265,
+      "poster_height": 376
     },
     {
       "position": 50,
@@ -855,7 +1000,10 @@
       "type": "TV Series",
       "genres": "Comedy, Drama, Music, Musical",
       "director": "",
-      "runtime": "45"
+      "runtime": "45",
+      "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Glee_%28Ryan_Murphy_Television%29_logo.svg/330px-Glee_%28Ryan_Murphy_Television%29_logo.svg.png",
+      "poster_width": 300,
+      "poster_height": 159
     },
     {
       "position": 51,
@@ -865,7 +1013,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama",
       "director": "Jason Reitman",
-      "runtime": "92"
+      "runtime": "92",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/c3/Thank_you_for_smoking_Poster.jpg",
+      "poster_width": 261,
+      "poster_height": 381
     },
     {
       "position": 52,
@@ -875,7 +1026,10 @@
       "type": "Movie",
       "genres": "Animation, Action, Adventure, Comedy, Family, Fantasy",
       "director": "Kireet Khurana",
-      "runtime": "95"
+      "runtime": "95",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/7/71/Toonpur.jpg",
+      "poster_width": 263,
+      "poster_height": 380
     },
     {
       "position": 53,
@@ -885,7 +1039,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Family, Fantasy, Musical",
       "director": "Mahesh Manjrekar",
-      "runtime": "153"
+      "runtime": "153",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/b/b0/Vaah%21_Life_Ho_Toh_Aisi%21_poster.jpg",
+      "poster_width": 250,
+      "poster_height": 357
     },
     {
       "position": 54,
@@ -895,7 +1052,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Family, Fantasy, Sport",
       "director": "Karanjeet Saluja",
-      "runtime": "118"
+      "runtime": "118",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/3/3e/Chain_Kulii_Ki_Main_Kulii.JPG",
+      "poster_width": 264,
+      "poster_height": 376
     },
     {
       "position": 55,
@@ -905,7 +1065,10 @@
       "type": "Movie",
       "genres": "Action, Drama",
       "director": "Vikramaditya Motwane",
-      "runtime": "154"
+      "runtime": "154",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/64/Bhavesh_Joshi.jpg",
+      "poster_width": 263,
+      "poster_height": 380
     },
     {
       "position": 56,
@@ -915,7 +1078,10 @@
       "type": "Movie",
       "genres": "Comedy, Horror, Thriller",
       "director": "Mark Mylod",
-      "runtime": "107"
+      "runtime": "107",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/db/The_Menu_%282022_film%29.jpg",
+      "poster_width": 250,
+      "poster_height": 370
     },
     {
       "position": 57,
@@ -925,7 +1091,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Romance",
       "director": "Glenn Ficarra, John Requa",
-      "runtime": "118"
+      "runtime": "118",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/7/78/CrazyStupidLovePoster.jpg",
+      "poster_width": 220,
+      "poster_height": 326
     },
     {
       "position": 58,
@@ -935,7 +1104,10 @@
       "type": "Movie",
       "genres": "Action, Comedy",
       "director": "Krishna D.K., Raj Nidimoru",
-      "runtime": "145"
+      "runtime": "145",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/c6/A_Gentleman.jpg",
+      "poster_width": 262,
+      "poster_height": 379
     },
     {
       "position": 59,
@@ -945,7 +1117,10 @@
       "type": "Movie",
       "genres": "Drama",
       "director": "Pinaki Bhushan Mukherji",
-      "runtime": "140"
+      "runtime": "140",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/3/3c/Chowringhee_poster.jpeg/330px-Chowringhee_poster.jpeg",
+      "poster_width": 300,
+      "poster_height": 187
     },
     {
       "position": 60,
@@ -955,7 +1130,10 @@
       "type": "Movie",
       "genres": "Drama, Fantasy, Horror, Thriller",
       "director": "Rahi Anil Barve, Anand Gandhi, Adesh Prasad",
-      "runtime": "108"
+      "runtime": "108",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/4/41/Tumbbad_poster.jpg",
+      "poster_width": 264,
+      "poster_height": 376
     },
     {
       "position": 61,
@@ -965,7 +1143,10 @@
       "type": "TV Series",
       "genres": "Action, Adventure, Crime, Drama, Mystery, Thriller",
       "director": "",
-      "runtime": "60"
+      "runtime": "60",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/69/Elementary_intertitle.png",
+      "poster_width": 320,
+      "poster_height": 180
     },
     {
       "position": 62,
@@ -975,7 +1156,10 @@
       "type": "Movie",
       "genres": "Drama",
       "director": "Mira Nair",
-      "runtime": "122"
+      "runtime": "122",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/8/8b/The_Namesake.jpg",
+      "poster_width": 259,
+      "poster_height": 383
     },
     {
       "position": 63,
@@ -985,7 +1169,10 @@
       "type": "Movie",
       "genres": "Animation, Adventure, Comedy, Crime, Family",
       "director": "Pierre Perifel",
-      "runtime": "100"
+      "runtime": "100",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/0/00/The_Bad_Guys_poster.jpeg",
+      "poster_width": 256,
+      "poster_height": 389
     },
     {
       "position": 64,
@@ -1005,7 +1192,10 @@
       "type": "Movie",
       "genres": "Adventure, Drama, Fantasy",
       "director": "Peter Jackson",
-      "runtime": "178"
+      "runtime": "178",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/f/fb/Lord_Rings_Fellowship_Ring.jpg",
+      "poster_width": 218,
+      "poster_height": 326
     },
     {
       "position": 66,
@@ -1015,7 +1205,10 @@
       "type": "Movie",
       "genres": "Biography, Drama, Family, Musical, Romance",
       "director": "Robert Wise",
-      "runtime": "174"
+      "runtime": "174",
+      "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Sound_of_music.jpg/330px-Sound_of_music.jpg",
+      "poster_width": 300,
+      "poster_height": 450
     },
     {
       "position": 67,
@@ -1025,7 +1218,10 @@
       "type": "Movie",
       "genres": "Comedy, Music",
       "director": "Richard Linklater",
-      "runtime": "109"
+      "runtime": "109",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/11/School_of_Rock_Poster.jpg",
+      "poster_width": 258,
+      "poster_height": 385
     },
     {
       "position": 68,
@@ -1035,7 +1231,10 @@
       "type": "Movie",
       "genres": "Drama, War",
       "director": "Quentin Tarantino",
-      "runtime": "153"
+      "runtime": "153",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/c3/Inglourious_Basterds_poster.jpg",
+      "poster_width": 260,
+      "poster_height": 385
     },
     {
       "position": 69,
@@ -1045,7 +1244,10 @@
       "type": "Movie",
       "genres": "Drama",
       "director": "Hardik Mehta",
-      "runtime": "109"
+      "runtime": "109",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/d/de/Kaamyaab_Poster.jpeg",
+      "poster_width": 263,
+      "poster_height": 379
     },
     {
       "position": 70,
@@ -1055,7 +1257,10 @@
       "type": "Movie",
       "genres": "Crime, Drama, Mystery, Thriller",
       "director": "Anurag Kashyap",
-      "runtime": "103"
+      "runtime": "103",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/6/60/That_Girl_in_Yellow_Boots.jpg",
+      "poster_width": 265,
+      "poster_height": 378
     },
     {
       "position": 71,
@@ -1065,7 +1270,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Romance",
       "director": "Rajkumar Hirani",
-      "runtime": "144"
+      "runtime": "144",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/3/35/Lage_raho_munna_bhai.JPG",
+      "poster_width": 261,
+      "poster_height": 382
     },
     {
       "position": 72,
@@ -1075,7 +1283,10 @@
       "type": "TV Series",
       "genres": "Animation, Short, Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Sci-Fi, Thriller",
       "director": "",
-      "runtime": "15"
+      "runtime": "15",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/cb/Love%2C_Death_%26_Robots_Logo.png/330px-Love%2C_Death_%26_Robots_Logo.png",
+      "poster_width": 300,
+      "poster_height": 119
     },
     {
       "position": 73,
@@ -1085,7 +1296,10 @@
       "type": "Movie",
       "genres": "Animation, Drama, Fantasy, Mystery, Sci-Fi, Thriller",
       "director": "Satoshi Kon",
-      "runtime": "90"
+      "runtime": "90",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/16/Paprikaposter.jpg",
+      "poster_width": 265,
+      "poster_height": 374
     },
     {
       "position": 74,
@@ -1095,7 +1309,10 @@
       "type": "Movie",
       "genres": "Biography, Drama",
       "director": "Jay Roach",
-      "runtime": "124"
+      "runtime": "124",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/9/96/Trumbo_%282015_film%29_poster.jpg",
+      "poster_width": 260,
+      "poster_height": 390
     },
     {
       "position": 75,
@@ -1105,7 +1322,10 @@
       "type": "TV Mini Series",
       "genres": "Drama, History",
       "director": "",
-      "runtime": "50"
+      "runtime": "50",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/c1/Tokyo_Trial_miniseries_promotional_poster.jpg",
+      "poster_width": 260,
+      "poster_height": 382
     },
     {
       "position": 76,
@@ -1115,7 +1335,10 @@
       "type": "Movie",
       "genres": "Drama, Mystery",
       "director": "Orson Welles",
-      "runtime": "119"
+      "runtime": "119",
+      "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/Citizen_Kane_poster%2C_1941_%28Style_B%2C_unrestored%29.jpg/330px-Citizen_Kane_poster%2C_1941_%28Style_B%2C_unrestored%29.jpg",
+      "poster_width": 300,
+      "poster_height": 451
     },
     {
       "position": 77,
@@ -1125,7 +1348,10 @@
       "type": "Movie",
       "genres": "Drama, Romance",
       "director": "Vikramaditya Motwane",
-      "runtime": "136"
+      "runtime": "136",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/c/cc/Lootera_poster.jpg",
+      "poster_width": 250,
+      "poster_height": 400
     },
     {
       "position": 78,
@@ -1135,7 +1361,10 @@
       "type": "Movie",
       "genres": "Drama",
       "director": "Sudha Kongara",
-      "runtime": "153"
+      "runtime": "153",
+      "poster": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/61/Soorarai_Pottru.JPG/330px-Soorarai_Pottru.JPG",
+      "poster_width": 300,
+      "poster_height": 188
     },
     {
       "position": 79,
@@ -1145,7 +1374,10 @@
       "type": "Movie",
       "genres": "Action, Sci-Fi, Thriller",
       "director": "Anubhav Sinha",
-      "runtime": "156"
+      "runtime": "156",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/5/58/Ra.Oneposter.jpg",
+      "poster_width": 230,
+      "poster_height": 325
     },
     {
       "position": 80,
@@ -1155,7 +1387,10 @@
       "type": "TV Series",
       "genres": "Animation, Adventure, Comedy, Sci-Fi",
       "director": "",
-      "runtime": "22"
+      "runtime": "22",
+      "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Futurama_1999_logo.svg/330px-Futurama_1999_logo.svg.png",
+      "poster_width": 300,
+      "poster_height": 98
     },
     {
       "position": 81,
@@ -1165,7 +1400,10 @@
       "type": "Movie",
       "genres": "Biography, Drama, History, Sport, Thriller",
       "director": "Edward Zwick",
-      "runtime": "115"
+      "runtime": "115",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/15/Pawn_Sacrifice_Poster.jpg",
+      "poster_width": 250,
+      "poster_height": 370
     },
     {
       "position": 82,
@@ -1175,7 +1413,10 @@
       "type": "Movie",
       "genres": "Comedy, Family, Fantasy, Romance",
       "director": "Tommy O'Haver",
-      "runtime": "96"
+      "runtime": "96",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/1/1f/EllaEnchantedFilmPoster.jpg",
+      "poster_width": 259,
+      "poster_height": 384
     },
     {
       "position": 83,
@@ -1185,7 +1426,10 @@
       "type": "Movie",
       "genres": "Comedy, Drama, Family, Romance",
       "director": "Shakun Batra, Manish Rana",
-      "runtime": "132"
+      "runtime": "132",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/5/59/Kapoor_%26_Sons_poster.jpg",
+      "poster_width": 264,
+      "poster_height": 377
     },
     {
       "position": 84,
@@ -1195,7 +1439,10 @@
       "type": "Movie",
       "genres": "Animation, Drama, Fantasy, Romance",
       "director": "Satoshi Kon",
-      "runtime": "87"
+      "runtime": "87",
+      "poster": "https://upload.wikimedia.org/wikipedia/en/e/ee/Sennenyoyu.jpg",
+      "poster_width": 266,
+      "poster_height": 373
     }
   ],
   "books": [
@@ -1203,100 +1450,89 @@
       "title": "A Christmas Carol",
       "author": "Charles Dickens",
       "url": "https://www.goodreads.com/book/show/5326.A_Christmas_Carol",
-      "image": "assets/record/img/books/5326.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1406512317l/5326._SY300_.jpg",
       "width": 191,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1406512317l/5326._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "Being Mortal",
       "author": "Atul Gawande",
       "url": "https://www.goodreads.com/book/show/20696006-being-mortal",
-      "image": "assets/record/img/books/20696006.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408324949l/20696006._SY300_.jpg",
       "width": 198,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408324949l/20696006._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "The House in the Cerulean Sea",
       "author": "T.J. Klune",
       "url": "https://www.goodreads.com/book/show/45047384-the-house-in-the-cerulean-sea",
-      "image": "assets/record/img/books/45047384.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1569514209l/45047384._SY300_.jpg",
       "width": 200,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1569514209l/45047384._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "The Wisdom of Insecurity",
       "author": "Alan W. Watts",
       "url": "https://www.goodreads.com/book/show/551520.The_Wisdom_of_Insecurity",
-      "image": "assets/record/img/books/551520.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1411152436l/551520._SY300_.jpg",
       "width": 149,
-      "height": 260,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1411152436l/551520._SY300_.jpg"
+      "height": 260
     },
     {
       "title": "The Little Prince",
       "author": "Antoine de Saint-Exupéry",
       "url": "https://www.goodreads.com/book/show/157993.The_Little_Prince",
-      "image": "assets/record/img/books/157993.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1367545443l/157993._SY300_.jpg",
       "width": 200,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1367545443l/157993._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "When Breath Becomes Air",
       "author": "Paul Kalanithi",
       "url": "https://www.goodreads.com/book/show/25899336-when-breath-becomes-air",
-      "image": "assets/record/img/books/25899336.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1492677644l/25899336._SY300_.jpg",
       "width": 203,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1492677644l/25899336._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "A Man Called Ove",
       "author": "Fredrik Backman",
       "url": "https://www.goodreads.com/book/show/18774964-a-man-called-ove",
-      "image": "assets/record/img/books/18774964.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1405259930l/18774964._SY300_.jpg",
       "width": 195,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1405259930l/18774964._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "Project Hail Mary",
       "author": "Andy Weir",
       "url": "https://www.goodreads.com/book/show/54493401-project-hail-mary",
-      "image": "assets/record/img/books/54493401.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1764703833l/54493401._SY300_.jpg",
       "width": 199,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1764703833l/54493401._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "Unsong",
       "author": "Scott Alexander",
       "url": "https://www.goodreads.com/book/show/28589297-unsong",
-      "image": "assets/record/img/books/28589297.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1632785897l/28589297._SY300_.jpg",
       "width": 229,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1632785897l/28589297._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "The Fifth Science",
       "author": "Exurb1a",
       "url": "https://www.goodreads.com/book/show/41580260-the-fifth-science",
-      "image": "assets/record/img/books/41580260.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1535736994l/41580260._SY300_.jpg",
       "width": 188,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1535736994l/41580260._SY300_.jpg"
+      "height": 300
     },
     {
       "title": "Ramayan 3392 AD, Vol. 1",
       "author": "Shamik Dasgupta",
       "url": "https://www.goodreads.com/book/show/546611.Ramayan_3392_AD_Vol_1",
-      "image": "assets/record/img/books/546611.jpg",
+      "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1352764836l/546611._SY300_.jpg",
       "width": 196,
-      "height": 300,
-      "source_image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1352764836l/546611._SY300_.jpg"
+      "height": 300
     }
   ],
   "personal_sources": {
@@ -1305,7 +1541,9 @@
     "films": "User-provided IMDb export, 84 entries, imported 2026-10-26; no ratings, timestamps or notes imported.",
     "film_list": "https://www.imdb.com/list/ls591727943/",
     "essays": "https://casuallyoverthinking.substack.com/feed",
-    "retrieved": "2026-10-26"
+    "retrieved": "2026-10-26",
+    "posters": "Poster URLs resolved 2026-10-29 from Wikidata (IMDb ID) and English Wikipedia lead images; the images load from upload.wikimedia.org.",
+    "book_covers": "Cover URLs from Goodreads; the images load from i.gr-assets.com."
   },
   "essays": [
     {

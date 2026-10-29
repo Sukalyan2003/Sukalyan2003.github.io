@@ -131,6 +131,9 @@ def check() -> list[str]:
         csp = re.search(r'http-equiv="Content-Security-Policy" content="([^"]+)"', html)
         if csp and "giscus.app" in csp.group(1) and "data-giscus" not in html:
             problems.append(f"{page}: CSP allows giscus.app but the page has no comments")
+        # Remote image hosts are allowed only on the Library page.
+        if csp and page != "library/index.html" and re.search(r"img-src [^;]*https:", csp.group(1)):
+            problems.append(f"{page}: CSP allows remote images outside the Library")
 
     # ---- drafts must never reach public output --------------------------------
     # content/drafts/ exists only on the author's machine (gitignored).

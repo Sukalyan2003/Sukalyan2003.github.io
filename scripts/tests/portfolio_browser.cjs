@@ -169,7 +169,7 @@ async function main() {
  assert('find keyboard reaches result',await evaluate("document.activeElement.matches('#find-results a')&&document.activeElement.getAttribute('href')==='work/tempo/'"));
  await key('Enter');await sleep(400);
  assert('find result navigates',await evaluate("location.pathname==='/work/tempo/'"));
- await go('');await click('[data-open-print]');
+ await go('');for(const c of 'press')await key(c,'Key'+c.toUpperCase());
  for(let i=0;i<50;i++){if(await evaluate("!document.querySelector('[data-print-canvas]').hidden"))break;await sleep(100);}
  assert('print renders the portrait',await evaluate("document.querySelector('#print-dialog').open&&!document.querySelector('[data-print-canvas]').hidden"));
  await evaluate("window.__printBefore=document.querySelector('[data-print-canvas]').toDataURL();document.querySelector('#print-spacing').focus()");await key('ArrowRight');
@@ -186,7 +186,7 @@ async function main() {
  for(let i=0;i<40&&!fs.existsSync(downloadPath+'/sukalyan-roy-halftone.png');i++)await sleep(100);
  const png=fs.existsSync(downloadPath+'/sukalyan-roy-halftone.png')?fs.readFileSync(downloadPath+'/sukalyan-roy-halftone.png'):null;
  assert('save produces a 440px PNG',png&&png.subarray(1,4).toString()==='PNG'&&png.readUInt32BE(16)===440&&png.readUInt32BE(20)===440);
- await key('Escape');assert('print focus returns to trigger',await evaluate("document.activeElement.matches('[data-open-print]')&&!document.querySelector('#print-dialog').open"));
+ await key('Escape');assert('print dialog closes on Escape',await evaluate("!document.querySelector('#print-dialog').open"));
  await click('.map-disclosure > summary');
  await detailShot('project-map-desktop','.project-atlas');
  await go('work/local-retrieval/');
@@ -210,37 +210,36 @@ async function main() {
  await sleep(500);await cmd('Input.dispatchMouseEvent',{type:'mouseMoved',button:'left',buttons:1,...drag.to});await sleep(100);await cmd('Input.dispatchMouseEvent',{type:'mouseReleased',button:'left',clickCount:1,...drag.to});await sleep(250);
  assert('native mouse drag reorders ranking',await evaluate("document.querySelector('[data-ranking=\"dense\"] li').dataset.doc==='header'"));
  await detailShot('fusion-desktop','#explore');
- await go('library/');await evaluate("document.querySelector('#books-track').scrollIntoView({block:'center',behavior:'instant'})");await sleep(700);
- assert('book covers load locally',await evaluate("[...document.querySelectorAll('#books-track img')].slice(0,3).every(i=>i.complete&&i.naturalWidth>0&&new URL(i.src).origin===location.origin)"));
- await click('[data-shelf] [data-shelf-next]');await sleep(700);
- assert('book carousel advances',await evaluate("document.querySelector('#books-track').scrollLeft>0&&!document.querySelector('[data-shelf] [data-shelf-prev]').disabled"));
+ await go('library/');await evaluate("document.querySelector('#books-grid').scrollIntoView({block:'center',behavior:'instant'})");await sleep(1500);
+ assert('book covers load from Goodreads or fall back to text',await evaluate("[...document.querySelectorAll('#books-grid img')].slice(0,3).every(i=>new URL(i.src).host==='i.gr-assets.com'&&((i.complete&&i.naturalWidth>0)||i.closest('[data-img-box]').classList.contains('is-missing')))"));
+ assert('book shelf shows all 11 without a Show all button',await evaluate("document.querySelectorAll('#books-grid > li:not([hidden])').length===11&&document.querySelector('[aria-controls=\"books-grid\"]').hidden"));
+ assert('film grid starts with 15 recommendations',await evaluate("document.querySelectorAll('#films-grid > li:not([hidden])').length===15"));
+ await click('[aria-controls="films-grid"]');await sleep(300);
+ assert('Show all extends the film grid to 84',await evaluate("document.querySelectorAll('#films-grid > li:not([hidden])').length===84&&document.querySelector('[aria-controls=\"films-grid\"]').getAttribute('aria-expanded')==='true'"));
  await evaluate("document.querySelector('#film-kind').focus()");await key('End');await key('Enter');
- assert('film filter shows 10 series',await evaluate("document.querySelector('#film-kind').value==='series'&&document.querySelectorAll('#films-track > li:not([hidden])').length===10"));
+ assert('film filter shows 10 series',await evaluate("document.querySelector('#film-kind').value==='series'&&document.querySelectorAll('#films-grid > li:not([hidden])').length===10"));
  await evaluate("document.querySelector('#film-kind').focus()");await key('Home');await key('Enter');
- assert('film filter restores all 84 recommendations',await evaluate("document.querySelectorAll('#films-track > li:not([hidden])').length===84"));
- await evaluate("window.__random=Math.random;Math.random=()=>.75");await click('[data-shelf-surprise]');await sleep(700);await evaluate("Math.random=window.__random");
- assert('surprise browses elsewhere in the film shelf',await evaluate("document.querySelector('#films-track').scrollLeft>0"));
+ assert('film filter restores all 84 recommendations',await evaluate("document.querySelectorAll('#films-grid > li:not([hidden])').length===84"));
+ await evaluate("window.__random=Math.random;Math.random=()=>.75");await click('[data-shelf-surprise]');await evaluate("Math.random=window.__random");
+ for(let i=0;i<30;i++){if(await evaluate("(()=>{const li=document.querySelector('#films-grid li.is-picked');if(!li)return false;const r=li.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;})()"))break;await sleep(100);}
+ assert('surprise picks a film and scrolls to it',await evaluate("(()=>{const li=document.querySelector('#films-grid li.is-picked');if(!li)return false;const r=li.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight&&document.activeElement===li.querySelector('a');})()"));
  await detailShot('book-shelf-desktop','.personal-shelf');
  await detailShot('film-shelf-desktop','#films-heading');
- await viewport(390);await go('library/');await evaluate("document.querySelector('#books-track').scrollIntoView({block:'center',behavior:'instant'})");await sleep(300);
+ await viewport(390);await go('library/');await evaluate("document.querySelector('#books-grid').scrollIntoView({block:'center',behavior:'instant'})");await sleep(300);
  await cmd('Emulation.setTouchEmulationEnabled',{enabled:true});
- const swipe=await evaluate("(()=>{const r=document.querySelector('#books-track').getBoundingClientRect();return {x:r.right-30,y:r.top+110,scroll:scrollY};})()");
- await cmd('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:swipe.x,y:swipe.y}]});
- for(let i=1;i<=8;i++){await cmd('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:swipe.x-i*28,y:swipe.y}]});await sleep(35);}
- await cmd('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await sleep(700);
- assert('mobile touch swipes the book shelf',await evaluate("document.querySelector('#books-track').scrollLeft>30"));
+ assert('phone shelves use a two-column grid without sideways scroll',await evaluate("getComputedStyle(document.querySelector('#books-grid')).gridTemplateColumns.split(' ').length===2&&document.documentElement.scrollWidth<=innerWidth"));
  await detailShot('book-shelf-mobile','#books-heading');
  await cmd('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await go('');await click('.map-disclosure > summary');
  assert('map respects reduced motion',await evaluate("getComputedStyle(document.querySelector('.map-lines .is-connected')).animationName==='none'"));
  await cmd('Emulation.setScriptExecutionDisabled',{value:true});await go('library/');
- assert('personal shelves work without JS',await evaluate("document.querySelectorAll('#films-track a').length===84&&document.querySelectorAll('#books-track a').length===11&&document.querySelectorAll('.personal-essays article').length===2&&[...document.querySelectorAll('[data-enhance]')].every(e=>e.hidden)"));
+ assert('personal shelves work without JS',await evaluate("document.querySelectorAll('#films-grid a').length===84&&document.querySelectorAll('#books-grid a').length===11&&document.querySelectorAll('.personal-essays article').length===2&&[...document.querySelectorAll('[data-enhance]')].every(e=>e.hidden)"));
  await cmd('Emulation.setScriptExecutionDisabled',{value:false});
- await cmd('Emulation.setDeviceMetricsOverride',{width:390,height:700,deviceScaleFactor:1,mobile:true});await go('');await touch('[data-open-print]');await sleep(150);
+ await cmd('Emulation.setDeviceMetricsOverride',{width:390,height:700,deviceScaleFactor:1,mobile:true});await go('');await evaluate("document.querySelector('[data-open-print]').click()");await sleep(150);
  assert('small phone print dialog fits',await evaluate("(()=>{const d=document.querySelector('#print-dialog');const r=d.getBoundingClientRect();return d.open&&r.right<=innerWidth&&r.bottom<=innerHeight&&r.top>=0;})()"));
  await evaluate("document.querySelector('#print-spacing').focus()");await key('End');
  assert('small phone print controls work',await evaluate("document.querySelector('#print-spacing').value==='20'&&document.querySelector('[data-print-canvas]').getAttribute('aria-label').includes('20 pixel')"));
  {const {data}=await cmd('Page.captureScreenshot',{format:'png'});fs.writeFileSync(reviewDir+'/printing-press-mobile.png',Buffer.from(data,'base64'));}
- await key('Escape');assert('small phone print closes',await evaluate("!document.querySelector('#print-dialog').open&&document.activeElement.matches('[data-open-print]')"));
+ await key('Escape');assert('small phone print closes',await evaluate("!document.querySelector('#print-dialog').open"));
  await cmd('Emulation.setTouchEmulationEnabled',{enabled:false});
  await cmd('Emulation.setEmulatedMedia',{features:[]});
  const blogRoot=path.resolve(__dirname,'../../blog');

@@ -124,6 +124,15 @@
     var spacing = press.querySelector('#print-spacing');
     var contrast = press.querySelector('#print-contrast');
     var photoButton = press.querySelector('[data-print-photo]');
+    // Easter egg: typing "press" outside a form field opens the printing press.
+    var pressOpener = document.querySelector('[data-open-print]');
+    var typed = '';
+    document.addEventListener('keydown', function (event) {
+      if (!pressOpener || event.ctrlKey || event.metaKey || event.altKey || event.key.length !== 1) return;
+      if (event.target.closest && event.target.closest('input, textarea, select, [contenteditable]')) return;
+      typed = (typed + event.key.toLowerCase()).slice(-5);
+      if (typed === 'press') { typed = ''; pressOpener.click(); }
+    });
     var pixels = null;
     var photoMode = false;
     var ready = false;
@@ -212,52 +221,49 @@
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { if (press.open) drawPrint(); });
   }
 
+  // Remote covers and posters fall back to the text card if they fail to load.
+  document.querySelectorAll('img[data-remote-img]').forEach(function (img) {
+    function missing() { img.closest('[data-img-box]').classList.add('is-missing'); }
+    if (img.complete && img.currentSrc && img.naturalWidth === 0) missing();
+    else img.addEventListener('error', missing);
+  });
+
+  // Shelves show the first rows; "Show all" extends the grid downward.
+  var SHELF_LIMIT = 15;
   document.querySelectorAll('[data-shelf]').forEach(function (shelf) {
-    var track = shelf.querySelector('[data-shelf-track]');
-    var allItems = Array.from(track.querySelectorAll('[data-shelf-item]'));
-    var prev = shelf.querySelector('[data-shelf-prev]');
-    var next = shelf.querySelector('[data-shelf-next]');
-    var position = shelf.querySelector('[data-shelf-position]');
-    function visibleItems() { return allItems.filter(function (item) { return !item.hidden; }); }
-    function updateShelf() {
-      var items = visibleItems();
-      var bounds = track.getBoundingClientRect();
-      var seen = items.filter(function (item) { var rect = item.getBoundingClientRect(); return rect.right > bounds.left + 3 && rect.left < bounds.right - 3; });
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
-      if (seen.length) position.value = (items.indexOf(seen[0]) + 1) + '–' + (items.indexOf(seen[seen.length - 1]) + 1) + ' of ' + items.length;
-    }
-    function moveShelf(direction) { track.scrollBy({ left: direction * track.clientWidth * .9, behavior: reducedMotion.matches ? 'instant' : 'smooth' }); }
-    prev.addEventListener('click', function () { moveShelf(-1); });
-    next.addEventListener('click', function () { moveShelf(1); });
-    track.addEventListener('keydown', function (event) {
-      if (event.target === track && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
-        event.preventDefault();
-        moveShelf(event.key === 'ArrowRight' ? 1 : -1);
-      }
-    });
-    var scheduled = false;
-    track.addEventListener('scroll', function () {
-      if (scheduled) return;
-      scheduled = true;
-      requestAnimationFrame(function () { updateShelf(); scheduled = false; });
-    }, { passive: true });
-    if ('ResizeObserver' in window) new ResizeObserver(updateShelf).observe(track);
+    var allItems = Array.from(shelf.querySelectorAll('[data-shelf-item]'));
     var filter = shelf.querySelector('[data-film-filter]');
-    if (filter) filter.addEventListener('change', function () {
-      allItems.forEach(function (item) { item.hidden = filter.value !== 'all' && item.dataset.filmType !== filter.value; });
-      track.scrollTo({ left: 0, behavior: 'instant' });
-      updateShelf();
+    var more = shelf.querySelector('[data-shelf-more]');
+    var expanded = false;
+    function matching() {
+      return allItems.filter(function (item) { return !filter || filter.value === 'all' || item.dataset.filmType === filter.value; });
+    }
+    function render() {
+      var items = matching();
+      allItems.forEach(function (item) { item.hidden = true; });
+      items.forEach(function (item, i) { item.hidden = !expanded && i >= SHELF_LIMIT; });
+      more.hidden = items.length <= SHELF_LIMIT;
+      more.setAttribute('aria-expanded', String(expanded));
+      more.textContent = expanded ? 'Show fewer' : 'Show all ' + items.length;
+    }
+    more.addEventListener('click', function () {
+      expanded = !expanded;
+      render();
+      if (!expanded) shelf.scrollIntoView({ block: 'start', behavior: reducedMotion.matches ? 'instant' : 'smooth' });
     });
+    if (filter) filter.addEventListener('change', render);
     var surprise = shelf.querySelector('[data-shelf-surprise]');
     if (surprise) surprise.addEventListener('click', function () {
-      var items = visibleItems();
+      var items = matching();
       if (!items.length) return;
       var selected = items[Math.floor(Math.random() * items.length)];
-      var left = selected.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
-      track.scrollTo({ left: left, behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+      if (selected.hidden) { expanded = true; render(); }
+      allItems.forEach(function (item) { item.classList.remove('is-picked'); });
+      selected.classList.add('is-picked');
+      selected.scrollIntoView({ block: 'center', behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+      selected.querySelector('a').focus({ preventScroll: true });
     });
-    updateShelf();
+    render();
   });
 
   var fusion = document.querySelector('.fusion-lab');
