@@ -170,11 +170,6 @@ def check() -> list[str]:
     except json.JSONDecodeError as exc:
         problems.append(f"manifest.json: invalid ({exc})")
 
-    # The dispatch markers must survive edits or the sync silently stops working.
-    for marker in ("WRITING:START", "WRITING:END"):
-        if index.count(marker) != 1:
-            problems.append(f"index.html: expected exactly one {marker}")
-
     return problems
 
 

@@ -11,6 +11,7 @@ change one key with a line edit instead of re-serialising the whole block.
 from __future__ import annotations
 
 import io
+import html
 import json
 import re
 from collections import Counter
@@ -62,6 +63,21 @@ class ContentError(Exception):
 
 
 # --------------------------------------------------------------------- text
+def summarize(text: str, limit: int = 180) -> str:
+    """Plain-text excerpt shared by imported posts, blog cards and the homepage."""
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", html.unescape(text)).strip()
+    text = re.sub(r"^TL;?DR:?\s*", "", text, flags=re.I)
+    if len(text) <= limit:
+        return text
+    clipped = text[:limit]
+    sentence = max(clipped.rfind(". "), clipped.rfind("? "), clipped.rfind("! "))
+    if sentence > limit * 0.55:
+        return clipped[:sentence + 1]
+    space = clipped.rfind(" ")
+    return (clipped[:space] if space > 0 else clipped).rstrip(",;:-") + "…"
+
+
 def split_front_matter(text: str) -> tuple[dict, str]:
     match = FRONT_MATTER.match(text)
     if not match:
@@ -145,10 +161,6 @@ def iso(dt: datetime) -> str:
 def date_label(dt: datetime) -> str:
     local = dt.astimezone(cfg.DISPLAY_TZ)
     return f"{local.day} {MONTHS[local.month - 1]} {local.year}"
-
-
-def date_ymd(dt: datetime) -> str:
-    return dt.astimezone(cfg.DISPLAY_TZ).strftime("%Y-%m-%d")
 
 
 # ------------------------------------------------------------------ loading
@@ -344,13 +356,3 @@ def validate(sections: list[dict], posts: list[dict]) -> list[str]:
                     errors.append(f"{name}: seriesOrder {order} already used by {taken[order]}")
                 taken[order] = name
     return errors
-
-
-def load_all() -> tuple[list[dict], list[dict]]:
-    """Load and validate; raise ContentError listing every problem at once."""
-    sections = load_sections()
-    posts = load_posts()
-    errors = validate(sections, posts)
-    if errors:
-        raise ContentError("\n".join(errors))
-    return sections, posts

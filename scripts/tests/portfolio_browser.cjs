@@ -41,7 +41,7 @@ chrome.stdio[4].on('data', data => {
         pending.delete(message.id);
         message.error ? request.reject(message.error) : request.resolve(message.result);
       }
-    } else if (message.method === 'Page.lifecycleEvent' && message.params.name === 'load') {
+    } else if (message.method === 'Page.lifecycleEvent' && message.params.name === 'DOMContentLoaded') {
       loaded.add(message.params.loaderId);
     } else if (message.method === 'Runtime.exceptionThrown' ||
                (message.method === 'Log.entryAdded' && message.params.entry.level === 'error')) {
@@ -86,15 +86,19 @@ async function main() {
     const navigation = await cmd('Page.navigate', {url});
     if (navigation.errorText) throw new Error('Cannot open ' + url + ': ' + navigation.errorText + '. Start the preview server first.');
     let ready = false;
-    for (let attempt = 0; attempt < 80; attempt++) {
+    for (let attempt = 0; attempt < 300; attempt++) {
       await sleep(100);
-      if (loaded.has(navigation.loaderId) && await evaluate("document.readyState === 'complete' && location.href === " + JSON.stringify(url))) {
+      if (loaded.has(navigation.loaderId) && await evaluate("document.readyState !== 'loading' && location.href === " + JSON.stringify(url))) {
         ready = true;
         break;
       }
     }
     if (!ready) throw new Error('Navigation did not complete: ' + url);
     await evaluate('document.fonts.ready.then(() => true)');
+    // Remote Library covers must not hold navigation open. Local eager images
+    // are still awaited; image and diagram assertions below check their bytes.
+    await evaluate(`Promise.all([...document.images].filter(img => img.loading !== 'lazy' &&
+      new URL(img.currentSrc || img.src).origin === location.origin).map(img => img.decode().catch(() => {})))`);
     await sleep(80);
   };
   const click = async selector => {
@@ -283,7 +287,7 @@ async function main() {
  // Embedded local animations are visible, paused initially, and controllable without JS.
  for (const width of [1440,768,390,320]) {
    await viewport(width);
-   for (const slug of ['the-distance-that-knows-how-the-data-moves','what-comes-after-cs50x-discover-cs50-ai-2']) {
+   for (const slug of ['the-distance-that-knows-how-the-data-moves','the-floor-beneath-every-estimate','what-comes-after-cs50x-discover-cs50-ai-2']) {
      await go('blog/'+slug+'/');
      await evaluate("document.querySelector('video').scrollIntoView({block:'center',behavior:'instant'})");
      const media = await evaluate(`(async()=>{const v=document.querySelector('video');const poster=new Image();poster.src=v.poster;await poster.decode();return {paused:v.paused,controls:v.controls,poster:poster.naturalWidth,visible:v.getBoundingClientRect().width>0,autoplay:v.autoplay,width:document.documentElement.scrollWidth}})()`);

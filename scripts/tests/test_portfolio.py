@@ -89,15 +89,24 @@ class PortfolioTests(unittest.TestCase):
         self.assertIn('A new measured result, under stated conditions.', page)
         self.assertIn('https://example.com/new-book', Links(page).hrefs)
 
-    def test_writing_updates_preserve_surrounding_portfolio(self):
-        home = self.pages['index.html']
-        replacement = '<!-- WRITING:START -->\n<p>A later dispatch</p>\n<!-- WRITING:END -->'
-        updated = portfolio.update_writing.splice(home, replacement)
-        self.assertIn('A later dispatch', updated)
-        self.assertIn('Selected work', updated)
-        self.assertIn('about/', Links(updated).hrefs)
-        self.assertEqual(updated.count('WRITING:START'), 1)
-        self.assertEqual(updated.count('WRITING:END'), 1)
+    def test_homepage_build_refreshes_writing_from_the_search_index(self):
+        records = [{"title": "A's post", "slug": "a", "url": "/blog/a/", "summary": "TL;DR Short.",
+                    "dateLabel": "1 Jan 2026", "date": "2026-01-01T00:00:00.000Z", "tags": []}]
+        with mock.patch.object(Path, 'read_text', return_value=json.dumps(records)):
+            page = portfolio.home(self.data, {})
+        self.assertIn('<a href="blog/a/">A&#x27;s post</a>', page)
+        self.assertIn('<p>Short.</p>', page)
+        self.assertIn('Selected work', page)
+        self.assertIn('about/', Links(page).hrefs)
+
+    def test_writing_shows_only_four_newest_posts(self):
+        records = [dict(title=f'Post {i}', url=f'/blog/p{i}/', summary='',
+                        date=f'2026-01-0{i}', dateLabel=f'{i} Jan 2026', tags=[])
+                   for i in range(1, 7)]
+        page = portfolio.writing(records)
+        self.assertEqual(page.count('<article '), 4)
+        self.assertNotIn('blog/p2/', page)
+        self.assertLess(page.index('Post 6'), page.index('Post 5'))
 
     def test_personal_links_use_the_provided_accounts_without_embedded_playback(self):
         about = self.pages['about/index.html']

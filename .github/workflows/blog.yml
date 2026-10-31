@@ -49,14 +49,8 @@ jobs:
       - name: Build
         run: python3 scripts/blog.py build
 
-      - name: Unit tests
-        run: python3 -m unittest discover -s scripts/tests -v
-
-      - name: JavaScript syntax
-        run: |
-          for file in assets/record/js/*.js blog/assets/*.js js/*.js; do
-            node --check "$file"
-          done
+      - name: Unit tests and JavaScript syntax
+        run: python3 scripts/blog.py test
 
       - name: Freshness, design and HTML checks
         run: python3 scripts/blog.py check

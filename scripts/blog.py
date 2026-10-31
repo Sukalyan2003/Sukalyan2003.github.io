@@ -12,7 +12,9 @@
     python3 scripts/blog.py optimize [--dry-run]         shrink original images in content/
     python3 scripts/blog.py import [BACKUP_DIR] [--overwrite]
                                                           re-run the Hashnode importer
-    python3 scripts/blog.py build | check | preview      generate / verify / preview with drafts
+    python3 scripts/blog.py build | check | test         build / verify / test the whole site
+    python3 scripts/blog.py preview                     preview with drafts
+    python3 scripts/blog.py posters                     refresh Library poster metadata
 
 Edits touch only the front-matter keys they are about; the body is never
 rewritten. Run `build` afterwards (or let CI do it) to regenerate /blog.
@@ -283,6 +285,29 @@ def cmd_check(args) -> int:
     return code or run_script("build_portfolio.py", "--check") or run_script("check.py")
 
 
+def cmd_test(args) -> int:
+    code = subprocess.call([sys.executable, "-m", "unittest", "discover",
+                            "-s", str(ROOT / "scripts/tests"), "-v"], cwd=ROOT)
+    if code:
+        return code
+    node = shutil.which("node")
+    if not node:
+        return fail("Node.js is needed for JavaScript syntax checks")
+    files = sorted(path for pattern in ("assets/record/js/*.js", "blog/assets/*.js",
+                                        "js/*.js", "scripts/tests/*.cjs")
+                   for path in ROOT.glob(pattern))
+    for path in files:
+        code = subprocess.call([node, "--check", str(path)], cwd=ROOT)
+        if code:
+            return code
+    print(f"JavaScript syntax: {len(files)} files passed.")
+    return 0
+
+
+def cmd_posters(args) -> int:
+    return run_script("resolve_posters.py")
+
+
 def cmd_preview(args) -> int:
     out = ROOT / ".preview"
     code = run_script("build_blog.py", "--drafts", "--out", str(out))
@@ -337,6 +362,8 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("build", help="regenerate blog and portfolio pages").set_defaults(func=cmd_build)
     sub.add_parser("check", help="verify output is current and passes check.py").set_defaults(func=cmd_check)
+    sub.add_parser("test", help="run unit tests and JavaScript syntax checks").set_defaults(func=cmd_test)
+    sub.add_parser("posters", help="refresh Library poster URLs from Wikimedia").set_defaults(func=cmd_posters)
     p = sub.add_parser("preview", help="build with drafts into .preview/ and serve it")
     p.add_argument("--port", type=int, default=8000)
     p.set_defaults(func=cmd_preview)

@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-import update_writing
+from blog_lib import summarize
 import portfolio_explore as explore
 import build_classic
 
@@ -153,9 +153,35 @@ def project_preview(p: dict, prefix: str, number: int, featured: bool = False) -
 </article>'''
 
 
+def writing(records: list[dict], count: int = 4) -> str:
+    """Render the newest local posts as part of the complete homepage build."""
+    ordered = sorted(records, key=lambda r: r['date'], reverse=True)[:count]
+    if not ordered:
+        raise RuntimeError('no posts in the blog index')
+    items = []
+    for post in ordered:
+        link = esc(post['url'].lstrip('/'))
+        tags = ''.join(f'<span class="tag">{esc(t["label"])}</span>' for t in post.get('tags', [])[:2])
+        tag_block = f'\n            <div class="tags">{tags}</div>' if tags else ''
+        summary = summarize(post.get('summary', ''))
+        summary_block = f'\n            <p>{esc(summary)}</p>' if summary else ''
+        items.append(f'''        <article class="dispatch">
+          <div class="dispatch__date">
+            <time datetime="{esc(post['date'][:10])}">{esc(post['dateLabel'])}</time>
+          </div>
+          <div>
+            <h3><a href="{link}">{esc(post['title'])}</a></h3>{summary_block}
+            <div class="dispatch__meta">{tag_block}
+              <a class="more" href="{link}">Read</a>
+            </div>
+          </div>
+        </article>''')
+    return '      <div class="dispatches">\n' + '\n\n'.join(items) + '\n      </div>'
+
+
 def home(data: dict, graph: dict) -> str:
     by_slug = {p['slug']: p for p in data['projects']}
-    writing = update_writing.render(update_writing.posts_from_records(json.loads((ROOT / 'blog/search.json').read_text())))
+    dispatches = writing(json.loads((ROOT / 'blog/search.json').read_text()))
     return head('', 'Sukalyan Roy · Backend Engineer', 'Backend engineering for large data and inspectable AI systems. Explore production EEG infrastructure, an ML leakage audit, and local-first retrieval.', '', graph) + nav('', 'home') + f'''
 <header class="sheet front-masthead" id="top"><div class="edition"><span>The Record · Sukalyan Roy</span><span>Kolkata, India · Open to remote</span></div>
 <div class="front-masthead__body"><div><h1 class="masthead__name">Sukalyan<br>Roy</h1><p class="front-role">Backend Engineer <span>Python, Data &amp; ML Systems</span></p></div>{portrait()}</div>
@@ -174,7 +200,7 @@ def home(data: dict, graph: dict) -> str:
 <section class="section" id="writing" aria-labelledby="writing-title">{section_head('02', 'Writing', heading_id='writing-title')}
 <div class="reading-pair"><article><span class="eyebrow">Retrieval · Implementation notes</span><h3><a href="blog/adding-rank-fusion-to-my-rag-retrieval-logic/">Adding Rank Fusion to my RAG retrieval logic</a></h3><p>Combining semantic search with exact-term matching, then merging the rankings.</p></article>
 <article><span class="eyebrow">Evaluation · An experiment</span><h3><a href="blog/does-your-system-prompt-actually-do-anything-i-built-an-eval-to-find-out/">Does Your System Prompt Actually Do Anything? I Built an Eval to Find Out</a></h3><p>Testing whether changing a system prompt changes the model's answers.</p></article></div>
-<details class="latest-writing"><summary>Latest posts <span>From Engineering Tales</span></summary>{writing}</details>
+<details class="latest-writing"><summary>Latest posts <span>From Engineering Tales</span></summary>{dispatches}</details>
 <p class="section-end"><a class="text-link" href="blog/">All of Engineering Tales →</a></p></section>
 <section class="section front-record" id="record">{section_head('03', 'About me')}<div><p>Backend Developer at Avinya Neurotech. Previously, a Tech Development Intern at Aecho AI. Away from work, I read, keep film lists and make playlists.</p><a class="text-link" href="about/">Experience, education and life outside work →</a></div></section>
 </main>''' + explore.print_dialog() + footer('', data)

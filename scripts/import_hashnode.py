@@ -46,9 +46,8 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import blog_config as cfg  # noqa: E402
 from blog_lib import (  # noqa: E402
-    CONTENT, DRAFTS, MIGRATION, compose, iso, load_file, optimize_image, parse_date, slugify,
+    CONTENT, DRAFTS, MIGRATION, compose, iso, load_file, optimize_image, parse_date, slugify, summarize,
 )
-from update_writing import _summarize  # noqa: E402
 
 BACKUP_URL = "https://github.com/Sukalyan2003/hashnode-backup.git"
 USER_AGENT = "Mozilla/5.0 (compatible; engineering-tales-import)"
@@ -240,7 +239,7 @@ def plain_text(body: str) -> str:
 
 
 def excerpt(body: str) -> str:
-    return _summarize(plain_text(body))
+    return summarize(plain_text(body))
 
 
 def build_meta(src: dict, slug: str, body: str, localize, *, draft: bool, cuid: str) -> dict:

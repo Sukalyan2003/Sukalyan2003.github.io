@@ -28,7 +28,6 @@ import blog  # noqa: E402
 import blog_lib  # noqa: E402
 import build_blog  # noqa: E402
 import import_hashnode as imp  # noqa: E402
-import update_writing  # noqa: E402
 from blog_lib import compose, set_key, split_front_matter, validate  # noqa: E402
 
 SECTIONS_YML = """
@@ -344,6 +343,30 @@ class CliTests(unittest.TestCase):
         with mock.patch.object(blog, 'run_script', side_effect=[0, 1]) as run:
             self.assertEqual(blog.main(['check']), 1)
             self.assertEqual(run.call_args_list, [mock.call('build_blog.py', '--check'), mock.call('build_portfolio.py', '--check')])
+
+    def test_test_command_stops_on_unit_or_javascript_failure(self):
+        with mock.patch.object(blog.subprocess, 'call', return_value=7) as run:
+            self.assertEqual(blog.main(['test']), 7)
+            self.assertEqual(run.call_count, 1)
+            self.assertEqual(run.call_args.args[0][1:4], ['-m', 'unittest', 'discover'])
+        with mock.patch.object(blog.subprocess, 'call', side_effect=[0, 3]) as run, \
+                mock.patch.object(blog.shutil, 'which', return_value='/usr/bin/node'), \
+                mock.patch.object(Path, 'glob', side_effect=[[Path('js/script.js')], [], [], []]):
+            self.assertEqual(blog.main(['test']), 3)
+            self.assertEqual(run.call_args.args[0][:2], ['/usr/bin/node', '--check'])
+
+    def test_test_command_checks_all_site_javascript_and_browser_runner(self):
+        files = [Path('js/script.js'), Path('scripts/tests/portfolio_browser.cjs')]
+        with mock.patch.object(blog.subprocess, 'call', return_value=0) as run, \
+                mock.patch.object(blog.shutil, 'which', return_value='/usr/bin/node'), \
+                mock.patch.object(Path, 'glob', side_effect=[[], [], files[:1], files[1:]]):
+            self.assertEqual(quiet(blog.main, ['test'])[0], 0)
+            self.assertEqual([call.args[0][-1] for call in run.call_args_list[1:]], [str(p) for p in files])
+
+    def test_posters_command_uses_the_existing_resolver(self):
+        with mock.patch.object(blog, 'run_script', return_value=2) as run:
+            self.assertEqual(blog.main(['posters']), 2)
+            run.assert_called_once_with('resolve_posters.py')
 
     def test_move_changes_only_section(self):
         path = self.tmp.add("p", body="Keep\n  exactly\n")
@@ -742,16 +765,6 @@ class RelativeUrlTests(unittest.TestCase):
         self.assertIn('href="https://x.dev/a"', out)
         self.assertIn('src="img/p-480.webp"', out)
         self.assertIn('srcset="img/p-480.webp 480w, img/p-960.webp 960w"', out)
-
-
-class WritingSectionTests(unittest.TestCase):
-    def test_render_links_locally(self):
-        records = [{"title": "A's post", "url": "/blog/a/", "summary": "TL;DR Short.", "dateLabel": "1 Jan 2026",
-                    "date": "2026-01-01T00:00:00.000Z", "tags": [{"slug": "x", "label": "X"}]}]
-        block = update_writing.render(update_writing.posts_from_records(records))
-        self.assertIn('<a href="blog/a/">A&#x27;s post</a>', block)
-        self.assertNotIn("target=", block)
-        self.assertIn("<p>Short.</p>", block)
 
 
 if __name__ == "__main__":

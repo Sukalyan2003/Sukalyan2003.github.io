@@ -90,7 +90,3 @@ GISCUS = {
     "category": "Comments",
     "category_id": "",
 }
-
-# Likes / view counts are deferred until a backend exists. Set this to the
-# endpoint base URL to enable them; the templates render nothing while None.
-REACTIONS_ENDPOINT: str | None = None

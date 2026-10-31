@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Build /blog from content/blog/*.md into static HTML.
 
-content/blog/*.md -> blog/ (committed), plus sitemap.xml, robots.txt and the
-Writing section of index.html. Nothing at runtime depends on Hashnode or on
+content/blog/*.md -> blog/ (generated), plus sitemap.xml and robots.txt.
+The portfolio generator owns index.html. Nothing at runtime depends on Hashnode or on
 this script: the output is plain files served by GitHub Pages.
 
 Usage:
     python3 scripts/build_blog.py            # build and write
-    python3 scripts/build_blog.py --check    # exit 1 if the committed output is stale
+    python3 scripts/build_blog.py --check    # exit 1 if the generated output is stale
     python3 scripts/build_blog.py --drafts --out .preview
                                              # local preview including drafts (never committed)
 """
@@ -43,10 +43,9 @@ from pygments.util import ClassNotFound
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import blog_config as cfg  # noqa: E402
-import update_writing  # noqa: E402
 from blog_lib import (  # noqa: E402
     CONTENT, DRAFTS, ROOT, ContentError, date_label, iso, load_page, load_posts,
-    load_sections, tag_label, tag_slug, validate,
+    load_sections, summarize, tag_label, tag_slug, validate,
 )
 
 BLOG_URL = f"{cfg.SITE_URL}/blog/"
@@ -580,7 +579,7 @@ class Site:
             post["toc"] = rendered["toc"] if len(rendered["toc"]) >= cfg.TOC_MIN_HEADINGS else []
             post["words"] = rendered["words"]
             post["minutes"] = max(1, round(rendered["words"] / cfg.WORDS_PER_MINUTE))
-            post["summary"] = update_writing._summarize(post["description"]) if post["description"] else ""
+            post["summary"] = summarize(post["description"]) if post["description"] else ""
             cover = post["meta"].get("cover")
             post["cover"] = resolve(cover) if cover else None
             og_src = post["meta"].get("ogImage") or cover
@@ -1491,17 +1490,6 @@ def run(check: bool = False, drafts: bool = False, out: Path | None = None) -> i
         site.diagrams.prune(CONTENT / "diagrams")  # drop renders no post uses any more
     changed = sync(site.files, images, out_root, write=not check)
 
-    # On a fresh checkout index.html does not exist yet; build_portfolio.py writes it,
-    # Writing section included, straight after this script.
-    if not preview and update_writing.TARGET.exists():
-        index = update_writing.TARGET.read_text(encoding="utf-8")
-        updated = update_writing.splice(index, update_writing.render(update_writing.posts_from_records(
-            json.loads(site.files["blog/search.json"]))))
-        if updated != index:
-            changed.append("index.html (Writing section)")
-            if not check:
-                update_writing.TARGET.write_text(updated, encoding="utf-8")
-
     pages = sum(1 for k in site.files if k.endswith(".html"))
     if check:
         if changed:
@@ -1516,7 +1504,7 @@ def run(check: bool = False, drafts: bool = False, out: Path | None = None) -> i
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--check", action="store_true", help="fail if the committed output is stale")
+    parser.add_argument("--check", action="store_true", help="fail if the generated output is stale")
     parser.add_argument("--drafts", action="store_true", help="include content/drafts (requires --out)")
     parser.add_argument("--out", type=Path, help="output root (default: the repository)")
     args = parser.parse_args(argv)

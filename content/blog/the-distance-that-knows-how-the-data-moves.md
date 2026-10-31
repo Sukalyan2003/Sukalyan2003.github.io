@@ -4,7 +4,7 @@ slug: "the-distance-that-knows-how-the-data-moves"
 section: "unsung-bits"
 seriesOrder: 5
 datePublished: "2026-10-03T02:30:00Z"
-dateUpdated: "2026-10-29T12:12:06Z"
+dateUpdated: "2026-10-31T04:20:56Z"
 description: "In 1936, P. C. Mahalanobis made covariance part of measuring distance. The same geometry still runs through statistical machine learning."
 tags: ["machine-learning", "statistics", "india", "data-science", "unsung-bits", "history-of-science", "anomaly-detection"]
 cover: "img/the-distance-that-knows-how-the-data-moves/mahalanobis-ellipse-comparison.webp"
